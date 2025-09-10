@@ -1,0 +1,13 @@
+{
+"users": [
+
+    {
+"id": "1",
+"name": "Алёна",
+"age": 28,
+"gender": "female",
+"photo": "alena.jpg",
+}
+
+]
+}
