@@ -4,7 +4,7 @@ import styles from './ButtonUI.module.css';
 type ButtonProps = {
   label: string;
   colored?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export const ButtonUI = ({ label, colored, onClick }: ButtonProps) => {
