@@ -3,12 +3,15 @@
 import React from 'react';
 import { ButtonUI } from '../shared/ui/button/ButtonUI';
 import { Footer } from '../widgets/footer/Footer';
+import { SkillTag } from '../features/skills/skillTag/SkillTag';
 
 export const HomePage = () => {
   return (
     <div>
       <h2>Главная страница</h2>
       <ButtonUI label="UI" colored onClick={() => alert('U and I')}/>
+      <SkillTag rest={2} />
+      <SkillTag skill='Английский' />
       <Footer />
     </div>
   );
