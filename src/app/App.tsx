@@ -7,15 +7,9 @@ import { AuthForm } from '../features/auth/AuthForm'; // для теста
 export const App = () => {
   return (
     <div>
-      <AuthForm /> 
-      {/*
-      <h1>SkillSwap</h1>
       <HomePage />
-      */}
+      <AuthForm />
     </div>
-    <>
-      <HomePage />
-    </>
   );
 };
 

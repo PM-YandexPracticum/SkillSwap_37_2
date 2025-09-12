@@ -7,7 +7,7 @@ import { ButtonUI } from '../../../shared/ui/button/ButtonUI';
 
 type SkillCardProps = {
   name: string;
-  city: string;
+  from: string;
   age: number;
   avatar: string;
   learnSkill: SkillName;
@@ -15,7 +15,7 @@ type SkillCardProps = {
 };
 
 export const SkillCard = ({
-  name, city, age, avatar, learnSkill, teachSkill }: SkillCardProps) => {
+  name, from, age, avatar, learnSkill, teachSkill }: SkillCardProps) => {
       return (
         <article className={styles.card}>
           <section className={styles.userInfo}>
@@ -23,7 +23,7 @@ export const SkillCard = ({
               <img src={avatar} alt='фото профиля' className={styles.avatar}/>
               <div className={styles.infoWrapper}>
                 <p>{name}</p>
-                <p className={styles.cityAge}>{`${city}, ${age}`}</p>
+                <p className={styles.fromAge}>{`${from}, ${age}`}</p>
               </div>
             </div>
             <img src={like} alt='лайк' className={styles.like}/>

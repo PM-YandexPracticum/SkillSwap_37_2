@@ -7,7 +7,7 @@ import { SkillTag } from '../features/skills/skillTag/SkillTag';
 import { Header } from '../widgets/header/Header';
 import { users } from '../../public/db/users.json';
 import { SkillCard } from '../features/skills/skillCard/SkillCard';
-import mockPhoto from '../../public/db/users-photo/2149227125.jpg';
+import mockPhoto from '../../public/db/users-photo/00001.jpg'
 
 export const HomePage = () => {
   return (
@@ -16,7 +16,7 @@ export const HomePage = () => {
       <SkillCard
         name={users[0].name}
         age={users[0].age}
-        city={users[0].city}
+        from={users[0].from}
         avatar={mockPhoto}
         teachSkill='Английский'
         learnSkill='Игра на барабанах'

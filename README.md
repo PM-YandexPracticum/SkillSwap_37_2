@@ -10,7 +10,7 @@
 1. Установите это:
     ```bash
     npm install
-    npm install clsx
+    npm install clsx (но это не точно)
     ```
 
 2. Запустите проект в режиме разработки:
