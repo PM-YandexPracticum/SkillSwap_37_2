@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import styles from './ButtonUI.module.css'
+import styles from './ButtonUI.module.css';
 
 type ButtonProps = {
   label: string;
