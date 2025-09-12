@@ -4,15 +4,24 @@ import React from 'react';
 import { ButtonUI } from '../shared/ui/button/ButtonUI';
 import { Footer } from '../widgets/footer/Footer';
 import { SkillTag } from '../features/skills/skillTag/SkillTag';
+import { Header } from '../widgets/header/Header';
+import { users } from '../../public/db/users.json';
+import { SkillCard } from '../features/skills/skillCard/SkillCard';
+import mockPhoto from '../../public/db/users-photo/2149227125.jpg';
 
 export const HomePage = () => {
   return (
-    <div>
-      <h2>Главная страница</h2>
-      <ButtonUI label="UI" colored onClick={() => alert('U and I')}/>
-      <SkillTag rest={2} />
-      <SkillTag skill='Английский' />
+    <>
+      <Header />
+      <SkillCard
+        name={users[0].name}
+        age={users[0].age}
+        city={users[0].city}
+        avatar={mockPhoto}
+        teachSkill='Английский'
+        learnSkill='Игра на барабанах'
+      />
       <Footer />
-    </div>
+    </>
   );
 };

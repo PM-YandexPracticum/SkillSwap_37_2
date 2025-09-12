@@ -1,0 +1,55 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  width: 324px;
+  height: 368px;
+  padding: 20px;
+  background-color: #FFF;
+}
+
+.userInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userInfoContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; 
+  border-radius: 50%;
+}
+
+.infoWrapper {
+  align-self: center;
+  margin-left: 12px;
+}
+
+.cityAge {
+  font-size: 12px;
+  line-height: 16px;
+  color: #253017;
+}
+
+.like {
+  width: 24px;
+  height: 24px;
+  align-self: flex-start;
+}
+
+.canTeach {
+  margin-bottom: 12px;
+}
+
+.bid {
+  line-height: 24px;
+  letter-spacing: 2%;
+  font-weight: bold;
+  margin-bottom: 8px;
+}

@@ -13,6 +13,9 @@ export const App = () => {
       <HomePage />
       */}
     </div>
+    <>
+      <HomePage />
+    </>
   );
 };
 

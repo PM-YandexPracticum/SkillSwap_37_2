@@ -1,0 +1,65 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 32px;
+  height: 116px;
+}
+
+.navList {
+  display: flex;
+  flex-direction: row;
+  column-gap: 24px;
+}
+
+.li {
+  list-style-type: none;
+  white-space: nowrap;
+}
+
+li:has(img) {
+  /* position: relative; */
+  display: flex;
+  column-gap: 4px;
+}
+
+.iconChevron {
+  /* position: relative; */
+  width: 24px;
+  height: 24px;
+  align-self: center;
+  cursor: pointer;
+}
+
+.searchWrapper {
+  position: relative;
+}
+
+.iconSearch {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 10px;
+  top: 12px;
+  pointer-events: none;
+  opacity: 0.7; 
+}
+
+.search {
+  width: 527px;
+  height: 48px;
+  padding-left: 44px;
+  border: none;
+  border-radius: 12px;
+}
+
+.iconMoon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.loginWrapper {
+  width: 92px;
+  flex-shrink: 0;
+}
