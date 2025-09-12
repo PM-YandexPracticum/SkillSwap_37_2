@@ -1,0 +1,47 @@
+.footer {
+  bottom: 0;
+  position: fixed;
+  width: 1368px;
+  height: 232px;
+  background-color: #ffffff;
+}
+
+.logo {
+  margin-top: 32px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  column-gap: 24px;
+  padding: 20px 0 0 250px;
+  letter-spacing: 2%;
+}
+
+.column {
+  display: flex;
+  width: 324px;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.link {
+  color: #253017;
+  font-size: 16px;
+}
+
+.copyright {
+  margin-top: 32px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #69735D;
+}
+
+.marker::before {
+  content: "•";
+  margin-right: 1em;
+  font-size: 0.75em;
+}
