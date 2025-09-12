@@ -1,4 +1,4 @@
-import { SkillName } from "../../types/SkillName";
+import { SkillName } from "../../../shared/types/SkillName";
 
 export const skillColors: Record<SkillName, string> = {
   "Игра на барабанах": "#f7e7f2",
@@ -25,7 +25,7 @@ export const skillColors: Record<SkillName, string> = {
   "Хранение вещей": "#d7ccc8",
   "Творчество и искусство": "#ef9a9a",
   "Рисование и иллюстрация": "#ffccbc",
-  "Фотография": "#b39ddb",
+  "Фотография": "#d0c3e6ff",
   "Видеомонтаж": "#90caf9",
   "Музыка и звук": "#f48fb1",
   "Актёрское мастерство": "#ffe082",

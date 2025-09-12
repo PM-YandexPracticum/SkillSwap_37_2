@@ -5,8 +5,9 @@
 "id": "1",
 "name": "Алёна",
 "age": 28,
+"city": "Челябинск",
 "gender": "female",
-"photo": "alena.jpg",
+"photo": "alena.jpg"
 }
 
 ]
