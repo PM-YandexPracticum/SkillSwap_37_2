@@ -1,28 +1,73 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import styles from "./AuthForm.module.css";
 import clsx from "clsx";
 import { Icon } from "../../shared/ui/icon/Icon"; // компонет единый для всех иконок
 import { ButtonUI } from "../../shared/ui/button/ButtonUI";
+import { EmailInput } from "../../shared/ui/input/email-input/EmailInput";
+import { PasswordInput } from "../../shared/ui/input/password-input/PasswordInput";
+import { SocialButton } from "../../shared/ui/social-button/SocialButton";
 
 export const AuthForm: FC = () => {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordStatus, setPasswordStatus] = useState<
+    "hint" | "error" | "success"
+  >("hint");
+  const [emailStatus, setEmailStatus] = useState<"error" | "default">("error");
+
+  // временно
+  const checkPassword = (value: string) => {
+    if (value.length === 0) {
+      return {
+        type: "hint" as const,
+        message: "Пароль должен содержать не менее 8 знаков",
+      };
+    } else if (value.length < 8) {
+      return {
+        type: "error" as const,
+        message: "Пароль должен содержать не менее 8 знаков",
+      };
+    } else {
+      return { type: "success" as const, message: "Надёжный" };
+    }
   };
+
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    const status = checkPassword(value);
+    setPasswordStatus(status.type);
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    setEmailStatus(value.length > 0 ? "error" : "default");
+  };
+
+  const handleGoogleLogin = () => {
+    console.log("Google login clicked");
+    // логика для Google
+  };
+
+  const handleAppleLogin = () => {
+    console.log("Apple login clicked");
+    //  логика для Apple
+  };
+
+  const passwordMessage = checkPassword(password).message;
+  const emailMessage =
+    emailStatus === "error" ? "Email уже используется" : undefined;
 
   return (
     <div className={styles.authForm}>
       <div className={styles.content}>
         {/* Кнопки соц сетей */}
-        <button className={clsx(styles.button, styles.googleButton)}>
-          <Icon name="google" size="s" />
+        <SocialButton provider="google" onClick={handleGoogleLogin}>
           Продолжить с Google
-        </button>
+        </SocialButton>
 
-        <button className={clsx(styles.button, styles.appleButton)}>
-          <Icon name="apple" size="s" />
+        <SocialButton provider="apple" onClick={handleAppleLogin}>
           Продолжить с Apple
-        </button>
+        </SocialButton>
 
         {/* Разделитель */}
         <div className={styles.separator}>
@@ -31,42 +76,25 @@ export const AuthForm: FC = () => {
 
         {/* Форма */}
         <form className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value="petrov@mail.ru"
-              className={clsx(styles.input, styles.error)}
-            />
-            <span className={styles.errorText}>Email уже используется</span>
-          </div>
+          <EmailInput
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="Введите email"
+            status={emailStatus}
+            message={emailMessage}
+            label="Email"
+          />
 
-          <div className={styles.inputGroup}>
-            <label htmlFor="password">Пароль</label>
-            <div className={styles.inputWrapper}>
-              <input
-                type={isPasswordVisible ? "text" : "password"}
-                id="password"
-                value="Чер5нослив)"
-                className={clsx(styles.input, styles.success)}
-              />
-              <button
-                type="button"
-                className={styles.eyeButton}
-                onClick={togglePasswordVisibility}
-                aria-label={
-                  isPasswordVisible ? "Скрыть пароль" : "Показать пароль"
-                }
-              >
-                <Icon name={isPasswordVisible ? "eyeSlash" : "eye"} size="s" />
-              </button>
-            </div>
-            <span className={styles.successText}>Надёжный</span>
-          </div>
-
-          <ButtonUI label="Далее" colored onClick={() => {}} />
+          <PasswordInput
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder="Придумайте надёжный пароль"
+            status={passwordStatus}
+            message={passwordMessage}
+            label="Пароль"
+          />
         </form>
+        <ButtonUI label="Далее" colored onClick={() => {}} />
       </div>
     </div>
   );

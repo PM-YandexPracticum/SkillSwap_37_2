@@ -9,14 +9,14 @@ import { users } from "../../public/db/users.json";
 import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import mockPhoto from "../../public/db/users-photo/00001.jpg";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
+import { AuthForm } from "../features/auth/AuthForm"; // для теста
 
 export const HomePage = () => {
   return (
     <>
       <Header />
-
       <DropdownDemo />
-
+      <AuthForm />
       <SkillCard
         name={users[0].name}
         age={users[0].age}
@@ -25,6 +25,7 @@ export const HomePage = () => {
         teachSkill="Английский"
         learnSkill="Игра на барабанах"
       />
+
       <Footer />
     </>
   );
