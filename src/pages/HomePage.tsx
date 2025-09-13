@@ -1,9 +1,4 @@
-// src\pages\HomePage.tsx
-
-import React from 'react';
-import { ButtonUI } from '../shared/ui/button/ButtonUI';
 import { Footer } from '../widgets/footer/Footer';
-import { SkillTag } from '../features/skills/skillTag/SkillTag';
 import { Header } from '../widgets/header/Header';
 import { users } from '../../public/db/users.json';
 import { SkillCard } from '../features/skills/skillCard/SkillCard';
