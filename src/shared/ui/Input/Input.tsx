@@ -1,62 +1,72 @@
-import React from 'react';
-import styles from './Input.module.css';
-import clsx from 'clsx';
+import React from "react";
+import styles from "./Input.module.css";
+import clsx from "clsx";
+import { FormMessage } from "../form-message/FormMessage";
 
 interface InputProps {
   label?: string;
   className?: string;
   placeholder?: string;
   errorMessage?: string;
-  error?: boolean; 
+  status?: "error" | "default" | "success" | "hint";
   id?: string;
-  icon?: string; 
-  type?: 'text' | 'search' | 'tel' | 'email' | 'password';
-};
+  icon?: string;
+  type?: "text" | "search" | "tel" | "email" | "password";
+  value?: string;
+  onChange?: (value: string) => void;
+  onBlur?: () => void;
+}
 
 export const Input = ({
-  label, 
-  placeholder, 
-  errorMessage, 
-  error, 
-  id, 
-  type = 'text',
+  label,
+  placeholder,
+  errorMessage,
+  status = "default",
+  id,
+  type = "text",
   icon,
   className,
+  value,
+  onChange,
+  onBlur,
   ...otherProps
 }: InputProps) => {
+  const isError = status === "error";
   return (
-    <div className={styles.wrapper}> 
+    <div className={styles.wrapper}>
       {label && (
-        <label htmlFor={id} className={styles.label}> 
-          {label} 
+        <label htmlFor={id} className={styles.label}>
+          {label}
         </label>
       )}
       <div className={styles.inputContainer}>
         {icon && (
           <div className={styles.iconContainer}>
-            <img src={icon}/>
+            <img src={icon} alt="input icon" />
           </div>
         )}
-        <input 
+        <input
           className={clsx(
-            styles.input, 
-            { 
-              [styles.error]: error,
-              [styles.withicon]: icon 
+            styles.input,
+            {
+              [styles.error]: isError,
+              [styles.withicon]: icon,
             },
             className
-          )} 
-          placeholder={placeholder} 
+          )}
+          placeholder={placeholder}
           id={id}
           type={type}
+          value={value}
+          onChange={(e) => onChange?.(e.target.value)}
+          onBlur={onBlur}
           {...otherProps}
         />
       </div>
-      {error && (
-        <span className={styles.textError}>
-          {errorMessage}
-        </span>
-      )}
+      <FormMessage
+        message={errorMessage}
+        type={isError ? "error" : status === "success" ? "success" : "hint"}
+      />
     </div>
   );
 };

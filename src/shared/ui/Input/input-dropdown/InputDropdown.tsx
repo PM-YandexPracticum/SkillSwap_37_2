@@ -1,7 +1,7 @@
 import { FC, useState, useRef, useEffect } from "react";
 import styles from "./InputDropdown.module.css";
 import clsx from "clsx";
-import { Icon } from "../icon/Icon";
+import { Icon } from "../../icon/Icon";
 
 interface DropdownOption {
   value: string;
@@ -37,7 +37,10 @@ export const Dropdown: FC<DropdownProps> = ({
   // Закрытие дропдауна при клике за пределами компонента
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -50,9 +53,9 @@ export const Dropdown: FC<DropdownProps> = ({
     if (multiple) {
       const currentValue = Array.isArray(value) ? value : [];
       const newValue = currentValue.includes(optionValue)
-        ? currentValue.filter(v => v !== optionValue)
+        ? currentValue.filter((v) => v !== optionValue)
         : [...currentValue, optionValue];
-      
+
       onChange(newValue);
     } else {
       onChange(optionValue);
@@ -64,12 +67,12 @@ export const Dropdown: FC<DropdownProps> = ({
     if (multiple && Array.isArray(value) && value.length > 0) {
       return `Выбрано: ${value.length}`;
     }
-    
+
     if (!multiple && value) {
-      const selectedOption = options.find(opt => opt.value === value);
+      const selectedOption = options.find((opt) => opt.value === value);
       return selectedOption?.label || placeholder;
     }
-    
+
     return placeholder;
   };
 
@@ -81,10 +84,10 @@ export const Dropdown: FC<DropdownProps> = ({
   };
 
   return (
-    <div 
+    <div
       ref={dropdownRef}
       className={clsx(
-        styles.dropdownGroup, 
+        styles.dropdownGroup,
         className,
         disabled && styles.disabled
       )}
@@ -110,9 +113,9 @@ export const Dropdown: FC<DropdownProps> = ({
           aria-expanded={isOpen}
         >
           <span className={styles.selectedText}>{getDisplayText()}</span>
-          <Icon 
-            name={isOpen ? "chevronUp" : "chevronDown"} 
-            size="s" 
+          <Icon
+            name={isOpen ? "chevronUp" : "chevronDown"}
+            size="s"
             className={styles.chevronIcon}
           />
         </button>
@@ -125,18 +128,26 @@ export const Dropdown: FC<DropdownProps> = ({
                 className={clsx(
                   styles.option,
                   isOptionSelected(option.value) && styles.selected,
-                  !multiple && isOptionSelected(option.value) && styles.singleSelected
+                  !multiple &&
+                    isOptionSelected(option.value) &&
+                    styles.singleSelected
                 )}
                 onClick={() => handleOptionClick(option.value)}
                 role="option"
                 aria-selected={isOptionSelected(option.value)}
               >
                 {multiple && (
-                  <Icon 
-                    name={isOptionSelected(option.value) ? "checkboxDone" : "checkboxEmpty"} 
-                    size="s" 
+                  <Icon
+                    name={
+                      isOptionSelected(option.value)
+                        ? "checkboxDone"
+                        : "checkboxEmpty"
+                    }
+                    size="s"
                     className={styles.checkboxIcon}
-                    color={isOptionSelected(option.value) ? "#ABD27A" : "#69735D"}
+                    color={
+                      isOptionSelected(option.value) ? "#ABD27A" : "#69735D"
+                    }
                   />
                 )}
                 <span className={styles.optionLabel}>{option.label}</span>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Dropdown } from "../../shared/ui/input-dropdown/InputDropdown";
+import { Dropdown } from "../../shared/ui/input/input-dropdown/InputDropdown";
 import {
   genderOptions,
   skillCategoryOptions,
-} from "../../shared/ui/input-dropdown/dropdownData";
+} from "../../shared/ui/input/input-dropdown/dropdownData";
 
 export const DropdownDemo = () => {
   const [selectedGender, setSelectedGender] = useState<string>("");
