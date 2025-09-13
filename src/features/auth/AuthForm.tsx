@@ -1,9 +1,8 @@
 import { FC, useState, useEffect } from "react";
 import styles from "./AuthForm.module.css";
 import clsx from "clsx";
-import { Icon } from "../../shared/ui/icon/Icon"; // компонет единый для всех иконок
 import { ButtonUI } from "../../shared/ui/button/ButtonUI";
-import { EmailInput } from "../../shared/ui/input/email-input/EmailInput";
+import { Input } from "../../shared/ui/input/Input";
 import { PasswordInput } from "../../shared/ui/input/password-input/PasswordInput";
 import { SocialButton } from "../../shared/ui/social-button/SocialButton";
 
@@ -13,7 +12,8 @@ export const AuthForm: FC = () => {
   const [passwordStatus, setPasswordStatus] = useState<
     "hint" | "error" | "success"
   >("hint");
-  const [emailStatus, setEmailStatus] = useState<"error" | "default">("error");
+  const [emailStatus, setEmailStatus] = useState<"error" | "default">("default");
+  const [emailTouched, setEmailTouched] = useState(false);
 
   // временно
   const checkPassword = (value: string) => {
@@ -40,7 +40,21 @@ export const AuthForm: FC = () => {
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
-    setEmailStatus(value.length > 0 ? "error" : "default");
+
+    if (emailTouched) {
+      // пока что такая валидация
+      const isValid = /\S+@\S+\.\S+/.test(value);
+      setEmailStatus(isValid ? "default" : "error");
+    }
+  };
+
+  const handleEmailBlur = () => {
+    // Устанавливаем, что пользователь взаимодействовал с полем
+    setEmailTouched(true);
+
+    // Проверяем email при уходе с поля
+    const isValid = /\S+@\S+\.\S+/.test(email);
+    setEmailStatus(isValid ? "default" : "error");
   };
 
   const handleGoogleLogin = () => {
@@ -55,7 +69,9 @@ export const AuthForm: FC = () => {
 
   const passwordMessage = checkPassword(password).message;
   const emailMessage =
-    emailStatus === "error" ? "Email уже используется" : undefined;
+    emailTouched && emailStatus === "error"
+      ? "Введите корректный email"
+      : undefined;
 
   return (
     <div className={styles.authForm}>
@@ -76,13 +92,16 @@ export const AuthForm: FC = () => {
 
         {/* Форма */}
         <form className={styles.form}>
-          <EmailInput
+          <Input
+            type="email"
             value={email}
             onChange={handleEmailChange}
+            onBlur={handleEmailBlur}
             placeholder="Введите email"
             status={emailStatus}
-            message={emailMessage}
+            errorMessage={emailMessage}
             label="Email"
+            id="email"
           />
 
           <PasswordInput
