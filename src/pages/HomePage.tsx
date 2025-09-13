@@ -8,12 +8,14 @@ import { Header } from "../widgets/header/Header";
 import { users } from "../../public/db/users.json";
 import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import mockPhoto from "../../public/db/users-photo/00001.jpg";
+import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
 import { AuthForm } from "../features/auth/AuthForm"; // для теста
 
 export const HomePage = () => {
   return (
     <>
       <Header />
+      <DropdownDemo />
       <AuthForm />
       <SkillCard
         name={users[0].name}
