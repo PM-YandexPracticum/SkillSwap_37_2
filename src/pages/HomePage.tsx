@@ -15,8 +15,6 @@ export const HomePage = () => {
   return (
     <>
       <Header />
-      <DropdownDemo />
-      <AuthForm />
       <SkillCard
         name={users[0].name}
         age={users[0].age}
@@ -25,7 +23,8 @@ export const HomePage = () => {
         teachSkill="Английский"
         learnSkill="Игра на барабанах"
       />
-
+      <DropdownDemo />
+      <AuthForm />
       <Footer />
     </>
   );
