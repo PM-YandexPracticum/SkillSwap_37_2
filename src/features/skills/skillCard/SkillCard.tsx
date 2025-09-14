@@ -23,7 +23,7 @@ export const SkillCard = ({
             <div className={styles.userInfoContainer}>
               <img src={avatar} alt='фото профиля' className={styles.avatar}/>
               <div className={styles.infoWrapper}>
-                <p>{name}</p>
+                <p className={styles.userName}>{name}</p>
                 <p className={styles.fromAge}>{`${from}, ${age}`}</p>
               </div>
             </div>

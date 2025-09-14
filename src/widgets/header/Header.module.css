@@ -18,13 +18,11 @@
 }
 
 li:has(img) {
-  /* position: relative; */
   display: flex;
   column-gap: 4px;
 }
 
 .iconChevron {
-  /* position: relative; */
   width: 24px;
   height: 24px;
   align-self: center;
@@ -59,7 +57,17 @@ li:has(img) {
   cursor: pointer;
 }
 
+.buttonWrapper {
+  display: flex;
+  gap: 8px;
+}
+
 .loginWrapper {
   width: 92px;
+  flex-shrink: 0;
+}
+
+.registryWrapper {
+  width: 208px;
   flex-shrink: 0;
 }
