@@ -53,3 +53,8 @@
   font-weight: bold;
   margin-bottom: 8px;
 }
+
+.tagWrapper {
+  display: flex;
+  gap: 4px;
+}
