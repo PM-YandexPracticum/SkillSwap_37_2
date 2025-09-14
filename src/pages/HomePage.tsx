@@ -1,4 +1,4 @@
-// src/pages/HomePage.tsx
+
 import React from 'react';
 import { Footer } from '../widgets/footer/Footer';
 import { SkillCard } from '../features/skills/Skill Card/SkillCard';

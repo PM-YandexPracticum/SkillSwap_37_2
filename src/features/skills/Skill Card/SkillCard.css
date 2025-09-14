@@ -9,16 +9,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 50px;
-  align-items: flex-start; /* выравниваем по верхней линии */
+  align-items: flex-start;
 }
 
-/* Левая колонка */
 .skill-card__info {
   flex: 1 1 300px;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  align-self: flex-end; /* 🔥 теперь текст спускается вниз и начинается с уровня картинок */
+  align-self: flex-end; 
 }
 
 .skill-card__title {
@@ -53,7 +52,7 @@
   margin-top: auto;
 }
 
-/* Правая колонка */
+
 .skill-card__right {
   display: flex;
   flex-direction: column;
@@ -61,7 +60,6 @@
   gap: 1rem;
 }
 
-/* Иконки */
 .skill-card__icons {
   display: flex;
   justify-content: flex-end;
@@ -82,7 +80,6 @@
   object-fit: contain;
 }
 
-/* Сетка картинок */
 .skill-card__images-grid {
   display: flex;
   justify-content: center;

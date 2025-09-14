@@ -24,7 +24,6 @@ export const SkillCard: React.FC<SkillCardProps> = ({
 }) => {
   return (
     <div className="skill-card">
-      {/* Левая колонка */}
       <div className="skill-card__info">
         <h2 className="skill-card__title">{title}</h2>
         <h3 className="skill-card__subtitle">{subtitle}</h3>
@@ -34,9 +33,7 @@ export const SkillCard: React.FC<SkillCardProps> = ({
         </button>
       </div>
 
-      {/* Правая колонка */}
       <div className="skill-card__right">
-        {/* Иконки сверху над маленькими фото */}
         {icons.length > 0 && (
           <div className="skill-card__icons">
             {icons.map((icon, i) => (
@@ -47,7 +44,6 @@ export const SkillCard: React.FC<SkillCardProps> = ({
           </div>
         )}
 
-        {/* Большое + маленькие фото */}
         <div className="skill-card__images-grid">
           <div className="skill-card__main-wrapper">
             <img src={mainImage} alt="Главная" className="skill-card__main-image" />
