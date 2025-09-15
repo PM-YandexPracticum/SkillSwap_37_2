@@ -10,12 +10,14 @@ import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import mockPhoto from "../../public/db/users-photo/00001.jpg";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
 import { AuthForm } from "../features/auth/AuthForm"; // для теста
+import { SkillForm } from "../widgets/skillForm/SkillForm";
 
 export const HomePage = () => {
   return (
     <>
       <Header />
       <DropdownDemo />
+      <SkillForm/>
       <AuthForm />
       <SkillCard
         name={users[0].name}
