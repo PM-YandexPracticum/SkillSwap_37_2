@@ -21,7 +21,7 @@ export const SkillCard = ({
             <div className={styles.userInfoContainer}>
               <img src={avatar} alt='фото профиля' className={styles.avatar}/>
               <div className={styles.infoWrapper}>
-                <p>{name}</p>
+                <p className={styles.userName}>{name}</p>
                 <p className={styles.fromAge}>{`${from}, ${age}`}</p>
               </div>
             </div>
@@ -32,18 +32,15 @@ export const SkillCard = ({
             <div className={styles.canTeach}>
               <p className={styles.bid}>Может научить</p>
               <div className={styles.tagWrapper}>
-                <SkillTag skill={teachSkill}/>
+                <SkillTag skill={teachSkill} />
               </div>
             </div>
             <div>
               <p className={styles.bid}>Хочет научиться</p>
               <div className={styles.tagWrapper}>
-              <SkillTag
-                skill={learnSkill}/>
-              <SkillTag
-                skill={'Фотография'}/>
-              <SkillTag
-                rest={3}/>
+              <SkillTag skill={learnSkill} />
+              <SkillTag skill={'Фотография'} />
+              <SkillTag rest={3} />
               </div>
             </div>
           </section>

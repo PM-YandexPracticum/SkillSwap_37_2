@@ -1,5 +1,8 @@
 import { SkillName } from "../../../shared/types/SkillName";
 
+// Этот список будет удален. его можно только временно использовать
+// используйте данные из API
+// src\api\Api.ts
 export const skillColors: Record<SkillName, string> = {
   "Игра на барабанах": "#f7e7f2",
   "Управление командой": "#a1887f",
