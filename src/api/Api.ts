@@ -12,7 +12,7 @@ export const getUsersApi = async (): Promise<TResponseUsers> => {
   try {
     const response = await fetch('/db/users.json')
     const data = await response?.json()
-    return data 
+    return data
   } catch(error) {
     console.error(error)
     throw error
