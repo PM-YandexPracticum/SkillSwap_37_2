@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import { Footer } from '../widgets/footer/Footer';
-import { Header } from '../widgets/header/Header';
-import { users } from '../../public/db/users.json';
-import { SkillCard } from '../features/skills/skillCard/SkillCard';
-import mockPhoto from '../../public/db/users-photo/00001.jpg'
-=======
 // src\pages\HomePage.tsx
 
 import React, { useState } from "react";
