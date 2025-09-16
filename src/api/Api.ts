@@ -1,4 +1,4 @@
-import { TUser, TResponseUsers, TResponsePlaces } from "./types";
+import { TUser, TResponseUsers, TResponsePlaces, TResponseSubcategories } from "./types";
 
 export const getUsersApi = async (): Promise<TResponseUsers> => {
   try {
@@ -34,11 +34,33 @@ export const getPlacesApi = async (): Promise<TResponsePlaces> => {
   }
 };
 
+export const getSkillsCategoriesApi = async (): Promise<TResponsePlaces> => {
+  try {
+    const response = await fetch("/db/skills_categories.json");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getSkillsSubCategoriesApi = async (): Promise<TResponseSubcategories> => {
+  try {
+    const response = await fetch("/db/skills_subcategories.json");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 // skill больше нет. в соответствии с макетом они лишь часть пользователя.
 // нет скилов без пользователя и у каждого пользователя по одному скилу
-// export const getSkilsApi = async (): Promise<TResponsePlaces> => {
+// export const getSkillsApi = async (): Promise<TResponsePlaces> => {
 //   try {
-//     const response = await fetch('/db/skils.json')
+//     const response = await fetch('/db/skills.json')
 //     const data = await response?.json()
 //     return data
 //   } catch(error) {
@@ -46,25 +68,3 @@ export const getPlacesApi = async (): Promise<TResponsePlaces> => {
 //     throw error
 //   }
 // }
-
-export const getSkilsCategoriesApi = async (): Promise<TResponsePlaces> => {
-  try {
-    const response = await fetch("/db/skils_categories.json");
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
-export const getSkilsSubCategoriesApi = async (): Promise<TResponsePlaces> => {
-  try {
-    const response = await fetch("/db/skils_subcategories.json");
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};

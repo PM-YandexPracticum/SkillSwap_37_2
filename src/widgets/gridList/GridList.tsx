@@ -1,26 +1,27 @@
-import { useEffect, useState } from 'react';
 import { SkillCard } from '../../features/skills/skillCard/SkillCard';
 import styles from './GridList.module.css';
-import { SkillName } from '../../shared/types/SkillName';
-import { TUserMock} from './usersMock'; 
+import { TUsersMock} from './usersMock'; 
+import { TPlace, TUserCard } from '../../api/types';
 
 type GridListProps = {
-  users: TUserMock[];
+  users: TUserCard[];
+  subCategories: TPlace[];
 }
 
-export const GridList = ( items: GridListProps ) => {
+export const GridList = ( { users, subCategories }: GridListProps ) => {
 
   return (
     <ul className={styles.grid}>
-      {items.users.map((user) => (
+      {users && subCategories && users.map((user) => (
         <li key={user.id} className={styles.gridItem}>
           <SkillCard
             name={user.name}
             from={user.from}
-            age={user.age}
+            age={user.birthdate}
             avatar={`/db/users-photo/${user.photo}`}
-            learnSkills={user.learnSkills}
-            teachSkills={user.teachSkills}
+            teachSkills={user.skill}
+            learnSkills={user.need_subcat}
+            subCategories={subCategories}
           />
         </li>
       ))}
