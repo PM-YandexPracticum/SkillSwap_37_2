@@ -1,6 +1,6 @@
 import { SkillName } from "../../shared/types/SkillName";
 
-export type TUserMock = {
+export type TUsersMock = {
   id: string;
   name: string;
   age: number;
@@ -11,7 +11,7 @@ export type TUserMock = {
   teachSkills: SkillName[];
 };
 
-export const users: TUserMock[] = [
+export const usersMock: TUsersMock[] = [
   {
     id: "1",
     name: "Ольга",

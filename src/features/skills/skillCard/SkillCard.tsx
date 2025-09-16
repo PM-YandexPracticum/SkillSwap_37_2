@@ -3,18 +3,20 @@ import like from '../../../shared/assets/icons/like.png';
 import styles from './SkillCard.module.css';
 import { ButtonUI } from '../../../shared/ui/button/ButtonUI';
 import { SkillTag } from '../skillTag/SkillTag';
-// import pgotos from '../../../../public/db/users-photo'
+import { TPlace } from '../../../api/types';
+
 type SkillCardProps = {
   name: string;
   from: string;
-  age: number;
+  age: string;
   avatar: string;
-  learnSkills: SkillName[];
-  teachSkills: SkillName[];
+  learnSkills: number[];
+  teachSkills: SkillName;
+  subCategories: TPlace[]
 };
 
 export const SkillCard = ({
-  name, from, age, avatar, learnSkills, teachSkills }: SkillCardProps) => {
+  name, from, age, avatar, learnSkills, teachSkills, subCategories }: SkillCardProps) => {
       return (
         <article className={styles.card}>
           <section className={styles.userInfo}>
@@ -32,25 +34,20 @@ export const SkillCard = ({
             <div className={styles.canTeach}>
               <p className={styles.bid}>Может научить</p>
               <ul className={styles.tagWrapper}>
-                {teachSkills.map((item, index) => {
-                  return (
-                    <li key={index}>
-                      <SkillTag skill={item} />
-                    </li>
-                  )
-                })}
+                <SkillTag skill={teachSkills} />
               </ul>
             </div>
             <div>
               <p className={styles.bid}>Хочет научиться</p>
               <ul className={styles.tagWrapper}>
                 {learnSkills.map((item, index) => {
+                  const subcat = subCategories.find(i => i.id === item);
                   return (
                     <li
                       key={index}
                       className={styles.tag}>
                     <SkillTag 
-                      skill={item} />
+                      skill={subcat?.name as SkillName} />
                     </li>
                 )})}
                 <li>

@@ -1,24 +1,56 @@
 // src\api\types.ts
 
+import { SkillName } from "../shared/types/SkillName";
+
 export type TUser = {
   id: number;
   name: string;
-  gender: "male" | "female";
+  gender: "male" | "female" | 'unspecified';
   photo: string; //Фото профиля
   from: string; //Город пользователя
-  skill: string; //Навык, которым пользователь готов делиться
-  description: string; //Описание навыка
+  skill: SkillName; //Навык, которым пользователь готов делиться
+  need_subcat: number[]; //Массив подкатегорий, которым пользователь хочет научиться
   images: string[]; //Список изображений, связанных с описанием навыком
+  description: string; //Описание навыка
   categoryId: number; //ID категории навыка
   subCategoryId: number; //ID подкатегории навыка
-  cat_text: string; //Текстовое название категории (из skils_categories.json)
-  sub_text: string; //Текстовое название подкатегории (из skils_subcategories.json)
+  cat_text: string; //Текстовое название категории (из skills_categories.json)
+  sub_text: string; //Текстовое название подкатегории (из skills_subcategories.json)
   birthdate: string; // др в формате YYYY-MM-DD
   email: string;
   about?: string; //Описание пользователя (вводится при регистрации)
-  need_subcat: number[]; //Массив подкатегорий, которым пользователь хочет научиться
   created_at: string; //Дата создания аккаунта
 };
+
+export type TUserCard = Pick<
+TUser,
+'id' |
+'name' |
+'from' |
+'birthdate' |
+'photo' |
+'skill' |
+'need_subcat'>;
+
+export type TPlace = {
+  id: number;
+  name: string;
+}
+
+// Для ответа API пользователей
+export type TResponseUsers = {
+  users: TUser[];
+}
+
+// Для ответа API мест
+export type TResponsePlaces = {
+  places: TPlace[];
+}
+
+// Для ответа API мест
+export type TResponseSubcategories = {
+  subcategories: TPlace[];
+}
 
 // {
 //   "id": 1,
@@ -38,9 +70,9 @@ export type TUser = {
 //   ],
 //   "categoryId": 4,
 //   "subCategoryId": 25,
-// текст из файла public\db\skils_categories.json (возможно, его стоит убрать)
+// текст из файла public\db\skills_categories.json (возможно, его стоит убрать)
 //   "cat_text": "Творчество и искусство",
-// текст из файла public\db\skils_subcategories.json (возможно, его стоит убрать)
+// текст из файла public\db\skills_subcategories.json (возможно, его стоит убрать)
 //   "sub_text": "Музыка и звук",
 
 //   "birthdate": "1999-05-14",
@@ -56,18 +88,3 @@ export type TUser = {
 // дата создания аккаунта (возможно, нужна для выбора свеженьких пользователей)
 //   "created_at": "2025-05-02T14:16:12"
 // },
-
-export type TPlace = {
-  id: number;
-  name: string;
-}
-
-// Для ответа API пользователей
-export type TResponseUsers = {
-  users: TUser[];
-}
-
-// Для ответа API мест
-export type TResponsePlaces = {
-  places: TPlace[];
-}
