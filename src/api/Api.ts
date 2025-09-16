@@ -1,46 +1,38 @@
-import { TPlace, TUser } from "./types";
-
-type TResponseUsers = {
-  users: TUser[]
-}
-
-type TResponsePlaces = {
-  places: TPlace[]
-}
+import { TUser, TResponseUsers, TResponsePlaces } from "./types";
 
 export const getUsersApi = async (): Promise<TResponseUsers> => {
   try {
-    const response = await fetch('/db/users.json')
-    const data = await response?.json()
-    return data
-  } catch(error) {
-    console.error(error)
-    throw error
+    const response = await fetch("/db/users.json");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
-}
+};
 
-export const getUserByID = async (userId: string) => {
+export const getUserByID = async (userId: number): Promise<TUser | null> => {
   try {
-    const response = await fetch('/db/users.json')
-    const data = await response?.json()
+    const response = await fetch("/db/users.json");
+    const data = await response.json();
     const user = data.users.find((user: TUser) => user.id === userId);
-    return user
-  } catch(error) {
-    console.error(error)
-    throw error
+    return user || null; // если пользователь не найден
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
-}
+};
 
 export const getPlacesApi = async (): Promise<TResponsePlaces> => {
   try {
-    const response = await fetch('/db/places.json')
-    const data = await response?.json()
-    return data 
-  } catch(error) {
-    console.error(error)
-    throw error
+    const response = await fetch("/db/places.json");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
-}
+};
 
 // skill больше нет. в соответствии с макетом они лишь часть пользователя.
 // нет скилов без пользователя и у каждого пользователя по одному скилу
@@ -48,7 +40,7 @@ export const getPlacesApi = async (): Promise<TResponsePlaces> => {
 //   try {
 //     const response = await fetch('/db/skils.json')
 //     const data = await response?.json()
-//     return data 
+//     return data
 //   } catch(error) {
 //     console.error(error)
 //     throw error
@@ -57,26 +49,22 @@ export const getPlacesApi = async (): Promise<TResponsePlaces> => {
 
 export const getSkilsCategoriesApi = async (): Promise<TResponsePlaces> => {
   try {
-    const response = await fetch('/db/skils_categories.json')
-    const data = await response?.json()
-    return data 
-  } catch(error) {
-    console.error(error)
-    throw error
+    const response = await fetch("/db/skils_categories.json");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
-}
+};
 
 export const getSkilsSubCategoriesApi = async (): Promise<TResponsePlaces> => {
   try {
-    const response = await fetch('/db/skils_subcategories.json')
-    const data = await response?.json()
-    return data 
-  } catch(error) {
-    console.error(error)
-    throw error
+    const response = await fetch("/db/skils_subcategories.json");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
-}
-
-
-
-  
+};
