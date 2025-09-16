@@ -1,0 +1,396 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Ольга",
+      "age": 26,
+      "gender": "female",
+      "photo": "00001.jpg",
+      "from": "Омск"
+    },
+    {
+      "id": "2",
+      "name": "Алиса",
+      "age": 27,
+      "gender": "female",
+      "photo": "00002.jpg",
+      "from": "Ижевск"
+    },
+    {
+      "id": "3",
+      "name": "Марина",
+      "age": 27,
+      "gender": "female",
+      "photo": "00003.jpg",
+      "from": "Красноярск"
+    },
+    {
+      "id": "4",
+      "name": "Ирина",
+      "age": 23,
+      "gender": "female",
+      "photo": "00004.jpg",
+      "from": "Краснодар"
+    },
+    {
+      "id": "5",
+      "name": "Наталья",
+      "age": 23,
+      "gender": "female",
+      "photo": "00005.jpg",
+      "from": "Челябинск"
+    },
+    {
+      "id": "6",
+      "name": "Вера",
+      "age": 27,
+      "gender": "female",
+      "photo": "00006.jpg",
+      "from": "Санкт-Петербург"
+    },
+    {
+      "id": "7",
+      "name": "Ирина",
+      "age": 30,
+      "gender": "female",
+      "photo": "00007.jpg",
+      "from": "Новосибирск"
+    },
+    {
+      "id": "8",
+      "name": "Ирина",
+      "age": 30,
+      "gender": "female",
+      "photo": "00008.jpg",
+      "from": "Ростов-на-Дону"
+    },
+    {
+      "id": "9",
+      "name": "Ева",
+      "age": 22,
+      "gender": "female",
+      "photo": "00009.jpg",
+      "from": "Пермь"
+    },
+    {
+      "id": "10",
+      "name": "Вера",
+      "age": 22,
+      "gender": "female",
+      "photo": "00010.jpg",
+      "from": "Казань"
+    },
+    {
+      "id": "11",
+      "name": "Алиса",
+      "age": 24,
+      "gender": "female",
+      "photo": "00011.jpg",
+      "from": "Казань"
+    },
+    {
+      "id": "12",
+      "name": "Кира",
+      "age": 26,
+      "gender": "female",
+      "photo": "00012.jpg",
+      "from": "Пермь"
+    },
+    {
+      "id": "13",
+      "name": "Лилия",
+      "age": 23,
+      "gender": "female",
+      "photo": "00013.jpg",
+      "from": "Новосибирск"
+    },
+    {
+      "id": "14",
+      "name": "Кристина",
+      "age": 29,
+      "gender": "female",
+      "photo": "00014.jpg",
+      "from": "Нижний Новгород"
+    },
+    {
+      "id": "15",
+      "name": "Кира",
+      "age": 28,
+      "gender": "female",
+      "photo": "00015.jpg",
+      "from": "Челябинск"
+    },
+    {
+      "id": "16",
+      "name": "Екатерина",
+      "age": 23,
+      "gender": "female",
+      "photo": "00016.jpg",
+      "from": "Красноярск"
+    },
+    {
+      "id": "17",
+      "name": "Екатерина",
+      "age": 25,
+      "gender": "female",
+      "photo": "00017.jpg",
+      "from": "Омск"
+    },
+    {
+      "id": "18",
+      "name": "Валерия",
+      "age": 23,
+      "gender": "female",
+      "photo": "00018.jpg",
+      "from": "Воронеж"
+    },
+    {
+      "id": "19",
+      "name": "Кира",
+      "age": 23,
+      "gender": "female",
+      "photo": "00019.jpg",
+      "from": "Саратов"
+    },
+    {
+      "id": "20",
+      "name": "Нина",
+      "age": 26,
+      "gender": "female",
+      "photo": "00020.jpg",
+      "from": "Казань"
+    },
+    {
+      "id": "21",
+      "name": "Лилия",
+      "age": 22,
+      "gender": "female",
+      "photo": "00021.jpg",
+      "from": "Екатеринбург"
+    },
+    {
+      "id": "22",
+      "name": "Нина",
+      "age": 28,
+      "gender": "female",
+      "photo": "00022.jpg",
+      "from": "Тюмень"
+    },
+    {
+      "id": "23",
+      "name": "Валерия",
+      "age": 24,
+      "gender": "female",
+      "photo": "00023.jpg",
+      "from": "Саратов"
+    },
+    {
+      "id": "24",
+      "name": "Нина",
+      "age": 27,
+      "gender": "female",
+      "photo": "00024.jpg",
+      "from": "Санкт-Петербург"
+    },
+    {
+      "id": "25",
+      "name": "Алёна",
+      "age": 25,
+      "gender": "female",
+      "photo": "00025.jpg",
+      "from": "Омск"
+    },
+    {
+      "id": "26",
+      "name": "Ольга",
+      "age": 25,
+      "gender": "female",
+      "photo": "00026.jpg",
+      "from": "Челябинск"
+    },
+    {
+      "id": "27",
+      "name": "Зоя",
+      "age": 27,
+      "gender": "female",
+      "photo": "00027.jpg",
+      "from": "Ижевск"
+    },
+    {
+      "id": "28",
+      "name": "Жанна",
+      "age": 23,
+      "gender": "female",
+      "photo": "00028.jpg",
+      "from": "Тюмень"
+    },
+    {
+      "id": "29",
+      "name": "Алёна",
+      "age": 26,
+      "gender": "female",
+      "photo": "00029.jpg",
+      "from": "Новосибирск"
+    },
+    {
+      "id": "30",
+      "name": "Дарья",
+      "age": 29,
+      "gender": "female",
+      "photo": "00030.jpg",
+      "from": "Ростов-на-Дону"
+    },
+    {
+      "id": "31",
+      "name": "Андрей",
+      "age": 22,
+      "gender": "male",
+      "photo": "00031.jpg",
+      "from": "Казань"
+    },
+    {
+      "id": "32",
+      "name": "Никита",
+      "age": 26,
+      "gender": "male",
+      "photo": "00032.jpg",
+      "from": "Саратов"
+    },
+    {
+      "id": "33",
+      "name": "Роман",
+      "age": 22,
+      "gender": "male",
+      "photo": "00033.jpg",
+      "from": "Омск"
+    },
+    {
+      "id": "34",
+      "name": "Георгий",
+      "age": 30,
+      "gender": "male",
+      "photo": "00034.jpg",
+      "from": "Екатеринбург"
+    },
+    {
+      "id": "35",
+      "name": "Георгий",
+      "age": 25,
+      "gender": "male",
+      "photo": "00035.jpg",
+      "from": "Волгоград"
+    },
+    {
+      "id": "36",
+      "name": "Алексей",
+      "age": 26,
+      "gender": "male",
+      "photo": "00036.jpg",
+      "from": "Омск"
+    },
+    {
+      "id": "37",
+      "name": "Олег",
+      "age": 26,
+      "gender": "male",
+      "photo": "00037.jpg",
+      "from": "Нижний Новгород"
+    },
+    {
+      "id": "38",
+      "name": "Андрей",
+      "age": 26,
+      "gender": "male",
+      "photo": "00038.jpg",
+      "from": "Санкт-Петербург"
+    },
+    {
+      "id": "39",
+      "name": "Роман",
+      "age": 22,
+      "gender": "male",
+      "photo": "00039.jpg",
+      "from": "Пермь"
+    },
+    {
+      "id": "40",
+      "name": "Антон",
+      "age": 23,
+      "gender": "male",
+      "photo": "00040.jpg",
+      "from": "Самара"
+    },
+    {
+      "id": "41",
+      "name": "Егор",
+      "age": 22,
+      "gender": "male",
+      "photo": "00041.jpg",
+      "from": "Ростов-на-Дону"
+    },
+    {
+      "id": "42",
+      "name": "Сергей",
+      "age": 22,
+      "gender": "male",
+      "photo": "00042.jpg",
+      "from": "Самара"
+    },
+    {
+      "id": "43",
+      "name": "Владимир",
+      "age": 28,
+      "gender": "male",
+      "photo": "00043.jpg",
+      "from": "Санкт-Петербург"
+    },
+    {
+      "id": "44",
+      "name": "Константин",
+      "age": 28,
+      "gender": "male",
+      "photo": "00044.jpg",
+      "from": "Краснодар"
+    },
+    {
+      "id": "45",
+      "name": "Артём",
+      "age": 24,
+      "gender": "male",
+      "photo": "00045.jpg",
+      "from": "Омск"
+    },
+    {
+      "id": "46",
+      "name": "Иван",
+      "age": 25,
+      "gender": "male",
+      "photo": "00046.jpg",
+      "from": "Санкт-Петербург"
+    },
+    {
+      "id": "47",
+      "name": "Олег",
+      "age": 25,
+      "gender": "male",
+      "photo": "00047.jpg",
+      "from": "Волгоград"
+    },
+    {
+      "id": "48",
+      "name": "Даниил",
+      "age": 30,
+      "gender": "male",
+      "photo": "00048.jpg",
+      "from": "Ростов-на-Дону"
+    },
+    {
+      "id": "49",
+      "name": "Максим",
+      "age": 28,
+      "gender": "male",
+      "photo": "00049.jpg",
+      "from": "Ижевск"
+    }
+  ]
+}

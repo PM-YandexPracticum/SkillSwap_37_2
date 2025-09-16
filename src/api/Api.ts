@@ -12,7 +12,7 @@ export const getUsersApi = async (): Promise<TResponseUsers> => {
   try {
     const response = await fetch('/db/users.json')
     const data = await response?.json()
-    return data 
+    return data
   } catch(error) {
     console.error(error)
     throw error
@@ -42,17 +42,18 @@ export const getPlacesApi = async (): Promise<TResponsePlaces> => {
   }
 }
 
-
-export const getSkilsApi = async (): Promise<TResponsePlaces> => {
-  try {
-    const response = await fetch('/db/skils.json')
-    const data = await response?.json()
-    return data 
-  } catch(error) {
-    console.error(error)
-    throw error
-  }
-}
+// skill больше нет. в соответствии с макетом они лишь часть пользователя.
+// нет скилов без пользователя и у каждого пользователя по одному скилу
+// export const getSkilsApi = async (): Promise<TResponsePlaces> => {
+//   try {
+//     const response = await fetch('/db/skils.json')
+//     const data = await response?.json()
+//     return data 
+//   } catch(error) {
+//     console.error(error)
+//     throw error
+//   }
+// }
 
 export const getSkilsCategoriesApi = async (): Promise<TResponsePlaces> => {
   try {

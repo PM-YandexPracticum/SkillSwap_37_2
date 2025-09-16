@@ -1,13 +1,12 @@
 // src\pages\HomePage.tsx
 
 import React, { useState } from "react";
-import { ButtonUI } from "../shared/ui/button/ButtonUI";
 import { Footer } from "../widgets/footer/Footer";
 import { Header } from "../widgets/header/Header";
-import { users } from "../../public/db/users.json";
 import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
 import { AuthForm } from "../features/auth/AuthForm"; // для теста
+import { SkillForm } from "../widgets/skillForm/SkillForm";
 import { FilterSection } from "../features/filters/FilterSection";
 import mockPhoto from "../../public/db/users-photo/00001.jpg";
 import { GridList } from "../widgets/gridList/GridList";
@@ -34,6 +33,7 @@ export const HomePage = () => {
         selectedCities={selectedCities}
       />
       <DropdownDemo />
+      <SkillForm/>
       <AuthForm />
       {/* <SkillCard
         name={users[0].name}
