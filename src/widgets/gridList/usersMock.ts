@@ -49,7 +49,7 @@ export const users: TUserMock[] = [
     gender: "female",
     photo: "00004.jpg",
     from: "Краснодар",
-    learnSkills: ["Продажи и переговоры", "Английский"],
+    learnSkills: ["Продажи и переговоры", "Китайский"],
     teachSkills: ["Маркетинг и реклама"]
   },
   {
