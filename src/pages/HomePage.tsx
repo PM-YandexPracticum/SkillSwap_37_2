@@ -6,9 +6,11 @@ import { Header } from "../widgets/header/Header";
 import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
 import { AuthForm } from "../features/auth/AuthForm"; // для теста
+import { SkillForm } from "../widgets/skillForm/SkillForm";
 import { FilterSection } from "../features/filters/FilterSection";
 import { users } from "../../public/db/users.json";
 const mockPhoto = "/db/users-photo/00001.jpg";
+// import mockPhoto from "../../public/db/users-photo/00001.jpg";
 
 export const HomePage = () => {
 
@@ -31,6 +33,7 @@ export const HomePage = () => {
         selectedCities={selectedCities}
       />
       <DropdownDemo />
+      <SkillForm/>
       <AuthForm />
       <SkillCard
         name={users[0].name}
