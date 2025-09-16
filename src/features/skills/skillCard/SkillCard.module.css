@@ -63,19 +63,14 @@
 
 .tagWrapper {
   display: flex;
+  align-items: center;
   gap: 4px;
+  box-sizing: border-box;
   white-space: nowrap;
   text-overflow: ellipsis;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .button {
   flex-shrink: 0;
-}
-
-.tag {
-  flex-grow: 0;
-  white-space: nowrap; /* запрещает перенос */
-  overflow: hidden;    /* обрезает текст, если не помещается */
-  text-overflow: ellipsis; /* добавляет многоточие, если текст обрезан */
 }

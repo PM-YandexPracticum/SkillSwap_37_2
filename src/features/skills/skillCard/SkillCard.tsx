@@ -46,13 +46,17 @@ export const SkillCard = ({
               <ul className={styles.tagWrapper}>
                 {learnSkills.map((item, index) => {
                   return (
-                    <li key={index}>
-                    <SkillTag skill={item} />
+                    <li
+                      key={index}
+                      className={styles.tag}>
+                    <SkillTag 
+                      skill={item} />
                     </li>
                 )})}
-              {/* <SkillTag className={styles.tag} skill={learnSkill} />
-              <SkillTag className={styles.tag} skill={'Фотография'} /> */}
-              <SkillTag rest={Number(Math.floor(Math.random() * 5) + 2)} />
+                <li>
+                  <SkillTag
+                    rest={Number(Math.floor(Math.random() * 5) + 2)} />
+                </li>
               </ul>
             </div>
           </section>
