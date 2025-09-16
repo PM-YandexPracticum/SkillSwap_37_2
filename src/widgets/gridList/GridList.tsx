@@ -1,6 +1,6 @@
+// src\widgets\gridList\GridList.tsx
 import { SkillCard } from '../../features/skills/skillCard/SkillCard';
 import styles from './GridList.module.css';
-import { TUsersMock} from './usersMock'; 
 import { TPlace, TUserCard } from '../../api/types';
 
 type GridListProps = {

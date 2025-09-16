@@ -11,6 +11,10 @@
     ```bash
     npm install
     npm install clsx (но это не точно)
+    npm i redux react-redux @reduxjs/toolkit
+    npm i react-router-dom
+    npm i -D @types/react-router-dom
+    npm i --save-dev @types/node
     ```
 
 2. Запустите проект в режиме разработки:
