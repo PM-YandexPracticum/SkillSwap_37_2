@@ -1,3 +1,4 @@
+// src\api\Api.ts
 import { TUser, TResponseUsers, TResponsePlaces, TResponseSubcategories } from "./types";
 
 export const getUsersApi = async (): Promise<TResponseUsers> => {
