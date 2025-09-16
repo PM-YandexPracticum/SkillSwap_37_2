@@ -31,6 +31,13 @@
   margin-left: 12px;
 }
 
+.userName {
+  font-family: 'Open sans';
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
 .fromAge {
   font-size: 12px;
   line-height: 16px;
@@ -50,6 +57,11 @@
 .bid {
   line-height: 24px;
   letter-spacing: 2%;
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 8px;
+}
+
+.tagWrapper {
+  display: flex;
+  gap: 4px;
 }
