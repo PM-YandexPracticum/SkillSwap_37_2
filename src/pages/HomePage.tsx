@@ -9,7 +9,7 @@ import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
 import { AuthForm } from "../features/auth/AuthForm"; // для теста
 import { FilterSection } from "../features/filters/FilterSection";
-// import mockPhoto from "../../public/db/users-photo/00001.jpg";
+import mockPhoto from "../../public/db/users-photo/00001.jpg";
 
 export const HomePage = () => {
 
