@@ -1,6 +1,4 @@
 import { SkillName } from '../../../shared/types/SkillName';
-import { skillColors } from '../skillTag/skillColors';
-import { SkillTagUI } from '../../../shared/ui/skillTag/SkillTagUI';
 import like from '../../../shared/assets/icons/like.png';
 import styles from './SkillCard.module.css';
 import { ButtonUI } from '../../../shared/ui/button/ButtonUI';
