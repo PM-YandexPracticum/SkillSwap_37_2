@@ -9,7 +9,8 @@ import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
 import { AuthForm } from "../features/auth/AuthForm"; // для теста
 import { FilterSection } from "../features/filters/FilterSection";
-// import mockPhoto from "../../public/db/users-photo/00001.jpg";
+import mockPhoto from "../../public/db/users-photo/00001.jpg";
+import { GridList } from "../widgets/gridList/GridList";
 
 export const HomePage = () => {
 
@@ -25,7 +26,8 @@ export const HomePage = () => {
   return (
     <>
       <Header />
-          <FilterSection
+      <GridList />
+      <FilterSection
         onGenderChange={handleGenderChange}
         onCityChange={handleCityChange}
         selectedGender={selectedGender}
@@ -33,14 +35,14 @@ export const HomePage = () => {
       />
       <DropdownDemo />
       <AuthForm />
-      <SkillCard
+      {/* <SkillCard
         name={users[0].name}
         age={users[0].age}
         from={users[0].from}
         avatar={mockPhoto}
         teachSkill="Английский"
         learnSkill="Игра на барабанах"
-      />
+      /> */}
       <DropdownDemo />
       <AuthForm />
       <Footer />

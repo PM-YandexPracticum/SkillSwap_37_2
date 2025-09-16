@@ -5,15 +5,16 @@ type ButtonProps = {
   label: string;
   colored?: boolean;
   onClick?: () => void;
+  className?: string;
 };
 
-export const ButtonUI = ({ label, colored, onClick }: ButtonProps) => {
+export const ButtonUI = ({ label, colored, onClick, className }: ButtonProps) => {
   return (
     <button 
       onClick={onClick}
       className={clsx(
         styles.button,
-        colored && styles.colored)}>
+        colored && styles.colored, className)}>
       {label}
     </button>
   )
