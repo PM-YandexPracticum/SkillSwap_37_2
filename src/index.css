@@ -11,3 +11,7 @@ body {
   color: #253017;
   background-color: #F9FAF7;
 }
+
+ul {
+  list-style-type: none;
+}

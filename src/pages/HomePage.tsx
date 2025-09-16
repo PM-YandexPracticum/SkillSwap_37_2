@@ -1,16 +1,14 @@
 // src\pages\HomePage.tsx
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Footer } from "../widgets/footer/Footer";
 import { Header } from "../widgets/header/Header";
-import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
 import { AuthForm } from "../features/auth/AuthForm"; // для теста
 import { SkillForm } from "../widgets/skillForm/SkillForm";
 import { FilterSection } from "../features/filters/FilterSection";
-import { users } from "../../public/db/users.json";
-const mockPhoto = "/db/users-photo/00001.jpg";
-// import mockPhoto from "../../public/db/users-photo/00001.jpg";
+import { GridList } from "../widgets/gridList/GridList";
+import { users } from '../widgets/gridList/usersMock';
 
 export const HomePage = () => {
 
@@ -26,6 +24,7 @@ export const HomePage = () => {
   return (
     <>
       <Header />
+      <GridList users={users}/>
       <FilterSection
         onGenderChange={handleGenderChange}
         onCityChange={handleCityChange}
@@ -35,14 +34,6 @@ export const HomePage = () => {
       <DropdownDemo />
       <SkillForm/>
       <AuthForm />
-      <SkillCard
-        name={users[0].name}
-        age={users[0].age}
-        from={users[0].from}
-        avatar={mockPhoto}
-        teachSkill="Английский"
-        learnSkill="Игра на барабанах"
-      />
       <DropdownDemo />
       <AuthForm />
       <Footer />
