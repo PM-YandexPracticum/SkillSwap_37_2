@@ -64,6 +64,9 @@ const icons = {
   chevronDown: ChevronDownIcon,
   checkboxDone: CheckboxDoneIcon,
   checkboxEmpty: CheckboxEmptyIcon,
+  briefcase: BriefcaseIcon,
+  palette: PaletteIcon,
+  global: GlobalIcon,
 } as const;
 
 // Типы для пропсов

@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  max-width: 1136px;
+  max-height: 1040px;
+  border: 1px solid #69735D;
+  border-radius: 12px;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 60px;
+  margin: 0;
+}
+
+.skillMenu {
+  display: grid;
+  grid-template-columns: repeat(2, 488px);
+  gap: 40px;
+  margin: 0;
+  width: 100%;
+}
+
+.category {
+  display: flex;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.li {
+  font-size: 16px;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.category_title {
+  font-size: 24px;
+  font-weight: bold;
+}
