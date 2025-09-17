@@ -2,6 +2,7 @@
 import { SkillCard } from '../../features/skills/skillCard/SkillCard';
 import styles from './GridList.module.css';
 import { TPlace, TUserCard } from '../../api/types';
+import { formatAge } from '../../shared/lib/helpers';
 
 type GridListProps = {
   users: TUserCard[];
@@ -17,7 +18,7 @@ export const GridList = ( { users, subCategories }: GridListProps ) => {
           <SkillCard
             name={user.name}
             from={user.from}
-            age={user.birthdate}
+            age={formatAge(user.age)}
             avatar={`/db/users-photo/${user.photo}`}
             teachSkills={user.skill}
             learnSkills={user.need_subcat}

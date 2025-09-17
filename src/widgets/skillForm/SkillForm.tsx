@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Input } from '../../shared/ui/input/Input'
 import { Dropdown } from '../../shared/ui/input/input-dropdown/InputDropdown'
-import styles from './skillForm.module.css'
+import styles from './SkillForm.module.css'
 import { skillCategoryOptions, skillSubCategoryOptions } from './skillData'
 import { ButtonUI } from '../../shared/ui/button/ButtonUI'
 import { DragDrop } from '../../shared/ui/dragdrop/DragDrop'
