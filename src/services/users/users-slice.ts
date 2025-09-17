@@ -6,13 +6,13 @@ import { getUsersThunk } from './actions';
 
 type UsersState = {
   users: TUser[];
-  loading: boolean;
+  isLoading: boolean;
   error: string | null;
 };
 
 const initialState: UsersState = {
   users: [],
-  loading: false,
+  isLoading: false,
   error: null
 };
 
@@ -23,15 +23,15 @@ export const usersSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getUsersThunk.pending, state => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(getUsersThunk.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.users = action.payload;
       })
       .addCase(getUsersThunk.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.error.message || 'Ошибка загрузки пользователей';
       });
   }
