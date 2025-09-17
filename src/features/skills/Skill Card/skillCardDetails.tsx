@@ -1,27 +1,34 @@
 import React from "react";
-import "./SkillCard.css";
+import "./skillCardDetails.css";
+import { Gallery } from "../../../shared/ui/skillCardDetailsUI/skillCardDetailsUI";
 
-type SkillCardProps = {
+type Skill = {
   title: string;
   subtitle: string;
   description: string;
-  mainImage: string;
+  mainImage?: string;
   smallImages?: string[];
   icons?: string[];
   buttonText?: string;
   onExchange?: () => void;
 };
 
-export const SkillCard: React.FC<SkillCardProps> = ({
-  title,
-  subtitle,
-  description,
-  mainImage,
-  smallImages = [],
-  icons = [],
-  buttonText = "Предложить обмен",
-  onExchange,
-}) => {
+type SkillCardDetailsProps = {
+  skill: Skill;
+};
+
+export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({ skill }) => {
+  const {
+    title,
+    subtitle,
+    description,
+    mainImage,
+    smallImages = [],
+    icons = [],
+    buttonText = "Предложить обмен",
+    onExchange,
+  } = skill;
+
   return (
     <div className="skill-card">
       <div className="skill-card__info">
@@ -44,21 +51,7 @@ export const SkillCard: React.FC<SkillCardProps> = ({
           </div>
         )}
 
-        <div className="skill-card__images-grid">
-          <div className="skill-card__main-wrapper">
-            <img src={mainImage} alt="Главная" className="skill-card__main-image" />
-          </div>
-          <div className="skill-card__small-images">
-            {smallImages.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                alt={`Малое ${idx + 1}`}
-                className="skill-card__small-image"
-              />
-            ))}
-          </div>
-        </div>
+        <Gallery mainImage={mainImage} smallImages={smallImages} />
       </div>
     </div>
   );
