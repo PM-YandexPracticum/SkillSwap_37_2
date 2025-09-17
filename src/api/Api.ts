@@ -1,11 +1,22 @@
 // src\api\Api.ts
-import { TUser, TResponseUsers, TResponsePlaces, TResponseSubcategories } from "./types";
+import {
+  TUser,
+  TResponseUsers,
+  TResponsePlaces,
+  TResponseSubcategories,
+} from "./types";
+import { calculateAge } from "../shared/lib/helpers";
 
 export const getUsersApi = async (): Promise<TResponseUsers> => {
   try {
     const response = await fetch("/db/users.json");
     const data = await response.json();
-    return data;
+    
+    const usersWithAge = data.users.map((user: TUser) => ({
+      ...user,
+      age: calculateAge(user.birthdate),
+    }));
+    return { users: usersWithAge };
   } catch (error) {
     console.error(error);
     throw error;
@@ -46,16 +57,17 @@ export const getSkillsCategoriesApi = async (): Promise<TResponsePlaces> => {
   }
 };
 
-export const getSkillsSubCategoriesApi = async (): Promise<TResponseSubcategories> => {
-  try {
-    const response = await fetch("/db/skills_subcategories.json");
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+export const getSkillsSubCategoriesApi =
+  async (): Promise<TResponseSubcategories> => {
+    try {
+      const response = await fetch("/db/skills_subcategories.json");
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
 // skill больше нет. в соответствии с макетом они лишь часть пользователя.
 // нет скилов без пользователя и у каждого пользователя по одному скилу
