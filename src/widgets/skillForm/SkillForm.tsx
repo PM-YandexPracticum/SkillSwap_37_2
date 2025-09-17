@@ -46,7 +46,8 @@ export const SkillForm = () => {
       // Сбрасываем выбранную подкатегорию при изменении категории
       setSelectedSubCategory("");
     } else {
-      setFilteredSubcategories([]);
+      // Если категория не выбрана, показываем все подкатегории
+      setFilteredSubcategories(subcategories);
     }
   }, [selectedCategory, subcategories]);
 
