@@ -28,7 +28,11 @@ export const getUserByID = async (userId: number): Promise<TUser | null> => {
     const response = await fetch("/db/users.json");
     const data = await response.json();
     const user = data.users.find((user: TUser) => user.id === userId);
-    return user || null; // если пользователь не найден
+    const usersWithAge = {
+      ...user,
+      age: calculateAge(user.birthdate),
+    };
+    return usersWithAge || null; // если пользователь не найден
   } catch (error) {
     console.error(error);
     throw error;
