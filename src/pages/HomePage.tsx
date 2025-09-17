@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { Footer } from "../widgets/footer/Footer";
 import { Header } from "../widgets/header/Header";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
-import { AuthForm } from "../features/auth/AuthForm"; // для теста
+import { DropdownGroupedDemo } from "../widgets/dropdownDemo/DropdownGroupedDemo";
+import { AuthForm } from "../features/auth/AuthForm";
 import { SkillForm } from "../widgets/skillForm/SkillForm";
 import { FilterSection } from "../features/filters/FilterSection";
 import { GridList } from "../widgets/gridList/GridList";
@@ -48,7 +49,13 @@ export const HomePage = () => {
         selectedGender={selectedGender}
         selectedCities={selectedCities}
       />
+
+      <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
+
+      <h2>Вариант Dropdown 2</h2>
+      <DropdownGroupedDemo />
+      
       <SkillForm/>
       <AuthForm />
       <Footer />
