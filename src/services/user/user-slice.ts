@@ -6,14 +6,14 @@ import { getUserThunk } from './actions';
 export interface UserState {
   user: TUser | null;
   isAuthChecked: boolean;
-  loading: boolean;
+  isLoading: boolean;
   error: string | null;
 }
 
 const initialState: UserState = {
   user: null,   // это тот, кто сейчас залогинился
   isAuthChecked: false,
-  loading: false,
+  isLoading: false,
   error: null
 };
 
@@ -24,15 +24,15 @@ export const userSlice = createSlice({
   extraReducers: builder => {
     builder
     .addCase(getUserThunk.pending, state => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
     })
     .addCase(getUserThunk.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.user = action.payload;
     })
     .addCase(getUserThunk.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.error.message || 'Ошибка загрузки';
     });
   }
