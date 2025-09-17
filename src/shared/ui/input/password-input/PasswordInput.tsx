@@ -39,26 +39,28 @@ export const PasswordInput: FC<PasswordInputProps> = ({
         </label>
       )}
 
-      <input
-        type={isPasswordVisible ? "text" : "password"}
-        id={id}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
-        className={clsx(
-          styles.input,
-          status === "error" && styles.error,
-          status === "success" && styles.success
-        )}
-      />
-      <button
-        type="button"
-        className={styles.eyeButton}
-        onClick={togglePasswordVisibility}
-        aria-label={isPasswordVisible ? "Скрыть пароль" : "Показать пароль"}
-      >
-        <Icon name={isPasswordVisible ? "eyeSlash" : "eye"} size="s" />
-      </button>
+      <div className={styles.inputContainer}>
+        <input
+          type={isPasswordVisible ? "text" : "password"}
+          id={id}
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+          className={clsx(
+            styles.input,
+            status === "error" && styles.error,
+            status === "success" && styles.success
+          )}
+        />
+        <button
+          type="button"
+          className={styles.eyeButton}
+          onClick={togglePasswordVisibility}
+          aria-label={isPasswordVisible ? "Скрыть пароль" : "Показать пароль"}
+        >
+          <Icon name={isPasswordVisible ? "eyeSlash" : "eye"} size="s" />
+        </button>
+      </div>
 
       <FormMessage message={message} type={status} />
     </div>

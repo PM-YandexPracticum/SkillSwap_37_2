@@ -1,13 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown } from "../../shared/ui/input/input-dropdown/InputDropdown";
+import { genderOptions } from "../../shared/ui/input/input-dropdown/dropdownData";
 import {
-  genderOptions,
-  skillCategoryOptions,
-} from "../../shared/ui/input/input-dropdown/dropdownData";
+  getSkillsCategoriesApi,
+  getSkillsSubCategoriesApi,
+} from "../../api/Api";
+import { TCategory, TSubcategory } from "../../api/types";
 
 export const DropdownDemo = () => {
   const [selectedGender, setSelectedGender] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(
+    []
+  );
+  const [categories, setCategories] = useState<TCategory[]>([]);
+  const [subcategories, setSubcategories] = useState<TSubcategory[]>([]);
+  const [filteredSubcategories, setFilteredSubcategories] = useState<
+    TSubcategory[]
+  >([]);
+
+  // Загрузка данных
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesResponse = await getSkillsCategoriesApi();
+        const subcategoriesResponse = await getSkillsSubCategoriesApi();
+
+        setCategories(categoriesResponse.categories);
+        setSubcategories(subcategoriesResponse.subcategories);
+      } catch (error) {
+        console.error("Ошибка загрузки данных:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Фильтрация подкатегорий по выбранным категориям
+  useEffect(() => {
+    if (selectedCategories.length > 0) {
+      const filtered = subcategories.filter((subcat) =>
+        selectedCategories.includes(subcat.categoryId.toString())
+      );
+      setFilteredSubcategories(filtered);
+    } else {
+      setFilteredSubcategories([]);
+    }
+  }, [selectedCategories, subcategories]);
 
   // Функция-обертка для одиночного выбора
   const handleGenderChange = (value: string | string[]) => {
@@ -16,11 +55,43 @@ export const DropdownDemo = () => {
     }
   };
 
-  // Функция-обертка для множественного выбора
+  // Функция-обертка для множественного выбора категорий
   const handleCategoriesChange = (value: string | string[]) => {
     if (Array.isArray(value)) {
       setSelectedCategories(value);
+      // Сбрасываем подкатегории при изменении категорий
+      setSelectedSubcategories([]);
     }
+  };
+
+  // Функция-обертка для множественного выбора подкатегорий
+  const handleSubcategoriesChange = (value: string | string[]) => {
+    if (Array.isArray(value)) {
+      setSelectedSubcategories(value);
+    }
+  };
+
+  // Преобразование категорий в формат для Dropdown
+  const categoryOptions = categories.map((category) => ({
+    value: category.id.toString(),
+    label: category.name,
+  }));
+
+  // Преобразование подкатегорий в формат для Dropdown
+  const subcategoryOptions = filteredSubcategories.map((subcategory) => ({
+    value: subcategory.id.toString(),
+    label: subcategory.name,
+  }));
+
+  // Функции для получения названий по ID
+  const getCategoryName = (id: string) => {
+    const category = categories.find((cat) => cat.id.toString() === id);
+    return category ? category.name : id;
+  };
+
+  const getSubcategoryName = (id: string) => {
+    const subcategory = subcategories.find((sub) => sub.id.toString() === id);
+    return subcategory ? subcategory.name : id;
   };
 
   return (
@@ -38,24 +109,21 @@ export const DropdownDemo = () => {
       <Dropdown
         value={selectedCategories}
         onChange={handleCategoriesChange}
-        options={skillCategoryOptions}
+        options={categoryOptions}
         multiple={true}
-        label="Категория навыка"
-        placeholder="Выберите категории"
+        label="Категория навыка, которому хотите научиться"
+        placeholder="Выберите категорию"
       />
 
-      {/* Покажем выбранные значения для демонстрации */}
-      <div
-        style={{
-          marginTop: "20px",
-          padding: "10px",
-          backgroundColor: "#f5f5f5",
-          borderRadius: "8px",
-        }}
-      >
-        <h3>Выбранный пол: {selectedGender}</h3>
-        <h3>Выбранные категории: {selectedCategories.join(", ")}</h3>
-      </div>
+      {/* Множественный выбор - подкатегории навыков */}
+      <Dropdown
+        value={selectedSubcategories}
+        onChange={handleSubcategoriesChange}
+        options={subcategoryOptions}
+        multiple={true}
+        label="Подкатегория навыка, которому хотите научиться"
+        placeholder="Выберите подкатегорию"
+      />
     </div>
   );
 };

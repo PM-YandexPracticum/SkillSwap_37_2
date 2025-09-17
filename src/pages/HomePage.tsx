@@ -51,8 +51,6 @@ export const HomePage = () => {
       <DropdownDemo />
       <SkillForm/>
       <AuthForm />
-      <DropdownDemo />
-      <AuthForm />
       <Footer />
     </>
   );
