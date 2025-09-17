@@ -1,0 +1,11 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 324px);
+  gap: 24px;
+  justify-content: center;
+}
+
+.gridItem {
+  width: 324px;
+  height: 368px;
+}

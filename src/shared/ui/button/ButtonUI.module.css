@@ -3,7 +3,8 @@
   height: 48px;
   border: none;
   border-radius: 12px;
-  background-color: #FFF;
+  background-color: #FFFFFF;
+  cursor: pointer;
 }
 
 .button:hover {
