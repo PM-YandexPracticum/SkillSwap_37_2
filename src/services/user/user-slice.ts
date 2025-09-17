@@ -21,6 +21,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {},
+  selectors: {
+    getUser: (state) => state.user
+  },
   extraReducers: builder => {
     builder
     .addCase(getUserThunk.pending, state => {
@@ -33,10 +36,12 @@ export const userSlice = createSlice({
     })
     .addCase(getUserThunk.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Ошибка загрузки';
+        state.error = action.error.message || 'Ошибка загрузки пользователя';
     });
   }
 });
+
+export const { getUser } = userSlice.selectors;
 
 export const userReducer = userSlice.reducer;
 
