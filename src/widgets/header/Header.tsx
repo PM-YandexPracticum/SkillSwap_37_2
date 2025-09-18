@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import styles from "./Header.module.css";
-import { LogoUI } from "../../shared/ui/logo/Logo";
+import { Logo } from "../../shared/ui/logo/Logo";
 import { ButtonUI } from "../../shared/ui/button/ButtonUI";
 import clsx from "clsx";
 import { NotificationWidget } from "../notification-widget/NotificationWidget";
@@ -19,7 +19,7 @@ export const Header: FC = () => {
 
   return (
     <header className={styles.header}>
-      <LogoUI />
+      <Logo />
       <nav>
         <ul className={styles.navList}>
           <li className={styles.li}>
