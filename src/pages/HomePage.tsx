@@ -22,6 +22,7 @@ import { formatAge } from "../shared/lib/helpers";
 import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
 import { SkillTag } from "../features/skills/skillTag/SkillTag";
 import { ButtonUI } from "../shared/ui/button/ButtonUI";
+import styles from "./HomePage.module.css";
 
 export const HomePage = () => {
 
@@ -78,13 +79,16 @@ export const HomePage = () => {
     <>
       <Header />
 
-      <GridList users={users} subCategories={subCategories}/>
-      <FilterSection
+      <div className={styles.wrapper}>
+        <FilterSection
         onGenderChange={handleGenderChange}
         onCityChange={handleCityChange}
         selectedGender={selectedGender}
         selectedCities={selectedCities}
-      />
+        />
+        <GridList users={users} subCategories={subCategories}/>
+      </div>
+      
 
       <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
