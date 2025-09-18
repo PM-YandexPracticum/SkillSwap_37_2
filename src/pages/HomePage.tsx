@@ -114,10 +114,10 @@ export const HomePage = () => {
         />}
 
       <h2>SkillCardDetails</h2>
-      // Настроить передачу свойств от текущего пользователя
-      // образец user && SkillCard
-      // все данные есть в user
-      // уьрать константу mySkill
+      {/* Настроить передачу свойств от текущего пользователя
+      образец user && SkillCard
+      все данные есть в user
+      убрать константу mySkill */}
       <SkillCardDetails skill={mySkill} />
 
 {/* Отладочные ссылки */}
