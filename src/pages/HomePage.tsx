@@ -23,6 +23,7 @@ import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails
 import { SkillTag } from "../features/skills/skillTag/SkillTag";
 import { ButtonUI } from "../shared/ui/button/ButtonUI";
 import styles from "./HomePage.module.css";
+import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
 
 export const HomePage = () => {
 
@@ -119,6 +120,9 @@ export const HomePage = () => {
       все данные есть в user
       убрать константу mySkill */}
       <SkillCardDetails skill={mySkill} />
+
+      {/* появляется, если нажать на колокольчик в header
+      <NotificationWidget /> */}
 
 {/* Отладочные ссылки */}
 <div style={{ padding: '2rem', paddingBottom: '20rem' }}>
