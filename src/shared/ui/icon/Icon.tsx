@@ -68,6 +68,7 @@ const icons = {
   moon: MoonIcon,
   notification: NotificationIcon,
   idea: IdeaIcon,
+  logo: LogoIcon
 } as const;
 
 // Типы для пропсов
