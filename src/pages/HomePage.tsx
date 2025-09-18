@@ -10,34 +10,47 @@ import { GridList } from "../widgets/gridList/GridList";
 import { getSkillsSubCategoriesApi } from "../api/Api";
 import { TPlace, TUserCard } from "../api/types";
 
-import { useSelector } from 'react-redux';
-import { getUsersThunk } from '../services/users/actions';
-import { RootState } from '../services/store';
-import { useDispatch } from '@store';
+import { useSelector } from "react-redux";
+import { getUsersThunk } from "../services/users/actions";
+import { RootState } from "../services/store";
+import { useDispatch } from "@store";
 import { getUserThunk } from "../services/user/actions";
 
 import { getUser } from "../services/user/user-slice";
-import { TUser } from '../api/types';
+import { TUser } from "../api/types";
 import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import { formatAge } from "../shared/lib/helpers";
+import { setPage } from "../services/users/users-slice";
 
 export const HomePage = () => {
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
   const dispatch = useDispatch();
 
-  const user = useSelector(getUser);  
-  const users = useSelector((state: RootState) => state.users.users);
-  
+  const user = useSelector(getUser);
+  const { users, isLoading, hasMore, page } = useSelector(
+    (state: RootState) => state.users
+  );
+
   const [subCategories, setSubCategories] = useState<TPlace[]>([]);
-  
+
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
-    dispatch(getUsersThunk());
-    getSkillsSubCategoriesApi()
-      .then(data => setSubCategories(data.subcategories));
+    dispatch(getUsersThunk(1));
+    getSkillsSubCategoriesApi().then((data) =>
+      setSubCategories(data.subcategories)
+    );
   }, [dispatch]);
 
-  const [selectedGender, setSelectedGender] = useState<string>('');
+  // функция загрузки последующих данных
+  const handleLoadMore = () => {
+    if (!isLoading && hasMore) {
+      const nextPage = page + 1;
+      dispatch(setPage(nextPage));
+      dispatch(getUsersThunk(nextPage));
+    }
+  };
+
+  const [selectedGender, setSelectedGender] = useState<string>("");
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
 
   const handleGenderChange = (gender: string) => {
@@ -49,16 +62,25 @@ export const HomePage = () => {
   return (
     <>
       <Header />
-      {user && <SkillCard
-                  name={user.name}
-                  from={user.from}
-                  age={formatAge(user.age)}
-                  avatar={`/db/users-photo/${user.photo}`}
-                  teachSkills={user.skill}
-                  learnSkills={user.need_subcat}
-                  subCategories={subCategories}
-        />}
-      <GridList users={users} subCategories={subCategories}/>
+      {user && (
+        <SkillCard
+          name={user.name}
+          from={user.from}
+          age={formatAge(user.age)}
+          avatar={`/db/users-photo/${user.photo}`}
+          teachSkills={user.skill}
+          learnSkills={user.need_subcat}
+          subCategories={subCategories}
+        />
+      )}
+      <GridList
+        users={users}
+        subCategories={subCategories}
+        loading={isLoading}
+        hasMore={hasMore}
+        onLoadMore={handleLoadMore}
+      />
+
       <FilterSection
         onGenderChange={handleGenderChange}
         onCityChange={handleCityChange}
@@ -71,16 +93,15 @@ export const HomePage = () => {
 
       <h2>Вариант Dropdown 2</h2>
       <DropdownGroupedDemo />
-      
-      <SkillForm/>
+
+      <SkillForm />
       <AuthForm />
       <Footer />
     </>
   );
 };
 
-
-<!-- import React from 'react';
+/*<!-- import React from 'react';
 import { ButtonUI } from '../shared/ui/button/ButtonUI';
 import { Footer } from '../widgets/footer/Footer';
 import { SkillTag } from '../features/skills/skillTag/SkillTag';
@@ -116,10 +137,4 @@ export const HomePage = () => {
 
       <SkillCardDetails skill={mySkill} />
 
--->
-
-
-
-
-
-
+-->*/
