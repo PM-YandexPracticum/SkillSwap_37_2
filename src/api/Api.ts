@@ -7,13 +7,43 @@ import {
   TResponseSubcategories,
 } from "./types";
 import { calculateAge } from "../shared/lib/helpers";
+import { PAGE_SIZE } from "../shared/constants/pagination";
 
-const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
-
-export const getUsersApi = async (
-  page = 1,
-  limit = USERS_PAGE_SIZE
+// <<<<<<< feature/infiniteScroll
+export const getUsersPaginatedApi = async (
+  page: number
 ): Promise<TResponseUsers> => {
+  try {
+    const response = await fetch("/db/users.json");
+    const data = await response.json();
+
+    const startIndex = (page - 1) * PAGE_SIZE;
+    const endIndex = startIndex + PAGE_SIZE;
+    const paginatedUsers = data.users.slice(startIndex, endIndex);
+
+    const usersWithAge = paginatedUsers.map((user: TUser) => ({
+      ...user,
+      age: calculateAge(user.birthdate),
+    }));
+
+    return {
+      users: usersWithAge,
+      hasMore: endIndex < data.users.length,
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+export const getUsersApi = async (): Promise<TResponseUsers> => {
+//=======
+// const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
+
+// export const getUsersApi = async (
+//   page = 1,
+//   limit = USERS_PAGE_SIZE
+// ): Promise<TResponseUsers> => {
+// >>>>>>> develop
   try {
     const response = await fetch('/db/users.json');
     const data = await response.json();
@@ -22,12 +52,16 @@ export const getUsersApi = async (
       ...user,
       age: calculateAge(user.birthdate),
     }));
+// <<<<<<< feature/infiniteScroll
+    return { users: usersWithAge, hasMore: false };
+// =======
 
-    const start = (page - 1) * limit;
-    const end = start + limit;
-    const paginated = usersWithAge.slice(start, end);
+//     const start = (page - 1) * limit;
+//     const end = start + limit;
+//     const paginated = usersWithAge.slice(start, end);
 
-    return { users: paginated };
+//     return { users: paginated };
+// >>>>>>> develop
   } catch (error) {
     console.error(error);
     throw error;
