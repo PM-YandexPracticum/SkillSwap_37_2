@@ -9,6 +9,7 @@ import {
 import { calculateAge } from "../shared/lib/helpers";
 import { PAGE_SIZE } from "../shared/constants/pagination";
 
+// <<<<<<< feature/infiniteScroll
 export const getUsersPaginatedApi = async (
   page: number
 ): Promise<TResponseUsers> => {
@@ -35,15 +36,32 @@ export const getUsersPaginatedApi = async (
   }
 };
 export const getUsersApi = async (): Promise<TResponseUsers> => {
+//=======
+// const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
+
+// export const getUsersApi = async (
+//   page = 1,
+//   limit = USERS_PAGE_SIZE
+// ): Promise<TResponseUsers> => {
+// >>>>>>> develop
   try {
-    const response = await fetch("/db/users.json");
+    const response = await fetch('/db/users.json');
     const data = await response.json();
 
     const usersWithAge = data.users.map((user: TUser) => ({
       ...user,
       age: calculateAge(user.birthdate),
     }));
+// <<<<<<< feature/infiniteScroll
     return { users: usersWithAge, hasMore: false };
+// =======
+
+//     const start = (page - 1) * limit;
+//     const end = start + limit;
+//     const paginated = usersWithAge.slice(start, end);
+
+//     return { users: paginated };
+// >>>>>>> develop
   } catch (error) {
     console.error(error);
     throw error;
