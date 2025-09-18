@@ -58,7 +58,6 @@ export type TSubcategory = {
 // Для ответа API пользователей
 export type TResponseUsers = {
   users: TUser[];
-  hasMore: boolean;
 }
 
 // Для ответа API мест

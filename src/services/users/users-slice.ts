@@ -1,6 +1,6 @@
 // src\services\users\users-slice.ts
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { TUser } from '../../api/types';
 import { getUsersThunk } from './actions';
 
@@ -8,39 +8,18 @@ type UsersState = {
   users: TUser[];
   isLoading: boolean;
   error: string | null;
-  page: number; // страница для пагинации
-  hasMore: boolean;
 };
 
 const initialState: UsersState = {
   users: [],
   isLoading: false,
-  error: null,
-  page: 0,
-  hasMore: true 
+  error: null
 };
 
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {
-     // установка текущей страницы
-    setPage: (state, action: PayloadAction<number>) => {
-      state.page = action.payload;
-    },
-    // установка флага наличия данных
-    setHasMore: (state, action: PayloadAction<boolean>) => {
-      state.hasMore = action.payload;
-    },
-    // сброс состояния к начальному
-    resetUsers: (state) => {
-      state.users = [];
-      state.page = 0;
-      state.hasMore = true;
-      state.isLoading = false;
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(getUsersThunk.pending, state => {
@@ -49,11 +28,7 @@ export const usersSlice = createSlice({
       })
       .addCase(getUsersThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        if (action.payload.users.length > 0) {
-        state.users = [...state.users, ...action.payload.users];
-        state.page += 1;
-        }
-        state.hasMore = action.payload.hasMore; 
+        state.users = action.payload;
       })
       .addCase(getUsersThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -62,5 +37,4 @@ export const usersSlice = createSlice({
   }
 });
 
-export const { setPage, setHasMore, resetUsers } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;
