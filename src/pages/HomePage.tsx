@@ -110,27 +110,12 @@ export const HomePage = () => {
         />}
 
       <h2>SkillCardDetails</h2>
+      // Настроить передачу свойств от текущего пользователя
+      // образец user && SkillCard
+      // все данные есть в user
+      // уьрать константу mySkill
       <SkillCardDetails skill={mySkill} />
       <Footer />
     </>
   );
 };
-
-
-// import React from 'react';
-// import { ButtonUI } from '../shared/ui/button/ButtonUI';
-// import { Footer } from '../widgets/footer/Footer';
-// import { SkillTag } from '../features/skills/skillTag/SkillTag';
-// import { SkillCardDetails } from '../features/skills/Skill Card/skillCardDetails';
-
-// export const HomePage = () => {
-
-//   return (
-//     <div>
-//       <h2>Главная страница</h2>
-//       <ButtonUI label="UI" colored onClick={() => alert('U and I')} />
-//       <SkillTag rest={2} />
-//       <SkillTag skill="Английский" />
-
-//       <SkillCardDetails skill={mySkill} />
-
