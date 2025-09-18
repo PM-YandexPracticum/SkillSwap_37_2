@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import styles from './Footer.module.css';
-import { LogoUI } from '../../shared/ui/logo/Logo';
+import { Logo } from '../../shared/ui/logo/Logo';
 import clsx from 'clsx'
 
 export const Footer: FC = () => {
   return (
     <footer className={styles.footer}>
       <div className={clsx(styles.column, styles.logo)}>
-        <LogoUI />
+        <Logo />
       </div>
       <div  className={styles.container}>
         <div className={styles.column}>
