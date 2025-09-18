@@ -27,10 +27,14 @@ export const Header: FC = () => {
         <input type="search" className={styles.search} placeholder="Искать навык" />
       </div>
       <img src={moon} alt="луна" className={styles.iconMoon} />
-      <div className={styles.loginWrapper}>
-        <ButtonUI label="Войти" />
+      <div className={styles.buttonWrapper}>
+        <div className={styles.loginWrapper}>
+          <ButtonUI label="Войти" />
+        </div>
+        <div className={styles.registryWrapper}>
+          <ButtonUI label="Зарегистрироваться" colored />
+        </div>
       </div>
-      <ButtonUI label="Зарегистрироваться" colored />
     </header>
   );
 };

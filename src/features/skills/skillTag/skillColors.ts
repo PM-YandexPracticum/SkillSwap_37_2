@@ -1,5 +1,8 @@
 import { SkillName } from "../../../shared/types/SkillName";
 
+// Этот список будет удален. его можно только временно использовать
+// используйте данные из API
+// src\api\Api.ts
 export const skillColors: Record<SkillName, string> = {
   "Игра на барабанах": "#f7e7f2",
   "Управление командой": "#a1887f",
@@ -23,7 +26,6 @@ export const skillColors: Record<SkillName, string> = {
   "Домашние растения": "#a5d6a7",
   "Ремонт": "#b0bec5",
   "Хранение вещей": "#d7ccc8",
-  "Творчество и искусство": "#ef9a9a",
   "Рисование и иллюстрация": "#ffccbc",
   "Фотография": "#d0c3e6ff",
   "Видеомонтаж": "#90caf9",
@@ -38,7 +40,7 @@ export const skillColors: Record<SkillName, string> = {
   "Скорочтение": "#90caf9",
   "Навыки преподавания": "#fff59d",
   "Коучинг": "#80cbc4",
-  "Медитация": "#e9f7e7",
+  "Йога и медитация": "#e9f7e7",
   "Питание и ЗОЖ": "#c5e1a5",
   "Ментальное здоровье": "#f8bbd0",
   "Осознанность": "#b2dfdb",
