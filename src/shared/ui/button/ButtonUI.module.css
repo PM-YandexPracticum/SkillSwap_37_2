@@ -3,7 +3,12 @@
   height: 48px;
   border: none;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #DEEBC5;
 }
 
 .colored {

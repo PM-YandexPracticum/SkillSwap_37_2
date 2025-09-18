@@ -1,1 +1,36 @@
-export const sum = (a: number, b: number) => a + b;
+export const formatAge = (age: string): string => {
+  const ageNum = parseInt(age);
+  const lastDigit = ageNum % 10;
+  const lastTwoDigits = ageNum % 100;
+  
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+    return `${age} лет`;
+  }
+  
+  if (lastDigit === 1) {
+    return `${age} год`;
+  }
+  
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return `${age} года`;
+  }
+  
+  return `${age} лет`;
+};
+
+export const calculateAge = (birthdate: string): string => {
+  const birthDate = new Date(birthdate);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  
+  return age.toString();
+};
+
+export const getImageUrl = (photoPath: string): string => {
+  return `/db/users-photo/${photoPath}`;
+};
