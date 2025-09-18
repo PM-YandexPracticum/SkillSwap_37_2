@@ -3,9 +3,6 @@
 import { useEffect, useState } from "react";
 import { Footer } from "../widgets/footer/Footer";
 import { Header } from "../widgets/header/Header";
-import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
-import { AuthForm } from "../features/auth/AuthForm"; // для теста
-import { SkillForm } from "../widgets/skillForm/SkillForm";
 import { FilterSection } from "../features/filters/FilterSection";
 import { GridList } from "../widgets/gridList/GridList";
 import { getSkillsSubCategoriesApi } from "../api/Api";
@@ -15,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { getUsersThunk } from '../services/users/actions';
 import { RootState } from '../services/store';
 import { useDispatch } from '@store';
+import styles from './HomePage.module.css'
 
 export const HomePage = () => {
 
@@ -36,24 +34,17 @@ export const HomePage = () => {
     setSelectedGender(gender);
   };
   const handleCityChange = (cities: string[]) => {
-    setSelectedCities(cities);
+    setSelectedCities(cities); 
   };
   return (
-    <>
-      <Header />
-      <GridList users={users} subCategories={subCategories}/>
+    <div className={styles.wrapper}>
       <FilterSection
-        onGenderChange={handleGenderChange}
-        onCityChange={handleCityChange}
-        selectedGender={selectedGender}
-        selectedCities={selectedCities}
+      onGenderChange={handleGenderChange}
+      onCityChange={handleCityChange}
+      selectedGender={selectedGender}
+      selectedCities={selectedCities}
       />
-      <DropdownDemo />
-      <SkillForm/>
-      <AuthForm />
-      <DropdownDemo />
-      <AuthForm />
-      <Footer />
-    </>
+      <GridList users={users} subCategories={subCategories}/>
+    </div>
   );
 };

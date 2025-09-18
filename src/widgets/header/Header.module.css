@@ -1,9 +1,10 @@
 .header {
   display: flex;
-  flex-direction: row;
   align-items: center;
   column-gap: 32px;
   height: 116px;
+  justify-content: center;
+  width: 100%;
 }
 
 .navList {

@@ -2,12 +2,19 @@
 
 import React from 'react';
 import { HomePage } from '../pages/HomePage';
+import { Header } from '../widgets/header/Header';
+import { Footer } from '../widgets/footer/Footer';
 
 export const App = () => {
   return (
-    <div>
-      <HomePage />
-    </div>
+    <>
+      <Header />
+      <main>
+        <HomePage />
+      </main>
+      <Footer />
+    </>
+    
   );
 };
 
