@@ -119,6 +119,27 @@ export const HomePage = () => {
       // все данные есть в user
       // уьрать константу mySkill
       <SkillCardDetails skill={mySkill} />
+
+{/* Отладочные ссылки */}
+<div style={{ padding: '2rem', paddingBottom: '20rem' }}>
+  <h2>Debug Links</h2>
+  <ul>
+    <li><a href="/skills">/skills</a></li>
+    <li><a href="/auth/login">/auth/login</a></li>
+    <li><a href="/auth/register">/auth/register</a></li>
+    <li><a href="/skill/new">/skill/new</a></li>
+    <li><a href="/demo/dropdowns">/demo/dropdowns</a></li>
+    <li><a href="/demo/skill-details">/demo/skill-details</a></li>
+    <li><a href="/skills/123">/skills/:id</a></li>
+    <li><a href="/favorites">/favorites</a></li>
+    <li><a href="/requests">/requests</a></li>
+    <li><a href="/profile">/profile</a></li>
+    <li><a href="/profile/notifications">/profile/notifications</a></li>
+    <li><a href="/500">/500</a></li>
+    <li><a href="/nonexistent">/not-found</a></li>
+  </ul>
+</div>
+
       <Footer />
     </>
   );
