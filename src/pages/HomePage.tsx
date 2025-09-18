@@ -26,6 +26,7 @@ import { SkillTag } from "../features/skills/skillTag/SkillTag";
 import { ButtonUI } from "../shared/ui/button/ButtonUI";
 import styles from "./HomePage.module.css";
 import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
+import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
 
 export const HomePage = () => {
 
@@ -171,6 +172,7 @@ export const HomePage = () => {
         </ul>
       </div>
 
+      <SkillMenu />
       <Footer />
     </>
   );
