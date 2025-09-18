@@ -41,6 +41,20 @@ export type TPlace = {
   name: string;
 }
 
+export type TCategory = {
+  id: number;
+  name: string;
+  color: string;
+  icon: string;
+};
+
+export type TSubcategory = {
+  id: number;
+  categoryId: number;
+  name: string;
+  color: string;
+};
+
 // Для ответа API пользователей
 export type TResponseUsers = {
   users: TUser[];
@@ -51,9 +65,14 @@ export type TResponsePlaces = {
   places: TPlace[];
 }
 
-// Для ответа API мест
+// Для ответа API категорий
+export type TResponseCategories = {
+  categories: TCategory[];
+};
+
+// Для ответа API подкатегорий
 export type TResponseSubcategories = {
-  subcategories: TPlace[];
+  subcategories: TSubcategory[];
 }
 
 // {

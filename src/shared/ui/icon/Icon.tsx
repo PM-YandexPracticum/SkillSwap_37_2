@@ -64,9 +64,10 @@ const icons = {
   chevronDown: ChevronDownIcon,
   checkboxDone: CheckboxDoneIcon,
   checkboxEmpty: CheckboxEmptyIcon,
-  briefcase: BriefcaseIcon,
-  palette: PaletteIcon,
-  global: GlobalIcon,
+  search: SearchIcon,
+  moon: MoonIcon,
+  notification: NotificationIcon,
+  idea: IdeaIcon,
 } as const;
 
 // Типы для пропсов

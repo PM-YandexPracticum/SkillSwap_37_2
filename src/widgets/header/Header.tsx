@@ -1,32 +1,57 @@
-import { FC } from 'react';
-import styles from './Header.module.css';
-import { LogoUI } from '../../shared/ui/logo/Logo';
-import search from '../../shared/assets/icons/search.png';
-import chevronDown from '../../shared/assets/icons/chevron-down.png';
-import moon from '../../shared/assets/icons/moon.png';
-import { ButtonUI } from '../../shared/ui/button/ButtonUI';
-import clsx from 'clsx';
+import { FC, useState } from "react";
+import styles from "./Header.module.css";
+import { LogoUI } from "../../shared/ui/logo/Logo";
+import { ButtonUI } from "../../shared/ui/button/ButtonUI";
+import clsx from "clsx";
+import { NotificationWidget } from "../notification-widget/NotificationWidget";
+import { Icon } from "../../shared/ui/icon/Icon";
 
 export const Header: FC = () => {
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
+  const toggleNotifications = () => {
+    setIsNotificationsOpen(!isNotificationsOpen);
+  };
+
+  const closeNotifications = () => {
+    setIsNotificationsOpen(false);
+  };
+
   return (
     <header className={styles.header}>
       <LogoUI />
       <nav>
         <ul className={styles.navList}>
           <li className={styles.li}>
-            <a href="#" className={styles.link}>О проекте</a>
+            <a href="#" className={styles.link}>
+              О проекте
+            </a>
           </li>
           <li className={styles.li}>
-            <a href="#" className={styles.link}>Все навыки</a>
-            <img src={chevronDown} alt="стрелка вниз" className={styles.iconChevron} />
+            <a href="#" className={styles.link}>
+              Все навыки
+            </a>
+            <Icon name="chevronDown" size="s" className={styles.iconChevron} />
           </li>
         </ul>
       </nav>
       <div className={styles.searchWrapper}>
-        <img src={search} alt="лупа" className={styles.iconSearch} />
-        <input type="search" className={styles.search} placeholder="Искать навык" />
+        <Icon name="search" size="s" className={styles.iconSearch} />
+        <input
+          type="search"
+          className={styles.search}
+          placeholder="Искать навык"
+        />
       </div>
-      <img src={moon} alt="луна" className={styles.iconMoon} />
+      <Icon name="moon" size="s" className={styles.iconMoon} />
+
+      <button
+        className={styles.notificationButton}
+        onClick={toggleNotifications}
+      >
+        <Icon name="notification" size="s" />
+      </button>
+
       <div className={styles.buttonWrapper}>
         <div className={styles.loginWrapper}>
           <ButtonUI label="Войти" />
@@ -35,6 +60,11 @@ export const Header: FC = () => {
           <ButtonUI label="Зарегистрироваться" colored />
         </div>
       </div>
+
+      <NotificationWidget
+        isOpen={isNotificationsOpen}
+        onClose={closeNotifications}
+      />
     </header>
   );
 };

@@ -1,0 +1,79 @@
+.skill-card {
+  border: 1px solid white;
+  border-radius: 0.75rem;
+  padding: 40px;
+  background-color: white;
+  max-width: 64rem;
+  margin: 1rem auto;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+.skill-card__info {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-self: flex-end;
+}
+
+.skill-card__title {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.skill-card__subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #69735d;
+}
+
+.skill-card__description {
+  font-size: 1rem;
+  color: black;
+  line-height: 1.5;
+  margin-top: 20px;
+}
+
+.skill-card__button {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #abd27a;
+  color: #253017;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: auto;
+}
+
+.skill-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.skill-card__icons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.skill-card__icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.skill-card__icon-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
