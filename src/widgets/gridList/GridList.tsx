@@ -23,6 +23,10 @@ export const GridList = ({
 }: GridListProps) => {
   const lastElementRef = useInfiniteScroll(onLoadMore, hasMore, loading);
 
+    if (users.length === 0 && !loading) {
+    return <div className={styles.empty}>Пользователи не найдены</div>;
+  }
+
   return (
     <div>
       <ul className={styles.grid}>

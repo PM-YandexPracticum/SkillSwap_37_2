@@ -16,7 +16,7 @@ const initialState: UsersState = {
   users: [],
   isLoading: false,
   error: null,
-  page: 1,
+  page: 0,
   hasMore: true 
 };
 
@@ -35,7 +35,7 @@ export const usersSlice = createSlice({
     // сброс состояния к начальному
     resetUsers: (state) => {
       state.users = [];
-      state.page = 1;
+      state.page = 0;
       state.hasMore = true;
       state.isLoading = false;
       state.error = null;
@@ -49,8 +49,11 @@ export const usersSlice = createSlice({
       })
       .addCase(getUsersThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users = [...state.users, ...action.payload];
-        state.hasMore = action.payload.length === 20; 
+        if (action.payload.users.length > 0) {
+        state.users = [...state.users, ...action.payload.users];
+        state.page += 1;
+        }
+        state.hasMore = action.payload.hasMore; 
       })
       .addCase(getUsersThunk.rejected, (state, action) => {
         state.isLoading = false;

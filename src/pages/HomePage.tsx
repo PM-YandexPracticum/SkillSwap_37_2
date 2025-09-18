@@ -20,7 +20,6 @@ import { getUser } from "../services/user/user-slice";
 import { TUser } from "../api/types";
 import { SkillCard } from "../features/skills/skillCard/SkillCard";
 import { formatAge } from "../shared/lib/helpers";
-import { setPage } from "../services/users/users-slice";
 
 export const HomePage = () => {
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
@@ -35,17 +34,20 @@ export const HomePage = () => {
 
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
-    dispatch(getUsersThunk(1));
+
+      if (page === 0) {
+      dispatch(getUsersThunk(1));
+    }
+
     getSkillsSubCategoriesApi().then((data) =>
       setSubCategories(data.subcategories)
     );
-  }, [dispatch]);
+  }, [dispatch, page]);
 
   // функция загрузки последующих данных
   const handleLoadMore = () => {
     if (!isLoading && hasMore) {
       const nextPage = page + 1;
-      dispatch(setPage(nextPage));
       dispatch(getUsersThunk(nextPage));
     }
   };

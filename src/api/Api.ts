@@ -7,7 +7,33 @@ import {
   TResponseSubcategories,
 } from "./types";
 import { calculateAge } from "../shared/lib/helpers";
+import { PAGE_SIZE } from "../shared/constants/pagination";
 
+export const getUsersPaginatedApi = async (
+  page: number
+): Promise<TResponseUsers> => {
+  try {
+    const response = await fetch("/db/users.json");
+    const data = await response.json();
+
+    const startIndex = (page - 1) * PAGE_SIZE;
+    const endIndex = startIndex + PAGE_SIZE;
+    const paginatedUsers = data.users.slice(startIndex, endIndex);
+
+    const usersWithAge = paginatedUsers.map((user: TUser) => ({
+      ...user,
+      age: calculateAge(user.birthdate),
+    }));
+
+    return {
+      users: usersWithAge,
+      hasMore: endIndex < data.users.length,
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 export const getUsersApi = async (): Promise<TResponseUsers> => {
   try {
     const response = await fetch("/db/users.json");
@@ -17,7 +43,7 @@ export const getUsersApi = async (): Promise<TResponseUsers> => {
       ...user,
       age: calculateAge(user.birthdate),
     }));
-    return { users: usersWithAge };
+    return { users: usersWithAge, hasMore: false };
   } catch (error) {
     console.error(error);
     throw error;
