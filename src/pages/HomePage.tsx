@@ -1,3 +1,5 @@
+// src\pages\HomePage.tsx
+
 import { useEffect, useState } from "react";
 import { Footer } from "../widgets/footer/Footer";
 import { Header } from "../widgets/header/Header";
@@ -49,33 +51,52 @@ export const HomePage = () => {
     onExchange: () => alert("Обмен предложен!"),
   };
 
-
-
-
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
   const dispatch = useDispatch();
 
-  const user = useSelector(getUser);  
-  const users = useSelector((state: RootState) => state.users.users);
+  const user = useSelector(getUser);
+  const { users, isLoading, hasMore, page } = useSelector(
+    (state: RootState) => state.users
+  );
+  // const users = useSelector((state: RootState) => state.users.users);
   
   const [subCategories, setSubCategories] = useState<TPlace[]>([]);
   
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
-    dispatch(getUsersThunk());
+    // dispatch(getUsersThunk());
+    // if (page === 0) {
+    //   dispatch(getUsersThunk(1));
+    // }
     getSkillsSubCategoriesApi()
       .then(data => setSubCategories(data.subcategories));
+  // }, [dispatch, page]);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (page === 0) {
+      dispatch(getUsersThunk(1));
+    }
+  }, [dispatch, page]);
 
   const [selectedGender, setSelectedGender] = useState<string>('');
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
-
+ 
   const handleGenderChange = (gender: string) => {
     setSelectedGender(gender);
   };
   const handleCityChange = (cities: string[]) => {
     setSelectedCities(cities);
   };
+
+  // функция загрузки последующих данных
+  const handleLoadMore = () => {
+    if (!isLoading && hasMore) {
+      const nextPage = page + 1;
+      dispatch(getUsersThunk(nextPage));
+    }
+  };
+
   return (
     <>
       <Header />
@@ -87,7 +108,14 @@ export const HomePage = () => {
         selectedGender={selectedGender}
         selectedCities={selectedCities}
         />
-        <GridList users={users} subCategories={subCategories}/>
+        <GridList
+          users={users}
+          subCategories={subCategories}
+          loading={isLoading}
+          hasMore={hasMore}
+          onLoadMore={handleLoadMore}
+        />
+        {/* <GridList users={users} subCategories={subCategories}/> */}
       </div>
       
 
