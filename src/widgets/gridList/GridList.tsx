@@ -2,9 +2,10 @@
 import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
 import { TPlace, TUserCard } from '../../api/types';
-import { formatAge } from '../../shared/lib/helpers';
+// import { formatAge } from '../../shared/lib/helpers';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
 import { Loader } from '../../shared/ui/loader/Loader';
+import { birthdayToFormatedAge, getImageUrl } from '../../shared/lib/helpers';
 
 type GridListProps = {
   users: TUserCard[];
@@ -39,8 +40,8 @@ export const GridList = ({
               <SkillCard
                 name={user.name}
                 from={user.from}
-                age={formatAge(user.age)}
-                avatar={`/db/users-photo/${user.photo}`}
+                age={birthdayToFormatedAge(user.birthdate)}
+                avatar={getImageUrl(user.photo)}
                 teachSkills={user.skill}
                 learnSkills={user.need_subcat}
                 subCategories={subCategories}

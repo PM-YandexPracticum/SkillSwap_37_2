@@ -19,8 +19,8 @@ import { useDispatch } from '@store';
 import { getUserThunk } from "../services/user/actions";
 
 import { getUser } from "../services/user/user-slice";
+import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
 import { UserCard } from "../features/users/userCard/UserCard";
-import { formatAge } from "../shared/lib/helpers";
 import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
 import { SkillTag } from "../features/skills/skillTag/SkillTag";
 import { Button } from "../shared/ui/button/Button";
@@ -65,13 +65,8 @@ export const HomePage = () => {
   
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
-    // dispatch(getUsersThunk());
-    // if (page === 0) {
-    //   dispatch(getUsersThunk(1));
-    // }
     getSkillsSubCategoriesApi()
       .then(data => setSubCategories(data.subcategories));
-  // }, [dispatch, page]);
   }, [dispatch]);
 
   useEffect(() => {
@@ -135,8 +130,8 @@ export const HomePage = () => {
       {user && <UserCard
                   name={user.name}
                   from={user.from}
-                  age={formatAge(user.age)}
-                  avatar={`/db/users-photo/${user.photo}`}
+                  age={birthdayToFormatedAge(user.birthdate)}
+                  avatar={getImageUrl(user.photo)}
                   teachSkills={user.skill}
                   learnSkills={user.need_subcat}
                   subCategories={subCategories}
