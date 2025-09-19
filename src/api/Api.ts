@@ -12,7 +12,6 @@ const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
 
 export const getUsersApi = async (
   page = 1,
-  limit = USERS_PAGE_SIZE
 ): Promise<TResponseUsers> => {
   try {
     const response = await fetch('/db/users.json');
@@ -23,11 +22,14 @@ export const getUsersApi = async (
       age: calculateAge(user.birthdate),
     }));
 
-    const start = (page - 1) * limit;
-    const end = start + limit;
-    const paginated = usersWithAge.slice(start, end);
+    const startIndex = (page - 1) * USERS_PAGE_SIZE;
+    const endIndex = startIndex + USERS_PAGE_SIZE;
+    const paginated = usersWithAge.slice(startIndex, endIndex);
 
-    return { users: paginated };
+    return { 
+      users: paginated,
+      hasMore: endIndex < data.users.length
+    };
   } catch (error) {
     console.error(error);
     throw error;
