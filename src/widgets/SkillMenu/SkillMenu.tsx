@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './SkillMenu.module.css';
 import { SkillMenuCategories } from './skillMenuCategory/skillMenuCategory';
-import { getSkillsCategoriesApi, getSkillsSubCategoriesApi } from '../../api/Api';
 import { TCategory, TSubcategory } from '../../api/types';
-
+import { getSkillsCategoriesApi, getSkillsSubCategoriesApi } from '../../api/Api';
 
 export const SkillMenu = () => {
   const [categories, setCategories] = useState<TCategory[]>([]);
@@ -11,11 +10,11 @@ export const SkillMenu = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try{
+      try {
         const categoriesResponse = await getSkillsCategoriesApi();
         const subcategoriesResponse = await getSkillsSubCategoriesApi();
         setCategories(categoriesResponse.categories);
-        setSubcategories(subcategoriesResponse.subcategories);
+        setSubcategories(subcategoriesResponse.subcategories || []);
       } catch (error) {
         console.error("Ошибка загрузки данных:", error);
       }
@@ -24,12 +23,12 @@ export const SkillMenu = () => {
     fetchData();
   }, []);
 
-  return(
+  return (
     <div className={styles.container}>
       <SkillMenuCategories 
-        categories={categories}
-        subcategories={subcategories}
-        icon=''/>
+        categories={categories} 
+        subcategories={subcategories} 
+      />
     </div>
   );
 };
