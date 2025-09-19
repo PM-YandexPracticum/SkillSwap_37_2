@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+// src\features\filters\FilterSection.tsx
+
+import React, { useState } from 'react';
 import styles from './FilterSection.module.css';
 import { Icon } from '../../shared/ui/icon/Icon';
+import { RootState, useSelector } from '@store';
 
 interface FilterSectionProps {
   onGenderChange: (value: string) => void;
-  onPlaceChange: (value: string[]) => void;
+  onPlaceChange: ( selectedPlaces: number[]) => void;
   selectedGender: string;
-  selectedPlaces: string[];
+  selectedPlaces: number[];
 }
 
 export const FilterSection: React.FC<FilterSectionProps> = ({
@@ -15,25 +18,19 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
   selectedGender,
   selectedPlaces
 }) => {
-  const [places, setPlaces] = useState<{id: number; name: string}[]>([]);
+  // const places = useSelector(state => state.places.places);
+  const places = useSelector((state: RootState) => state.places.places);
   const [showAllPlaces, setShowAllPlaces] = useState(false);
-
-  useEffect(() => {
-    fetch('/db/places.json')
-      .then(response => response.json())
-      .then(data => setPlaces(data.places || []))
-      .catch(error => console.error('Ошибка загрузки городов:', error));
-  }, []);
 
   const mainPlaces = places.slice(0, 5);
   const otherPlaces = places.slice(5);
 
-  // Обработчик выбора отдельного города
-  const handlePlaceToggle = (placeId: string) => {
-    const newPlace = selectedPlaces.includes(placeId)
+  // добавляем/убираем из "списка id" "id города"
+  const handlePlaceToggle = (placeId: number) => {
+    const newPlaces = selectedPlaces.includes(placeId)
       ? selectedPlaces.filter(id => id !== placeId)
       : [...selectedPlaces, placeId];
-    onPlaceChange(newPlace);
+    onPlaceChange(newPlaces);
   };
 
   return (
@@ -91,8 +88,8 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
             <label key={place.id} className={styles.item}>
               <input
                 type="checkbox"
-                checked={selectedPlaces.includes(place.id.toString())}
-                onChange={() => handlePlaceToggle(place.id.toString())}
+                checked={selectedPlaces.includes(place.id)}
+                onChange={() => handlePlaceToggle(place.id)}
                 className={styles.input}
               />
               <span className={styles.checkbox}></span>
@@ -119,8 +116,8 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
                 <label key={place.id} className={styles.item}>
                   <input
                     type="checkbox"
-                    checked={selectedPlaces.includes(place.id.toString())}
-                    onChange={() => handlePlaceToggle(place.id.toString())}
+                    checked={selectedPlaces.includes(place.id)}
+                    onChange={() => handlePlaceToggle(place.id)}
                     className={styles.input}
                   />
                   <span className={styles.checkbox}></span>

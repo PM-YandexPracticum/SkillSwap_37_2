@@ -24,18 +24,16 @@ import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, SkillForm 
 
 //То, что есть
 import { HomePage } from "../pages/HomePage";
-// import { FilterSection } from "../features/filters/FilterSection";
-// import { AuthForm } from "../features/auth/AuthForm";
-// import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
 
 //Данные/типы/стор (для каталога)
-import { useDispatch } from "@store";
+import { RootState, useDispatch } from "@store";
 import { useSelector } from "react-redux";
-import { RootState } from "../services/store";
-import { getUsersThunk } from "../services/users/actions";
-import { getSkillsSubCategoriesApi } from "@api/Api";
-import { TPlace, TSubcategory } from "@api/types";
+import { TPlace } from "@api/types";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
+
+import { getPlacesThunk } from "../services/places/actions";
+import { getUsersThunk } from "../services/users/actions";
+import { getCategoriesThunk } from "../services/categories/actions";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
@@ -50,19 +48,12 @@ const Layout: React.FC = () => (
 
 //Каталог (FilterSection + GridList)
 const CatalogContent: React.FC = () => {
-  const dispatch = useDispatch();
+
   const users = useSelector((s: RootState) => s.users.users);
 
-  const [subCategories, setSubCategories] = React.useState<TSubcategory[]>([]);
+  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
   const [selectedGender, setSelectedGender] = React.useState<string>("");
-  const [selectedPlaces, setSelectedPlaces] = React.useState<TPlace[]>([]);
-
-  React.useEffect(() => {
-    dispatch(getUsersThunk(1));
-    getSkillsSubCategoriesApi()
-      .then((data) => setSubCategories(data.subcategories ?? []))
-      .catch((e) => console.error("Не удалось загрузить подкатегории:", e));
-  }, [dispatch]);
+  const [selectedPlaces, setSelectedPlaces] = React.useState<number[]>([]);
 
   return (
     <section className="page page-catalog">
@@ -70,7 +61,7 @@ const CatalogContent: React.FC = () => {
         onGenderChange={setSelectedGender}
         onPlaceChange={setSelectedPlaces}
         selectedGender={selectedGender}
-        selectedCities={selectedCities}
+        selectedPlaces={selectedPlaces}
       />
       <GridList
         users={users}
@@ -202,6 +193,17 @@ const NotFoundPageStub: React.FC = () => (
 );
 
 export const App: React.FC = () => {
+
+
+  const dispatch = useDispatch();
+  
+  React.useEffect(() => {
+    dispatch(getUsersThunk(1));
+    dispatch(getPlacesThunk());
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
+
+
   return (
     <BrowserRouter>
       <Routes>
