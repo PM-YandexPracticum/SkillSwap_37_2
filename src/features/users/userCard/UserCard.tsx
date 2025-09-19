@@ -4,8 +4,7 @@ import styles from './UserCard.module.css';
 import { Button } from '../../../shared/ui/button/Button';
 import { SkillTag } from '../../skills/skillTag/SkillTag';
 import { TPlace } from '../../../api/types';
-// import { Icon } from '../../shared/ui/icon/Icon';
-import { Icon } from '../../../shared/ui/icon/Icon';
+
 
 type UserCardProps = {
   name: string;

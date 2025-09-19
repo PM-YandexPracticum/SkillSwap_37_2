@@ -37,7 +37,7 @@ export const GridList = ({
               className={styles.gridItem}
               ref={index === users.length - 1 ? lastElementRef : undefined}
             >
-              <SkillCard
+              <UserCard
                 name={user.name}
                 from={user.from}
                 age={birthdayToFormatedAge(user.birthdate)}
