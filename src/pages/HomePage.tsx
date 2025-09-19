@@ -21,7 +21,7 @@ import { UserCard } from "../features/users/userCard/UserCard";
 import { formatAge } from "../shared/lib/helpers";
 import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
 import { SkillTag } from "../features/skills/skillTag/SkillTag";
-import { ButtonUI } from "../shared/ui/button/ButtonUI";
+import { Button } from "../shared/ui/button/Button";
 import styles from "./HomePage.module.css";
 import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
 

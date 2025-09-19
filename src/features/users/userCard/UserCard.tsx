@@ -1,9 +1,11 @@
 import { SkillName } from '../../../shared/types/SkillName';
 import like from '../../../shared/assets/icons/like.png';
 import styles from './UserCard.module.css';
-import { ButtonUI } from '../../../shared/ui/button/ButtonUI';
+import { Button } from '../../../shared/ui/button/Button';
 import { SkillTag } from '../../skills/skillTag/SkillTag';
 import { TPlace } from '../../../api/types';
+// import { Icon } from '../../shared/ui/icon/Icon';
+import { Icon } from '../../../shared/ui/icon/Icon';
 
 type UserCardProps = {
   name: string;
@@ -58,7 +60,7 @@ export const UserCard = ({
             </div>
           </section>
 
-          <ButtonUI colored label='Подробнее' className={styles.button} />
+          <Button colored className={styles.button}>Подробнее</Button>
         </article>
     );
 };
