@@ -1,10 +1,11 @@
 // src\widgets\gridList\GridList.tsx
+
 import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
-import { TPlace, TUser } from '../../api/types';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
 import { Loader } from '../../shared/ui/loader/Loader';
 import { birthdayToFormatedAge, getImageUrl } from '../../shared/lib/helpers';
+import { TPlace, TUserCard } from '@api/types';
 
 type GridListProps = {
   users: TUser[];
