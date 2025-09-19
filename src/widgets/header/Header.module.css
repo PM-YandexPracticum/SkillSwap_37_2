@@ -58,19 +58,9 @@ li:has(img) {
   cursor: pointer;
 }
 
-.buttonWrapper {
+.buttonsWrapper {
   display: flex;
   gap: 8px;
-}
-
-.loginWrapper {
-  width: 92px;
-  flex-shrink: 0;
-}
-
-.registryWrapper {
-  width: 208px;
-  flex-shrink: 0;
 }
 
 .notificationButton {
