@@ -1,4 +1,5 @@
 // src\api\Api.ts
+import { PLACES_JSON_FILE, USERS_JSON_FILE } from "@const/paths";
 import {
   TUser,
   TResponseUsers,
@@ -6,7 +7,6 @@ import {
   TResponseCategories,
   TResponseSubcategories,
 } from "./types";
-import { calculateAge } from "../shared/lib/helpers";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
 
@@ -14,17 +14,12 @@ export const getUsersApi = async (
   page = 1,
 ): Promise<TResponseUsers> => {
   try {
-    const response = await fetch('/db/users.json');
+    const response = await fetch(USERS_JSON_FILE);
     const data = await response.json();
-
-    const usersWithAge = data.users.map((user: TUser) => ({
-      ...user,
-      age: calculateAge(user.birthdate),
-    }));
 
     const startIndex = (page - 1) * USERS_PAGE_SIZE;
     const endIndex = startIndex + USERS_PAGE_SIZE;
-    const paginated = usersWithAge.slice(startIndex, endIndex);
+    const paginated = data.users.slice(startIndex, endIndex);
 
     return { 
       users: paginated,
@@ -38,14 +33,27 @@ export const getUsersApi = async (
 
 export const getUserByID = async (userId: number): Promise<TUser | null> => {
   try {
-    const response = await fetch("/db/users.json");
+    const response = await fetch(USERS_JSON_FILE);
     const data = await response.json();
-    const user = data.users.find((user: TUser) => user.id === userId);
-    const usersWithAge = {
-      ...user,
-      age: calculateAge(user.birthdate),
-    };
-    return usersWithAge || null; // если пользователь не найден
+    return data.users.find((user: TUser) => user.id === userId);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getUsersBySubCategory = async (
+  subCategoryId: number
+): Promise<TUser[]> => {
+  try {
+    const response = await fetch(USERS_JSON_FILE);
+    const data = await response.json();
+
+    const filtered = data.users.filter((user: TUser) =>
+      user.subCategoryId === subCategoryId
+    );
+
+    return filtered;
   } catch (error) {
     console.error(error);
     throw error;
@@ -54,7 +62,7 @@ export const getUserByID = async (userId: number): Promise<TUser | null> => {
 
 export const getPlacesApi = async (): Promise<TResponsePlaces> => {
   try {
-    const response = await fetch("/db/places.json");
+    const response = await fetch(PLACES_JSON_FILE);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -86,16 +94,3 @@ export const getSkillsSubCategoriesApi =
       throw error;
     }
   };
-
-// skill больше нет. в соответствии с макетом они лишь часть пользователя.
-// нет скилов без пользователя и у каждого пользователя по одному скилу
-// export const getSkillsApi = async (): Promise<TResponsePlaces> => {
-//   try {
-//     const response = await fetch('/db/skills.json')
-//     const data = await response?.json()
-//     return data
-//   } catch(error) {
-//     console.error(error)
-//     throw error
-//   }
-// }

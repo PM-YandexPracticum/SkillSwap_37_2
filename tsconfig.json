@@ -17,7 +17,8 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
-      "@store": ["services/store"]
+      "@store": ["services/store"],
+      "@const/*": ["shared/const/*"]
     }
   },
   "include": ["src", "src/types"]

@@ -1,4 +1,12 @@
-export const formatAge = (age: string): string => {
+// src\shared\lib\helpers.ts
+
+import { USERS_PHOTO_PATH } from "@const/paths";
+
+export const birthdayToFormatedAge = (birthdate: string): string => {
+  return formatAge(calculateAge(birthdate));
+}
+
+const formatAge = (age: string): string => {
   const ageNum = parseInt(age);
   const lastDigit = ageNum % 10;
   const lastTwoDigits = ageNum % 100;
@@ -18,7 +26,7 @@ export const formatAge = (age: string): string => {
   return `${age} лет`;
 };
 
-export const calculateAge = (birthdate: string): string => {
+const calculateAge = (birthdate: string): string => {
   const birthDate = new Date(birthdate);
   const today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
@@ -32,5 +40,5 @@ export const calculateAge = (birthdate: string): string => {
 };
 
 export const getImageUrl = (photoPath: string): string => {
-  return `/db/users-photo/${photoPath}`;
+  return `${USERS_PHOTO_PATH}${photoPath}`;
 };

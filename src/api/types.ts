@@ -17,7 +17,7 @@ export type TUser = {
   cat_text: string; //Текстовое название категории (из skills_categories.json)
   sub_text: string; //Текстовое название подкатегории (из skills_subcategories.json)
   birthdate: string; // др в формате YYYY-MM-DD
-  age: string;
+  // age: string;
   email: string;
   about?: string; //Описание пользователя (вводится при регистрации)
   created_at: string; //Дата создания аккаунта
@@ -31,8 +31,8 @@ TUser,
 'birthdate' |
 'photo' |
 'skill' |
-'need_subcat' |
-'age'
+'need_subcat' 
+// | 'age'
  >;
 
 
