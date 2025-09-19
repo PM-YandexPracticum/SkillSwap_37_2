@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Input } from "../../shared/ui/input/Input";
 import { Dropdown } from "../../shared/ui/input/input-dropdown/InputDropdown";
 import styles from "./SkillForm.module.css";
-import { ButtonUI } from "../../shared/ui/button/ButtonUI";
+import { Button } from "../../shared/ui/button/Button";
 import { DragDrop } from "../../shared/ui/dragdrop/DragDrop";
 import {
   getSkillsCategoriesApi,
@@ -110,8 +110,8 @@ export const SkillForm = () => {
           <DragDrop />
         </fieldset>
         <div className={styles.buttonGroup}>
-          <ButtonUI label={"Назад"}></ButtonUI>
-          <ButtonUI label={"Продолжить"} colored={true}></ButtonUI>
+          <Button>Назад</Button>
+          <Button colored>Продолжить</Button>
         </div>
       </form>
     </div>

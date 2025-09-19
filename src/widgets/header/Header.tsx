@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
-import { ButtonUI } from "../../shared/ui/button/ButtonUI";
+import { Button } from "../../shared/ui/button/Button";
 import clsx from "clsx";
 import { NotificationWidget } from "../notification-widget/NotificationWidget";
 import { Icon } from "../../shared/ui/icon/Icon";
@@ -52,13 +52,9 @@ export const Header: FC = () => {
         <Icon name="notification" size="s" />
       </button>
 
-      <div className={styles.buttonWrapper}>
-        <div className={styles.loginWrapper}>
-          <ButtonUI label="Войти" />
-        </div>
-        <div className={styles.registryWrapper}>
-          <ButtonUI label="Зарегистрироваться" colored />
-        </div>
+      <div className={styles.buttonsWrapper}>
+          <Button size={92}>Войти</Button>
+          <Button size={208} colored>Зарегистрироваться</Button>
       </div>
 
       <NotificationWidget

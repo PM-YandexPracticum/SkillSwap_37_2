@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from "react";
 import styles from "./AuthForm.module.css";
 import clsx from "clsx";
-import { ButtonUI } from "../../shared/ui/button/ButtonUI";
+import { Button } from "../../shared/ui/button/Button";
 import { Input } from "../../shared/ui/input/Input";
 import { PasswordInput } from "../../shared/ui/input/password-input/PasswordInput";
 import { SocialButton } from "../../shared/ui/social-button/SocialButton";
@@ -113,7 +113,7 @@ export const AuthForm: FC = () => {
             label="Пароль"
           />
         </form>
-        <ButtonUI label="Далее" colored onClick={() => {}} />
+        <Button colored onClick={() => {}}>Далее</Button>
       </div>
     </div>
   );

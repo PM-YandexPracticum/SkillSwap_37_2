@@ -1,5 +1,5 @@
 // src\widgets\gridList\GridList.tsx
-import { SkillCard } from '../../features/skills/skillCard/SkillCard';
+import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
 import { TPlace, TUserCard } from '../../api/types';
 import { formatAge } from '../../shared/lib/helpers';
