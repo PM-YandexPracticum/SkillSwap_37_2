@@ -1,6 +1,6 @@
 import { TPlace } from "../../api/types";
 
-// фича prepareSkillsToRender возвращает один или несколько скилов
+// фича prepareSkillsToRender возвращает массив скилов
 // таким образом, чтобы они уместились в строке целиком, без обрезания
 export function prepareSkillsToRender(
   learnSkills: number[],
