@@ -34,7 +34,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../services/store";
 import { getUsersThunk } from "../services/users/actions";
 import { getSkillsSubCategoriesApi } from "@api/Api";
-import { TPlace } from "@api/types";
+import { TPlace, TSubcategory } from "@api/types";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
@@ -53,9 +53,9 @@ const CatalogContent: React.FC = () => {
   const dispatch = useDispatch();
   const users = useSelector((s: RootState) => s.users.users);
 
-  const [subCategories, setSubCategories] = React.useState<TPlace[]>([]);
+  const [subCategories, setSubCategories] = React.useState<TSubcategory[]>([]);
   const [selectedGender, setSelectedGender] = React.useState<string>("");
-  const [selectedCities, setSelectedCities] = React.useState<string[]>([]);
+  const [selectedPlaces, setSelectedPlaces] = React.useState<TPlace[]>([]);
 
   React.useEffect(() => {
     dispatch(getUsersThunk(1));
@@ -68,7 +68,7 @@ const CatalogContent: React.FC = () => {
     <section className="page page-catalog">
       <FilterSection
         onGenderChange={setSelectedGender}
-        onCityChange={setSelectedCities}
+        onPlaceChange={setSelectedPlaces}
         selectedGender={selectedGender}
         selectedCities={selectedCities}
       />

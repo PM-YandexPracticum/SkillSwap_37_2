@@ -109,17 +109,6 @@ type TOfferRaw = {
   sawOffer: number;
 };
 
-export type TOfferResult = {
-  offerUserId: number;
-  offerUserName: string;
-  skillOwnerId: number;
-  skillOwnerName: string;
-  confirm: number;
-  sawOffer: number;
-  offerDate: string;           // всегда есть
-  confirmDate: string | null;  // только если confirm === 1
-};
-
 const formatPastDate = (daysAgo: number): string => {
   const date = new Date();
   date.setDate(date.getDate() - daysAgo);

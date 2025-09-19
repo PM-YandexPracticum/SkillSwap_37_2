@@ -2,7 +2,6 @@ import { FC, useState } from "react";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
 import { Button } from "../../shared/ui/button/Button";
-import clsx from "clsx";
 import { NotificationWidget } from "../notification-widget/NotificationWidget";
 import { Icon } from "../../shared/ui/icon/Icon";
 

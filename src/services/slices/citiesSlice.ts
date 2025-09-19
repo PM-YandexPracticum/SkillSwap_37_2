@@ -1,35 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface City {
+export interface Place {
   id: number;
   name: string;
   selected: boolean;
 }
 
-interface CitiesState {
-  list: City[];
+interface PlacesState {
+  list: Place[];
 }
 
-const initialState: CitiesState = {
-  list: [
-    { id: 1, name: "Москва", selected: false },
-    { id: 2, name: "Санкт-Петербург", selected: false },
-    { id: 3, name: "Новосибирск", selected: false },
-    { id: 4, name: "Екатеринбург", selected: false },
-    { id: 5, name: "Казань", selected: false },
-  ],
+const initialState: PlacesState = {
+  list: [],
 };
 
-const citiesSlice = createSlice({
-  name: "cities",
+const placesSlice = createSlice({
+  name: "places",
   initialState,
   reducers: {
-    toggleCity(state, action: PayloadAction<number>) {
-      const city = state.list.find(c => c.id === action.payload);
-      if (city) city.selected = !city.selected;
+    togglePlace(state, action: PayloadAction<number>) {
+      const place = state.list.find(c => c.id === action.payload);
+      if (place) place.selected = !place.selected;
     },
   },
 });
 
-export const { toggleCity } = citiesSlice.actions;
-export default citiesSlice.reducer;
+export const { togglePlace } = placesSlice.actions;
+export default placesSlice.reducer;

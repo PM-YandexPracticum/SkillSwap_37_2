@@ -4,36 +4,36 @@ import { Icon } from '../../shared/ui/icon/Icon';
 
 interface FilterSectionProps {
   onGenderChange: (value: string) => void;
-  onCityChange: (value: string[]) => void;
+  onPlaceChange: (value: string[]) => void;
   selectedGender: string;
-  selectedCities: string[];
+  selectedPlaces: string[];
 }
 
 export const FilterSection: React.FC<FilterSectionProps> = ({
   onGenderChange,
-  onCityChange,
+  onPlaceChange,
   selectedGender,
-  selectedCities
+  selectedPlaces
 }) => {
-  const [cities, setCities] = useState<{id: number; name: string}[]>([]);
-  const [showAllCities, setShowAllCities] = useState(false);
+  const [places, setPlaces] = useState<{id: number; name: string}[]>([]);
+  const [showAllPlaces, setShowAllPlaces] = useState(false);
 
   useEffect(() => {
     fetch('/db/places.json')
       .then(response => response.json())
-      .then(data => setCities(data.places || []))
+      .then(data => setPlaces(data.places || []))
       .catch(error => console.error('Ошибка загрузки городов:', error));
   }, []);
 
-  const mainCities = cities.slice(0, 5);
-  const otherCities = cities.slice(5);
+  const mainPlaces = places.slice(0, 5);
+  const otherPlaces = places.slice(5);
 
   // Обработчик выбора отдельного города
-  const handleCityToggle = (cityId: string) => {
-    const newCities = selectedCities.includes(cityId)
-      ? selectedCities.filter(id => id !== cityId)
-      : [...selectedCities, cityId];
-    onCityChange(newCities);
+  const handlePlaceToggle = (placeId: string) => {
+    const newPlace = selectedPlaces.includes(placeId)
+      ? selectedPlaces.filter(id => id !== placeId)
+      : [...selectedPlaces, placeId];
+    onPlaceChange(newPlace);
   };
 
   return (
@@ -87,24 +87,24 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         
         {/* Основные города */}
         <div className={styles.items}>
-          {mainCities.map((city) => (
-            <label key={city.id} className={styles.item}>
+          {mainPlaces.map((place) => (
+            <label key={place.id} className={styles.item}>
               <input
                 type="checkbox"
-                checked={selectedCities.includes(city.id.toString())}
-                onChange={() => handleCityToggle(city.id.toString())}
+                checked={selectedPlaces.includes(place.id.toString())}
+                onChange={() => handlePlaceToggle(place.id.toString())}
                 className={styles.input}
               />
               <span className={styles.checkbox}></span>
-              <span className={styles.text}>{city.name}</span>
+              <span className={styles.text}>{place.name}</span>
             </label>
           ))}
           
           {/* Переключатель с выпадающим списком */}
-          <div className={styles.toggle} onClick={() => setShowAllCities(!showAllCities)}>
+          <div className={styles.toggle} onClick={() => setShowAllPlaces(!showAllPlaces)}>
             <span className={styles.text}>Все города</span>
             <Icon 
-              name={showAllCities ? "chevronUp" : "chevronDown"} 
+              name={showAllPlaces ? "chevronUp" : "chevronDown"} 
               size="s" 
               className={styles.icon}
             />
@@ -112,19 +112,19 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         </div>
 
         {/* Выпадающий список со всеми остальными городами */}
-        {showAllCities && otherCities.length > 0 && (
+        {showAllPlaces && otherPlaces.length > 0 && (
           <div className={styles.dropdown}>
             <div className={styles.items}>
-              {otherCities.map((city) => (
-                <label key={city.id} className={styles.item}>
+              {otherPlaces.map((place) => (
+                <label key={place.id} className={styles.item}>
                   <input
                     type="checkbox"
-                    checked={selectedCities.includes(city.id.toString())}
-                    onChange={() => handleCityToggle(city.id.toString())}
+                    checked={selectedPlaces.includes(place.id.toString())}
+                    onChange={() => handlePlaceToggle(place.id.toString())}
                     className={styles.input}
                   />
                   <span className={styles.checkbox}></span>
-                  <span className={styles.text}>{city.name}</span>
+                  <span className={styles.text}>{place.name}</span>
                 </label>
               ))}
             </div>

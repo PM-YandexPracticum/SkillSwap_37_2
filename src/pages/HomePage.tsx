@@ -65,13 +65,13 @@ export const HomePage = () => {
   }, [dispatch, page]);
 
   const [selectedGender, setSelectedGender] = useState<string>('');
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
  
   const handleGenderChange = (gender: string) => {
     setSelectedGender(gender);
   };
-  const handleCityChange = (cities: string[]) => {
-    setSelectedCities(cities);
+  const handlePlaceChange = (places: string[]) => {
+    setSelectedPlaces(places);
   };
 
   // функция загрузки последующих данных
@@ -88,9 +88,9 @@ export const HomePage = () => {
       <div className={styles.wrapper}>
         <FilterSection
         onGenderChange={handleGenderChange}
-        onCityChange={handleCityChange}
+        onPlaceChange={handlePlaceChange}
         selectedGender={selectedGender}
-        selectedCities={selectedCities}
+        selectedPlaces={selectedPlaces}
         />
         <GridList
           users={users}
