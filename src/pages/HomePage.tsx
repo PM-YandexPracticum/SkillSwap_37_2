@@ -1,32 +1,22 @@
 // src\pages\HomePage.tsx
 
 import { useEffect, useState } from "react";
-import { Footer } from "../widgets/footer/Footer";
-import { Header } from "../widgets/header/Header";
-import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
-import { DropdownGroupedDemo } from "../widgets/dropdownDemo/DropdownGroupedDemo";
-import { AuthForm } from "../features/auth/AuthForm";
-import { SkillForm } from "../widgets/skillForm/SkillForm";
-import { FilterSection } from "../features/filters/FilterSection";
-import { GridList } from "../widgets/gridList/GridList";
-import { getSkillsSubCategoriesApi } from "../api/Api";
-import { TPlace } from "../api/types";
 
-import { useSelector } from "react-redux";
-import { getUsersThunk } from "../services/users/actions";
-import { RootState } from "../services/store";
-import { useDispatch } from "@store";
+import { useSelector } from 'react-redux';
+import { RootState, useDispatch } from '@store';
+
 import { getUserThunk } from "../services/user/actions";
-
+import { getUsersThunk } from '../services/users/actions';
 import { getUser } from "../services/user/user-slice";
 import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
 import { UserCard } from "../features/users/userCard/UserCard";
-import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
-import { SkillTag } from "../features/skills/skillTag/SkillTag";
-import { Button } from "../shared/ui/button/Button";
+
 import styles from "./HomePage.module.css";
 import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
-import { SkillMenu } from "../widgets/SkillMenu/SkillMenu";
+import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTable, SkillForm, SkillMenu } from "@widgets";
+import { AuthForm, FilterSection, SkillCardDetails } from "@features";
+import { getSkillsSubCategoriesApi } from "@api/Api";
+import { TPlace } from "@api/types";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -75,14 +65,14 @@ export const HomePage = () => {
     }
   }, [dispatch, page]);
 
-  const [selectedGender, setSelectedGender] = useState<string>("");
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
-
+  const [selectedGender, setSelectedGender] = useState<string>('');
+  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
+ 
   const handleGenderChange = (gender: string) => {
     setSelectedGender(gender);
   };
-  const handleCityChange = (cities: string[]) => {
-    setSelectedCities(cities);
+  const handlePlaceChange = (places: string[]) => {
+    setSelectedPlaces(places);
   };
 
   // функция загрузки последующих данных
@@ -97,10 +87,10 @@ export const HomePage = () => {
       <Header />
       <div className={styles.wrapper}>
         <FilterSection
-          onGenderChange={handleGenderChange}
-          onCityChange={handleCityChange}
-          selectedGender={selectedGender}
-          selectedCities={selectedCities}
+        onGenderChange={handleGenderChange}
+        onPlaceChange={handlePlaceChange}
+        selectedGender={selectedGender}
+        selectedPlaces={selectedPlaces}
         />
         <GridList
           users={users}
@@ -109,7 +99,6 @@ export const HomePage = () => {
           hasMore={hasMore}
           onLoadMore={handleLoadMore}
         />
-        {/* <GridList users={users} subCategories={subCategories}/> */}
       </div>
 
       <h2>Вариант Dropdown 1</h2>
@@ -136,6 +125,9 @@ export const HomePage = () => {
           subCategories={subCategories}
         />
       )}
+
+      <h2>OffersTable</h2>
+      <OffersTable userId={API_USER_ID} />
 
       <h2>SkillCardDetails</h2>
       {/* Настроить передачу свойств от текущего пользователя
