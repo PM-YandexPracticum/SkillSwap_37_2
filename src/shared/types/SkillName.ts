@@ -1,4 +1,4 @@
-export type SkillName =
+export type TSkillName =
   | "Игра на барабанах"
   | "Управление командой"
   | "Маркетинг и реклама"

@@ -1,14 +1,13 @@
 // src\widgets\gridList\GridList.tsx
 import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
-import { TPlace, TUserCard } from '../../api/types';
-// import { formatAge } from '../../shared/lib/helpers';
+import { TPlace, TUser } from '../../api/types';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
 import { Loader } from '../../shared/ui/loader/Loader';
 import { birthdayToFormatedAge, getImageUrl } from '../../shared/lib/helpers';
 
 type GridListProps = {
-  users: TUserCard[];
+  users: TUser[];
   subCategories: TPlace[];
   loading: boolean;
   hasMore: boolean;
@@ -42,7 +41,7 @@ export const GridList = ({
                 from={user.from}
                 age={birthdayToFormatedAge(user.birthdate)}
                 avatar={getImageUrl(user.photo)}
-                teachSkills={user.skill}
+                teachSkills={user.sub_text}
                 learnSkills={user.need_subcat}
                 subCategories={subCategories}
               />

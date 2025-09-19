@@ -132,7 +132,7 @@ export const HomePage = () => {
                   from={user.from}
                   age={birthdayToFormatedAge(user.birthdate)}
                   avatar={getImageUrl(user.photo)}
-                  teachSkills={user.skill}
+                  teachSkills={user.sub_text}
                   learnSkills={user.need_subcat}
                   subCategories={subCategories}
         />}

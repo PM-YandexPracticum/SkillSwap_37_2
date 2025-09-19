@@ -1,6 +1,6 @@
 // src\api\types.ts
 
-import { SkillName } from "../shared/types/SkillName";
+import { TSkillName } from "../shared/types/SkillName";
 
 export type TUser = {
   id: number;
@@ -8,33 +8,19 @@ export type TUser = {
   gender: "male" | "female" | 'unspecified';
   photo: string; //Фото профиля
   from: string; //Город пользователя
-  skill: SkillName; //Навык, которым пользователь готов делиться
+  skill: TSkillName; //Текстовое название подкатегории (из skills_subcategories.json)
   need_subcat: number[]; //Массив подкатегорий, которым пользователь хочет научиться
-  images: string[]; //Список изображений, связанных с описанием навыком
-  description: string; //Описание навыка
+  cat_text: string; //Текстовое название категории (из skills_categories.json)
+  sub_text: TSkillName; //Текстовое название подкатегории (из skills_subcategories.json)
   categoryId: number; //ID категории навыка
   subCategoryId: number; //ID подкатегории навыка
-  cat_text: string; //Текстовое название категории (из skills_categories.json)
-  sub_text: string; //Текстовое название подкатегории (из skills_subcategories.json)
+  description: string; //Описание навыка
+  images: string[]; //Список изображений, связанных с описанием навыком
   birthdate: string; // др в формате YYYY-MM-DD
-  // age: string;
   email: string;
-  about?: string; //Описание пользователя (вводится при регистрации)
   created_at: string; //Дата создания аккаунта
+  about?: string; //Описание пользователя (вводится при регистрации)
 };
-
-export type TUserCard = Pick<
-TUser,
-'id' |
-'name' |
-'from' |
-'birthdate' |
-'photo' |
-'skill' |
-'need_subcat' 
-// | 'age'
- >;
-
 
 export type TPlace = {
   id: number;
