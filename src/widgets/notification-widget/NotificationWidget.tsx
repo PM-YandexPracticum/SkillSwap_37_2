@@ -1,6 +1,7 @@
 import { FC } from "react";
 import styles from "./NotificationWidget.module.css";
 import { Icon } from "../../shared/ui/icon/Icon";
+import { Button } from "../../shared/ui/button/Button";
 
 interface Notification {
   id: number;
@@ -141,7 +142,9 @@ const NotificationCard: FC<{ notification: Notification; isNew: boolean }> = ({
 
     {isNew && (
       <div className={styles.buttonContainer}>
-        <button className={styles.actionButton}>Перейти</button>
+        <Button size={114} colored>
+          Перейти
+        </Button>
       </div>
     )}
   </div>
