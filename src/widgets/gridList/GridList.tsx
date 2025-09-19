@@ -1,5 +1,5 @@
 // src\widgets\gridList\GridList.tsx
-import { SkillCard } from '../../features/skills/skillCard/SkillCard';
+import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
 import { TPlace, TUserCard } from '../../api/types';
 import { formatAge } from '../../shared/lib/helpers';
@@ -15,7 +15,7 @@ export const GridList = ( { users, subCategories }: GridListProps ) => {
     <ul className={styles.grid}>
       {users && subCategories && users.map((user) => (
         <li key={user.id} className={styles.gridItem}>
-          <SkillCard
+          <UserCard
             name={user.name}
             from={user.from}
             age={formatAge(user.age)}

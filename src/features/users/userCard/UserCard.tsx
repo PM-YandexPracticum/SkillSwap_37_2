@@ -1,11 +1,11 @@
 import { SkillName } from '../../../shared/types/SkillName';
 import like from '../../../shared/assets/icons/like.png';
-import styles from './SkillCard.module.css';
+import styles from './UserCard.module.css';
 import { ButtonUI } from '../../../shared/ui/button/ButtonUI';
-import { SkillTag } from '../skillTag/SkillTag';
+import { SkillTag } from '../../skills/skillTag/SkillTag';
 import { TPlace } from '../../../api/types';
 
-type SkillCardProps = {
+type UserCardProps = {
   name: string;
   from: string;
   age: string;
@@ -15,8 +15,8 @@ type SkillCardProps = {
   subCategories: TPlace[]
 };
 
-export const SkillCard = ({
-  name, from, age, avatar, learnSkills, teachSkills, subCategories }: SkillCardProps) => {
+export const UserCard = ({
+  name, from, age, avatar, learnSkills, teachSkills, subCategories }: UserCardProps) => {
       return (
         <article className={styles.card}>
           <section className={styles.userInfo}>

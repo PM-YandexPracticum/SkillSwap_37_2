@@ -17,7 +17,7 @@ import { useDispatch } from '@store';
 import { getUserThunk } from "../services/user/actions";
 
 import { getUser } from "../services/user/user-slice";
-import { SkillCard } from "../features/skills/skillCard/SkillCard";
+import { UserCard } from "../features/users/userCard/UserCard";
 import { formatAge } from "../shared/lib/helpers";
 import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
 import { SkillTag } from "../features/skills/skillTag/SkillTag";
@@ -101,8 +101,8 @@ export const HomePage = () => {
       <h2>AuthForm</h2>
       <AuthForm />
 
-      <h2>user && SkillCard</h2>
-      {user && <SkillCard
+      <h2>user && UserCard</h2>
+      {user && <UserCard
                   name={user.name}
                   from={user.from}
                   age={formatAge(user.age)}
