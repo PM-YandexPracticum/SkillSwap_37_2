@@ -27,6 +27,7 @@ import { Button } from "../shared/ui/button/Button";
 import styles from "./HomePage.module.css";
 import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
 import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
+import { OffersTable } from "../widgets/offersTable/OffersTable";
 
 export const HomePage = () => {
 
@@ -136,6 +137,9 @@ export const HomePage = () => {
                   learnSkills={user.need_subcat}
                   subCategories={subCategories}
         />}
+
+      <h2>OffersTable</h2>
+      <OffersTable userId={API_USER_ID} />
 
       <h2>SkillCardDetails</h2>
       {/* Настроить передачу свойств от текущего пользователя
