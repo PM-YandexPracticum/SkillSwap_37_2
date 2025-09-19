@@ -1,9 +1,7 @@
 // src\widgets\offersTable\OffersTable.tsx
 
-// import { useEffect, useState } from 'react';
-// import { renderOffersTableHtml } from '../../shared/lib/offer-table';
-
-import { getOffersForUser, TOfferResult } from '../../api/Api';
+import { getOffersForUser } from '@api/Api';
+import { TOfferResult } from '@api/types';
 import { useEffect, useState } from 'react';
 
 

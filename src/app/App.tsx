@@ -20,27 +20,22 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Outlet, useParams } from "react-router-dom";
 
-//Глобальные виджеты
-import { Header } from "../widgets/header/Header";
-import { Footer } from "../widgets/footer/Footer";
+import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, SkillForm } from "@widgets";
 
 //То, что есть
 import { HomePage } from "../pages/HomePage";
-import { FilterSection } from "../features/filters/FilterSection";
-import { GridList } from "../widgets/gridList/GridList";
-import { AuthForm } from "../features/auth/AuthForm";
-import { SkillForm } from "../widgets/skillForm/SkillForm";
-import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
-import { DropdownGroupedDemo } from "../widgets/dropdownDemo/DropdownGroupedDemo";
-import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
+// import { FilterSection } from "../features/filters/FilterSection";
+// import { AuthForm } from "../features/auth/AuthForm";
+// import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
 
 //Данные/типы/стор (для каталога)
 import { useDispatch } from "@store";
 import { useSelector } from "react-redux";
 import { RootState } from "../services/store";
 import { getUsersThunk } from "../services/users/actions";
-import { getSkillsSubCategoriesApi } from "../api/Api";
-import type { TPlace } from "../api/types";
+import { getSkillsSubCategoriesApi } from "@api/Api";
+import { TPlace } from "@api/types";
+import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
@@ -63,7 +58,7 @@ const CatalogContent: React.FC = () => {
   const [selectedCities, setSelectedCities] = React.useState<string[]>([]);
 
   React.useEffect(() => {
-    dispatch(getUsersThunk());
+    dispatch(getUsersThunk(1));
     getSkillsSubCategoriesApi()
       .then((data) => setSubCategories(data.subcategories ?? []))
       .catch((e) => console.error("Не удалось загрузить подкатегории:", e));
@@ -77,7 +72,13 @@ const CatalogContent: React.FC = () => {
         selectedGender={selectedGender}
         selectedCities={selectedCities}
       />
-      <GridList users={users ?? []} subCategories={subCategories ?? []} />
+      <GridList
+        users={users}
+        subCategories={subCategories}
+        loading={false}
+        hasMore={false}
+        onLoadMore={() => {}}
+      />
     </section>
   );
 };
