@@ -1,9 +1,9 @@
-import { SkillName } from "../../../shared/types/SkillName";
+import { TSkillName } from "../../../shared/types/SkillName";
 
 // Этот список будет удален. его можно только временно использовать
 // используйте данные из API
 // src\api\Api.ts
-export const skillColors: Record<SkillName, string> = {
+export const skillColors: Record<TSkillName, string> = {
   "Игра на барабанах": "#f7e7f2",
   "Управление командой": "#a1887f",
   "Маркетинг и реклама": "#90a4ae",
