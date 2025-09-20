@@ -17,6 +17,8 @@ import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTabl
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 import { getSkillsSubCategoriesApi } from "@api/Api";
 import { TPlace } from "@api/types";
+import { NotFoundPage } from "./not-found-page/NotFoundPage";
+import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -186,6 +188,8 @@ export const HomePage = () => {
       </div>
 
       <SkillMenu />
+      <NotFoundPage />
+      <ServerErrorPage />
       <Footer />
     </>
   );
