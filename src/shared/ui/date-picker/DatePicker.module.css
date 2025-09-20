@@ -1,7 +1,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   width: 100%;
   position: relative;
 }
@@ -17,6 +16,27 @@
   position: relative;
   width: 100%;
   cursor: pointer;
+}
+
+.calendarIconWrapper {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none; 
+  z-index: 2;
+  cursor: pointer; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendarIcon {
+  width: 20px;
+  height: 20px;
+  pointer-events: all;
 }
 
 .input {
@@ -61,7 +81,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
   padding: 0 12px;
   background: white;
 }
@@ -84,17 +103,24 @@
 
 .popper {
   padding-bottom: 0 !important;
+  transform: translate3d(0px, 80px, 0px) !important; /* позиционирование под инпутом */
+  z-index: 1000;
 }
 
 .calendarContainer {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #69735d;
+  width: 280px; 
+  height: 360px; 
+  display: flex;
+  flex-direction: column;
 }
 
 .calendarContent {
   padding: 16px;
-  background: white;
+  flex: 1;
+  overflow: hidden;
 }
 
 .footerButtons {
@@ -107,33 +133,11 @@
 }
 
 .cancelButton {
-  padding: 12px 24px;
   border: 1px solid #ABD27A;
-  border-radius: 12px;
-  background: white;
-  color: #253017;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 400;
 }
 
 .cancelButton:hover {
-  background: #DEEAC5;
-}
-
-.selectButton {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 12px;
-  background: #ABD27A;
-  color: black;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 400;
-}
-
-.selectButton:hover {
-  background: #DEEBC5;
+  border: 1px solid transparent !important;
 }
 
 /* Скрываем крестик очистки */

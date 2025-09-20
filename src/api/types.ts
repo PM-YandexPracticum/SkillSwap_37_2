@@ -1,6 +1,7 @@
 // src\api\types.ts
 
 import { TSkillName } from "../shared/types/SkillName";
+import { IconName } from "shared/ui/icon/icons";
 
 export type TUser = {
   id: number;
@@ -31,7 +32,7 @@ export type TCategory = {
   id: number;
   name: string;
   color: string;
-  icon: string;
+  icon: IconName; // имя иконки
 };
 
 export type TSubcategory = {
