@@ -20,6 +20,7 @@
       "@api/*": ["api/*"],
       "@const/*": ["shared/const/*"],
       "@features": ["features/index"],
+      "@images/*": ["shared/assets/images"],      
       "@store": ["services/store"],
       "@widgets": ["widgets/index"]
     }

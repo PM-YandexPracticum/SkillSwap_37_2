@@ -12,18 +12,12 @@ import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
 import { UserCard } from "../features/users/userCard/UserCard";
 
 import styles from "./HomePage.module.css";
-import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
-
-// import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
 
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
-import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTable, SkillForm, SkillMenu } from "@widgets";
+import { CardSlider, DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, NotificationsTable, SkillForm, SkillMenu } from "@widgets";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
-import { getSkillsSubCategoriesApi } from "@api/Api";
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
-import { TPlace, TUser } from "@api/types";
-import { CardSlider } from "../widgets/cardSlider/CardSlider";
 import { getCategoriesThunk } from "../services/categories/actions";
 
 export const HomePage = () => {
@@ -139,8 +133,10 @@ export const HomePage = () => {
         />
       )}
 
-      <h2>OffersTable</h2>
-      <OffersTable userId={API_USER_ID} />
+      <h2>NotificationsTable</h2>
+      {/* появляется, если нажать на колокольчик в header
+      <NotificationWidget /> */}
+      <NotificationsTable userId={API_USER_ID} />
 
       <h2>SkillCardDetails</h2>
       {/* Настроить передачу свойств от текущего пользователя
@@ -149,8 +145,6 @@ export const HomePage = () => {
       убрать константу mySkill */}
       <SkillCardDetails skill={mySkill} />
 
-      {/* появляется, если нажать на колокольчик в header
-      <NotificationWidget /> */}
 
       <SkillMenu />
       <NotFoundPage />

@@ -63,13 +63,26 @@ export type TResponseSubcategories = {
   subcategories: TSubcategory[];
 }
 
-export type TOfferResult = {
-  offerUserId: number;
-  offerUserName: string;
-  skillOwnerId: number;
-  skillOwnerName: string;
-  confirm: number;
-  sawOffer: number;
-  offerDate: string;           // всегда есть
-  confirmDate: string | null;  // только если confirm === 1
+export type TNotificationEvent = {
+  type: 'offer' | 'accept';
+  seen: 0 | 1;
+  fromUserId: number;
+  fromUserName: string;
+  date: string; // ISO-строка с датой
 };
+
+export type TResponseNotifications = {
+  userId: number;
+  events: TNotificationEvent[];
+};  
+
+// export type TOfferResult = {
+//   offerUserId: number;
+//   offerUserName: string;
+//   skillOwnerId: number;
+//   skillOwnerName: string;
+//   confirm: number;
+//   sawOffer: number;
+//   offerDate: string;           // всегда есть
+//   confirmDate: string | null;  // только если confirm === 1
+// };
