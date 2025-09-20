@@ -24,6 +24,7 @@ import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { TPlace, TUser } from "@api/types";
 import { CardSlider } from "../widgets/cardSlider/CardSlider";
+import { getCategoriesThunk } from "../services/categories/actions";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -55,30 +56,22 @@ export const HomePage = () => {
   const { users, isLoading, hasMore, page } = useSelector(
     (state: RootState) => state.users
   );
-  // const users = useSelector((state: RootState) => state.users.users);
 
-  const [subCategories, setSubCategories] = useState<TPlace[]>([]);
-
+  // const [subCategories, setSubCategories] = useState<TPlace[]>([]);
+  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
+  
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
-    getSkillsSubCategoriesApi().then((data) =>
-      setSubCategories(data.subcategories)
-    );
+    dispatch(getCategoriesThunk());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (page === 0) {
-      dispatch(getUsersThunk(1));
-    }
-  }, [dispatch, page]);
-
   const [selectedGender, setSelectedGender] = useState<string>('');
-  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
+  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
  
   const handleGenderChange = (gender: string) => {
     setSelectedGender(gender);
   };
-  const handlePlaceChange = (places: string[]) => {
+  const handlePlaceChange = (places: number[]) => {
     setSelectedPlaces(places);
   };
 
@@ -159,6 +152,11 @@ export const HomePage = () => {
       {/* появляется, если нажать на колокольчик в header
       <NotificationWidget /> */}
 
+      <SkillMenu />
+      <NotFoundPage />
+      <ServerErrorPage />
+
+
       {/* Отладочные ссылки */}
       <div style={{ padding: "2rem", paddingBottom: "20rem" }}>
         <h2>Debug Links</h2>
@@ -205,9 +203,6 @@ export const HomePage = () => {
         </ul>
       </div>
 
-      <SkillMenu />
-      <NotFoundPage />
-      <ServerErrorPage />
       <Footer />
     </div>
   );
