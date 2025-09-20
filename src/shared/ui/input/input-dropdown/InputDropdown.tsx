@@ -18,6 +18,7 @@ interface DropdownProps {
   id?: string;
   label?: string;
   disabled?: boolean;
+  searchable?: boolean; // Добавляем возможность поиска
 }
 
 export const Dropdown: FC<DropdownProps> = ({
@@ -30,9 +31,17 @@ export const Dropdown: FC<DropdownProps> = ({
   id = "dropdown",
   label,
   disabled = false,
+  searchable = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Фильтрация опций по поисковому запросу
+  const filteredOptions = options.filter((option) =>
+    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // Закрытие дропдауна при клике за пределами компонента
   useEffect(() => {
@@ -42,12 +51,20 @@ export const Dropdown: FC<DropdownProps> = ({
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
+        setSearchTerm("");
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Фокус на поле поиска при открытии
+  useEffect(() => {
+    if (isOpen && searchable && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isOpen, searchable]);
 
   const handleOptionClick = (optionValue: string) => {
     if (multiple) {
@@ -60,6 +77,7 @@ export const Dropdown: FC<DropdownProps> = ({
     } else {
       onChange(optionValue);
       setIsOpen(false);
+      setSearchTerm("");
     }
   };
 
@@ -81,6 +99,21 @@ export const Dropdown: FC<DropdownProps> = ({
       return Array.isArray(value) && value.includes(optionValue);
     }
     return value === optionValue;
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  const handleButtonClick = () => {
+    if (!disabled) {
+      setIsOpen(!isOpen);
+      setSearchTerm("");
+    }
   };
 
   return (
@@ -111,8 +144,26 @@ export const Dropdown: FC<DropdownProps> = ({
           disabled={disabled}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
+          data-placeholder={placeholder} 
         >
-          <span className={styles.selectedText}>{getDisplayText()}</span>
+          {searchable && isOpen ? (
+            <input
+              ref={searchInputRef}
+              type="text"
+              className={styles.searchInput}
+              placeholder="Поиск..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onClick={handleSearchClick}
+              onKeyDown={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <span className={clsx(
+        styles.selectedText,
+        (!value || (multiple && Array.isArray(value) && value.length === 0)) && styles.placeholder
+      )}
+            >{getDisplayText()}</span>
+          )}
           <Icon
             name={isOpen ? "chevronUp" : "chevronDown"}
             size="s"
@@ -122,37 +173,41 @@ export const Dropdown: FC<DropdownProps> = ({
 
         {isOpen && (
           <div className={styles.dropdownMenu} role="listbox">
-            {options.map((option) => (
-              <div
-                key={option.value}
-                className={clsx(
-                  styles.option,
-                  isOptionSelected(option.value) && styles.selected,
-                  !multiple &&
-                    isOptionSelected(option.value) &&
-                    styles.singleSelected
-                )}
-                onClick={() => handleOptionClick(option.value)}
-                role="option"
-                aria-selected={isOptionSelected(option.value)}
-              >
-                {multiple && (
-                  <Icon
-                    name={
-                      isOptionSelected(option.value)
-                        ? "checkboxDone"
-                        : "checkboxEmpty"
-                    }
-                    size="s"
-                    className={styles.checkboxIcon}
-                    color={
-                      isOptionSelected(option.value) ? "#ABD27A" : "#69735D"
-                    }
-                  />
-                )}
-                <span className={styles.optionLabel}>{option.label}</span>
-              </div>
-            ))}
+            {filteredOptions.length === 0 ? (
+              <div className={styles.noResults}>Ничего не найдено</div>
+            ) : (
+              filteredOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className={clsx(
+                    styles.option,
+                    isOptionSelected(option.value) && styles.selected,
+                    !multiple &&
+                      isOptionSelected(option.value) &&
+                      styles.singleSelected
+                  )}
+                  onClick={() => handleOptionClick(option.value)}
+                  role="option"
+                  aria-selected={isOptionSelected(option.value)}
+                >
+                  {multiple && (
+                    <Icon
+                      name={
+                        isOptionSelected(option.value)
+                          ? "checkboxDone"
+                          : "checkboxEmpty"
+                      }
+                      size="s"
+                      className={styles.checkboxIcon}
+                      color={
+                        isOptionSelected(option.value) ? "#ABD27A" : "#69735D"
+                      }
+                    />
+                  )}
+                  <span className={styles.optionLabel}>{option.label}</span>
+                </div>
+              ))
+            )}
           </div>
         )}
       </div>

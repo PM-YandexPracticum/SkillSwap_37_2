@@ -122,3 +122,8 @@
   color: #253017;
   font-size: 14px;
 }
+
+.selectedText.placeholder {
+  color: #69735d ;
+  opacity: 0.7;
+}
