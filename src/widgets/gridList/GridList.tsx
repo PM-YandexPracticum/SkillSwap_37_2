@@ -5,7 +5,7 @@ import styles from './GridList.module.css';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
 import { Loader } from '../../shared/ui/loader/Loader';
 import { birthdayToFormatedAge, getImageUrl } from '../../shared/lib/helpers';
-import { TPlace, TUserCard } from '@api/types';
+import { TPlace, TUser } from '@api/types';
 
 type GridListProps = {
   users: TUser[];
