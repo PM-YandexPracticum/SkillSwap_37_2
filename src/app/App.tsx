@@ -35,6 +35,7 @@ import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 import { getPlacesThunk } from "../services/places/actions";
 import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
+import { Button } from "../shared/ui/button/Button";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (

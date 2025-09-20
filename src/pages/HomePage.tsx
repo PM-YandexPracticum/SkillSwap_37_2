@@ -14,7 +14,7 @@ import { UserCard } from "../features/users/userCard/UserCard";
 import styles from "./HomePage.module.css";
 import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
 
-import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
+// import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
 
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTable, SkillForm, SkillMenu } from "@widgets";
