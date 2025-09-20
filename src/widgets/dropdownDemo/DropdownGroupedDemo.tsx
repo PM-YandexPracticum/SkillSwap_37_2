@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Dropdown } from "../../shared/ui/input/input-dropdown/InputDropdown";
 import { GroupedSubcategoryDropdown } from "../../shared/ui/input/input-dropdown/GroupedSubcategoryDropdown";
 import { genderOptions } from "../../shared/ui/input/input-dropdown/dropdownData";
-import {
-  getSkillsCategoriesApi,
-  getSkillsSubCategoriesApi,
-} from "../../api/Api";
-import { TCategory, TSubcategory } from "../../api/types";
+import { TCategory, TSubcategory } from "@api/types";
+import { getSkillsCategoriesApi, getSkillsSubCategoriesApi } from "@api/Api";
+
 
 export const DropdownGroupedDemo = () => {
   const [selectedGender, setSelectedGender] = useState<string>("");

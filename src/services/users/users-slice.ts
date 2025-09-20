@@ -1,8 +1,8 @@
 // src\services\users\users-slice.ts
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TUser } from '../../api/types';
 import { getUsersThunk } from './actions';
+import { TUser } from '@api/types';
 
 type UsersState = {
   users: TUser[];

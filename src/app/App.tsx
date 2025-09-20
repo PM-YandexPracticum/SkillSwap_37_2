@@ -20,29 +20,21 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet, useParams } from "react-router-dom";
 
-//Глобальные виджеты
-import { Header } from "../widgets/header/Header";
-import { Footer } from "../widgets/footer/Footer";
+import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, SkillForm } from "@widgets";
 
 //То, что есть
 import { HomePage } from "../pages/HomePage";
-import { FilterSection } from "../features/filters/FilterSection";
-import { GridList } from "../widgets/gridList/GridList";
-import { AuthForm } from "../features/auth/AuthForm";
-import { SkillForm } from "../widgets/skillForm/SkillForm";
-import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
-import { DropdownGroupedDemo } from "../widgets/dropdownDemo/DropdownGroupedDemo";
-import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
-import { Button } from "../shared/ui/button/Button";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 
 //Данные/типы/стор (для каталога)
-import { useDispatch } from "@store";
+import { RootState, useDispatch } from "@store";
 import { useSelector } from "react-redux";
-import { RootState } from "../services/store";
+import { TPlace } from "@api/types";
+import { AuthForm, FilterSection, SkillCardDetails } from "@features";
+
+import { getPlacesThunk } from "../services/places/actions";
 import { getUsersThunk } from "../services/users/actions";
-import { getSkillsSubCategoriesApi } from "../api/Api";
-import type { TPlace } from "../api/types";
+import { getCategoriesThunk } from "../services/categories/actions";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
@@ -57,29 +49,28 @@ const Layout: React.FC = () => (
 
 //Каталог (FilterSection + GridList)
 const CatalogContent: React.FC = () => {
-  const dispatch = useDispatch();
+
   const users = useSelector((s: RootState) => s.users.users);
 
-  const [subCategories, setSubCategories] = React.useState<TPlace[]>([]);
+  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
   const [selectedGender, setSelectedGender] = React.useState<string>("");
-  const [selectedCities, setSelectedCities] = React.useState<string[]>([]);
-
-  React.useEffect(() => {
-    dispatch(getUsersThunk());
-    getSkillsSubCategoriesApi()
-      .then((data) => setSubCategories(data.subcategories ?? []))
-      .catch((e) => console.error("Не удалось загрузить подкатегории:", e));
-  }, [dispatch]);
+  const [selectedPlaces, setSelectedPlaces] = React.useState<number[]>([]);
 
   return (
     <section className="page page-catalog">
       <FilterSection
         onGenderChange={setSelectedGender}
-        onCityChange={setSelectedCities}
+        onPlaceChange={setSelectedPlaces}
         selectedGender={selectedGender}
-        selectedCities={selectedCities}
+        selectedPlaces={selectedPlaces}
       />
-      <GridList users={users ?? []} subCategories={subCategories ?? []} />
+      <GridList
+        users={users}
+        subCategories={subCategories}
+        loading={false}
+        hasMore={false}
+        onLoadMore={() => {}}
+      />
     </section>
   );
 };
@@ -241,6 +232,17 @@ const NotFoundPageStub: React.FC = () => (
 );
 
 export const App: React.FC = () => {
+
+
+  const dispatch = useDispatch();
+  
+  React.useEffect(() => {
+    dispatch(getUsersThunk(1));
+    dispatch(getPlacesThunk());
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
+
+
   return (
     <BrowserRouter>
       <Routes>

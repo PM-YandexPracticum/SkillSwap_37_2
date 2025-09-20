@@ -1,11 +1,16 @@
 // src\api\Api.ts
-import { PLACES_JSON_FILE, USERS_JSON_FILE } from "@const/paths";
+import { 
+  OFFERS_JSON_FILE,
+  PLACES_JSON_FILE,
+  USERS_JSON_FILE 
+} from "@const/paths";
 import {
   TUser,
   TResponseUsers,
   TResponsePlaces,
   TResponseCategories,
   TResponseSubcategories,
+  TOfferResult,
 } from "./types";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
@@ -94,3 +99,85 @@ export const getSkillsSubCategoriesApi =
       throw error;
     }
   };
+
+
+type TOfferRaw = {
+  offerUserId: number;
+  skillOwnerId: number;
+  confirm: number;
+  daysSinceOffer: number;
+  daysSinceConfirm: number;
+  sawOffer: number;
+};
+
+const formatPastDate = (daysAgo: number): string => {
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  return date.toISOString().split('T')[0];
+};
+
+export const getOffersForUser = async (
+  userId: number
+): Promise<TOfferResult[]> => {
+  try {
+    const offersRes = await fetch(OFFERS_JSON_FILE);
+    const usersRes = await fetch(USERS_JSON_FILE);
+
+    const offersData = await offersRes.json();
+    const usersData = await usersRes.json();
+
+    const usersMap = new Map<number, string>();
+    usersData.users.forEach((u: TUser) => {
+      usersMap.set(u.id, u.name);
+    });
+
+    const filtered = offersData.offers.filter((offer: TOfferRaw) =>
+      offer.offerUserId === userId || offer.skillOwnerId === userId
+    );
+
+    const enriched: TOfferResult[] = filtered.map((offer: { offerUserId: number; skillOwnerId: number; daysSinceOffer: number; confirm: number; sawOffer: any; daysSinceConfirm: number; }) => {
+      
+      const offerUserName = offer.offerUserId === userId
+        ? `${usersMap.get(offer.offerUserId) || `#${offer.offerUserId}`} (you)`
+        : usersMap.get(offer.offerUserId) || `#${offer.offerUserId}`;
+
+      const skillOwnerName = offer.skillOwnerId === userId
+        ? `${usersMap.get(offer.skillOwnerId) || `#${offer.skillOwnerId}`} (you)`
+        : usersMap.get(offer.skillOwnerId) || `#${offer.skillOwnerId}`;      
+      
+      
+      
+      // const offerUserName = offer.offerUserId === userId
+      //   ? 'you'
+      //   : usersMap.get(offer.offerUserId) || `#${offer.offerUserId}`;
+
+      // const skillOwnerName = offer.skillOwnerId === userId
+      //   ? 'you'
+      //   : usersMap.get(offer.skillOwnerId) || `#${offer.skillOwnerId}`;
+
+      const offerDate = formatPastDate(offer.daysSinceOffer);
+
+      return {
+        offerUserId: offer.offerUserId,
+        offerUserName,
+        skillOwnerId: offer.skillOwnerId,
+        skillOwnerName,
+        confirm: offer.confirm,
+        sawOffer: offer.sawOffer,
+        offerDate,
+        confirmDate:
+          offer.confirm === 1 && offer.daysSinceConfirm >= 0
+            ? formatPastDate(offer.daysSinceConfirm)
+            : null
+      };
+    });
+
+    // Сортировка: сначала новые по offerDate (по убыванию)
+    enriched.sort((a, b) => new Date(b.offerDate).getTime() - new Date(a.offerDate).getTime());
+
+    return enriched;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

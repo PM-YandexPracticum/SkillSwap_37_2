@@ -1,3 +1,5 @@
+// vite.config.ts
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
@@ -14,8 +16,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@api': path.resolve(__dirname, 'src/api'),
       '@const': path.resolve(__dirname, 'src/shared/const'),
+      '@features': path.resolve(__dirname, 'src/features'),
       '@store': path.resolve(__dirname, 'src/services/store'),
+      '@widgets': path.resolve(__dirname, 'src/widgets'),
     }
   }
 

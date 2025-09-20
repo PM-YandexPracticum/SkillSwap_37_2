@@ -1,37 +1,29 @@
 // src\pages\HomePage.tsx
 
 import { useEffect, useState } from "react";
-import { Footer } from "../widgets/footer/Footer";
-import { Header } from "../widgets/header/Header";
-import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
-import { DropdownGroupedDemo } from "../widgets/dropdownDemo/DropdownGroupedDemo";
-import { AuthForm } from "../features/auth/AuthForm";
-import { SkillForm } from "../widgets/skillForm/SkillForm";
-import { FilterSection } from "../features/filters/FilterSection";
-import { GridList } from "../widgets/gridList/GridList";
-import { getSkillsSubCategoriesApi } from "../api/Api";
-import { TPlace } from "../api/types";
 
 import { useSelector } from 'react-redux';
-import { getUsersThunk } from '../services/users/actions';
-import { RootState } from '../services/store';
-import { useDispatch } from '@store';
-import { getUserThunk } from "../services/user/actions";
+import { RootState, useDispatch } from '@store';
 
+import { getUserThunk } from "../services/user/actions";
+import { getUsersThunk } from '../services/users/actions';
 import { getUser } from "../services/user/user-slice";
 import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
 import { UserCard } from "../features/users/userCard/UserCard";
-import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
-import { SkillTag } from "../features/skills/skillTag/SkillTag";
-import { Button } from "../shared/ui/button/Button";
+
 import styles from "./HomePage.module.css";
 import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
+
 import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
+
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
+import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTable, SkillForm, SkillMenu } from "@widgets";
+import { AuthForm, FilterSection, SkillCardDetails } from "@features";
+import { getSkillsSubCategoriesApi } from "@api/Api";
+import { TPlace } from "@api/types";
 
 export const HomePage = () => {
-
-  // Это нужно убрать! 
+  // Это нужно убрать!
   // Ищем задачу в канбане
   const mySkill = {
     title: "Игра на барабанах",
@@ -42,12 +34,12 @@ export const HomePage = () => {
     smallImages: [
       "/public/db/skills-photo/drums-2.jpg",
       "/public/db/skills-photo/drums-3.jpg",
-      "/db/skills-photo/+3.png"
+      "/db/skills-photo/+3.png",
     ],
     icons: [
       "src/shared/assets/icons/like.png",
       "src/shared/assets/icons/share.png",
-      "src/shared/assets/icons/more-square.png"
+      "src/shared/assets/icons/more-square.png",
     ],
     buttonText: "Предложить обмен",
     onExchange: () => alert("Обмен предложен!"),
@@ -61,13 +53,14 @@ export const HomePage = () => {
     (state: RootState) => state.users
   );
   // const users = useSelector((state: RootState) => state.users.users);
-  
+
   const [subCategories, setSubCategories] = useState<TPlace[]>([]);
-  
+
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
-    getSkillsSubCategoriesApi()
-      .then(data => setSubCategories(data.subcategories));
+    getSkillsSubCategoriesApi().then((data) =>
+      setSubCategories(data.subcategories)
+    );
   }, [dispatch]);
 
   useEffect(() => {
@@ -77,13 +70,13 @@ export const HomePage = () => {
   }, [dispatch, page]);
 
   const [selectedGender, setSelectedGender] = useState<string>('');
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
  
   const handleGenderChange = (gender: string) => {
     setSelectedGender(gender);
   };
-  const handleCityChange = (cities: string[]) => {
-    setSelectedCities(cities);
+  const handlePlaceChange = (places: string[]) => {
+    setSelectedPlaces(places);
   };
 
   // функция загрузки последующих данных
@@ -96,13 +89,12 @@ export const HomePage = () => {
   return (
     <>
       <Header />
-
       <div className={styles.wrapper}>
         <FilterSection
         onGenderChange={handleGenderChange}
-        onCityChange={handleCityChange}
+        onPlaceChange={handlePlaceChange}
         selectedGender={selectedGender}
-        selectedCities={selectedCities}
+        selectedPlaces={selectedPlaces}
         />
         <GridList
           users={users}
@@ -111,10 +103,9 @@ export const HomePage = () => {
           hasMore={hasMore}
           onLoadMore={handleLoadMore}
         />
-        {/* <GridList users={users} subCategories={subCategories}/> */}
       </div>
   
- <h2>Форма регистрации (Шаг 2)</h2>
+     <h2>Форма регистрации (Шаг 2)</h2>
       <RegisterStep2 
         onBack={() => console.log('Назад')}
         onContinue={(data) => {
@@ -128,23 +119,28 @@ export const HomePage = () => {
 
       <h2>Вариант Dropdown 2</h2>
       <DropdownGroupedDemo />
-      
+
       <h2>SkillForm</h2>
-      <SkillForm/>
+      <SkillForm />
 
       <h2>AuthForm</h2>
       <AuthForm />
 
       <h2>user && UserCard</h2>
-      {user && <UserCard
-                  name={user.name}
-                  from={user.from}
-                  age={birthdayToFormatedAge(user.birthdate)}
-                  avatar={getImageUrl(user.photo)}
-                  teachSkills={user.skill}
-                  learnSkills={user.need_subcat}
-                  subCategories={subCategories}
-        />}
+      {user && (
+        <UserCard
+          name={user.name}
+          from={user.from}
+          age={birthdayToFormatedAge(user.birthdate)}
+          avatar={getImageUrl(user.photo)}
+          teachSkills={user.skill}
+          learnSkills={user.need_subcat}
+          subCategories={subCategories}
+        />
+      )}
+
+      <h2>OffersTable</h2>
+      <OffersTable userId={API_USER_ID} />
 
       <h2>SkillCardDetails</h2>
       {/* Настроить передачу свойств от текущего пользователя
@@ -157,22 +153,48 @@ export const HomePage = () => {
       <NotificationWidget /> */}
 
       {/* Отладочные ссылки */}
-      <div style={{ padding: '2rem', paddingBottom: '20rem' }}>
+      <div style={{ padding: "2rem", paddingBottom: "20rem" }}>
         <h2>Debug Links</h2>
         <ul>
-          <li><a href="/skills">/skills</a></li>
-          <li><a href="/auth/login">/auth/login</a></li>
-          <li><a href="/auth/register">/auth/register</a></li>
-          <li><a href="/skill/new">/skill/new</a></li>
-          <li><a href="/demo/dropdowns">/demo/dropdowns</a></li>
-          <li><a href="/demo/skill-details">/demo/skill-details</a></li>
-          <li><a href="/skills/123">/skills/:id</a></li>
-          <li><a href="/favorites">/favorites</a></li>
-          <li><a href="/requests">/requests</a></li>
-          <li><a href="/profile">/profile</a></li>
-          <li><a href="/profile/notifications">/profile/notifications</a></li>
-          <li><a href="/500">/500</a></li>
-          <li><a href="/nonexistent">/not-found</a></li>
+          <li>
+            <a href="/skills">/skills</a>
+          </li>
+          <li>
+            <a href="/auth/login">/auth/login</a>
+          </li>
+          <li>
+            <a href="/auth/register">/auth/register</a>
+          </li>
+          <li>
+            <a href="/skill/new">/skill/new</a>
+          </li>
+          <li>
+            <a href="/demo/dropdowns">/demo/dropdowns</a>
+          </li>
+          <li>
+            <a href="/demo/skill-details">/demo/skill-details</a>
+          </li>
+          <li>
+            <a href="/skills/123">/skills/:id</a>
+          </li>
+          <li>
+            <a href="/favorites">/favorites</a>
+          </li>
+          <li>
+            <a href="/requests">/requests</a>
+          </li>
+          <li>
+            <a href="/profile">/profile</a>
+          </li>
+          <li>
+            <a href="/profile/notifications">/profile/notifications</a>
+          </li>
+          <li>
+            <a href="/500">/500</a>
+          </li>
+          <li>
+            <a href="/nonexistent">/not-found</a>
+          </li>
         </ul>
       </div>
 

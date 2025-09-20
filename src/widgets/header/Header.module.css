@@ -1,10 +1,11 @@
 .header {
   display: flex;
   justify-content: center;
-  width: 100%;
   align-items: center;
-  column-gap: 32px;
-  height: 116px;
+  height: 104px;
+  gap: 32px;
+  padding: 0 36px;
+  box-sizing: border-box;
 }
 
 .navList {
@@ -30,44 +31,54 @@ li:has(img) {
   cursor: pointer;
 }
 
-.searchWrapper {
-  position: relative;
+/* Правая секция с иконками и кнопками */
+.rightSection {
+  display: flex;
+  align-items: center;
 }
 
-.iconSearch {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  left: 10px;
-  top: 12px;
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-.search {
-  width: 527px;
-  height: 48px;
-  padding-left: 44px;
+/* Общие стили для кнопок */
+.moonButton,
+.notificationButton,
+.likeButton {
+  background: none;
   border: none;
-  border-radius: 12px;
-}
-
-.iconMoon {
-  width: 24px;
-  height: 24px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Отступы между иконками в правой секции */
+.rightSection > *:not(:last-child) {
+  margin-right: 20px;
+}
+
+/* Стили для блока кнопок */
 .buttonsWrapper {
   display: flex;
   gap: 8px;
 }
 
-.notificationButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
+/* Стили для блока пользователя */
+.userAuthWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: fit-content; /* Добавляем минимальную ширину */
+  flex-shrink: 0; /* Запрещаем сжатие */
+}
+
+.userName {
+  font-weight: 400;
+  font-size: 16px;
+  color: #253017;
+  white-space: nowrap;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  transition: background-color 0.2s;
+  object-fit: cover;
 }
