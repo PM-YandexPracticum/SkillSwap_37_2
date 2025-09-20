@@ -61,6 +61,7 @@ const icons = {
   eye: EyeIcon,
   eyeSlash: EyeSlashIcon,
   chevronUp: ChevronUpIcon,
+  chevronRight: ChevronRightIcon,
   chevronDown: ChevronDownIcon,
   checkboxDone: CheckboxDoneIcon,
   checkboxEmpty: CheckboxEmptyIcon,

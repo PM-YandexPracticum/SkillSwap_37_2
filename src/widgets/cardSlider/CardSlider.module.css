@@ -1,0 +1,40 @@
+.slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardsWrapper {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+button {
+  border: none;
+}
+
+.chevron {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #E4E8DF;
+  cursor: pointer;
+}
+
+.chevronLeft {
+  left: 0;
+}
+
+.chevronRight {
+  right: 0;
+}
+
+.iconChevronLeft {
+  transform: scaleX(-1);
+}
