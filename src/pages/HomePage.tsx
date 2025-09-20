@@ -27,6 +27,7 @@ import { Button } from "../shared/ui/button/Button";
 import styles from "./HomePage.module.css";
 import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
 import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
+import { RegisterStep2 } from "../features/auth/RegisterStep2";
 
 export const HomePage = () => {
 
@@ -113,7 +114,15 @@ export const HomePage = () => {
         {/* <GridList users={users} subCategories={subCategories}/> */}
       </div>
   
-
+ <h2>Форма регистрации (Шаг 2)</h2>
+      <RegisterStep2 
+        onBack={() => console.log('Назад')}
+        onContinue={(data) => {
+          console.log('Данные регистрации:', data);
+          alert('Регистрация завершена!');
+        }}
+      />
+      
       <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
 

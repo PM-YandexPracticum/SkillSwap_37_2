@@ -1,0 +1,119 @@
+.registerStep2 {
+  max-width: 556px;
+  padding: 40px 60px;
+  background: #ffffff;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
+.content {
+  width: 100%;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #253017;
+  margin-bottom: 8px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #69735d;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.rowItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rowItem :global(.input),
+.rowItem :global(.dropdownButton) {
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.avatar {
+  width: 100px;
+}
+
+.addButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  background: #abd27a;
+  border: 2px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background: #9bc86a;
+}
+
+.addIcon {
+  width: 16px;
+  height: 16px;
+  color: white;
+  filter: invert(100%) brightness(100%);
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #69735d;
+}
+
+.backButton {
+  border: 1px solid #abd27a !important;
+}
+
+.backButton:hover {
+  border-color: #deebc5 !important;
+}

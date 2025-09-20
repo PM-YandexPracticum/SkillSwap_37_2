@@ -17,7 +17,7 @@
 /*                NotFoundPageStub
 =========================== */
 
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet, useParams } from "react-router-dom";
 
 //Глобальные виджеты
@@ -33,6 +33,8 @@ import { SkillForm } from "../widgets/skillForm/SkillForm";
 import { DropdownDemo } from "../widgets/dropdownDemo/DropdownDemo";
 import { DropdownGroupedDemo } from "../widgets/dropdownDemo/DropdownGroupedDemo";
 import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
+import { Button } from "../shared/ui/button/Button";
+import { RegisterStep2 } from "../features/auth/RegisterStep2";
 
 //Данные/типы/стор (для каталога)
 import { useDispatch } from "@store";
@@ -90,12 +92,50 @@ const LoginContent: React.FC = () => (
 );
 
 //Register
-const RegisterContent: React.FC = () => (
-  <section className="page page-auth">
-    <h1>Регистрация</h1>
-    <p>Здесь будет форма регистрации.</p>
-  </section>
-);
+const RegisterContent: React.FC = () => {
+  const [step, setStep] = useState(1);
+  const [step2Data, setStep2Data] = useState<Partial<{
+    name: string;
+    birthdate: Date | null;
+    gender: string;
+    city: string;
+    selectedCategories: string[];
+    selectedSubcategories: string[];
+  }> | null>(null);
+
+  const handleStep2Continue = (data: any) => {
+    setStep2Data(data);
+  
+    console.log("Данные регистрации:", data);
+    alert("Регистрация завершена! Данные: " + JSON.stringify(data, null, 2));
+  };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  return (
+    <section className="page page-auth">
+      {step === 1 ? (
+        <div>
+          <h1>Регистрация</h1>
+          <p>Здесь будет форма регистрации</p>
+          <Button colored onClick={() => setStep(2)}>
+            Далее
+          </Button>
+        </div>
+      ) : (
+        <RegisterStep2
+          onBack={handleBack}
+          onContinue={handleStep2Continue}
+          initialData={step2Data || undefined}
+        />
+      )}
+    </section>
+  );
+};
 
 //Форма навыка
 const SkillFormContent: React.FC = () => (
