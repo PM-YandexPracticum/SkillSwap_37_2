@@ -3,11 +3,20 @@
 }
 
 .react-datepicker {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   border: 1px solid #000;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   background: white;
+  width: 280px !important;
+  height: 360px !important;
+}
+
+.react-datepicker__month-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .react-datepicker__header {
@@ -15,7 +24,9 @@
   border-bottom: none;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .react-datepicker__current-month {
@@ -47,39 +58,45 @@
 }
 
 .react-datepicker__day {
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
   margin: 2px;
   border-radius: 50%;
   color: #253017;
   font-size: 14px;
 }
 
+/* Дни предыдущего и следующего месяца (включая выходные) */
+.react-datepicker__day--outside-month,
+.react-datepicker__day--outside-month.react-datepicker__day--weekend {
+  color: #9ca197 !important;
+  visibility: visible;
+}
+
+/* Выходные дни текущего месяца */
+.react-datepicker__day--weekend:not(.react-datepicker__day--outside-month) {
+  color: #253017 !important; /* темный цвет для выходных текущего месяца */
+}
 .react-datepicker__day:hover {
   background-color: #e4e8df;
   border-radius: 50%;
 }
 
 .react-datepicker__day--selected {
-  background-color: #508826;
-  color: white;
+  background-color: #abd27a;
+  color: #253017 !important;
   border-radius: 50%;
 }
 
 .react-datepicker__day--keyboard-selected {
   background-color: #abd27a;
-  color: white;
+  color: #253017 !important;
   border-radius: 50%;
 }
 
 .react-datepicker__day--today {
-  font-weight: 600;
-}
-
-.react-datepicker__day--outside-month {
-  color: #ccc;
-  visibility: hidden;
+  font-weight: 500;
 }
 
 .react-datepicker__navigation {
@@ -87,7 +104,7 @@
 }
 
 .react-datepicker__day--weekend {
-  color: #abd27a;
+  color: #253017 !important;
 }
 
 .react-datepicker__day-name:first-letter {
