@@ -20,9 +20,10 @@ import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTable, SkillForm, SkillMenu } from "@widgets";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 import { getSkillsSubCategoriesApi } from "@api/Api";
-import { TPlace } from "@api/types";
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
+import { TPlace, TUser } from "@api/types";
+import { CardSlider } from "../widgets/cardSlider/CardSlider";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -88,9 +89,13 @@ export const HomePage = () => {
       dispatch(getUsersThunk(nextPage));
     }
   };
+
   return (
-    <>
+    <div className={styles.homePageWrapper}>
       <Header />
+
+      <CardSlider users={users} subCategories={subCategories} />
+      
       <div className={styles.wrapper}>
         <FilterSection
         onGenderChange={handleGenderChange}
@@ -204,6 +209,6 @@ export const HomePage = () => {
       <NotFoundPage />
       <ServerErrorPage />
       <Footer />
-    </>
+    </div>
   );
 };
