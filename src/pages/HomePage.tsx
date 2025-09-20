@@ -13,6 +13,10 @@ import { UserCard } from "../features/users/userCard/UserCard";
 
 import styles from "./HomePage.module.css";
 import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
+
+// import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
+
+import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTable, SkillForm, SkillMenu } from "@widgets";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 import { getSkillsSubCategoriesApi } from "@api/Api";
@@ -102,7 +106,16 @@ export const HomePage = () => {
           onLoadMore={handleLoadMore}
         />
       </div>
-
+  
+     <h2>Форма регистрации (Шаг 2)</h2>
+      <RegisterStep2 
+        onBack={() => console.log('Назад')}
+        onContinue={(data) => {
+          console.log('Данные регистрации:', data);
+          alert('Регистрация завершена!');
+        }}
+      />
+      
       <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
 

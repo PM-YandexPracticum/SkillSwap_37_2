@@ -118,7 +118,11 @@ export const GroupedSubcategoryDropdown: FC<GroupedSubcategoryDropdownProps> = (
           aria-haspopup="listbox"
           aria-expanded={isOpen}
         >
-          <span className={styles.selectedText}>{getDisplayText()}</span>
+          <span className={clsx(
+            styles.selectedText,
+            selectedSubcategoryIds.length === 0 && styles.placeholder // Добавляем класс placeholder когда ничего не выбрано
+          )}
+          >{getDisplayText()}</span>
           <Icon
             name={isOpen ? "chevronUp" : "chevronDown"}
             size="s"

@@ -1,0 +1,146 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  position: relative;
+}
+
+.label {
+  font-size: 16px;
+  color: #253017;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border: 1px solid #69735d;
+  border-radius: 12px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  background: white;
+  height: 48px;
+  cursor: pointer;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #253017;
+}
+
+.input.error {
+  border-color: #bf3920;
+}
+
+.calendarIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.errorText {
+  color: #bf3920;
+  font-size: 12px;
+}
+
+.customHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  padding: 0 12px;
+  background: white;
+}
+
+.selectors {
+  display: flex;
+  gap: 8px;
+}
+
+.monthSelector,
+.yearSelector {
+  padding: 8px 12px;
+  background: white;
+  color: #253017;
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+.popper {
+  padding-bottom: 0 !important;
+}
+
+.calendarContainer {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calendarContent {
+  padding: 16px;
+  background: white;
+}
+
+.footerButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 16px;
+  background: white;
+  border-radius: 0 0 12px 12px;
+}
+
+.cancelButton {
+  padding: 12px 24px;
+  border: 1px solid #ABD27A;
+  border-radius: 12px;
+  background: white;
+  color: #253017;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.cancelButton:hover {
+  background: #DEEAC5;
+}
+
+.selectButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  background: #ABD27A;
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.selectButton:hover {
+  background: #DEEBC5;
+}
+
+/* Скрываем крестик очистки */
+.react-datepicker__close-icon {
+  display: none !important;
+}
+
+.react-datepicker__close-icon::after {
+  display: none !important;
+}

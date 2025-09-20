@@ -8,7 +8,7 @@ import { birthdayToFormatedAge, getImageUrl } from '../../shared/lib/helpers';
 import { TPlace, TUserCard } from '@api/types';
 
 type GridListProps = {
-  users: TUserCard[];
+  users: TUser[];
   subCategories: TPlace[];
   loading: boolean;
   hasMore: boolean;
@@ -42,7 +42,7 @@ export const GridList = ({
                 from={user.from}
                 age={birthdayToFormatedAge(user.birthdate)}
                 avatar={getImageUrl(user.photo)}
-                teachSkills={user.skill}
+                teachSkills={user.sub_text}
                 learnSkills={user.need_subcat}
                 subCategories={subCategories}
               />

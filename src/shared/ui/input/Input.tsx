@@ -15,6 +15,7 @@ interface InputProps {
   value?: string;
   onChange?: (value: string) => void;
   onBlur?: () => void;
+  required?: boolean; // Добавляем поле
 }
 
 export const Input = ({
@@ -29,6 +30,7 @@ export const Input = ({
   value,
   onChange,
   onBlur,
+  required = false,
   ...otherProps
 }: InputProps) => {
   const isError = status === "error";
@@ -60,6 +62,7 @@ export const Input = ({
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           onBlur={onBlur}
+          required={required}
           {...otherProps}
         />
       </div>

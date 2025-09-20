@@ -10,6 +10,7 @@ import {
   TResponsePlaces,
   TResponseCategories,
   TResponseSubcategories,
+  TOfferResult,
 } from "./types";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);

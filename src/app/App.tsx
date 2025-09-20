@@ -17,25 +17,25 @@
 /*                NotFoundPageStub
 =========================== */
 
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet, useParams } from "react-router-dom";
 
 import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, SkillForm } from "@widgets";
 
 //То, что есть
 import { HomePage } from "../pages/HomePage";
-// import { FilterSection } from "../features/filters/FilterSection";
-// import { AuthForm } from "../features/auth/AuthForm";
-// import { SkillCardDetails } from "../features/skills/Skill Card/skillCardDetails";
+import { RegisterStep2 } from "../features/auth/RegisterStep2";
 
 //Данные/типы/стор (для каталога)
-import { useDispatch } from "@store";
+import { RootState, useDispatch } from "@store";
 import { useSelector } from "react-redux";
-import { RootState } from "../services/store";
-import { getUsersThunk } from "../services/users/actions";
-import { getSkillsSubCategoriesApi } from "@api/Api";
-import { TPlace, TSubcategory } from "@api/types";
+import { TPlace } from "@api/types";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
+
+import { getPlacesThunk } from "../services/places/actions";
+import { getUsersThunk } from "../services/users/actions";
+import { getCategoriesThunk } from "../services/categories/actions";
+import { Button } from "../shared/ui/button/Button";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
@@ -50,19 +50,12 @@ const Layout: React.FC = () => (
 
 //Каталог (FilterSection + GridList)
 const CatalogContent: React.FC = () => {
-  const dispatch = useDispatch();
+
   const users = useSelector((s: RootState) => s.users.users);
 
-  const [subCategories, setSubCategories] = React.useState<TSubcategory[]>([]);
+  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
   const [selectedGender, setSelectedGender] = React.useState<string>("");
-  const [selectedPlaces, setSelectedPlaces] = React.useState<TPlace[]>([]);
-
-  React.useEffect(() => {
-    dispatch(getUsersThunk(1));
-    getSkillsSubCategoriesApi()
-      .then((data) => setSubCategories(data.subcategories ?? []))
-      .catch((e) => console.error("Не удалось загрузить подкатегории:", e));
-  }, [dispatch]);
+  const [selectedPlaces, setSelectedPlaces] = React.useState<number[]>([]);
 
   return (
     <section className="page page-catalog">
@@ -70,7 +63,7 @@ const CatalogContent: React.FC = () => {
         onGenderChange={setSelectedGender}
         onPlaceChange={setSelectedPlaces}
         selectedGender={selectedGender}
-        selectedCities={selectedCities}
+        selectedPlaces={selectedPlaces}
       />
       <GridList
         users={users}
@@ -91,12 +84,50 @@ const LoginContent: React.FC = () => (
 );
 
 //Register
-const RegisterContent: React.FC = () => (
-  <section className="page page-auth">
-    <h1>Регистрация</h1>
-    <p>Здесь будет форма регистрации.</p>
-  </section>
-);
+const RegisterContent: React.FC = () => {
+  const [step, setStep] = useState(1);
+  const [step2Data, setStep2Data] = useState<Partial<{
+    name: string;
+    birthdate: Date | null;
+    gender: string;
+    city: string;
+    selectedCategories: string[];
+    selectedSubcategories: string[];
+  }> | null>(null);
+
+  const handleStep2Continue = (data: any) => {
+    setStep2Data(data);
+  
+    console.log("Данные регистрации:", data);
+    alert("Регистрация завершена! Данные: " + JSON.stringify(data, null, 2));
+  };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  return (
+    <section className="page page-auth">
+      {step === 1 ? (
+        <div>
+          <h1>Регистрация</h1>
+          <p>Здесь будет форма регистрации</p>
+          <Button colored onClick={() => setStep(2)}>
+            Далее
+          </Button>
+        </div>
+      ) : (
+        <RegisterStep2
+          onBack={handleBack}
+          onContinue={handleStep2Continue}
+          initialData={step2Data || undefined}
+        />
+      )}
+    </section>
+  );
+};
 
 //Форма навыка
 const SkillFormContent: React.FC = () => (
@@ -202,6 +233,17 @@ const NotFoundPageStub: React.FC = () => (
 );
 
 export const App: React.FC = () => {
+
+
+  const dispatch = useDispatch();
+  
+  React.useEffect(() => {
+    dispatch(getUsersThunk(1));
+    dispatch(getPlacesThunk());
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
+
+
   return (
     <BrowserRouter>
       <Routes>

@@ -1,3 +1,5 @@
+// src\widgets\notification-widget\NotificationWidget.tsx
+
 import { FC } from "react";
 import styles from "./NotificationWidget.module.css";
 import { Icon } from "../../shared/ui/icon/Icon";

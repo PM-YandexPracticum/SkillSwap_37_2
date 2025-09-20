@@ -51,6 +51,21 @@
   opacity: 0.6;
 }
 
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 16px;
+  color: #253017;
+  padding: 0;
+}
+
+.searchInput::placeholder {
+  color: #69735d;
+  opacity: 0.7;
+}
+
 .selectedText {
   color: #253017;
   overflow: hidden;
@@ -58,6 +73,10 @@
   white-space: nowrap;
 }
 
+.selectedText.placeholder {
+  color: #69735d;
+  opacity: 0.7;
+}
 .chevronIcon {
   color: #69735d;
   flex-shrink: 0;
@@ -102,4 +121,11 @@
 .optionLabel {
   color: #253017;
   font-size: 16px;
+}
+
+.noResults {
+  padding: 12px;
+  color: #69735d;
+  font-size: 14px;
+  text-align: center;
 }
