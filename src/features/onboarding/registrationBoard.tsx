@@ -1,6 +1,12 @@
 import React from 'react';
 import styles from './registrationBoard.module.css';
 
+import lightBulbPNG from '@images/light-bulb.png';
+import userInfoPNG from '@images/user-info.png';
+import schoolBoardPNG from '@images/school-board.png';
+
+
+
 interface onBoardingProps {
   title?: string;
   description?: string;
@@ -13,7 +19,7 @@ export const RegistrationOnBoardingOne: React.FC<onBoardingProps> = ({
   return (
     <div className={styles.constent}>
         <div className={styles.onboarding}>
-        <img src='/db/onboarding-photo/light-bulb.png' alt='Лампочка' className={styles.image} />
+        <img src={lightBulbPNG} alt='Лампочка' className={styles.image} />
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>{description}</p>
         </div>
@@ -28,7 +34,7 @@ export const RegistrationOnBoardingTwo: React.FC<onBoardingProps> = ({
   return (
     <div className={styles.constent}>
         <div className={styles.onboarding}>
-        <img src='/db/onboarding-photo/user-info.png' alt='Человек говорит сообщение' className={styles.image} />
+        <img src={userInfoPNG} alt='Человек говорит сообщение' className={styles.image} />
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>{description}</p>
         </div>
@@ -43,7 +49,7 @@ export const RegistrationOnBoardingThree: React.FC<onBoardingProps> = ({
   return (
     <div className={styles.constent}>
         <div className={styles.onboarding}>
-        <img src='/db/onboarding-photo/school-board.png' alt='Маркерная доска с заданиями' className={styles.image} />
+        <img src={schoolBoardPNG} alt='Маркерная доска с заданиями' className={styles.image} />
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>{description}</p>
         </div>
