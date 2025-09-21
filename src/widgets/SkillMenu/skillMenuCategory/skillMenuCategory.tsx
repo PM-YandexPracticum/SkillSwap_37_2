@@ -6,7 +6,6 @@ import { useMemo } from "react";
 type SkillMenuCategoryProps = {
   categories: TCategory[];
   subcategories: TSubcategory[];
-  icon: string;
 };
 
 export const SkillMenuCategories = ({ categories, subcategories }: SkillMenuCategoryProps) => {
@@ -30,8 +29,16 @@ export const SkillMenuCategories = ({ categories, subcategories }: SkillMenuCate
     <menu className={styles.skillMenu}>
       {groupedCategories.map((group, index) => (
       <li key={index} className={styles.category}>
-        {/* иконка заглушка */}
-        <img src={group.category.icon} />
+
+        <div 
+          className={styles.iconContainer}
+          style={{ backgroundColor: group.category.color }}
+        >
+          <Icon 
+            name={group.category.icon}
+            size={24}
+          />
+        </div>
         <div className={styles.div}>
           <span className={styles.category_title}>{group.category.name}</span>
           <ul className={styles.ul}>
@@ -39,9 +46,9 @@ export const SkillMenuCategories = ({ categories, subcategories }: SkillMenuCate
               <li key={subIndex} className={styles.li}>{sub.name}</li>
             ))} 
           </ul>
-      </div>
-    </li>
-    ))}
+        </div>
+      </li>
+      ))}
     </menu>
   );
 };

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import clsx from "clsx";
 import styles from "./Icon.module.css";
+import { IconName } from "./icons";
 
 // Импорт всех иконок как React-компоненты (поэтому с большой буквы + добавляем ?react)
 import AddIcon from "../../assets/icons/add.svg?react";
@@ -61,6 +62,7 @@ const icons = {
   eye: EyeIcon,
   eyeSlash: EyeSlashIcon,
   chevronUp: ChevronUpIcon,
+  chevronRight: ChevronRightIcon,
   chevronDown: ChevronDownIcon,
   checkboxDone: CheckboxDoneIcon,
   checkboxEmpty: CheckboxEmptyIcon,
@@ -70,10 +72,16 @@ const icons = {
   idea: IdeaIcon,
   logo: LogoIcon,
   like: LikeIcon,
+  lifestyle: LifeStyleIcon,
+  book: BookIcon,
+  palette: PaletteIcon,
+  home: HomeIcon,
+  global: GlobalIcon,
+  briefcase: BriefcaseIcon,
+  add: AddIcon,
+  userCircle: UserCircleIcon,
+  calendar: CalendarIcon,
 } as const;
-
-// Типы для пропсов
-export type IconName = keyof typeof icons;
 
 interface IconProps {
   name: IconName;

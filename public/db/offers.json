@@ -1,1604 +1,2254 @@
 {
   "offers": [
     {
-      "offerUserId": 45,
-      "skillOwnerId": 49,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 44,
-      "skillOwnerId": 35,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 2,
-      "skillOwnerId": 15,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 4,
+      "offerUserId": 25,
       "skillOwnerId": 19,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 10,
-      "skillOwnerId": 9,
-      "confirm": 1,
+      "accept": 0,
       "daysSinceOffer": 4,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 42,
-      "skillOwnerId": 34,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 38,
-      "skillOwnerId": 11,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 17,
-      "skillOwnerId": 16,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 1,
-      "skillOwnerId": 36,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 46,
       "skillOwnerId": 29,
-      "confirm": 1,
+      "accept": 0,
       "daysSinceOffer": 3,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 12,
-      "skillOwnerId": 2,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 27,
-      "skillOwnerId": 13,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 26,
-      "skillOwnerId": 29,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 45,
-      "skillOwnerId": 34,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 31,
-      "skillOwnerId": 36,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 38,
-      "skillOwnerId": 2,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 38,
-      "skillOwnerId": 14,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 1,
-      "skillOwnerId": 12,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 6,
-      "skillOwnerId": 16,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 12,
-      "skillOwnerId": 8,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 26,
-      "skillOwnerId": 27,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 16,
-      "skillOwnerId": 47,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 45,
-      "skillOwnerId": 26,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 3,
-      "skillOwnerId": 7,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 5,
-      "skillOwnerId": 25,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 6,
-      "skillOwnerId": 4,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 31,
-      "skillOwnerId": 29,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 1,
-      "skillOwnerId": 41,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 43,
-      "skillOwnerId": 34,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 27,
-      "skillOwnerId": 29,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 19,
-      "skillOwnerId": 39,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 17,
-      "skillOwnerId": 13,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 4,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 6,
-      "skillOwnerId": 11,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 44,
-      "skillOwnerId": 17,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 9,
-      "skillOwnerId": 22,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 34,
-      "skillOwnerId": 19,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 20,
-      "skillOwnerId": 8,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 24,
-      "skillOwnerId": 1,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 33,
-      "skillOwnerId": 43,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 35,
-      "skillOwnerId": 32,
-      "confirm": 0,
+      "skillOwnerId": 5,
+      "accept": 1,
       "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 13,
-      "skillOwnerId": 25,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 47,
-      "skillOwnerId": 21,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 21,
-      "skillOwnerId": 12,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 40,
-      "skillOwnerId": 38,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 39,
-      "skillOwnerId": 18,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 19,
-      "skillOwnerId": 45,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 11,
-      "skillOwnerId": 32,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 36,
-      "skillOwnerId": 46,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 1,
-      "skillOwnerId": 47,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 28,
-      "skillOwnerId": 47,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 34,
-      "skillOwnerId": 44,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 20,
-      "skillOwnerId": 16,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 32,
-      "skillOwnerId": 19,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 47,
-      "skillOwnerId": 16,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 33,
-      "skillOwnerId": 26,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 26,
-      "skillOwnerId": 41,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 27,
-      "skillOwnerId": 48,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 5,
-      "skillOwnerId": 19,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 4,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 6,
-      "skillOwnerId": 33,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 39,
-      "skillOwnerId": 37,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 29,
-      "skillOwnerId": 37,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 47,
-      "skillOwnerId": 15,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 22,
-      "skillOwnerId": 36,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 48,
-      "skillOwnerId": 33,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 22,
-      "skillOwnerId": 1,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 41,
-      "skillOwnerId": 11,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 10,
-      "skillOwnerId": 40,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 41,
-      "skillOwnerId": 43,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 13,
-      "skillOwnerId": 28,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 48,
-      "skillOwnerId": 32,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 7,
-      "skillOwnerId": 35,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 34,
-      "skillOwnerId": 48,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 24,
-      "skillOwnerId": 18,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 17,
-      "skillOwnerId": 1,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 7,
-      "skillOwnerId": 30,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 15,
-      "skillOwnerId": 17,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
+      "skillOwnerId": 6,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 26,
-      "skillOwnerId": 16,
-      "confirm": 1,
+      "skillOwnerId": 10,
+      "accept": 0,
       "daysSinceOffer": 2,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 3,
-      "skillOwnerId": 15,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 39,
-      "skillOwnerId": 49,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 38,
-      "skillOwnerId": 20,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 2,
-      "skillOwnerId": 11,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 14,
-      "skillOwnerId": 15,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 48,
-      "skillOwnerId": 35,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 27,
-      "skillOwnerId": 18,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 3,
-      "skillOwnerId": 43,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 6,
-      "skillOwnerId": 28,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 23,
-      "skillOwnerId": 38,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 47,
-      "skillOwnerId": 29,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 41,
-      "skillOwnerId": 42,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 44,
-      "skillOwnerId": 29,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 39,
-      "skillOwnerId": 11,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 3,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 33,
-      "skillOwnerId": 37,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 7,
-      "skillOwnerId": 31,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 43,
-      "skillOwnerId": 22,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 18,
-      "skillOwnerId": 22,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 39,
-      "skillOwnerId": 24,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 46,
-      "skillOwnerId": 19,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 38,
-      "skillOwnerId": 26,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 35,
-      "skillOwnerId": 1,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 42,
       "skillOwnerId": 44,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 30,
-      "skillOwnerId": 45,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 20,
-      "skillOwnerId": 38,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 3,
-      "skillOwnerId": 4,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 36,
-      "skillOwnerId": 47,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 21,
-      "skillOwnerId": 4,
-      "confirm": 0,
+      "accept": 1,
       "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 46,
-      "skillOwnerId": 40,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 16,
-      "skillOwnerId": 26,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 8,
-      "skillOwnerId": 35,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 25,
-      "skillOwnerId": 15,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 13,
-      "skillOwnerId": 35,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 40,
-      "skillOwnerId": 32,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 3,
-      "skillOwnerId": 20,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 42,
-      "skillOwnerId": 31,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 9,
-      "skillOwnerId": 24,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 24,
-      "skillOwnerId": 28,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 35,
-      "skillOwnerId": 28,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 29,
-      "skillOwnerId": 4,
-      "confirm": 0,
+      "skillOwnerId": 45,
+      "accept": 1,
       "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 25,
-      "skillOwnerId": 35,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 30,
-      "skillOwnerId": 13,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 33,
-      "skillOwnerId": 47,
-      "confirm": 0,
+      "offerUserId": 49,
+      "skillOwnerId": 43,
+      "accept": 0,
       "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 4,
-      "skillOwnerId": 36,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 30,
-      "skillOwnerId": 20,
-      "confirm": 0,
+      "offerUserId": 20,
+      "skillOwnerId": 2,
+      "accept": 0,
       "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 35,
-      "skillOwnerId": 20,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 43,
-      "skillOwnerId": 7,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 37,
-      "skillOwnerId": 10,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
     },
     {
       "offerUserId": 16,
-      "skillOwnerId": 45,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "skillOwnerId": 25,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 29,
-      "skillOwnerId": 25,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "skillOwnerId": 26,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 7,
+      "skillOwnerId": 30,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 39,
+      "skillOwnerId": 1,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 22,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 15,
+      "skillOwnerId": 7,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 25,
-      "skillOwnerId": 23,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 6,
-      "skillOwnerId": 45,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 48,
-      "skillOwnerId": 40,
-      "confirm": 0,
+      "skillOwnerId": 4,
+      "accept": 0,
       "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 1,
-      "skillOwnerId": 33,
-      "confirm": 1,
+      "offerUserId": 2,
+      "skillOwnerId": 34,
+      "accept": 0,
       "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 44,
-      "skillOwnerId": 23,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
     },
     {
       "offerUserId": 28,
-      "skillOwnerId": 48,
-      "confirm": 0,
+      "skillOwnerId": 30,
+      "accept": 0,
       "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 26,
-      "skillOwnerId": 5,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "offerUserId": 44,
+      "skillOwnerId": 12,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 48,
-      "skillOwnerId": 26,
-      "confirm": 1,
+      "offerUserId": 41,
+      "skillOwnerId": 43,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 8,
+      "skillOwnerId": 27,
+      "accept": 1,
       "daysSinceOffer": 4,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 17,
+      "skillOwnerId": 18,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 49,
+      "skillOwnerId": 41,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 47,
+      "skillOwnerId": 29,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 27,
+      "skillOwnerId": 21,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 45,
+      "skillOwnerId": 35,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 39,
+      "skillOwnerId": 37,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 33,
+      "skillOwnerId": 37,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 25,
+      "skillOwnerId": 49,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 4,
+      "skillOwnerId": 20,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 11,
+      "skillOwnerId": 39,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 28,
+      "skillOwnerId": 32,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 25,
+      "skillOwnerId": 48,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 45,
+      "skillOwnerId": 38,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 30,
+      "skillOwnerId": 14,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 27,
+      "skillOwnerId": 1,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 28,
+      "skillOwnerId": 3,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 18,
+      "skillOwnerId": 7,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 4,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 14,
+      "skillOwnerId": 41,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 11,
+      "skillOwnerId": 6,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 7,
+      "skillOwnerId": 43,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 19,
       "skillOwnerId": 11,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 27,
+      "offerUserId": 24,
       "skillOwnerId": 47,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 34,
-      "skillOwnerId": 24,
-      "confirm": 0,
+      "accept": 1,
       "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 1
     },
     {
       "offerUserId": 45,
-      "skillOwnerId": 1,
-      "confirm": 1,
+      "skillOwnerId": 4,
+      "accept": 1,
       "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 29,
+      "skillOwnerId": 12,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 48,
+      "skillOwnerId": 1,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 26,
+      "skillOwnerId": 44,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 25,
+      "skillOwnerId": 15,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 20,
+      "skillOwnerId": 7,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 16,
+      "skillOwnerId": 12,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 31,
+      "skillOwnerId": 18,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 29,
+      "skillOwnerId": 34,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 28,
+      "skillOwnerId": 45,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 5,
+      "skillOwnerId": 38,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 8,
+      "skillOwnerId": 36,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 36,
+      "skillOwnerId": 37,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 1,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 41,
+      "skillOwnerId": 35,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 38,
+      "skillOwnerId": 35,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 7,
-      "skillOwnerId": 18,
-      "confirm": 1,
+      "skillOwnerId": 42,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 23,
+      "skillOwnerId": 17,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 8,
+      "skillOwnerId": 48,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 8,
+      "skillOwnerId": 9,
+      "accept": 0,
       "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 45,
+      "skillOwnerId": 2,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 32,
+      "skillOwnerId": 39,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 47,
+      "skillOwnerId": 33,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 17,
+      "skillOwnerId": 26,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 36,
+      "skillOwnerId": 21,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 5,
+      "skillOwnerId": 44,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 7,
+      "skillOwnerId": 34,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 11,
+      "skillOwnerId": 31,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 4,
+      "skillOwnerId": 15,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 31,
+      "skillOwnerId": 23,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 34,
+      "skillOwnerId": 14,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 12,
+      "skillOwnerId": 21,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 5,
+      "skillOwnerId": 18,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 5,
+      "skillOwnerId": 21,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 37,
+      "skillOwnerId": 27,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 23,
+      "skillOwnerId": 15,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 4,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 6,
+      "skillOwnerId": 34,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 29,
+      "skillOwnerId": 30,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 48,
+      "skillOwnerId": 23,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 47,
+      "skillOwnerId": 9,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 25,
+      "skillOwnerId": 14,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 12,
+      "skillOwnerId": 37,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 18,
+      "skillOwnerId": 29,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 39,
+      "skillOwnerId": 41,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 31,
+      "skillOwnerId": 17,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 35,
+      "skillOwnerId": 10,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 4,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 28,
+      "skillOwnerId": 24,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 24,
+      "skillOwnerId": 40,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 42,
+      "skillOwnerId": 16,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 47,
+      "skillOwnerId": 45,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 38,
+      "skillOwnerId": 14,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
     },
     {
       "offerUserId": 7,
       "skillOwnerId": 29,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 6,
-      "skillOwnerId": 17,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
+      "offerUserId": 48,
+      "skillOwnerId": 44,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
     },
     {
-      "offerUserId": 2,
+      "offerUserId": 49,
       "skillOwnerId": 40,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 47,
-      "skillOwnerId": 42,
-      "confirm": 0,
+      "accept": 0,
       "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 33,
-      "skillOwnerId": 19,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 20,
-      "skillOwnerId": 18,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 10,
-      "skillOwnerId": 15,
-      "confirm": 0,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 11,
-      "skillOwnerId": 14,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 31,
-      "skillOwnerId": 20,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 14,
-      "skillOwnerId": 33,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 42,
-      "skillOwnerId": 18,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 7,
-      "skillOwnerId": 14,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 6,
-      "skillOwnerId": 27,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 42,
-      "skillOwnerId": 14,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 23,
-      "skillOwnerId": 15,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 20,
-      "skillOwnerId": 30,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 32,
-      "skillOwnerId": 35,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 5,
-      "skillOwnerId": 17,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 4,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 46,
-      "skillOwnerId": 25,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 44,
-      "skillOwnerId": 40,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 30,
-      "skillOwnerId": 28,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 14,
-      "skillOwnerId": 13,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 33,
-      "skillOwnerId": 41,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 46,
-      "skillOwnerId": 49,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 15,
-      "skillOwnerId": 44,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 5,
-      "skillOwnerId": 10,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 30,
-      "skillOwnerId": 39,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 34,
-      "skillOwnerId": 32,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 1,
-      "skillOwnerId": 31,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 38,
-      "skillOwnerId": 40,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 37,
-      "skillOwnerId": 31,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 42,
-      "skillOwnerId": 22,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 19,
-      "skillOwnerId": 12,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 34,
-      "skillOwnerId": 18,
-      "confirm": 1,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 14,
-      "skillOwnerId": 12,
-      "confirm": 0,
-      "daysSinceOffer": 4,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 37,
-      "skillOwnerId": 48,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 20,
-      "skillOwnerId": 41,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 6,
-      "skillOwnerId": 32,
-      "confirm": 0,
+      "skillOwnerId": 23,
+      "accept": 1,
       "daysSinceOffer": 0,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 31,
-      "skillOwnerId": 24,
-      "confirm": 0,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "offerUserId": 46,
+      "skillOwnerId": 16,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 23,
-      "skillOwnerId": 40,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
+      "offerUserId": 36,
+      "skillOwnerId": 33,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 4,
+      "skillOwnerId": 38,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 49,
+      "skillOwnerId": 38,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
     },
     {
       "offerUserId": 11,
-      "skillOwnerId": 44,
-      "confirm": 1,
+      "skillOwnerId": 7,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 23,
+      "skillOwnerId": 27,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 6,
+      "skillOwnerId": 10,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 26,
+      "skillOwnerId": 19,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 18,
+      "skillOwnerId": 14,
+      "accept": 1,
       "daysSinceOffer": 2,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 35,
+      "skillOwnerId": 25,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 23,
+      "skillOwnerId": 13,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 12,
+      "skillOwnerId": 20,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 31,
+      "skillOwnerId": 1,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 41,
+      "skillOwnerId": 37,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 32,
+      "skillOwnerId": 21,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 17,
+      "skillOwnerId": 3,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 43,
+      "skillOwnerId": 38,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 39,
+      "skillOwnerId": 2,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 22,
+      "skillOwnerId": 29,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 29,
+      "skillOwnerId": 10,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 34,
+      "skillOwnerId": 25,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 39,
+      "skillOwnerId": 12,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 40,
+      "skillOwnerId": 1,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 47,
+      "skillOwnerId": 25,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 6,
+      "skillOwnerId": 48,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 49,
+      "skillOwnerId": 45,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 40,
+      "skillOwnerId": 38,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 3,
+      "skillOwnerId": 8,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 49,
+      "skillOwnerId": 12,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 34,
+      "skillOwnerId": 22,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 16,
+      "skillOwnerId": 13,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 4,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 1,
+      "skillOwnerId": 22,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 31,
+      "skillOwnerId": 32,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 15,
+      "skillOwnerId": 5,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 25,
+      "skillOwnerId": 46,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 27,
+      "skillOwnerId": 4,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 47,
+      "skillOwnerId": 6,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 38,
+      "skillOwnerId": 8,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 20,
+      "skillOwnerId": 36,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 40,
+      "skillOwnerId": 4,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 25,
+      "skillOwnerId": 20,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 28,
+      "skillOwnerId": 16,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 45,
+      "skillOwnerId": 11,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 36,
+      "skillOwnerId": 15,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 40,
+      "skillOwnerId": 19,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 8,
+      "skillOwnerId": 34,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 28,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 34,
+      "skillOwnerId": 41,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 24,
+      "skillOwnerId": 11,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 7,
+      "skillOwnerId": 12,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 32,
+      "skillOwnerId": 34,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 26,
+      "skillOwnerId": 3,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 31,
+      "skillOwnerId": 41,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 33,
+      "skillOwnerId": 39,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 31,
+      "skillOwnerId": 27,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
     },
     {
       "offerUserId": 33,
       "skillOwnerId": 3,
-      "confirm": 0,
+      "accept": 1,
       "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 47,
+      "skillOwnerId": 46,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 44,
+      "skillOwnerId": 39,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 15,
+      "skillOwnerId": 48,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 32,
+      "skillOwnerId": 14,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 44,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 12,
+      "skillOwnerId": 28,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 14,
+      "skillOwnerId": 40,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 22,
+      "skillOwnerId": 47,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 47,
+      "skillOwnerId": 38,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 4,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 9,
+      "skillOwnerId": 36,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 35,
+      "skillOwnerId": 8,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 30,
+      "skillOwnerId": 37,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 8,
+      "skillOwnerId": 15,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 46,
+      "skillOwnerId": 17,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 10,
+      "skillOwnerId": 37,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 3,
+      "skillOwnerId": 13,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 12,
+      "skillOwnerId": 34,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 23,
+      "skillOwnerId": 38,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 11,
+      "skillOwnerId": 14,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 17,
+      "skillOwnerId": 44,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 35,
+      "skillOwnerId": 22,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 33,
+      "skillOwnerId": 23,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 11,
+      "skillOwnerId": 46,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 3,
+      "skillOwnerId": 29,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 25,
+      "skillOwnerId": 40,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 18,
+      "skillOwnerId": 13,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 23,
+      "skillOwnerId": 16,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 28,
+      "skillOwnerId": 10,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 37,
+      "skillOwnerId": 5,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 40,
+      "skillOwnerId": 13,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 36,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 12,
+      "skillOwnerId": 48,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 48,
+      "skillOwnerId": 2,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 32,
+      "skillOwnerId": 20,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 22,
+      "skillOwnerId": 49,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 24,
+      "skillOwnerId": 17,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 26,
+      "skillOwnerId": 11,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 35,
+      "skillOwnerId": 26,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 37,
+      "skillOwnerId": 40,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 35,
+      "skillOwnerId": 47,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 13,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 24,
+      "skillOwnerId": 49,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 41,
+      "skillOwnerId": 18,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 24,
+      "skillOwnerId": 25,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 48,
+      "skillOwnerId": 28,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 27,
+      "skillOwnerId": 30,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 18,
+      "skillOwnerId": 1,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 8,
+      "skillOwnerId": 42,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 48,
+      "skillOwnerId": 14,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 36,
+      "skillOwnerId": 4,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 11,
+      "skillOwnerId": 12,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 48,
+      "skillOwnerId": 38,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 26,
+      "skillOwnerId": 22,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 14,
+      "skillOwnerId": 5,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 45,
+      "skillOwnerId": 25,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 43,
+      "skillOwnerId": 42,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 10,
+      "skillOwnerId": 3,
+      "accept": 0,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 33,
+      "skillOwnerId": 14,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 22,
       "skillOwnerId": 25,
-      "confirm": 1,
+      "accept": 0,
       "daysSinceOffer": 3,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 26,
-      "skillOwnerId": 21,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 3,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 49,
-      "skillOwnerId": 19,
-      "confirm": 0,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 14,
-      "skillOwnerId": 47,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 37,
-      "skillOwnerId": 11,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 33,
-      "skillOwnerId": 15,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 46,
-      "skillOwnerId": 11,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
-    },
-    {
-      "offerUserId": 2,
-      "skillOwnerId": 47,
-      "confirm": 1,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 28,
-      "skillOwnerId": 6,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 0
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
     },
     {
       "offerUserId": 35,
-      "skillOwnerId": 42,
-      "confirm": 1,
+      "skillOwnerId": 1,
+      "accept": 1,
       "daysSinceOffer": 3,
-      "daysSinceConfirm": 2,
-      "sawOffer": 1
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 37,
-      "skillOwnerId": 43,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 2,
-      "skillOwnerId": 14,
-      "confirm": 0,
+      "offerUserId": 30,
+      "skillOwnerId": 19,
+      "accept": 0,
       "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
-      "offerUserId": 40,
-      "skillOwnerId": 6,
-      "confirm": 1,
-      "daysSinceOffer": 1,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 22,
-      "skillOwnerId": 15,
-      "confirm": 0,
-      "daysSinceOffer": 3,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 31,
-      "skillOwnerId": 43,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
-    },
-    {
-      "offerUserId": 44,
-      "skillOwnerId": 6,
-      "confirm": 1,
-      "daysSinceOffer": 2,
-      "daysSinceConfirm": 1,
-      "sawOffer": 1
+      "offerUserId": 18,
+      "skillOwnerId": 12,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
     },
     {
       "offerUserId": 11,
       "skillOwnerId": 16,
-      "confirm": 0,
+      "accept": 0,
       "daysSinceOffer": 1,
-      "daysSinceConfirm": -1,
-      "sawOffer": 1
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 22,
+      "skillOwnerId": 2,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 31,
+      "skillOwnerId": 10,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 21,
+      "skillOwnerId": 40,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 48,
+      "skillOwnerId": 22,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 3,
+      "skillOwnerId": 18,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 28,
+      "skillOwnerId": 11,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 37,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 7,
+      "skillOwnerId": 36,
+      "accept": 0,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 4,
+      "skillOwnerId": 14,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 1,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 30,
+      "skillOwnerId": 35,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 4,
+      "skillOwnerId": 8,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 15,
+      "skillOwnerId": 39,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 27,
+      "skillOwnerId": 38,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 4,
+      "skillOwnerId": 23,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 20,
+      "skillOwnerId": 6,
+      "accept": 1,
+      "daysSinceOffer": 0,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
     },
     {
       "offerUserId": 41,
-      "skillOwnerId": 8,
-      "confirm": 1,
-      "daysSinceOffer": 0,
-      "daysSinceConfirm": 0,
-      "sawOffer": 1
+      "skillOwnerId": 20,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 10,
+      "skillOwnerId": 41,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 29,
+      "skillOwnerId": 33,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 32,
+      "skillOwnerId": 29,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 27,
+      "skillOwnerId": 39,
+      "accept": 1,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 1,
+      "skillOwnerId": 38,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 35,
+      "skillOwnerId": 23,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 30,
+      "skillOwnerId": 41,
+      "accept": 1,
+      "daysSinceOffer": 1,
+      "daysSinceAccept": 0,
+      "sawOffer": 1,
+      "sawAccept": 1
+    },
+    {
+      "offerUserId": 20,
+      "skillOwnerId": 42,
+      "accept": 1,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 14,
+      "skillOwnerId": 23,
+      "accept": 0,
+      "daysSinceOffer": 3,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 37,
+      "skillOwnerId": 22,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 36,
+      "skillOwnerId": 32,
+      "accept": 0,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 43,
+      "skillOwnerId": 16,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 3,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 22,
+      "skillOwnerId": 10,
+      "accept": 1,
+      "daysSinceOffer": 4,
+      "daysSinceAccept": 2,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 17,
+      "skillOwnerId": 14,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 19,
+      "skillOwnerId": 15,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 1,
+      "sawAccept": 0
+    },
+    {
+      "offerUserId": 9,
+      "skillOwnerId": 48,
+      "accept": 0,
+      "daysSinceOffer": 2,
+      "daysSinceAccept": -1,
+      "sawOffer": 0,
+      "sawAccept": 0
     }
   ]
 }

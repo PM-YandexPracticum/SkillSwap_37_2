@@ -12,9 +12,7 @@ import {
   getPlacesApi,
 } from "../../api/Api";
 import { TCategory, TSubcategory, TPlace } from "../../api/types";
-
-import userCircleIcon from "../../shared/assets/icons/user-circle.svg";
-import plusIcon from "../../shared/assets/icons/add.svg";
+import { Icon } from "../../shared/ui/icon/Icon";
 
 interface RegisterStep2Props {
   onBack: () => void;
@@ -132,15 +130,20 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
   return (
     <div className={styles.registerStep2}>
       <div className={styles.content}>
+        {/* Аватар */}
         <div className={styles.avatarSection}>
           <div className={styles.avatarContainer}>
-            <img
-              src={formData.avatar || userCircleIcon}
-              alt="Аватар"
-              className={styles.avatar}
-            />
+            {formData.avatar ? (
+              <img
+                src={formData.avatar}
+                alt="Аватар"
+                className={styles.avatar}
+              />
+            ) : (
+              <Icon name="userCircle" size={54} className={styles.avatarIcon} />
+            )}
             <label htmlFor="avatar-upload" className={styles.addButton}>
-              <img src={plusIcon} alt="Добавить" className={styles.addIcon} />
+              <Icon name="add" size={16} className={styles.addIcon} />
               <input
                 id="avatar-upload"
                 type="file"
@@ -151,6 +154,8 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             </label>
           </div>
         </div>
+
+        {/* Форма */}
         <form className={styles.form} onSubmit={handleSubmit}>
           <Input
             label="Имя"
@@ -166,7 +171,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
                 label="Дата рождения"
                 selected={formData.birthdate}
                 onChange={(date) => handleInputChange("birthdate", date)}
-                placeholder="Дд.мм.гггг"
+                placeholder="дд.мм.гггг"
               />
             </div>
 
@@ -221,6 +226,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
           <div className={styles.buttons}>
             <Button
               type="button"
+              size={208}
               onClick={onBack}
               className={styles.backButton}
             >
@@ -228,6 +234,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             </Button>
             <Button
               type="submit"
+              size={208}
               colored={true}
               disabled={!isFormValid()}
               className={styles.continueButton}
