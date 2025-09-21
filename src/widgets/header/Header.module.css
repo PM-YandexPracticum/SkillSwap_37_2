@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 104px;
   gap: 32px;
   padding: 0 36px;
@@ -77,8 +78,8 @@ li:has(img) {
 }
 
 .userAvatar {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
 }

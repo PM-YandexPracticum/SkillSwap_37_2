@@ -4,19 +4,36 @@
   align-items: center;
 }
 
+
 .header {
   display: flex;
-  align-items: space-between;
+  flex-direction: row;
   justify-content: space-between;
-  height: 48px;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 32px;
 }
 
 .title {
+  /* display: block; */
   font-family: 'Jost';
   font-size: 32px;
   font-weight: 500;
 }
 
+.button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+
 /* .childsWrapper {
-  max-width: 1020px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fit, minmax(0, 324px));
+  gap: 16px;
+  max-height: 368px;
 } */

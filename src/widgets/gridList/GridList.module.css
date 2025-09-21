@@ -1,8 +1,8 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 324px);
-  gap: 24px;
   justify-content: center;
+  gap: 24px;
 }
 
 .gridItem {

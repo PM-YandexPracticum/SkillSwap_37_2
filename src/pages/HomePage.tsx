@@ -26,6 +26,7 @@ import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { getCategoriesThunk } from "../services/categories/actions";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
+import { Icon } from "../shared/ui/icon/Icon";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -90,9 +91,28 @@ export const HomePage = () => {
 
       <CardSlider users={users} subCategories={subCategories} />
 
-      <CardShowcase title="Популярное" buttonName="Смотреть все" buttonSize={187}>
-        <CardSlider users={users} subCategories={subCategories} />
-      </CardShowcase>
+      <div className={styles.wrapper}>
+        <FilterSection
+        onGenderChange={handleGenderChange}
+        onPlaceChange={handlePlaceChange}
+        selectedGender={selectedGender}
+        selectedPlaces={selectedPlaces}
+        />
+        <CardShowcase
+        title="Популярное"
+        buttonTitle="Смотреть все"
+        icon={<Icon name="chevronRight" />}
+        >
+          <GridList
+            rows={1}
+            users={users}
+            subCategories={subCategories}
+            loading={isLoading}
+            hasMore={hasMore}
+            onLoadMore={handleLoadMore}
+        />
+        </CardShowcase>
+      </div>
       
       <div className={styles.wrapper}>
         <FilterSection

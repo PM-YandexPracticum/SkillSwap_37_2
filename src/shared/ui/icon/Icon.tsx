@@ -82,6 +82,7 @@ const icons = {
   userCircle: UserCircleIcon,
   calendar: CalendarIcon,
   done: DoneIcon,
+  sort: SortIcon,
 } as const;
 
 interface IconProps {

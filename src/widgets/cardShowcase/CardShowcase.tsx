@@ -6,37 +6,34 @@ import clsx from "clsx";
 type CardShowcaseProps = {
   children: ReactNode;
   title: string;
-  className?: string;
   onClick?: () => void;
-  buttonName?: string
-  buttonSize?: number;
+  buttonTitle?: string
   icon?: ReactElement;
+  // className?: string;
 };
 
 export const CardShowcase = ({
   children,
   title,
-  className,
   onClick,
-  buttonName = '',
-  buttonSize,
-  icon
+  buttonTitle = '',
+  icon,
+  // className,
 }: CardShowcaseProps) => {
 
   return (
     <div className={styles.cardShowcase}>
       <div className={styles.header}>
-        <h2 className={styles.title}>
-          {title}
-        </h2>
-        {buttonName && (
-              <Button 
-                size={buttonSize}
-                onClick={onClick}
-              >
-                <span>{buttonName}</span>
-                <span>{icon}</span>
-              </Button>
+        <div>
+          <h2 className={styles.title}>
+            {title}
+          </h2>
+        </div>
+        {buttonTitle && (
+              <button className={styles.button}>
+                  <span>{buttonTitle}</span>
+                  <span>{icon}</span>
+              </button>
         )}
       </div>
       <div className={styles.childsWrapper}>
