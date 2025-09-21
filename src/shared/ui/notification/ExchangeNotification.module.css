@@ -1,0 +1,65 @@
+.modal {
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  margin: 20px auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.icon {
+  color: #000;
+  stroke-width: 0.5px;
+}
+
+.header {
+  text-align: center;
+}
+
+.title {
+  font-family: 'Jost', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #253017;
+  margin: 0;
+}
+
+.message {
+  text-align: center;
+}
+
+.message p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #253017;
+  margin: 0;
+  line-height: 1.5;
+  padding-bottom: 32px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.actionButton {
+  width: 100%;
+}

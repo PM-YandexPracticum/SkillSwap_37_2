@@ -16,9 +16,15 @@ import styles from "./HomePage.module.css";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import { CardSlider, DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, NotificationsTable, SkillForm, SkillMenu } from "@widgets";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
+
+import { getSkillsSubCategoriesApi } from "@api/Api";
+import { TPlace } from "@api/types";
+import { RegistrationOnBoardingOne, RegistrationOnBoardingTwo, RegistrationOnBoardingThree } from "../features/onboarding/registrationBoard";
+
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { getCategoriesThunk } from "../services/categories/actions";
+import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 
 export const HomePage = () => {
@@ -103,7 +109,18 @@ export const HomePage = () => {
           onLoadMore={handleLoadMore}
         />
       </div>
-  
+
+<ExchangeNotification
+  type="success"
+  onNavigateToExchange={() => console.log('Переход к обмену')}
+/>
+
+<ExchangeNotification
+  type="info" 
+  onNavigateToExchange={() => console.log('Просмотр уведомления')}
+/>
+
+
      <h2>Форма регистрации (Шаг 2)</h2>
       <RegisterStep2 
         onBack={() => console.log('Назад')}
@@ -112,6 +129,15 @@ export const HomePage = () => {
           alert('Регистрация завершена!');
         }}
       />
+
+      <h2>onboarding register step 1</h2>
+      <RegistrationOnBoardingOne />
+
+      <h2>onboarding register step 2</h2>
+      <RegistrationOnBoardingTwo />
+
+      <h2>onboarding register step 3</h2>
+      <RegistrationOnBoardingThree />
       
       <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
