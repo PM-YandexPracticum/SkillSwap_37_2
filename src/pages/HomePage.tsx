@@ -21,6 +21,7 @@ import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTabl
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 import { getSkillsSubCategoriesApi } from "@api/Api";
 import { TPlace } from "@api/types";
+import { RegistrationOnBoardingOne, RegistrationOnBoardingTwo, RegistrationOnBoardingThree } from "../features/onboarding/registrationBoard";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -113,6 +114,15 @@ export const HomePage = () => {
           alert('Регистрация завершена!');
         }}
       />
+
+      <h2>onboarding register step 1</h2>
+      <RegistrationOnBoardingOne />
+
+      <h2>onboarding register step 2</h2>
+      <RegistrationOnBoardingTwo />
+
+      <h2>onboarding register step 3</h2>
+      <RegistrationOnBoardingThree />
       
       <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
