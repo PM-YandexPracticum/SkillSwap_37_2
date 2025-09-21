@@ -18,7 +18,7 @@ export const CardShowcase = ({
   title,
   actionName = '',
   icon
-  // type = "button",   
+  // type = "button", 
 }: CardShowcaseProps) => {
 
   return (
