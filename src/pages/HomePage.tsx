@@ -24,6 +24,7 @@ import { RegistrationOnBoardingOne, RegistrationOnBoardingTwo, RegistrationOnBoa
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { getCategoriesThunk } from "../services/categories/actions";
+import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -103,7 +104,15 @@ export const HomePage = () => {
           onLoadMore={handleLoadMore}
         />
       </div>
-  
+  <ExchangeNotification
+  type="success"
+  onNavigateToExchange={() => console.log('Переход к обмену')}
+/>
+
+<ExchangeNotification
+  type="info" 
+  onNavigateToExchange={() => console.log('Просмотр уведомления')}
+/>
      <h2>Форма регистрации (Шаг 2)</h2>
       <RegisterStep2 
         onBack={() => console.log('Назад')}
