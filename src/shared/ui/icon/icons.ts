@@ -4,6 +4,7 @@ export type IconName =
   | 'eye' 
   | 'eyeSlash' 
   | 'chevronUp' 
+  | 'chevronRight' 
   | 'chevronDown' 
   | 'checkboxDone' 
   | 'checkboxEmpty' 

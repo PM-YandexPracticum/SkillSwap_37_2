@@ -3,6 +3,7 @@ import { UserCard } from "../../features/users/userCard/UserCard";
 import { TUser, TPlace } from "../../api/types";
 import { Icon } from "../../shared/ui/icon/Icon";
 import { birthdayToFormatedAge, getImageUrl } from "../../shared/lib/helpers";
+import { Loader } from "../../shared/ui/loader/Loader";
 import styles from "./CardSlider.module.css";
 import clsx from "clsx";
 
@@ -31,6 +32,8 @@ export const CardSlider = ({ users, subCategories }: CardSliderProps) => {
   return (
     <div className={styles.slider}>
       <div className={styles.cardsWrapper}>
+        {!visibleUsers && Loader}
+        
         {visibleUsers.map((user) => (
           <UserCard
             key={user.id}
@@ -47,16 +50,12 @@ export const CardSlider = ({ users, subCategories }: CardSliderProps) => {
 
       {users.length > itemsPerPage && (
         <>
-          <div className={clsx(styles.chevronLeft, styles.chevron)}>
-            <button onClick={handlePrev} disabled={page === 0}>
-              <Icon name="chevronRight" size={16} className={styles.iconChevronLeft}/>
+            <button onClick={handlePrev} disabled={page === 0} className={clsx(styles.chevronLeft, styles.chevron)}>
+              <Icon name='chevronRight' size={16} className={styles.iconChevronLeft}/>
             </button>
-          </div>
-          <div className={clsx(styles.chevronRight, styles.chevron)}>
-            <button onClick={handleNext} disabled={page === totalPages - 1}>
+            <button onClick={handleNext} disabled={page === totalPages - 1} className={clsx(styles.chevronRight, styles.chevron)}>
               <Icon name="chevronRight" size={16} />
             </button>
-          </div>
         </>
       )}
     </div>
