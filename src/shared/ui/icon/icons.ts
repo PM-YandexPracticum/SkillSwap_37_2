@@ -22,4 +22,5 @@ export type IconName =
   | 'lifestyle'
   | 'userCircle' 
   | 'add'
-  | 'calendar'; 
+  | 'calendar'
+  | 'done'; 
