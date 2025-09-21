@@ -12,16 +12,13 @@ import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
 import { UserCard } from "../features/users/userCard/UserCard";
 
 import styles from "./HomePage.module.css";
-import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
-
-// import { SkillMenu } from '../widgets/SkillMenu/SkillMenu';
 
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
-import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, OffersTable, SkillForm, SkillMenu } from "@widgets";
+import { CardSlider, DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, NotificationsTable, SkillForm, SkillMenu } from "@widgets";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
-import { getSkillsSubCategoriesApi } from "@api/Api";
-import { TPlace, TUser } from "@api/types";
-import { CardSlider } from "../widgets/cardSlider/CardSlider";
+import { NotFoundPage } from "./not-found-page/NotFoundPage";
+import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
+import { getCategoriesThunk } from "../services/categories/actions";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -53,30 +50,22 @@ export const HomePage = () => {
   const { users, isLoading, hasMore, page } = useSelector(
     (state: RootState) => state.users
   );
-  // const users = useSelector((state: RootState) => state.users.users);
 
-  const [subCategories, setSubCategories] = useState<TPlace[]>([]);
-
+  // const [subCategories, setSubCategories] = useState<TPlace[]>([]);
+  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
+  
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
-    getSkillsSubCategoriesApi().then((data) =>
-      setSubCategories(data.subcategories)
-    );
+    dispatch(getCategoriesThunk());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (page === 0) {
-      dispatch(getUsersThunk(1));
-    }
-  }, [dispatch, page]);
-
   const [selectedGender, setSelectedGender] = useState<string>('');
-  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
+  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
  
   const handleGenderChange = (gender: string) => {
     setSelectedGender(gender);
   };
-  const handlePlaceChange = (places: string[]) => {
+  const handlePlaceChange = (places: number[]) => {
     setSelectedPlaces(places);
   };
 
@@ -144,8 +133,10 @@ export const HomePage = () => {
         />
       )}
 
-      <h2>OffersTable</h2>
-      <OffersTable userId={API_USER_ID} />
+      <h2>NotificationsTable</h2>
+      {/* появляется, если нажать на колокольчик в header
+      <NotificationWidget /> */}
+      <NotificationsTable userId={API_USER_ID} />
 
       <h2>SkillCardDetails</h2>
       {/* Настроить передачу свойств от текущего пользователя
@@ -154,8 +145,11 @@ export const HomePage = () => {
       убрать константу mySkill */}
       <SkillCardDetails skill={mySkill} />
 
-      {/* появляется, если нажать на колокольчик в header
-      <NotificationWidget /> */}
+
+      <SkillMenu />
+      <NotFoundPage />
+      <ServerErrorPage />
+
 
       {/* Отладочные ссылки */}
       <div style={{ padding: "2rem", paddingBottom: "20rem" }}>
@@ -203,7 +197,6 @@ export const HomePage = () => {
         </ul>
       </div>
 
-      <SkillMenu />
       <Footer />
     </div>
   );

@@ -5,7 +5,8 @@ import "./DatePicker-custom.css";
 import { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale/ru";
 import styles from "./DatePicker.module.css";
-import calendarIcon from "../../assets/icons/calendar.svg";
+import { Icon } from "../icon/Icon";
+import { Button } from "../button/Button";
 
 registerLocale('ru', ru);
 
@@ -39,20 +40,21 @@ const CustomCalendarContainer = ({
         {children}
       </div>
       <div className={styles.footerButtons}>
-        <button
+        <Button
           type="button"
-          className={styles.cancelButton}
           onClick={onCancel}
+          className={styles.cancelButton}
         >
           Отменить
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          className={styles.selectButton}
           onClick={onSelect}
+          colored={true}
+          className={styles.selectButton}
         >
           Выбрать
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -61,13 +63,14 @@ const CustomCalendarContainer = ({
 export const DatePicker: React.FC<DatePickerProps> = ({
   selected,
   onChange,
-  placeholder = 'Дд.мм.гггг',
+  placeholder = 'дд.мм.гггг',
   label,
   error,
   className,
 }) => {
   const [tempDate, setTempDate] = useState<Date | null>(selected || null);
   const datePickerRef = useRef<ReactDatePicker>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const renderCustomHeader = ({
     date,
@@ -113,22 +116,48 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     </div>
   );
 
+  const handleToggleCalendar = () => {
+    if (isOpen) {
+      // Если календарь открыт - закрываем
+      if (datePickerRef.current) {
+        datePickerRef.current.setOpen(false);
+      }
+      setIsOpen(false);
+    } else {
+      // Если календарь закрыт - открываем
+      if (datePickerRef.current) {
+        datePickerRef.current.setOpen(true);
+      }
+      setIsOpen(true);
+    }
+  };
+
   const CustomInput = ({ value, onClick }: { value?: string; onClick?: () => void }) => (
-    <div className={styles.inputContainer} onClick={onClick}>
-      <input
-        className={`${styles.input} ${error ? styles.error : ''}`}
-        value={value}
-        placeholder={placeholder}
-        readOnly
-      />
-      <img src={calendarIcon} alt="calendar" className={styles.calendarIcon} />
+  <div className={styles.inputContainer}>
+    <input
+      className={`${styles.input} ${error ? styles.error : ''}`}
+      value={value}
+      placeholder={placeholder}
+      readOnly
+      onClick={onClick} // обработчик на инпуте
+    />
+    <div 
+      className={styles.calendarIconWrapper}
+      onClick={(e) => {
+        e.stopPropagation(); // Предотвращаем всплытие события
+        handleToggleCalendar(); // Переключаем состояние календаря
+      }}
+    >
+      <Icon name="calendar" className={styles.calendarIcon} />
     </div>
-  );
+  </div>
+);
 
   const handleCancel = () => {
     if (datePickerRef.current) {
       datePickerRef.current.setOpen(false);
     }
+    setIsOpen(false);
   };
 
   const handleSelect = () => {
@@ -167,6 +196,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         isClearable={false}
         onCalendarOpen={() => {
           setTempDate(selected || null);
+          setIsOpen(true);
+        }}
+        onCalendarClose={() => {
+          setIsOpen(false);
         }}
         shouldCloseOnSelect={false}
         calendarContainer={calendarContainer}
