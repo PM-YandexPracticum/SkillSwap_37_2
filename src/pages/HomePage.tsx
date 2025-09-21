@@ -19,6 +19,7 @@ import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { getCategoriesThunk } from "../services/categories/actions";
+import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -82,6 +83,10 @@ export const HomePage = () => {
       <Header />
 
       <CardSlider users={users} subCategories={subCategories} />
+
+      <CardShowcase title="Популярное" buttonName="Смотреть все" buttonSize={187}>
+        <CardSlider users={users} subCategories={subCategories} />
+      </CardShowcase>
       
       <div className={styles.wrapper}>
         <FilterSection
