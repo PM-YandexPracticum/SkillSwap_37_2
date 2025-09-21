@@ -27,9 +27,9 @@ export const ExchangeNotification: React.FC<ExchangeNotificationProps> = ({
       defaultButtonText: 'Готово'
     },
     info: {
-      icon: 'userCircle' as IconName,
-      defaultTitle: 'Ваше предложение создано',
-      defaultMessage: 'Теперь вы можете предложить обмен',
+      icon: 'notification' as IconName,
+      defaultTitle: 'Вы предложили обмен',
+      defaultMessage: 'Теперь дождитесь подтверждения. Вам придет уведомление',
       defaultButtonText: 'Готово'
     }
   };

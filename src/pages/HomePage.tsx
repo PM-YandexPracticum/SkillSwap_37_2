@@ -104,7 +104,8 @@ export const HomePage = () => {
           onLoadMore={handleLoadMore}
         />
       </div>
-  <ExchangeNotification
+
+<ExchangeNotification
   type="success"
   onNavigateToExchange={() => console.log('Переход к обмену')}
 />
@@ -113,6 +114,8 @@ export const HomePage = () => {
   type="info" 
   onNavigateToExchange={() => console.log('Просмотр уведомления')}
 />
+
+
      <h2>Форма регистрации (Шаг 2)</h2>
       <RegisterStep2 
         onBack={() => console.log('Назад')}
