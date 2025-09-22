@@ -82,9 +82,9 @@ export const HomePage = () => {
     }
   };
 
-  const num = 9 as number;
+  // const num = 9 as number;
 
-    const { 
+  const { 
     isNotificationOpen, 
     openNotification, 
     closeNotification,
@@ -175,7 +175,44 @@ export const HomePage = () => {
         </CardShowcase>
       </main>
 
+    <div>
+
+    <h2>Кнопка для демонстрации success</h2>
+    <button
+      style={{
+        fontSize: '32px',
+        color: 'red',
+        height: '80px',
+        padding: '10px 20px',
+      }}
+      onClick={() => openNotification({ type: 'success' })} >
+      Показать уведомление Success
+    </button>
+
+
+    <h2>Кнопка для демонстрации info</h2>
+    <button
+      style={{
+        fontSize: '32px',
+        color: 'red',
+        height: '80px',
+        padding: '10px 20px',
+      }}
+      onClick={() => openNotification({ type: 'success' })} >
+      Показать уведомление Info
+    </button>
+
+      {/* Модальное окно */}
       <ExchangeNotification
+        isOpen={isNotificationOpen}
+        onClose={closeNotification} 
+        onNavigateToExchange={handleNavigateToExchange}
+        type="success"
+      />
+    </div>
+
+
+      {/* <ExchangeNotification
         type="success"
         onNavigateToExchange={() => console.log('Переход к обмену')}
       />
@@ -184,8 +221,7 @@ export const HomePage = () => {
         type="info" 
         onNavigateToExchange={() => console.log('Просмотр уведомления')}
       />
-
-<!--       </div> -->
+ */}
       
       <div className={styles.wrapper}>
         <FilterSection
@@ -202,29 +238,6 @@ export const HomePage = () => {
           onLoadMore={handleLoadMore}
         />
       </div>
-    <div>
-
-    <h2>Кнопка для демонстрации</h2>
-    <button
-      style={{
-        fontSize: '32px',
-        color: 'red',
-        height: '80px',
-        padding: '10px 20px',
-      }}
-      onClick={() => openNotification({ type: 'success' })} >
-      Показать уведомление
-    </button>
-
-
-      {/* Модальное окно */}
-      <ExchangeNotification
-        isOpen={isNotificationOpen}
-        onClose={closeNotification} 
-        onNavigateToExchange={handleNavigateToExchange}
-        type="success"
-      />
-    </div>
 
      <h2>Форма регистрации (Шаг 2)</h2>
       <RegisterStep2 
