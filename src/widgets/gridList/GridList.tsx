@@ -1,5 +1,3 @@
-// src\widgets\gridList\GridList.tsx
-
 import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
@@ -7,10 +5,13 @@ import { Loader } from '../../shared/ui/loader/Loader';
 import { birthdayToFormatedAge, getImageUrl } from '../../shared/lib/helpers';
 import { TPlace, TUser } from '@api/types';
 
+//количество отображаемых в гриде рядов 1 или максимум
+type TRows = 1 | "auto";
+
 type GridListProps = {
   users: TUser[];
   subCategories: TPlace[];
-  rows?: 1 | 2 | 3 | "auto";
+  rows?: TRows;
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
@@ -19,17 +20,19 @@ type GridListProps = {
 export const GridList = ({
   users,
   subCategories,
-  rows = "auto",
+  rows = "auto", //по умолчанию показывать все ряды(все карточки)
   loading,
-  hasMore,
+  hasMore, //бесконечный скролл/подгрузка данных
   onLoadMore,
 }: GridListProps) => {
+
   const lastElementRef = useInfiniteScroll(onLoadMore, hasMore, loading);
   if (users.length === 0 && !loading) {
     return <div className={styles.empty}>Пользователи не найдены</div>;
   }
 
-  const maxItems = typeof(rows) === "number" ? rows * 3 : users.length; // 3 колонки * rows строк
+  // 3 колонки * rows строк
+  const maxItems = typeof(rows) === "number" ? rows * 3 : users.length; 
   const visibleUsers = users.slice(0, maxItems);
 
   return (
@@ -55,13 +58,13 @@ export const GridList = ({
       </ul>
 
       {loading && (
-        <div style={{ textAlign: "center", padding: "20px" }}>
+        <div>
           <Loader />
         </div>
       )}
 
       {!hasMore && users.length > 0 && (
-        <div style={{ textAlign: "center", padding: "20px", color: "#69735D" }}>
+        <div className={styles.showedAllUsers}>
           Показаны все пользователи
         </div>
       )}

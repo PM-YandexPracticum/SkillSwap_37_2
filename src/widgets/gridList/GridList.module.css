@@ -1,11 +1,21 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 324px);
+  grid-template-columns: repeat(3, minmax(100px, 324px));
+  grid-auto-rows: minmax(150px, 368px);
   justify-content: center;
   gap: 24px;
+  overflow: hidden;
 }
 
 .gridItem {
-  width: 324px;
-  height: 368px;
+  width: 100%;
+  max-width: 324px;
+  height: 100%;
+  max-height: 368px;
+}
+
+.showedAllUsers {
+  text-align: center;
+  padding: 20px;
+  color: #69735D;
 }

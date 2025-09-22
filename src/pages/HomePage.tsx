@@ -10,17 +10,12 @@ import { getUsersThunk } from '../services/users/actions';
 import { getUser } from "../services/user/user-slice";
 import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
 import { UserCard } from "../features/users/userCard/UserCard";
-
-import styles from "./HomePage.module.css";
-
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import { CardSlider, DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, NotificationsTable, SkillForm, SkillMenu } from "@widgets";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
-
 import { getSkillsSubCategoriesApi } from "@api/Api";
 import { TPlace } from "@api/types";
 import { RegistrationOnBoardingOne, RegistrationOnBoardingTwo, RegistrationOnBoardingThree } from "../features/onboarding/registrationBoard";
-
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { getCategoriesThunk } from "../services/categories/actions";
@@ -28,6 +23,8 @@ import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotifica
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
+
+import styles from "./HomePage.module.css";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -85,6 +82,8 @@ export const HomePage = () => {
     }
   };
 
+  const num = 9 as number;
+
     const { 
     isNotificationOpen, 
     openNotification, 
@@ -96,30 +95,97 @@ export const HomePage = () => {
     <div className={styles.homePageWrapper}>
       <Header />
 
-      <CardSlider users={users} subCategories={subCategories} />
+      <CardShowcase
+        title="Похожие предложения"
+        icon={<Icon name="chevronRight" />}
+      >
+        <CardSlider users={users} subCategories={subCategories} />
+          
+      </CardShowcase>
 
-      <div className={styles.wrapper}>
+      <main className={styles.mainWrapper}>
         <FilterSection
-        onGenderChange={handleGenderChange}
-        onPlaceChange={handlePlaceChange}
-        selectedGender={selectedGender}
-        selectedPlaces={selectedPlaces}
+          onGenderChange={handleGenderChange}
+          onPlaceChange={handlePlaceChange}
+          selectedGender={selectedGender}
+          selectedPlaces={selectedPlaces}
+        />
+        <div className={styles.showCaseWrapper}>
+          <CardShowcase
+            title="Популярное"
+            buttonTitle="Смотреть все"
+            icon={<Icon name="chevronRight" />}
+          >
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+          <CardShowcase
+            title="Новое"
+            buttonTitle="Смотреть все"
+            icon={<Icon name="chevronRight" />}
+          >
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+          <CardShowcase title="Рекомендуем">
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+        </div>
+      </main>
+      
+      <main className={styles.mainWrapper}>
+        <FilterSection
+          onGenderChange={handleGenderChange}
+          onPlaceChange={handlePlaceChange}
+          selectedGender={selectedGender}
+          selectedPlaces={selectedPlaces}
         />
         <CardShowcase
-        title="Популярное"
-        buttonTitle="Смотреть все"
-        icon={<Icon name="chevronRight" />}
+          title='Подходящие предложения: '
+          buttonTitle="Сначала новые"
+          icon={<Icon name="sort" />}
+          isIconFirst
         >
           <GridList
-            rows={1}
             users={users}
             subCategories={subCategories}
             loading={isLoading}
             hasMore={hasMore}
             onLoadMore={handleLoadMore}
-        />
+          />
         </CardShowcase>
-      </div>
+      </main>
+
+      <ExchangeNotification
+        type="success"
+        onNavigateToExchange={() => console.log('Переход к обмену')}
+      />
+
+      <ExchangeNotification
+        type="info" 
+        onNavigateToExchange={() => console.log('Просмотр уведомления')}
+      />
+
+<!--       </div> -->
       
       <div className={styles.wrapper}>
         <FilterSection
