@@ -22,6 +22,7 @@ import { getCategoriesThunk } from "../services/categories/actions";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
+import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
 
 import styles from "./HomePage.module.css";
 
@@ -45,7 +46,6 @@ export const HomePage = () => {
       "src/shared/assets/icons/more-square.png",
     ],
     buttonText: "Предложить обмен",
-    onExchange: () => alert("Обмен предложен!"),
   };
 
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
@@ -81,7 +81,16 @@ export const HomePage = () => {
       dispatch(getUsersThunk(nextPage));
     }
   };
-const num = 9 as number;
+
+  const num = 9 as number;
+
+    const { 
+    isNotificationOpen, 
+    openNotification, 
+    closeNotification,
+    handleNavigateToExchange 
+  } = useExchangeNotification();
+
   return (
     <div className={styles.homePageWrapper}>
       <Header />
@@ -176,6 +185,46 @@ const num = 9 as number;
         onNavigateToExchange={() => console.log('Просмотр уведомления')}
       />
 
+<!--       </div> -->
+      
+      <div className={styles.wrapper}>
+        <FilterSection
+        onGenderChange={handleGenderChange}
+        onPlaceChange={handlePlaceChange}
+        selectedGender={selectedGender}
+        selectedPlaces={selectedPlaces}
+        />
+        <GridList
+          users={users}
+          subCategories={subCategories}
+          loading={isLoading}
+          hasMore={hasMore}
+          onLoadMore={handleLoadMore}
+        />
+      </div>
+    <div>
+
+    <h2>Кнопка для демонстрации</h2>
+    <button
+      style={{
+        fontSize: '32px',
+        color: 'red',
+        height: '80px',
+        padding: '10px 20px',
+      }}
+      onClick={() => openNotification({ type: 'success' })} >
+      Показать уведомление
+    </button>
+
+
+      {/* Модальное окно */}
+      <ExchangeNotification
+        isOpen={isNotificationOpen}
+        onClose={closeNotification} 
+        onNavigateToExchange={handleNavigateToExchange}
+        type="success"
+      />
+    </div>
 
      <h2>Форма регистрации (Шаг 2)</h2>
       <RegisterStep2 

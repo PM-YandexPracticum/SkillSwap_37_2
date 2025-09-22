@@ -1,55 +1,49 @@
-.modal {
-  border-radius: 12px;
-  padding: 62px 60px;
-  max-width: 556px;
-  width: 100%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  margin: 20px auto;
+.modalContent {
+  padding: 40px;
+  text-align: center;
+  max-width: 400px;
 }
 
-.modalContent,
-.textContent {
+.content {
   display: flex;
   flex-direction: column;
+  gap: 24px;
   align-items: center;
-  justify-content: center;
-}
-
-.modalContent {
-  gap: 52px;
 }
 
 .iconContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 100px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
+  background-color: #f0f7e6;
+  margin: 0 auto 16px;
 }
 
 .icon {
-  color: #000;
+  background-color: white;
   stroke-width: 0.5px;
 }
 
-.content {
-  display: grid;
-  gap: 32px;
-  width: 100%;
-}
-
 .textContent {
-  gap: 12px;
+  text-align: center;
 }
 
 .title {
-  font: 500 24px 'Jost', sans-serif;
+  font-family: 'Jost', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
   color: #253017;
+  margin: 0 0 12px 0;
 }
 
 .messageText {
-  font: 16px 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
   color: #253017;
-  text-align: center;
+  line-height: 1.5;
+  display: block;
+  margin-bottom: 24px;
 }
