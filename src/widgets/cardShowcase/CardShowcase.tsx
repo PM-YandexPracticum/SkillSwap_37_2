@@ -18,7 +18,7 @@ export const CardShowcase = ({
   onClick,
   buttonTitle = '',
   icon,
-  // className,
+  // className, 
 }: CardShowcaseProps) => {
 
   return (
