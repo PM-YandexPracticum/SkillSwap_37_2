@@ -23,4 +23,5 @@ export type IconName =
   | 'userCircle' 
   | 'add'
   | 'calendar'
-  | 'done'; 
+  | 'done' 
+  | 'sort';

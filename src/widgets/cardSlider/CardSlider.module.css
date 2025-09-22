@@ -3,6 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 1368px;
+  width: 100%;
+  margin: auto;
 }
 
 .cardsWrapper {
@@ -29,10 +32,12 @@ button {
 
 .chevronLeft {
   left: 0;
+  transform: translateX(-50%);
 }
 
 .chevronRight {
   right: 0;
+  transform: translateX(50%);
 }
 
 .iconChevronLeft {

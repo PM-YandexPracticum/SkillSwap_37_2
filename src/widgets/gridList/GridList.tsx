@@ -10,6 +10,7 @@ import { TPlace, TUser } from '@api/types';
 type GridListProps = {
   users: TUser[];
   subCategories: TPlace[];
+  rows?: 1 | 2 | 3 | "auto";
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
@@ -18,6 +19,7 @@ type GridListProps = {
 export const GridList = ({
   users,
   subCategories,
+  rows = "auto",
   loading,
   hasMore,
   onLoadMore,
@@ -26,12 +28,14 @@ export const GridList = ({
   if (users.length === 0 && !loading) {
     return <div className={styles.empty}>Пользователи не найдены</div>;
   }
+
+  const maxItems = typeof(rows) === "number" ? rows * 3 : users.length; // 3 колонки * rows строк
+  const visibleUsers = users.slice(0, maxItems);
+
   return (
     <div>
       <ul className={styles.grid}>
-        {users &&
-          subCategories &&
-          users.map((user, index) => (
+        {visibleUsers.map((user, index) => (
             <li
               key={user.id}
               className={styles.gridItem}

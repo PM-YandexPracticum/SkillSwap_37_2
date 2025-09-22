@@ -1,47 +1,44 @@
 import { ReactElement, ReactNode } from "react";
-import styles from "./Button.module.css";
+import styles from "./CardShowcase.module.css";
+import { Button } from "../../shared/ui/button/Button";
 import clsx from "clsx";
 
 type CardShowcaseProps = {
   children: ReactNode;
-  className?: string;
-  onClick?: () => void;
   title: string;
-  actionName?: string
-  icon?: ReactElement | null;
+  onClick?: () => void;
+  buttonTitle?: string
+  icon?: ReactElement;
+  // className?: string;
 };
 
 export const CardShowcase = ({
   children,
-  className,
-  onClick,
   title,
-  actionName = '',
-  icon
-  // type = "button", 
+  onClick,
+  buttonTitle = '',
+  icon,
+  // className,
 }: CardShowcaseProps) => {
 
   return (
-    <>
-      <div>
-        <h2 className={styles.title}>
-          {title}
-        </h2>
-        {actionName && (
-          <button onClick={onClick}>
-            <span>
-              {icon}
-            </span>
-            <span>
-              {actionName}
-            </span>
-          </button>)}
+    <div className={styles.cardShowcase}>
+      <div className={styles.header}>
+        <div>
+          <h2 className={styles.title}>
+            {title}
+          </h2>
+        </div>
+        {buttonTitle && (
+              <button className={styles.button}>
+                  <span>{buttonTitle}</span>
+                  <span>{icon}</span>
+              </button>
+        )}
       </div>
-      <div
-        className={clsx(styles.cardShowcase, className)}
-      >
+      <div className={styles.childsWrapper}>
         {children}
       </div>
-    </>
+    </div>
   );
 };
