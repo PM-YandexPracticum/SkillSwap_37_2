@@ -10,23 +10,20 @@ import { getUsersThunk } from '../services/users/actions';
 import { getUser } from "../services/user/user-slice";
 import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
 import { UserCard } from "../features/users/userCard/UserCard";
-
-import styles from "./HomePage.module.css";
-
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import { CardSlider, DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, NotificationsTable, SkillForm, SkillMenu } from "@widgets";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
-
 import { getSkillsSubCategoriesApi } from "@api/Api";
 import { TPlace } from "@api/types";
 import { RegistrationOnBoardingOne, RegistrationOnBoardingTwo, RegistrationOnBoardingThree } from "../features/onboarding/registrationBoard";
-
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { getCategoriesThunk } from "../services/categories/actions";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
+
+import styles from "./HomePage.module.css";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -84,7 +81,7 @@ export const HomePage = () => {
       dispatch(getUsersThunk(nextPage));
     }
   };
-
+const num = 9 as number;
   return (
     <div className={styles.homePageWrapper}>
       <Header />
@@ -133,11 +130,7 @@ export const HomePage = () => {
               onLoadMore={handleLoadMore}
             />
           </CardShowcase>
-          <CardShowcase
-            title="Рекомендуем"
-            buttonTitle="Смотреть все"
-            icon={<Icon name="chevronRight" />}
-          >
+          <CardShowcase title="Рекомендуем">
             <GridList
               rows={1}
               users={users}
@@ -158,7 +151,7 @@ export const HomePage = () => {
           selectedPlaces={selectedPlaces}
         />
         <CardShowcase
-          title="Подходящие предложения: 9"
+          title='Подходящие предложения: '
           buttonTitle="Сначала новые"
           icon={<Icon name="sort" />}
           isIconFirst

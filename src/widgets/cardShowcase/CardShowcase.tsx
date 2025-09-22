@@ -1,9 +1,18 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import styles from "./CardShowcase.module.css";
+
+type TTitle = 
+  'Подходящие предложения: '
+  | 'Популярное'
+  | 'Новое'
+  | 'Точное совпадение'
+  | 'Новые идеи'
+  | 'Рекомендуем'
+  | 'Похожие предложения'
 
 type CardShowcaseProps = {
   children: ReactElement;
-  title: string;
+  title: TTitle;
   buttonTitle?: string
   icon?: ReactElement;
   isIconFirst?: boolean; //если указан атрибут, то иконка слева от текста
@@ -16,14 +25,22 @@ export const CardShowcase = ({
   icon,
   isIconFirst
 }: CardShowcaseProps) => {
-  //состояние развернуть/свернуть CardShowcase
-  // const [isShowAllCards, setIsShowAllCards] = useState<boolean>(false);
 
    const showHideRowsHandle = () => {
-    if (title.startsWith('Подходящие предложения:')) {
+    if (title.startsWith('Подходящие предложения')) {
       console.log('Сортировка...');
-    } else {
-      // setIsShowAllCards(prev => !prev);
+    }
+    if (title.startsWith('Популярное')) {
+      console.log('Популярное...');
+    }
+    if (title.startsWith('Новое')) {
+      console.log('Новое...');
+    }
+    if (title.startsWith('Точное совпадение')) {
+      console.log('Точное совпадение...');
+    }
+    if (title.startsWith('Новые идеи')) {
+      console.log('Новые идеи...');
     }
   };
 
@@ -55,7 +72,7 @@ export const CardShowcase = ({
       <div className={styles.childsWrapper}>
         {children &&
         React.cloneElement(children, {
-          // isShowAllCards,
+          // здесь чилдрену можно передать какой-нибудь пропс 
         })}
       </div>
     </div>
