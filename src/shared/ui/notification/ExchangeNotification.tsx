@@ -38,30 +38,25 @@ export const ExchangeNotification: React.FC<ExchangeNotificationProps> = ({
 
   return (
     <div className={styles.modal}>
-      <div className={styles.content}>
+      <div className={styles.modalContent}>
         <div className={styles.iconContainer}>
           <Icon name={content.icon} size="l" className={styles.icon} data-icon={content.icon} />
         </div>
-        
-        <div className={styles.header}>
-          <h2 className={styles.title}>{title || content.defaultTitle}</h2>
-        </div>
-        
-        <div className={styles.message}>
-          <p>{message || content.defaultMessage}</p>
-        </div>
-        
-        {onNavigateToExchange && (
-          <div className={styles.actions}>
+        <div className={styles.content}>
+          <div className={styles.textContent}>
+            <h2 className={styles.title}>{title || content.defaultTitle}</h2>
+            <span className={styles.messageText}>{message || content.defaultMessage}</span>
+          </div>
+          
+          {onNavigateToExchange && (
             <Button 
               onClick={onNavigateToExchange}
               colored
-              className={styles.actionButton}
             >
               {buttonText || content.defaultButtonText}
             </Button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
