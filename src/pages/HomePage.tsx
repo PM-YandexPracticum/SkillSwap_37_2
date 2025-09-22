@@ -27,6 +27,7 @@ import { getCategoriesThunk } from "../services/categories/actions";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
+import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -48,7 +49,6 @@ export const HomePage = () => {
       "src/shared/assets/icons/more-square.png",
     ],
     buttonText: "Предложить обмен",
-    onExchange: () => alert("Обмен предложен!"),
   };
 
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
@@ -84,6 +84,13 @@ export const HomePage = () => {
       dispatch(getUsersThunk(nextPage));
     }
   };
+
+    const { 
+    isNotificationOpen, 
+    openNotification, 
+    closeNotification,
+    handleNavigateToExchange 
+  } = useExchangeNotification();
 
   return (
     <div className={styles.homePageWrapper}>
@@ -129,17 +136,20 @@ export const HomePage = () => {
           onLoadMore={handleLoadMore}
         />
       </div>
+    <div>
+      {/* Кнопка для демонстрации */}
+      <button onClick={() => openNotification({ type: 'success' })}>
+        Показать уведомление
+      </button>
 
-<ExchangeNotification
-  type="success"
-  onNavigateToExchange={() => console.log('Переход к обмену')}
-/>
-
-<ExchangeNotification
-  type="info" 
-  onNavigateToExchange={() => console.log('Просмотр уведомления')}
-/>
-
+      {/* Модальное окно */}
+      <ExchangeNotification
+        isOpen={isNotificationOpen}
+        onClose={closeNotification} 
+        onNavigateToExchange={handleNavigateToExchange}
+        type="success"
+      />
+    </div>
 
      <h2>Форма регистрации (Шаг 2)</h2>
       <RegisterStep2 
