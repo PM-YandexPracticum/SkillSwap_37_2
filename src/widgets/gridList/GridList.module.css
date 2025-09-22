@@ -1,11 +1,13 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 324px);
+  grid-auto-rows: 368px;
   justify-content: center;
   gap: 24px;
+  overflow: hidden;
 }
 
 .gridItem {
-  width: 324px;
-  height: 368px;
+  max-width: 324px;
+  max-height: 368px;
 }

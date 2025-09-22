@@ -91,6 +91,14 @@ export const HomePage = () => {
 
       <CardSlider users={users} subCategories={subCategories} />
 
+      <CardShowcase
+        title="Популярное"
+        icon={<Icon name="chevronRight" />}
+      >
+        <CardSlider users={users} subCategories={subCategories} />
+          
+      </CardShowcase>
+
       <div className={styles.wrapper}>
         <FilterSection
         onGenderChange={handleGenderChange}

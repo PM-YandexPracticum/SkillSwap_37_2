@@ -1,25 +1,27 @@
-import { ReactElement, ReactNode } from "react";
+import React, { ReactElement, useState } from "react";
 import styles from "./CardShowcase.module.css";
-import { Button } from "../../shared/ui/button/Button";
 import clsx from "clsx";
 
 type CardShowcaseProps = {
-  children: ReactNode;
+  children: ReactElement;
   title: string;
-  onClick?: () => void;
   buttonTitle?: string
   icon?: ReactElement;
-  // className?: string;
 };
 
 export const CardShowcase = ({
   children,
   title,
-  onClick,
   buttonTitle = '',
   icon,
-  // className, 
 }: CardShowcaseProps) => {
+  //состояние развернуть/свернуть CardShowcase
+  const [isShowAllRows, setIsShowAllRows] = useState<boolean>(false);
+
+   const showHideRowsHandle = () => {
+    setIsShowAllRows(prev => !prev);
+    console.log(isShowAllRows);
+  };
 
   return (
     <div className={styles.cardShowcase}>
@@ -30,14 +32,19 @@ export const CardShowcase = ({
           </h2>
         </div>
         {buttonTitle && (
-              <button className={styles.button}>
-                  <span>{buttonTitle}</span>
-                  <span>{icon}</span>
+              <button
+                onClick={showHideRowsHandle} 
+                className={styles.button}>
+                <span>{buttonTitle}</span>
+                <span>{icon}</span>
               </button>
         )}
       </div>
       <div className={styles.childsWrapper}>
-        {children}
+        {children &&
+        React.cloneElement(children, {
+          isShowAllRows,
+        })}
       </div>
     </div>
   );
