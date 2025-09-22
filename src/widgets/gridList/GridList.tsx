@@ -1,5 +1,3 @@
-// src\widgets\gridList\GridList.tsx
-
 import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
@@ -15,7 +13,7 @@ type GridListProps = {
   users: TUser[];
   subCategories: TPlace[];
   rows?: TRows;
-  isShowAllRows?: boolean;
+  // isShowAllCards?: boolean;
   loading: boolean;
   hasMore: boolean;
   onLoadMore: () => void;
@@ -24,21 +22,21 @@ type GridListProps = {
 export const GridList = ({
   users,
   subCategories,
-  isShowAllRows,
+  // isShowAllCards,
   rows = "auto",
   loading,
   hasMore,
   onLoadMore,
 }: GridListProps) => {
-  const [currentRows, setCurrentRows] = useState<TRows>(rows);
+  // const [currentRows, setCurrentRows] = useState<TRows>(rows);
 
-  useEffect( () => {
-    if (isShowAllRows) {
-      setCurrentRows("auto");
-    } else {
-      setCurrentRows(rows);
-    } 
-  }, [isShowAllRows]);
+  // useEffect( () => {
+  //   if (isShowAllCards) {
+  //     setCurrentRows("auto");
+  //   } else {
+  //     setCurrentRows(rows);
+  //   } 
+  // }, [isShowAllCards]);
 
 
   const lastElementRef = useInfiniteScroll(onLoadMore, hasMore, loading);
@@ -46,14 +44,16 @@ export const GridList = ({
     return <div className={styles.empty}>Пользователи не найдены</div>;
   }
 
-  const maxItems = typeof(currentRows) === "number" ? currentRows * 3 : users.length; // 3 колонки * rows строк
+  // const maxItems = typeof(currentRows) === "number" ? currentRows * 3 : users.length; // 3 колонки * rows строк
+  // const visibleUsers = users.slice(0, maxItems);
+  const maxItems = typeof(rows) === "number" ? rows * 3 : users.length; // 3 колонки * rows строк
   const visibleUsers = users.slice(0, maxItems);
 
   return (
     <div>
       <ul
         className={styles.grid}
-        style={{gridTemplateRows: currentRows === "auto" ? "auto" : `repeat(${currentRows}, 368px)`}}
+        // style={{gridTemplateRows: currentRows === "auto" ? "auto" : `repeat(${currentRows}, 368px)`}}
         >
         {visibleUsers.map((user, index) => (
             <li

@@ -89,64 +89,99 @@ export const HomePage = () => {
     <div className={styles.homePageWrapper}>
       <Header />
 
-      <CardSlider users={users} subCategories={subCategories} />
-
       <CardShowcase
-        title="Популярное"
+        title="Похожие предложения"
         icon={<Icon name="chevronRight" />}
       >
         <CardSlider users={users} subCategories={subCategories} />
           
       </CardShowcase>
 
-      <div className={styles.wrapper}>
+      <main className={styles.mainWrapper}>
         <FilterSection
-        onGenderChange={handleGenderChange}
-        onPlaceChange={handlePlaceChange}
-        selectedGender={selectedGender}
-        selectedPlaces={selectedPlaces}
+          onGenderChange={handleGenderChange}
+          onPlaceChange={handlePlaceChange}
+          selectedGender={selectedGender}
+          selectedPlaces={selectedPlaces}
+        />
+        <div className={styles.showCaseWrapper}>
+          <CardShowcase
+            title="Популярное"
+            buttonTitle="Смотреть все"
+            icon={<Icon name="chevronRight" />}
+          >
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+          <CardShowcase
+            title="Новое"
+            buttonTitle="Смотреть все"
+            icon={<Icon name="chevronRight" />}
+          >
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+          <CardShowcase
+            title="Рекомендуем"
+            buttonTitle="Смотреть все"
+            icon={<Icon name="chevronRight" />}
+          >
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+        </div>
+      </main>
+      
+      <main className={styles.mainWrapper}>
+        <FilterSection
+          onGenderChange={handleGenderChange}
+          onPlaceChange={handlePlaceChange}
+          selectedGender={selectedGender}
+          selectedPlaces={selectedPlaces}
         />
         <CardShowcase
-        title="Популярное"
-        buttonTitle="Смотреть все"
-        icon={<Icon name="chevronRight" />}
+          title="Подходящие предложения: 9"
+          buttonTitle="Сначала новые"
+          icon={<Icon name="sort" />}
+          isIconFirst
         >
           <GridList
-            rows={1}
             users={users}
             subCategories={subCategories}
             loading={isLoading}
             hasMore={hasMore}
             onLoadMore={handleLoadMore}
-        />
+          />
         </CardShowcase>
-      </div>
-      
-      <div className={styles.wrapper}>
-        <FilterSection
-        onGenderChange={handleGenderChange}
-        onPlaceChange={handlePlaceChange}
-        selectedGender={selectedGender}
-        selectedPlaces={selectedPlaces}
-        />
-        <GridList
-          users={users}
-          subCategories={subCategories}
-          loading={isLoading}
-          hasMore={hasMore}
-          onLoadMore={handleLoadMore}
-        />
-      </div>
+      </main>
 
-<ExchangeNotification
-  type="success"
-  onNavigateToExchange={() => console.log('Переход к обмену')}
-/>
+      <ExchangeNotification
+        type="success"
+        onNavigateToExchange={() => console.log('Переход к обмену')}
+      />
 
-<ExchangeNotification
-  type="info" 
-  onNavigateToExchange={() => console.log('Просмотр уведомления')}
-/>
+      <ExchangeNotification
+        type="info" 
+        onNavigateToExchange={() => console.log('Просмотр уведомления')}
+      />
 
 
      <h2>Форма регистрации (Шаг 2)</h2>
