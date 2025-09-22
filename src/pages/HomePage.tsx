@@ -137,10 +137,19 @@ export const HomePage = () => {
         />
       </div>
     <div>
-      {/* Кнопка для демонстрации */}
-      <button onClick={() => openNotification({ type: 'success' })}>
-        Показать уведомление
-      </button>
+
+    <h2>Кнопка для демонстрации</h2>
+    <button
+      style={{
+        fontSize: '32px',
+        color: 'red',
+        height: '80px',
+        padding: '10px 20px',
+      }}
+      onClick={() => openNotification({ type: 'success' })} >
+      Показать уведомление
+    </button>
+
 
       {/* Модальное окно */}
       <ExchangeNotification
