@@ -108,7 +108,11 @@ export const UserCard = ({
         </div>
       </section>
 
-      <Button colored className={styles.button} onClick={onDetailsClick}>
+      <Button
+        colored
+        className={styles.button}
+        onClick={onDetailsClick}
+      >
         Подробнее
       </Button>
     </article>
