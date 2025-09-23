@@ -28,6 +28,9 @@ import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotifica
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
+import { SkillFilters } from '../features/filters/SkillFilters';
+import { TSkillType } from "shared/types/filters";
+import { FiltersContainer } from '../features/filters/FiltersContainer';
 
 export const HomePage = () => {
   // Это нужно убрать!
@@ -67,6 +70,21 @@ export const HomePage = () => {
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
+const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>('all');
+const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+// Получаем категории из Redux
+const categories = useSelector((s: RootState) => s.categories.categories);
+
+// Обработчик для категорий
+const handleCategoryToggle = (categoryId: string) => {
+  setSelectedCategories(prev =>
+    prev.includes(categoryId)
+      ? prev.filter(id => id !== categoryId)
+      : [...prev, categoryId]
+  );
+};
+
   const [selectedGender, setSelectedGender] = useState<string>('');
   const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
  
@@ -98,13 +116,25 @@ export const HomePage = () => {
 
       <CardSlider users={users} subCategories={subCategories} />
 
-      <div className={styles.wrapper}>
+<div className={styles.mainLayout}>
+  <FiltersContainer title="Фильтры">
+    <SkillFilters
+      onSkillTypeChange={setSelectedSkillType}
+      onCategoryToggle={handleCategoryToggle}
+      selectedSkillType={selectedSkillType}
+      selectedCategories={selectedCategories}
+      categories={categories}
+      subcategories={subCategories}
+    />
         <FilterSection
         onGenderChange={handleGenderChange}
         onPlaceChange={handlePlaceChange}
         selectedGender={selectedGender}
         selectedPlaces={selectedPlaces}
+          
         />
+      </FiltersContainer>
+
         <CardShowcase
         title="Популярное"
         buttonTitle="Смотреть все"
