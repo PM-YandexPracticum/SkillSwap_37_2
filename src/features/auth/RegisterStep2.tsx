@@ -140,7 +140,12 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
                 className={styles.avatar}
               />
             ) : (
-              <Icon name="userCircle" size={54} className={styles.avatarIcon} />
+              <Icon
+                name="userCircle"
+                size={54}
+                strokeWidth={0.5}
+                className={styles.avatarIcon}
+              />
             )}
             <label htmlFor="avatar-upload" className={styles.addButton}>
               <Icon name="add" size={16} className={styles.addIcon} />

@@ -1,5 +1,3 @@
-// src/features/users/userCard/UserCard.tsx
-
 import { TSkillName } from '../../../shared/types/SkillName';
 import like from '../../../shared/assets/icons/like.png';
 import styles from './UserCard.module.css';
@@ -13,11 +11,10 @@ type UserCardProps = {
   from: string;
   age: string;
   avatar: string;
-  about?: string; // если есть, рендерит карточку с "о себе"
+  about?: string; //если есть, рендерит карточку с "о себе" 
   teachSkills: TSkillName;
   learnSkills: number[];
-  subCategories: TPlace[];
-  onDetailsClick?: () => void; // <-- добавили пропс
+  subCategories: TPlace[]
 };
 
 export const UserCard = ({
@@ -28,13 +25,19 @@ export const UserCard = ({
   about,
   teachSkills,
   learnSkills,
-  subCategories,
-  onDetailsClick
+  subCategories
 }: UserCardProps) => {
 
-  const { skillsCanRender, isRest, rest } = prepareSkillsToRender(learnSkills, subCategories);
+  // фича prepareSkillsToRender возвращает массив скилов
+  // таким образом, чтобы они уместились в строке целиком, без обрезания
+  const {
+    skillsCanRender,
+    isRest,
+    rest
+  } = prepareSkillsToRender(learnSkills, subCategories);
 
   return about ? (
+
     <article className={styles.card}
       style={{padding: '32px', maxHeight: '27.75em'}}>
       <section className={styles.userInfo}>
@@ -43,10 +46,15 @@ export const UserCard = ({
           <div className={styles.infoWrapper}>
             <p className={styles.userName}>{name}</p>
             <p className={styles.fromAge}>{`${from}, ${age}`}</p>
+
           </div>
-        </div>
-        <img src={like} alt='лайк' className={styles.like}/>
-      </section>
+          <img src={like} alt='лайк' className={styles.like}/>
+        </section>
+
+        <section className={styles.about}>
+          <p>{about}</p>
+        </section>
+
 
       <section className={styles.about}>
         <p>{about}</p>
@@ -94,12 +102,14 @@ export const UserCard = ({
       </section>
 
     </article>) : (
+
     <article className={styles.card}>
       <section className={styles.userInfo}>
         <div className={styles.userInfoContainer}>
           <img src={avatar} alt='фото профиля' className={styles.avatar}/>
           <div className={styles.infoWrapper}>
             <p className={styles.userName}>{name}</p>
+            {/* Исправлено: заменены кавычки на обратные */}
             <p className={styles.fromAge}>{`${from}, ${age}`}</p>
           </div>
         </div>
@@ -137,9 +147,9 @@ export const UserCard = ({
         </div>
       </section>
 
-      <Button colored className={styles.button} onClick={onDetailsClick}>
-        Подробнее
-      </Button>
+      <Button colored className={styles.button}>Подробнее</Button>
     </article>
+
   );
+
 };

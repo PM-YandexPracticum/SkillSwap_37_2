@@ -9,7 +9,7 @@
 
 .content {
   width: 100%;
-  max-width: 436px; 
+  max-width: 436px;
   margin: 0 auto;
 }
 
@@ -59,7 +59,6 @@
   width: 54px;
   height: 54px;
   color: #253017;
-  stroke-width: 0.5px;
 }
 
 .addButton {
