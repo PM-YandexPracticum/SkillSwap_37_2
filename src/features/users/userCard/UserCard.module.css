@@ -1,22 +1,31 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  box-sizing: border-box;
-  width: 324px;
-  height: 368px;
-  padding: 20px;
-  background-color: #FFF;
+  width: 100%;
+  /* max-width: 324px; Если карточка в какомнибудь контейнере, максвидс 
+  сжимается до 319px, пока не могу побороть и оставляю 324px */
+
+  /* gap: 20px; */
+  /* width: 324px; */
+  /* max-height: 444px; */
+  /* padding: 20px; */
+  gap: 1.25em;
+  width: 20.25em;
+  max-height: 27.75em;
+  padding: 1.25em;
+  background-color: #FFFFFF;
 }
 
 .userInfo {
   display: flex;
+  width: 100%;
   justify-content: space-between;
 }
 
 .userInfoContainer {
   display: flex;
-  flex-direction: row;
+  /* gap: 12px; */
+  gap: 0.75em;
 }
 
 .avatar {
@@ -28,49 +37,63 @@
 
 .infoWrapper {
   align-self: center;
-  margin-left: 12px;
 }
 
 .userName {
+  margin-bottom: 0.25em;
   font-family: 'Open sans';
-  font-size: 20px;
+  /* font-size: 20px; */
+  /* line-height: 24px; */
+  font-size: 1.25em;
+  line-height: 1.5em;
   font-weight: 600;
-  line-height: 24px;
 }
 
 .fromAge {
-  font-size: 12px;
-  line-height: 16px;
+  /* font-size: 12px; */
+  /* line-height: 16px; */
+  font-size: 0.75em;
+  line-height: 1em;
   color: #253017;
 }
 
-.like {
-  width: 24px;
-  height: 24px;
-  align-self: flex-start;
-}
-
-.canTeach {
-  margin-bottom: 12px;
-}
-
-.bid {
-  line-height: 24px;
-  letter-spacing: 2%;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-.tagWrapper {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  box-sizing: border-box;
-  white-space: nowrap;
+.about {
+  max-height: 72px;
+  max-height: 4.5em;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.button {
-  flex-shrink: 0;
+.like {
+  /* width: 24px;
+  height: 24px; */
+  width: 1.5em;
+  height: 1.5em;
+  align-self: flex-start;
+}
+
+.canTeach {
+  /* margin-bottom: 12px; */
+  margin-bottom: 0.75em;
+}
+
+.bid {
+  /* line-height: 24px;
+  margin-bottom: 8px; */
+  line-height: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  letter-spacing: 2%;
+}
+
+.tagWrapper {
+  display: flex;
+  /* align-items: center; */
+  /* gap: 4px; */
+  gap: 0.25em;
+  box-sizing: border-box;
+  line-height: 1em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
