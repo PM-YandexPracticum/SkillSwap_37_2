@@ -1,7 +1,16 @@
 .filter {
+/* <<<<<<< features/categoryfilters */
   margin-top: 32px; 
   margin-bottom: 0;
   max-width: 324px;
+/* ======= */
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  max-width:  324px;
+/* >>>>>>> develop */
   width: 100%;
   height: fit-content;
 }

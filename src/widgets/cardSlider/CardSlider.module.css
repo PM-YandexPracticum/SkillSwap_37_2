@@ -2,16 +2,16 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  max-width: 1368px;
   width: 100%;
-  margin: auto;
+  max-width: 1368px;
+  
 }
 
 .cardsWrapper {
   display: flex;
-  gap: 24px;
-  justify-content: center;
+  width: 100%;
+  /* gap: 24px; */
+  gap: 1.5em;
 }
 
 button {
@@ -23,8 +23,10 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  /* width: 32px;
+  height: 32px; */
+  width: 2em;
+  height: 2em;
   border-radius: 50%;
   background-color: #E4E8DF;
   cursor: pointer;

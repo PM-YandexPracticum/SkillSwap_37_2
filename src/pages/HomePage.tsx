@@ -1,59 +1,55 @@
-// src\pages\HomePage.tsx
-
+// src/pages/HomePage.tsx
 import { useEffect, useState } from "react";
-
-import { useSelector } from 'react-redux';
-import { RootState, useDispatch } from '@store';
+import { useSelector } from "react-redux";
+import { RootState, useDispatch } from "@store";
 
 import { getUserThunk } from "../services/user/actions";
-import { getUsersThunk } from '../services/users/actions';
+import { getUsersThunk } from "../services/users/actions";
 import { getUser } from "../services/user/user-slice";
+import { getCategoriesThunk } from "../services/categories/actions";
+import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
+
 import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
+import { TUser } from "@api/types";
 import { UserCard } from "../features/users/userCard/UserCard";
-
-import styles from "./HomePage.module.css";
-
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
-import { CardSlider, DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, NotificationsTable, SkillForm, SkillMenu } from "@widgets";
-import { AuthForm, FilterSection, SkillCardDetails } from "@features";
-
-import { getSkillsSubCategoriesApi } from "@api/Api";
-import { TPlace } from "@api/types";
-import { RegistrationOnBoardingOne, RegistrationOnBoardingTwo, RegistrationOnBoardingThree } from "../features/onboarding/registrationBoard";
-
+import { 
+  AuthForm, 
+  FilterSection, 
+  SkillCardDetails 
+} from "@features";
+import { 
+  CardSlider, 
+  DropdownDemo, 
+  DropdownGroupedDemo, 
+  Footer, 
+  GridList, 
+  Header, 
+  NotificationsTable, 
+  SkillForm, 
+  SkillMenu, 
+} from "@widgets";
+import { 
+  RegistrationOnBoardingOne,
+  RegistrationOnBoardingTwo, 
+  RegistrationOnBoardingThree 
+} from "../features/onboarding/registrationBoard";
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
-import { getCategoriesThunk } from "../services/categories/actions";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
-import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
 import { SkillFilters } from '../features/filters/SkillFilters';
 import { TSkillType } from "shared/types/filters";
 import { FiltersContainer } from '../features/filters/FiltersContainer';
 
-export const HomePage = () => {
-  // Это нужно убрать!
-  // Ищем задачу в канбане
-  const mySkill = {
-    title: "Игра на барабанах",
-    subtitle: "Творчество и искусство / Музыка и звук",
-    description:
-      "Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене с живыми группами. Научу основам техники (и как не отбить себе пальцы), играть любимые ритмы и разбирать песни, импровизировать и звучать уверенно даже без партитуры.",
-    mainImage: "public/db/skills-photo/drums-1.jpg",
-    smallImages: [
-      "/public/db/skills-photo/drums-2.jpg",
-      "/public/db/skills-photo/drums-3.jpg",
-      "/db/skills-photo/+3.png",
-    ],
-    icons: [
-      "src/shared/assets/icons/like.png",
-      "src/shared/assets/icons/share.png",
-      "src/shared/assets/icons/more-square.png",
-    ],
-    buttonText: "Предложить обмен",
-  };
+import like from "../shared/assets/icons/like.png";
+import share from "../shared/assets/icons/share.png";
+import more from "../shared/assets/icons/more-square.png";
 
+import styles from "./HomePage.module.css";
+
+export const HomePage = () => {
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
   const dispatch = useDispatch();
 
@@ -61,12 +57,24 @@ export const HomePage = () => {
   const { users, isLoading, hasMore, page } = useSelector(
     (state: RootState) => state.users
   );
+  const subCategories = useSelector(
+    (s: RootState) => s.categories.subcategories
+  );
 
-  // const [subCategories, setSubCategories] = useState<TPlace[]>([]);
-  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
-  
+  const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
+  const [selectedGender, setSelectedGender] = useState<string>("");
+  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
+
+  const {
+    isNotificationOpen,
+    openNotification,
+    closeNotification,
+    handleNavigateToExchange,
+  } = useExchangeNotification();
+
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
+    dispatch(getUsersThunk(1));
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
@@ -98,23 +106,78 @@ const handleCategoryToggle = (categoryId: string) => {
   // функция загрузки последующих данных
   const handleLoadMore = () => {
     if (!isLoading && hasMore) {
-      const nextPage = page + 1;
-      dispatch(getUsersThunk(nextPage));
+      dispatch(getUsersThunk(page + 1));
     }
   };
-
-    const { 
-    isNotificationOpen, 
-    openNotification, 
-    closeNotification,
-    handleNavigateToExchange 
-  } = useExchangeNotification();
 
   return (
     <div className={styles.homePageWrapper}>
       <Header />
 
-      <CardSlider users={users} subCategories={subCategories} />
+      {/* Блок текущего пользователя */}
+      <div style={{ display: "flex", gap: "20px" }}>
+        {user && (
+          <UserCard
+            name={user.name}
+            from={user.from}
+            age={birthdayToFormatedAge(user.birthdate)}
+            avatar={getImageUrl(user.photo)}
+            about={user.about}
+            teachSkills={user.skill}
+            learnSkills={user.need_subcat}
+            subCategories={subCategories}
+          />
+        )}
+      </div>
+
+      {/* Все карточки пользователей */}
+      <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
+        {users.map((u) => (
+          <UserCard
+            key={u.id}
+            name={u.name}
+            from={u.from}
+            age={birthdayToFormatedAge(u.birthdate)}
+            avatar={getImageUrl(u.photo)}
+            about={u.about}
+            teachSkills={u.skill}
+            learnSkills={u.need_subcat}
+            subCategories={subCategories}
+            onDetailsClick={() => setSelectedUser(u)}
+          />
+        ))}
+      </div>
+
+      {/* SkillCardDetails выбранного пользователя */}
+      {selectedUser && (
+        <SkillCardDetails
+          skill={{
+            title: selectedUser.skill || "Навык не указан",
+            subtitle: `${selectedUser.cat_text || ""} / ${
+              selectedUser.sub_text || ""
+            }`,
+            description: selectedUser.description || "Описание отсутствует",
+            mainImage: selectedUser.images?.[0] || "",
+            smallImages: selectedUser.images?.slice(1) || [],
+            icons: [like, share, more],
+            buttonText: "Предложить обмен",
+          }}
+        />
+      )}
+
+      {hasMore && !isLoading && (
+        <button
+          style={{ margin: "20px", padding: "10px 20px" }}
+          onClick={handleLoadMore}
+        >
+          Загрузить ещё
+        </button>
+      )}
+
+      {/* Showcase блоки */}
+      <CardShowcase title="Похожие предложения" icon={<Icon name="chevronRight" />}>
+        <CardSlider users={users} subCategories={subCategories} />
+      </CardShowcase>
 
 <div className={styles.mainLayout}>
   <FiltersContainer title="Фильтры">
@@ -132,85 +195,116 @@ const handleCategoryToggle = (categoryId: string) => {
         selectedGender={selectedGender}
         selectedPlaces={selectedPlaces}
           
+      <main className={styles.mainWrapper}>
+        <FilterSection
+          onGenderChange={setSelectedGender}
+          onPlaceChange={setSelectedPlaces}
+          selectedGender={selectedGender}
+          selectedPlaces={selectedPlaces}
+        />
+        <div className={styles.showCaseWrapper}>
+          <CardShowcase title="Популярное" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+          <CardShowcase title="Новое" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+          <CardShowcase title="Рекомендуем">
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+        </div>
+      </main>
+
+      <main className={styles.mainWrapper}>
+        <FilterSection
+          onGenderChange={setSelectedGender}
+          onPlaceChange={setSelectedPlaces}
+          selectedGender={selectedGender}
+          selectedPlaces={selectedPlaces}
         />
       </FiltersContainer>
 
         <CardShowcase
-        title="Популярное"
-        buttonTitle="Смотреть все"
-        icon={<Icon name="chevronRight" />}
+          title="Подходящие предложения: "
+          buttonTitle="Сначала новые"
+          icon={<Icon name="sort" />}
+          isIconFirst
         >
           <GridList
-            rows={1}
             users={users}
             subCategories={subCategories}
             loading={isLoading}
             hasMore={hasMore}
             onLoadMore={handleLoadMore}
-        />
+          />
         </CardShowcase>
-      </div>
-      
-      <div className={styles.wrapper}>
-        <FilterSection
-        onGenderChange={handleGenderChange}
-        onPlaceChange={handlePlaceChange}
-        selectedGender={selectedGender}
-        selectedPlaces={selectedPlaces}
+      </main>
+
+      {/* Демо-блоки */}
+      <div>
+        <h2>Кнопка для демонстрации success</h2>
+        <button
+          style={{ fontSize: "32px", color: "red", height: "80px", padding: "10px 20px" }}
+          onClick={() => openNotification({ type: "success" })}
+        >
+          Показать уведомление Success
+        </button>
+
+        <h2>Кнопка для демонстрации info</h2>
+        <button
+          style={{ fontSize: "32px", color: "red", height: "80px", padding: "10px 20px" }}
+          onClick={() => openNotification({ type: "info" })}
+        >
+          Показать уведомление Info
+        </button>
+
+        <ExchangeNotification
+          isOpen={isNotificationOpen}
+          onClose={closeNotification}
+          onNavigateToExchange={handleNavigateToExchange}
+          type="success"
         />
-        <GridList
-          users={users}
-          subCategories={subCategories}
-          loading={isLoading}
-          hasMore={hasMore}
-          onLoadMore={handleLoadMore}
-        />
       </div>
-    <div>
 
-    <h2>Кнопка для демонстрации</h2>
-    <button
-      style={{
-        fontSize: '32px',
-        color: 'red',
-        height: '80px',
-        padding: '10px 20px',
-      }}
-      onClick={() => openNotification({ type: 'success' })} >
-      Показать уведомление
-    </button>
-
-
-      {/* Модальное окно */}
-      <ExchangeNotification
-        isOpen={isNotificationOpen}
-        onClose={closeNotification} 
-        onNavigateToExchange={handleNavigateToExchange}
-        type="success"
-      />
-    </div>
-
-     <h2>Форма регистрации (Шаг 2)</h2>
-      <RegisterStep2 
-        onBack={() => console.log('Назад')}
+      <h2>Форма регистрации (Шаг 2)</h2>
+      <RegisterStep2
+        onBack={() => console.log("Назад")}
         onContinue={(data) => {
-          console.log('Данные регистрации:', data);
-          alert('Регистрация завершена!');
+          console.log("Данные регистрации:", data);
+          alert("Регистрация завершена!");
         }}
       />
 
       <h2>onboarding register step 1</h2>
       <RegistrationOnBoardingOne />
-
       <h2>onboarding register step 2</h2>
       <RegistrationOnBoardingTwo />
-
       <h2>onboarding register step 3</h2>
       <RegistrationOnBoardingThree />
-      
+
       <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
-
       <h2>Вариант Dropdown 2</h2>
       <DropdownGroupedDemo />
 
@@ -220,80 +314,30 @@ const handleCategoryToggle = (categoryId: string) => {
       <h2>AuthForm</h2>
       <AuthForm />
 
-      <h2>user && UserCard</h2>
-      {user && (
-        <UserCard
-          name={user.name}
-          from={user.from}
-          age={birthdayToFormatedAge(user.birthdate)}
-          avatar={getImageUrl(user.photo)}
-          teachSkills={user.skill}
-          learnSkills={user.need_subcat}
-          subCategories={subCategories}
-        />
-      )}
-
       <h2>NotificationsTable</h2>
-      {/* появляется, если нажать на колокольчик в header
-      <NotificationWidget /> */}
       <NotificationsTable userId={API_USER_ID} />
-
-      <h2>SkillCardDetails</h2>
-      {/* Настроить передачу свойств от текущего пользователя
-      образец user && SkillCard
-      все данные есть в user
-      убрать константу mySkill */}
-      <SkillCardDetails skill={mySkill} />
-
 
       <SkillMenu />
       <NotFoundPage />
       <ServerErrorPage />
 
-
-      {/* Отладочные ссылки */}
+      {/* Debug ссылки */}
       <div style={{ padding: "2rem", paddingBottom: "20rem" }}>
         <h2>Debug Links</h2>
         <ul>
-          <li>
-            <a href="/skills">/skills</a>
-          </li>
-          <li>
-            <a href="/auth/login">/auth/login</a>
-          </li>
-          <li>
-            <a href="/auth/register">/auth/register</a>
-          </li>
-          <li>
-            <a href="/skill/new">/skill/new</a>
-          </li>
-          <li>
-            <a href="/demo/dropdowns">/demo/dropdowns</a>
-          </li>
-          <li>
-            <a href="/demo/skill-details">/demo/skill-details</a>
-          </li>
-          <li>
-            <a href="/skills/123">/skills/:id</a>
-          </li>
-          <li>
-            <a href="/favorites">/favorites</a>
-          </li>
-          <li>
-            <a href="/requests">/requests</a>
-          </li>
-          <li>
-            <a href="/profile">/profile</a>
-          </li>
-          <li>
-            <a href="/profile/notifications">/profile/notifications</a>
-          </li>
-          <li>
-            <a href="/500">/500</a>
-          </li>
-          <li>
-            <a href="/nonexistent">/not-found</a>
-          </li>
+          <li><a href="/skills">/skills</a></li>
+          <li><a href="/auth/login">/auth/login</a></li>
+          <li><a href="/auth/register">/auth/register</a></li>
+          <li><a href="/skill/new">/skill/new</a></li>
+          <li><a href="/demo/dropdowns">/demo/dropdowns</a></li>
+          <li><a href="/demo/skill-details">/demo/skill-details</a></li>
+          <li><a href="/skills/123">/skills/:id</a></li>
+          <li><a href="/favorites">/favorites</a></li>
+          <li><a href="/requests">/requests</a></li>
+          <li><a href="/profile">/profile</a></li>
+          <li><a href="/profile/notifications">/profile/notifications</a></li>
+          <li><a href="/500">/500</a></li>
+          <li><a href="/nonexistent">/not-found</a></li>
         </ul>
       </div>
 
