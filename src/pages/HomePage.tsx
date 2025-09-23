@@ -1,4 +1,3 @@
-// src/pages/HomePage.tsx
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useDispatch } from "@store";
@@ -67,10 +66,26 @@ export const HomePage = () => {
 
   const {
     isNotificationOpen,
+    notificationConfig,
     openNotification,
     closeNotification,
     handleNavigateToExchange,
   } = useExchangeNotification();
+
+  const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>('all');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  // Получаем категории из Redux
+  const categories = useSelector((s: RootState) => s.categories.categories);
+
+  // Обработчик для категорий
+  const handleCategoryToggle = (categoryId: string) => {
+    setSelectedCategories(prev =>
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
 
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
@@ -78,27 +93,10 @@ export const HomePage = () => {
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
-const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>('all');
-const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
-// Получаем категории из Redux
-const categories = useSelector((s: RootState) => s.categories.categories);
-
-// Обработчик для категорий
-const handleCategoryToggle = (categoryId: string) => {
-  setSelectedCategories(prev =>
-    prev.includes(categoryId)
-      ? prev.filter(id => id !== categoryId)
-      : [...prev, categoryId]
-  );
-};
-
-  const [selectedGender, setSelectedGender] = useState<string>('');
-  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
- 
   const handleGenderChange = (gender: string) => {
     setSelectedGender(gender);
   };
+
   const handlePlaceChange = (places: number[]) => {
     setSelectedPlaces(places);
   };
@@ -129,7 +127,6 @@ const handleCategoryToggle = (categoryId: string) => {
           />
         )}
       </div>
-
       {/* Все карточки пользователей */}
       <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
         {users.map((u) => (
@@ -147,7 +144,6 @@ const handleCategoryToggle = (categoryId: string) => {
           />
         ))}
       </div>
-
       {/* SkillCardDetails выбранного пользователя */}
       {selectedUser && (
         <SkillCardDetails
@@ -173,94 +169,81 @@ const handleCategoryToggle = (categoryId: string) => {
           Загрузить ещё
         </button>
       )}
-
       {/* Showcase блоки */}
       <CardShowcase title="Похожие предложения" icon={<Icon name="chevronRight" />}>
         <CardSlider users={users} subCategories={subCategories} />
       </CardShowcase>
 
-<div className={styles.mainLayout}>
-  <FiltersContainer title="Фильтры">
-    <SkillFilters
-      onSkillTypeChange={setSelectedSkillType}
-      onCategoryToggle={handleCategoryToggle}
-      selectedSkillType={selectedSkillType}
-      selectedCategories={selectedCategories}
-      categories={categories}
-      subcategories={subCategories}
-    />
-        <FilterSection
-        onGenderChange={handleGenderChange}
-        onPlaceChange={handlePlaceChange}
-        selectedGender={selectedGender}
-        selectedPlaces={selectedPlaces}
-          
-      <main className={styles.mainWrapper}>
-        <FilterSection
-          onGenderChange={setSelectedGender}
-          onPlaceChange={setSelectedPlaces}
-          selectedGender={selectedGender}
-          selectedPlaces={selectedPlaces}
-        />
-        <div className={styles.showCaseWrapper}>
-          <CardShowcase title="Популярное" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
-            <GridList
-              rows={1}
-              users={users}
-              subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
-            />
-          </CardShowcase>
-          <CardShowcase title="Новое" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
-            <GridList
-              rows={1}
-              users={users}
-              subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
-            />
-          </CardShowcase>
-          <CardShowcase title="Рекомендуем">
-            <GridList
-              rows={1}
-              users={users}
-              subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
-            />
-          </CardShowcase>
-        </div>
-      </main>
-
-      <main className={styles.mainWrapper}>
-        <FilterSection
-          onGenderChange={setSelectedGender}
-          onPlaceChange={setSelectedPlaces}
-          selectedGender={selectedGender}
-          selectedPlaces={selectedPlaces}
-        />
-      </FiltersContainer>
-
-        <CardShowcase
-          title="Подходящие предложения: "
-          buttonTitle="Сначала новые"
-          icon={<Icon name="sort" />}
-          isIconFirst
-        >
-          <GridList
-            users={users}
-            subCategories={subCategories}
-            loading={isLoading}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
+      <div className={styles.mainLayout}>
+        <FiltersContainer title="Фильтры">
+          <SkillFilters
+            onSkillTypeChange={setSelectedSkillType}
+            onCategoryToggle={handleCategoryToggle}
+            selectedSkillType={selectedSkillType}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            subcategories={subCategories}
           />
-        </CardShowcase>
-      </main>
+          <FilterSection
+            onGenderChange={handleGenderChange}
+            onPlaceChange={handlePlaceChange}
+            selectedGender={selectedGender}
+            selectedPlaces={selectedPlaces}
+          />
+        </FiltersContainer>
 
+        <main className={styles.mainWrapper}>
+          <div className={styles.showCaseWrapper}>
+            <CardShowcase title="Популярное" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
+              <GridList
+                rows={1}
+                users={users}
+                subCategories={subCategories}
+                loading={isLoading}
+                hasMore={hasMore}
+                onLoadMore={handleLoadMore}
+              />
+            </CardShowcase>
+            <CardShowcase title="Новое" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
+              <GridList
+                rows={1}
+                users={users}
+                subCategories={subCategories}
+                loading={isLoading}
+                hasMore={hasMore}
+                onLoadMore={handleLoadMore}
+              />
+            </CardShowcase>
+            <CardShowcase title="Рекомендуем">
+              <GridList
+                rows={1}
+                users={users}
+                subCategories={subCategories}
+                loading={isLoading}
+                hasMore={hasMore}
+                onLoadMore={handleLoadMore}
+              />
+            </CardShowcase>
+          </div>
+        </main>
+
+        <main className={styles.mainWrapper}>
+          <CardShowcase
+            title="Подходящие предложения: "
+            buttonTitle="Сначала новые"
+            icon={<Icon name="sort" />}
+            isIconFirst
+          >
+            <GridList
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+        </main>
+      </div>
       {/* Демо-блоки */}
       <div>
         <h2>Кнопка для демонстрации success</h2>
@@ -283,7 +266,10 @@ const handleCategoryToggle = (categoryId: string) => {
           isOpen={isNotificationOpen}
           onClose={closeNotification}
           onNavigateToExchange={handleNavigateToExchange}
-          type="success"
+          type={notificationConfig.type}
+          title={notificationConfig.title}
+          message={notificationConfig.message}
+          buttonText={notificationConfig.buttonText}
         />
       </div>
 
@@ -320,8 +306,7 @@ const handleCategoryToggle = (categoryId: string) => {
       <SkillMenu />
       <NotFoundPage />
       <ServerErrorPage />
-
-      {/* Debug ссылки */}
+        {/* Debug ссылки */}
       <div style={{ padding: "2rem", paddingBottom: "20rem" }}>
         <h2>Debug Links</h2>
         <ul>
@@ -344,4 +329,4 @@ const handleCategoryToggle = (categoryId: string) => {
       <Footer />
     </div>
   );
-};
+}
