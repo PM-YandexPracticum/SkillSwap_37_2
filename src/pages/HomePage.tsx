@@ -82,8 +82,6 @@ export const HomePage = () => {
     }
   };
 
-  // const num = 9 as number;
-
   const { 
     isNotificationOpen, 
     openNotification, 
@@ -94,6 +92,32 @@ export const HomePage = () => {
   return (
     <div className={styles.homePageWrapper}>
       <Header />
+
+      <div style={{display: 'flex', gap: '20px'}}>
+        {user && (
+          <UserCard
+            name={user.name}
+            from={user.from}
+            age={birthdayToFormatedAge(user.birthdate)}
+            avatar={getImageUrl(user.photo)}
+            teachSkills={user.skill}
+            learnSkills={user.need_subcat}
+            subCategories={subCategories}
+          />
+        )}
+        {user && (
+          <UserCard
+            name={user.name}
+            from={user.from}
+            age={birthdayToFormatedAge(user.birthdate)}
+            avatar={getImageUrl(user.photo)}
+            about={user.about}
+            teachSkills={user.skill}
+            learnSkills={user.need_subcat}
+            subCategories={subCategories}
+          />
+        )}
+      </div>
 
       <CardShowcase
         title="Похожие предложения"
@@ -222,22 +246,6 @@ export const HomePage = () => {
         onNavigateToExchange={() => console.log('Просмотр уведомления')}
       />
  */}
-      
-      <div className={styles.wrapper}>
-        <FilterSection
-        onGenderChange={handleGenderChange}
-        onPlaceChange={handlePlaceChange}
-        selectedGender={selectedGender}
-        selectedPlaces={selectedPlaces}
-        />
-        <GridList
-          users={users}
-          subCategories={subCategories}
-          loading={isLoading}
-          hasMore={hasMore}
-          onLoadMore={handleLoadMore}
-        />
-      </div>
 
      <h2>Форма регистрации (Шаг 2)</h2>
       <RegisterStep2 
@@ -268,19 +276,6 @@ export const HomePage = () => {
 
       <h2>AuthForm</h2>
       <AuthForm />
-
-      <h2>user && UserCard</h2>
-      {user && (
-        <UserCard
-          name={user.name}
-          from={user.from}
-          age={birthdayToFormatedAge(user.birthdate)}
-          avatar={getImageUrl(user.photo)}
-          teachSkills={user.skill}
-          learnSkills={user.need_subcat}
-          subCategories={subCategories}
-        />
-      )}
 
       <h2>NotificationsTable</h2>
       {/* появляется, если нажать на колокольчик в header

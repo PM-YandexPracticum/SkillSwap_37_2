@@ -62,12 +62,7 @@ export const GridList = ({
           <Loader />
         </div>
       )}
-
-      {!hasMore && users.length > 0 && (
-        <div className={styles.showedAllUsers}>
-          Показаны все пользователи
-        </div>
-      )}
+      
     </div>
   );
 };
