@@ -62,8 +62,8 @@ export const HomePage = () => {
   );
 
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
-  const [selectedGender, setSelectedGender] = useState<string>("");
-  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
+  // const [selectedGender, setSelectedGender] = useState<string>("");
+  // const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
 
   const {
     isNotificationOpen,
@@ -110,25 +110,99 @@ const handleCategoryToggle = (categoryId: string) => {
     }
   };
 
-  return (
-    <div className={styles.homePageWrapper}>
+  return (<div className={styles.homePageWrapper}>
       <Header />
 
-      {/* Блок текущего пользователя */}
-      <div style={{ display: "flex", gap: "20px" }}>
-        {user && (
-          <UserCard
-            name={user.name}
-            from={user.from}
-            age={birthdayToFormatedAge(user.birthdate)}
-            avatar={getImageUrl(user.photo)}
-            about={user.about}
-            teachSkills={user.skill}
-            learnSkills={user.need_subcat}
-            subCategories={subCategories}
+
+      <div className={styles.mainLayout}>
+        <FiltersContainer title="Фильтры">
+          <SkillFilters
+            onSkillTypeChange={setSelectedSkillType}
+            onCategoryToggle={handleCategoryToggle}
+            selectedSkillType={selectedSkillType}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            subcategories={subCategories}
           />
-        )}
+
+          <FilterSection
+            onGenderChange={setSelectedGender}
+            onPlaceChange={setSelectedPlaces}
+            selectedGender={selectedGender}
+            selectedPlaces={selectedPlaces}
+          />
+        </FiltersContainer>
+
+        <div className={styles.showCaseWrapper}>
+          <CardShowcase title="Популярное" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+        </div>
       </div>
+
+
+
+      <CardShowcase
+        title="Подходящие предложения: "
+        buttonTitle="Сначала новые"
+        icon={<Icon name="sort" />}
+        isIconFirst
+      >
+        <GridList
+          users={users}
+          subCategories={subCategories}
+          loading={isLoading}
+          hasMore={hasMore}
+          onLoadMore={handleLoadMore}
+        />
+      </CardShowcase>
+
+
+      <div className={styles.showCaseWrapper}>
+        <CardShowcase title="Популярное" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
+          <GridList
+            rows={1}
+            users={users}
+            subCategories={subCategories}
+            loading={isLoading}
+            hasMore={hasMore}
+            onLoadMore={handleLoadMore}
+          />
+        </CardShowcase>
+        <CardShowcase title="Новое" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
+          <GridList
+            rows={1}
+            users={users}
+            subCategories={subCategories}
+            loading={isLoading}
+            hasMore={hasMore}
+            onLoadMore={handleLoadMore}
+          />
+        </CardShowcase>
+        <CardShowcase title="Рекомендуем">
+          <GridList
+            rows={1}
+            users={users}
+            subCategories={subCategories}
+            loading={isLoading}
+            hasMore={hasMore}
+            onLoadMore={handleLoadMore}
+          />
+        </CardShowcase>
+      </div>
+
+
+    <div >
+
+
+
 
       {/* Все карточки пользователей */}
       <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
@@ -178,90 +252,30 @@ const handleCategoryToggle = (categoryId: string) => {
       <CardShowcase title="Похожие предложения" icon={<Icon name="chevronRight" />}>
         <CardSlider users={users} subCategories={subCategories} />
       </CardShowcase>
+    </div>
 
-<div className={styles.mainLayout}>
-  <FiltersContainer title="Фильтры">
-    <SkillFilters
-      onSkillTypeChange={setSelectedSkillType}
-      onCategoryToggle={handleCategoryToggle}
-      selectedSkillType={selectedSkillType}
-      selectedCategories={selectedCategories}
-      categories={categories}
-      subcategories={subCategories}
-    />
-        <FilterSection
-        onGenderChange={handleGenderChange}
-        onPlaceChange={handlePlaceChange}
-        selectedGender={selectedGender}
-        selectedPlaces={selectedPlaces}
-          
-      <main className={styles.mainWrapper}>
-        <FilterSection
-          onGenderChange={setSelectedGender}
-          onPlaceChange={setSelectedPlaces}
-          selectedGender={selectedGender}
-          selectedPlaces={selectedPlaces}
-        />
-        <div className={styles.showCaseWrapper}>
-          <CardShowcase title="Популярное" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
-            <GridList
-              rows={1}
-              users={users}
-              subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
-            />
-          </CardShowcase>
-          <CardShowcase title="Новое" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
-            <GridList
-              rows={1}
-              users={users}
-              subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
-            />
-          </CardShowcase>
-          <CardShowcase title="Рекомендуем">
-            <GridList
-              rows={1}
-              users={users}
-              subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
-            />
-          </CardShowcase>
-        </div>
-      </main>
 
-      <main className={styles.mainWrapper}>
-        <FilterSection
-          onGenderChange={setSelectedGender}
-          onPlaceChange={setSelectedPlaces}
-          selectedGender={selectedGender}
-          selectedPlaces={selectedPlaces}
-        />
-      </FiltersContainer>
+      <h1>Демо-блоки</h1>
 
-        <CardShowcase
-          title="Подходящие предложения: "
-          buttonTitle="Сначала новые"
-          icon={<Icon name="sort" />}
-          isIconFirst
-        >
-          <GridList
-            users={users}
+
+
+      <h2>Блок текущего пользователя</h2>
+      <div style={{ display: "flex", gap: "20px" }}>
+        {user && (
+          <UserCard
+            name={user.name}
+            from={user.from}
+            age={birthdayToFormatedAge(user.birthdate)}
+            avatar={getImageUrl(user.photo)}
+            about={user.about}
+            teachSkills={user.skill}
+            learnSkills={user.need_subcat}
             subCategories={subCategories}
-            loading={isLoading}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
           />
-        </CardShowcase>
-      </main>
+        )}
+      </div>
 
-      {/* Демо-блоки */}
+
       <div>
         <h2>Кнопка для демонстрации success</h2>
         <button
@@ -342,6 +356,8 @@ const handleCategoryToggle = (categoryId: string) => {
       </div>
 
       <Footer />
-    </div>
-  );
+
+
+
+  </div>);
 };

@@ -35,8 +35,8 @@ export const UserCard = ({
   const { skillsCanRender, isRest, rest } = prepareSkillsToRender(learnSkills, subCategories);
 
   return about ? (
-      <article className={styles.card}
-        style={{padding: '32px', maxHeight: '27.75em'}}>
+      <article className={styles.card} style={{padding: '32px', maxHeight: '27.75em'}}>
+
         <section className={styles.userInfo}>
           <div className={styles.userInfoContainer}>
             <img src={avatar} alt='фото профиля' className={styles.avatar}/>
@@ -44,11 +44,10 @@ export const UserCard = ({
               <p className={styles.userName}>{name}</p>
               <p className={styles.fromAge}>{`${from}, ${age}`}</p>
             </div>
-
           </div>
-        </div>
-        <img src={like} alt='лайк' className={styles.like}/>
-      </section>
+
+          <img src={like} alt='лайк' className={styles.like}/>
+        </section>
 
         <section>
           <div
@@ -63,6 +62,7 @@ export const UserCard = ({
               <SkillTag skill={teachSkills} />
             </ul>
           </div>
+
           <div>
             <p 
               className={styles.offer}
@@ -80,6 +80,10 @@ export const UserCard = ({
                     </li>
                   )}
                 )}
+            </ul>
+          </div>
+      </section>
+            
       <section>
         <div className={styles.canTeach}>
           <p className={styles.bid}>Может научить</p>
