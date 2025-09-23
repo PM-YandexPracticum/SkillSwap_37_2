@@ -1,0 +1,168 @@
+;   работающий вариант
+  
+  return (
+    <div className={styles.homePageWrapper}>
+      <Header />
+
+      <div className={styles.wrapper}>
+        <FilterSection
+        onGenderChange={handleGenderChange}
+        onPlaceChange={handlePlaceChange}
+        selectedGender={selectedGender}
+        selectedPlaces={selectedPlaces}
+        />
+        <GridList
+          users={users}
+          subCategories={subCategories}
+          loading={isLoading}
+          hasMore={hasMore}
+          onLoadMore={handleLoadMore}
+        />
+      </div>
+
+      <Footer />
+    </div>
+  );
+
+
+
+// src/pages/HomePage.tsx
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useDispatch } from "@store";
+
+import { getUserThunk } from "../services/user/actions";
+import { getUsersThunk } from "../services/users/actions";
+import { getUser } from "../services/user/user-slice";
+import { getCategoriesThunk } from "../services/categories/actions";
+import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
+
+import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
+import { TUser } from "@api/types";
+import { UserCard } from "../features/users/userCard/UserCard";
+import { RegisterStep2 } from "../features/auth/RegisterStep2";
+import { 
+  AuthForm, 
+  FilterSection, 
+  SkillCardDetails 
+} from "@features";
+import { 
+  CardSlider, 
+  DropdownDemo, 
+  DropdownGroupedDemo, 
+  Footer, 
+  GridList, 
+  Header, 
+  NotificationsTable, 
+  SkillForm, 
+  SkillMenu, 
+} from "@widgets";
+import { 
+  RegistrationOnBoardingOne,
+  RegistrationOnBoardingTwo, 
+  RegistrationOnBoardingThree 
+} from "../features/onboarding/registrationBoard";
+import { NotFoundPage } from "./not-found-page/NotFoundPage";
+import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
+import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
+import { Icon } from "../shared/ui/icon/Icon";
+import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
+import { SkillFilters } from '../features/filters/SkillFilters';
+import { TSkillType } from "shared/types/filters";
+import { FiltersContainer } from '../features/filters/FiltersContainer';
+
+import like from "../shared/assets/icons/like.png";
+import share from "../shared/assets/icons/share.png";
+import more from "../shared/assets/icons/more-square.png";
+
+import styles from "./HomePage.module.css";
+
+export const HomePage = () => {
+  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+  const dispatch = useDispatch();
+
+  const user = useSelector(getUser);
+  const { users, isLoading, hasMore, page } = useSelector(
+    (state: RootState) => state.users
+  );
+  const subCategories = useSelector(
+    (s: RootState) => s.categories.subcategories
+  );
+
+  const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
+  // const [selectedGender, setSelectedGender] = useState<string>("");
+  // const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
+
+  const {
+    isNotificationOpen,
+    openNotification,
+    closeNotification,
+    handleNavigateToExchange,
+  } = useExchangeNotification();
+
+  useEffect(() => {
+    dispatch(getUserThunk(API_USER_ID));
+    dispatch(getUsersThunk(1));
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
+
+const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>('all');
+const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+// Получаем категории из Redux
+const categories = useSelector((s: RootState) => s.categories.categories);
+
+// Обработчик для категорий
+const handleCategoryToggle = (categoryId: string) => {
+  setSelectedCategories(prev =>
+    prev.includes(categoryId)
+      ? prev.filter(id => id !== categoryId)
+      : [...prev, categoryId]
+  );
+};
+
+  const [selectedGender, setSelectedGender] = useState<string>('');
+  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
+ 
+  const handleGenderChange = (gender: string) => {
+    setSelectedGender(gender);
+  };
+  const handlePlaceChange = (places: number[]) => {
+    setSelectedPlaces(places);
+  };
+
+  // функция загрузки последующих данных
+  const handleLoadMore = () => {
+    if (!isLoading && hasMore) {
+      dispatch(getUsersThunk(page + 1));
+    }
+  };
+
+  return (
+
+<div className={styles.mainLayout}>
+
+
+      <main className={styles.mainWrapper}>
+
+
+      </main>
+
+      {/* <main className={styles.mainWrapper}> */}
+
+      {/* </main> */}
+
+
+        <FilterSection
+          onGenderChange={setSelectedGender}
+          onPlaceChange={setSelectedPlaces}
+          selectedGender={selectedGender}
+          selectedPlaces={selectedPlaces}
+          />
+        </FiltersContainer>
+
+
+
+
+  );
+};

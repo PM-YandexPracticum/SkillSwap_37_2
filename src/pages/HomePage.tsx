@@ -24,6 +24,16 @@ import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
 
+import { OfferPage } from "../pages/OfferPage/OfferPage";
+import { SkillFilters } from '../features/filters/SkillFilters';
+import { TSkillType } from "shared/types/filters";
+import { FiltersContainer } from '../features/filters/FiltersContainer';
+
+import like from "../shared/assets/icons/like.png";
+import share from "../shared/assets/icons/share.png";
+import more from "../shared/assets/icons/more-square.png";
+
+
 import styles from "./HomePage.module.css";
 import { OfferPage } from "./OfferPages/OfferPage";
 
@@ -56,6 +66,22 @@ export const HomePage = () => {
   const { users, isLoading, hasMore, page } = useSelector(
     (state: RootState) => state.users
   );
+
+  const subCategories = useSelector(
+    (s: RootState) => s.categories.subcategories
+  );
+
+  const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
+  // const [selectedGender, setSelectedGender] = useState<string>("");
+  // const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
+
+  const {
+    isNotificationOpen,
+    openNotification,
+    closeNotification,
+    handleNavigateToExchange,
+  } = useExchangeNotification();
+
 
   // const [subCategories, setSubCategories] = useState<TPlace[]>([]);
   const subCategories = useSelector((s: RootState) => s.categories.subcategories);
@@ -95,48 +121,26 @@ export const HomePage = () => {
       <Header />
       <OfferPage />
 
-Hey Looch, [23.09.2025 18:50]
-<div style={{display: 'flex', gap: '20px'}}>
-        {user && (
-          <UserCard
-            name={user.name}
-            from={user.from}
-            age={birthdayToFormatedAge(user.birthdate)}
-            avatar={getImageUrl(user.photo)}
-            teachSkills={user.skill}
-            learnSkills={user.need_subcat}
-            subCategories={subCategories}
-          />
-        )}
-        {user && (
-          <UserCard
-            name={user.name}
-            from={user.from}
-            age={birthdayToFormatedAge(user.birthdate)}
-            avatar={getImageUrl(user.photo)}
-            about={user.about}
-            teachSkills={user.skill}
-            learnSkills={user.need_subcat}
-            subCategories={subCategories}
-          />
-        )}
-      </div>
 
-      <CardShowcase
-        title="Похожие предложения"
-        icon={<Icon name="chevronRight" />}
-      >
-        <CardSlider users={users} subCategories={subCategories} />
-          
-      </CardShowcase>
+      <div className={styles.filterSectionWrapper}>
+        <FiltersContainer title="Фильтры">
+          <SkillFilters
+            onSkillTypeChange={setSelectedSkillType}
+            onCategoryToggle={handleCategoryToggle}
+            selectedSkillType={selectedSkillType}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            subcategories={subCategories}
+          />
+          <FilterSection
+            onGenderChange={setSelectedGender}
+            onPlaceChange={setSelectedPlaces}
+            selectedGender={selectedGender}
+            selectedPlaces={selectedPlaces}
+          />
+        </FiltersContainer>
 
-      <main className={styles.mainWrapper}>
-        <FilterSection
-          onGenderChange={handleGenderChange}
-          onPlaceChange={handlePlaceChange}
-          selectedGender={selectedGender}
-          selectedPlaces={selectedPlaces}
-        />
+
         <div className={styles.showCaseWrapper}>
           <CardShowcase
             title="Популярное"
@@ -177,66 +181,128 @@ Hey Looch, [23.09.2025 18:50]
             />
           </CardShowcase>
         </div>
-      </main>
-      
-      <main className={styles.mainWrapper}>
-        <FilterSection
-          onGenderChange={handleGenderChange}
-          onPlaceChange={handlePlaceChange}
-          selectedGender={selectedGender}
-          selectedPlaces={selectedPlaces}
-        />
-        <CardShowcase
-          title='Подходящие предложения: '
-          buttonTitle="Сначала новые"
-          icon={<Icon name="sort" />}
-          isIconFirst
-        >
-          <GridList
-            users={users}
-            subCategories={subCategories}
-            loading={isLoading}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
+
+      </div>
+
+      <div className={styles.filterSectionWrapper}>
+        <FiltersContainer title="Фильтры">
+          <SkillFilters
+            onSkillTypeChange={setSelectedSkillType}
+            onCategoryToggle={handleCategoryToggle}
+            selectedSkillType={selectedSkillType}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            subcategories={subCategories}
           />
-        </CardShowcase>
-      </main>
+          <FilterSection
+            onGenderChange={setSelectedGender}
+            onPlaceChange={setSelectedPlaces}
+            selectedGender={selectedGender}
+            selectedPlaces={selectedPlaces}
+          />
+        </FiltersContainer>
+          <CardShowcase
+            title="Подходящие предложения: "
+            buttonTitle="Сначала новые"
+            icon={<Icon name="sort" />}
+            isIconFirst
+          >
+            <GridList
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+      </div>
 
-    <div>
+      <OfferPage />
 
-    <h2>Кнопка для демонстрации success</h2>
-    <button
-      style={{
-        fontSize: '32px',
-        color: 'red',
-        height: '80px',
-        padding: '10px 20px',
-      }}
-      onClick={() => openNotification({ type: 'success' })} >
-      Показать уведомление Success
-    </button>
+      <div >
+        {/* Все карточки пользователей */}
+        <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
+          {users.map((u) => (
+            <UserCard
+              key={u.id}
+              name={u.name}
+              from={u.from}
+              age={birthdayToFormatedAge(u.birthdate)}
+              avatar={getImageUrl(u.photo)}
+              about={u.about}
+              teachSkills={u.skill}
+              learnSkills={u.need_subcat}
+              subCategories={subCategories}
+              onDetailsClick={() => setSelectedUser(u)}
+            />
+          ))}
+        </div>
 
+      {/* SkillCardDetails выбранного пользователя */}
+      {selectedUser && (
+        <SkillCardDetails
+          skill={{
+            title: selectedUser.skill || "Навык не указан",
+            subtitle: `${selectedUser.cat_text || ""} / ${
+              selectedUser.sub_text || ""
+            }`,
+            description: selectedUser.description || "Описание отсутствует",
+            mainImage: selectedUser.images?.[0] || "",
+            smallImages: selectedUser.images?.slice(1) || [],
+            icons: [like, share, more],
+            buttonText: "Предложить обмен",
+          }}
+        />
+      )}
 
-    <h2>Кнопка для демонстрации info</h2>
-    <button
-      style={{
-        fontSize: '32px',
-        color: 'red',
-        height: '80px',
-        padding: '10px 20px',
-      }}
-      onClick={() => openNotification({ type: 'info' })} >
-      Показать уведомление Info
-    </button>
+      {hasMore && !isLoading && (
+        <button
+          style={{ margin: "20px", padding: "10px 20px" }}
+          onClick={handleLoadMore}
 
-      {/* Модальное окно */}
-      <ExchangeNotification
-        isOpen={isNotificationOpen}
-        onClose={closeNotification} 
-        onNavigateToExchange={handleNavigateToExchange}
-        type="info"
-      />
+        >
+          Загрузить ещё
+        </button>
+      )}
+
+      {/* Showcase блоки */}
+      <CardShowcase title="Похожие предложения" icon={<Icon name="chevronRight" />}>
+        <CardSlider users={users} subCategories={subCategories} />
+      </CardShowcase>
     </div>
+
+
+      <h1>Демо-блоки</h1>
+
+
+
+      <h2>Блок текущего пользователя</h2>
+      <div style={{ display: "flex", gap: "20px" }}>
+        {user && (
+          <UserCard
+            name={user.name}
+            from={user.from}
+            age={birthdayToFormatedAge(user.birthdate)}
+            avatar={getImageUrl(user.photo)}
+            about={user.about}
+            teachSkills={user.skill}
+            learnSkills={user.need_subcat}
+            subCategories={subCategories}
+          />
+        )}
+      </div>
+
+
+
+      <div>
+        <h2>Кнопка для демонстрации success</h2>
+        <button
+          style={{ fontSize: "32px", color: "red", height: "80px", padding: "10px 20px" }}
+          onClick={() => openNotification({ type: "success" })}
+        >
+          Показать уведомление Success
+        </button>
+
 
 
       {/* <ExchangeNotification
@@ -345,6 +411,8 @@ Hey Looch, [23.09.2025 18:50]
       </div>
 
       <Footer />
-    </div>
-  );
+
+
+  </div>);
 };
+
