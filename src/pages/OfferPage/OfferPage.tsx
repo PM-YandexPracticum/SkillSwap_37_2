@@ -1,4 +1,4 @@
-import { RootState } from '@store';
+import { RootState, useDispatch } from '@store';
 import { useSelector } from 'react-redux';
 import { UserCard } from '../../features/users/userCard/UserCard';
 import { getUser } from '../../services/user/user-slice';
@@ -8,6 +8,9 @@ import { CardShowcase } from '../../widgets/cardShowcase/CardShowcase';
 import { CardSlider } from '@widgets';
 import styles from './OfferPage.module.css';
 import { SkillCardDetails } from '../../features/skills/Skill Card/skillCardDetails';
+import { useEffect } from 'react';
+import { getUserThunk } from '../../services/user/actions';
+import { getCategoriesThunk } from '../../services/categories/actions';
 
 const mySkill = {
     title: "Игра на барабанах",
@@ -28,20 +31,25 @@ const mySkill = {
     buttonText: "Предложить обмен",
   };
 
-// type UserCardProps = {
-// };
-
-export const OfferPage = () => {
+export const OfferPage: React.FC = () => {
   
-  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
-  const user = useSelector(getUser);
-  const { users, isLoading, hasMore, page } = useSelector(
-    (state: RootState) => state.users
-  );
+    const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+    const dispatch = useDispatch();
+  
+    const subCategories = useSelector((s: RootState) => s.categories.subcategories);
+    const user = useSelector(getUser);
+    const { users, isLoading, hasMore, page } = useSelector(
+      (state: RootState) => state.users
+    );
+  
+    useEffect(() => {
+      dispatch(getUserThunk(API_USER_ID));
+      dispatch(getCategoriesThunk());
+    }, [dispatch]);
 
   return (
     <>
-      <div>
+      <section className={styles.skillSection}>
         {user && (
                   <UserCard
                     name={user.name}
@@ -55,12 +63,15 @@ export const OfferPage = () => {
                   />
                 )}
         <SkillCardDetails skill={mySkill}/>
-      </div>
-      <CardShowcase
-        title="Похожие предложения"
-        icon={<Icon name="chevronRight" />}>
-          <CardSlider users={users} subCategories={subCategories} />
-      </CardShowcase>
+      </section>
+
+      <section>
+        <CardShowcase
+          title="Похожие предложения"
+          icon={<Icon name="chevronRight" />}>
+            <CardSlider users={users} subCategories={subCategories} />
+        </CardShowcase>
+      </section>
     </>
   )
 };

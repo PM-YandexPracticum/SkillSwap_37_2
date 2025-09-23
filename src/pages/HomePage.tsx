@@ -23,6 +23,7 @@ import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotifica
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
+import { OfferPage } from "../pages/OfferPage/OfferPage";
 
 import styles from "./HomePage.module.css";
 
@@ -92,6 +93,8 @@ export const HomePage = () => {
   return (
     <div className={styles.homePageWrapper}>
       <Header />
+      <OfferPage />
+
 
       <div style={{display: 'flex', gap: '20px'}}>
         {user && (

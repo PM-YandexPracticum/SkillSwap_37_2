@@ -36,12 +36,15 @@ import { getPlacesThunk } from "../services/places/actions";
 import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
 import { Button } from "../shared/ui/button/Button";
+import { OfferPage } from "../pages/OfferPage/OfferPage";
+
+import styles from "./App.module.css";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
   <div className="layout">
     <Header />
-    <main>
+    <main className={styles.main} style={{paddingBottom: '232px'}}>
       <Outlet />
     </main>
     <Footer />
@@ -258,7 +261,7 @@ export const App: React.FC = () => {
           <Route path="auth/register" element={<RegisterContent />} />
           <Route path="skill/new" element={<SkillFormContent />} />
           <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
-          <Route path="demo/skill-details" element={<SkillDetailsDemoContent />} />
+          <Route path="demo/skill-details" element={<OfferPage />} />
 
           {/*заглушки*/}
           <Route path="skills/:id" element={<SkillPageStub />} />
