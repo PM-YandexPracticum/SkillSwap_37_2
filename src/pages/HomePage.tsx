@@ -114,19 +114,6 @@ const handleCategoryToggle = (categoryId: string) => {
   return (
     <div className={styles.homePageWrapper}>
       <Header />
-      
-       {user && (
-          <UserCard
-            name={user.name}
-            from={user.from}
-            age={birthdayToFormatedAge(user.birthdate)}
-            avatar={getImageUrl(user.photo)}
-            about={user.about}
-            teachSkills={user.skill}
-            learnSkills={user.need_subcat}
-            subCategories={subCategories}
-          />
-        )}
 
       <div className={styles.filterSectionWrapper}>
         <FiltersContainer title="Фильтры">

@@ -35,88 +35,65 @@ export const UserCard = ({
   const { skillsCanRender, isRest, rest } = prepareSkillsToRender(learnSkills, subCategories);
 
   return about ? (
-      <article className={styles.card} style={{padding: '32px', maxHeight: '27.75em'}}>
-
-        <section className={styles.userInfo}>
-          <div className={styles.userInfoContainer}>
-            <img src={avatar} alt='фото профиля' className={styles.avatar}/>
-            <div className={styles.infoWrapper}>
-              <p className={styles.userName}>{name}</p>
-              <p className={styles.fromAge}>{`${from}, ${age}`}</p>
-            </div>
+    <article className={styles.card}
+      style={{padding: '32px', maxHeight: '27.75em'}}>
+      <section className={styles.userInfo}>
+        <div className={styles.userInfoContainer}>
+          <img src={avatar} alt='фото профиля' className={styles.avatar}/>
+          <div className={styles.infoWrapper}>
+            <p className={styles.userName}>{name}</p>
+            <p className={styles.fromAge}>{`${from}, ${age}`}</p>
           </div>
-
-          <img src={like} alt='лайк' className={styles.like}/>
-        </section>
-
-        <section>
-          <div
-            className={styles.canTeach}
-            style={{marginBottom: '1.5em'}}>
-            <p 
-              className={styles.offer}
-              style={{marginBottom: '0.875em'}}>
-              Может научить
-            </p>
-            <ul className={styles.tagWrapper}>
-              <SkillTag skill={teachSkills} />
-            </ul>
-          </div>
-
-          <div>
-            <p 
-              className={styles.offer}
-              style={{marginBottom: '0.875em'}}>
-                Хочет научиться
-            </p>
-            <ul className={styles.tagWrapper}>
-                {skillsCanRender.map((item, index) => {
-                  return (
-                    <li
-                      key={index}
-                      className={styles.tag}>
-                    <SkillTag 
-                      skill={item as TSkillName} />
-                    </li>
-                  )}
-                )}
-            </ul>
-          </div>
+        </div>
+        <img src={like} alt='лайк' className={styles.like}/>
       </section>
-            
+
+      <section className={styles.about}>
+        <p>{about}</p>
+      </section>
+
       <section>
-        <div className={styles.canTeach}>
-          <p className={styles.bid}>Может научить</p>
+        <div
+          className={styles.canTeach}
+          style={{marginBottom: '1.5em'}}>
+          <p 
+            className={styles.offer}
+            style={{marginBottom: '0.875em'}}>
+            Может научить
+          </p>
           <ul className={styles.tagWrapper}>
             <SkillTag skill={teachSkills} />
           </ul>
         </div>
         <div>
-          <p className={styles.bid}>Хочет научиться</p>
+          <p 
+            className={styles.offer}
+            style={{marginBottom: '0.875em'}}>
+              Хочет научиться
+          </p>
           <ul className={styles.tagWrapper}>
-            {skillsCanRender.map((item, index) => (
-              <li key={index} className={styles.tag}>
-                <SkillTag skill={item as TSkillName} />
-              </li>
-            ))}
+              {skillsCanRender.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    className={styles.tag}>
+                  <SkillTag 
+                    skill={item as TSkillName} />
+                  </li>
+                )}
+              )}
+
             {isRest && 
-              <li>
-                <SkillTag rest={rest} />
-              </li>
+            <li>
+              <SkillTag
+                rest={rest} />
+            </li>
             }
           </ul>
         </div>
       </section>
 
-      <Button
-        colored
-        className={styles.button}
-        onClick={onDetailsClick}
-      >
-        Подробнее
-      </Button>
-    </article>
-  ) : (
+    </article>) : (
     <article className={styles.card}>
       <section className={styles.userInfo}>
         <div className={styles.userInfoContainer}>
@@ -139,15 +116,22 @@ export const UserCard = ({
         <div>
           <p className={styles.offer}>Хочет научиться</p>
           <ul className={styles.tagWrapper}>
-            {skillsCanRender.map((item, index) => (
-              <li key={index} className={styles.tag}>
-                <SkillTag skill={item as TSkillName} />
-              </li>
-            ))}
+              {skillsCanRender.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    className={styles.tag}>
+                  <SkillTag 
+                    skill={item as TSkillName} />
+                  </li>
+                )}
+              )}
+
             {isRest && 
-              <li>
-                <SkillTag rest={rest} />
-              </li>
+            <li>
+              <SkillTag
+                rest={rest} />
+            </li>
             }
           </ul>
         </div>
