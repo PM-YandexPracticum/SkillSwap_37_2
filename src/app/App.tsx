@@ -18,13 +18,30 @@
 =========================== */
 
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Outlet, useParams } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  useParams,
+} from "react-router-dom";
 
-import { DropdownDemo, DropdownGroupedDemo, Footer, GridList, Header, SkillForm } from "@widgets";
+import {
+  DropdownDemo,
+  DropdownGroupedDemo,
+  Footer,
+  GridList,
+  Header,
+  SkillForm,
+} from "@widgets";
+
+import { ServerErrorPage } from "../pages/server-error-page/ServerErrorPage";
+import { NotFoundPage } from "../pages/not-found-page/NotFoundPage";
 
 //То, что есть
 import { HomePage } from "../pages/HomePage";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
+import { ProfilePage } from "../pages/profile/ProfilePage";
 
 //Данные/типы/стор (для каталога)
 import { RootState, useDispatch } from "@store";
@@ -50,10 +67,11 @@ const Layout: React.FC = () => (
 
 //Каталог (FilterSection + GridList)
 const CatalogContent: React.FC = () => {
-
   const users = useSelector((s: RootState) => s.users.users);
 
-  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
+  const subCategories = useSelector(
+    (s: RootState) => s.categories.subcategories
+  );
   const [selectedGender, setSelectedGender] = React.useState<string>("");
   const [selectedPlaces, setSelectedPlaces] = React.useState<number[]>([]);
 
@@ -97,7 +115,7 @@ const RegisterContent: React.FC = () => {
 
   const handleStep2Continue = (data: any) => {
     setStep2Data(data);
-  
+
     console.log("Данные регистрации:", data);
     alert("Регистрация завершена! Данные: " + JSON.stringify(data, null, 2));
   };
@@ -153,7 +171,7 @@ const SkillDetailsDemoContent: React.FC = () => {
     subtitle: "Творчество и искусство / Музыка и звук",
     description:
       "Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене...",
-    
+
     mainImage: "/db/skills-photo/drums-1.jpg",
     smallImages: [
       "/db/skills-photo/drums-2.jpg",
@@ -204,14 +222,7 @@ const RequestsPageStub: React.FC = () => (
   </section>
 );
 
-// /profile (index) и /profile/notifications
-const ProfilePageStub: React.FC = () => (
-  <section className="page page-profile">
-    <h1>Профиль</h1>
-    <p>Страница в разработке.</p>
-  </section>
-);
-
+// /profile/notifications
 const NotificationsPageStub: React.FC = () => (
   <section className="page page-notifications">
     <h1>Уведомления</h1>
@@ -219,30 +230,14 @@ const NotificationsPageStub: React.FC = () => (
   </section>
 );
 
-// /500 и 404
-const Error500PageStub: React.FC = () => (
-  <section className="page page-500" style={{ textAlign: "center" }}>
-    <h1>Внутренняя ошибка сервера</h1>
-  </section>
-);
-
-const NotFoundPageStub: React.FC = () => (
-  <section className="page page-404" style={{ textAlign: "center" }}>
-    <h1>Страница не найдена</h1>
-  </section>
-);
-
 export const App: React.FC = () => {
-
-
   const dispatch = useDispatch();
-  
+
   React.useEffect(() => {
     dispatch(getUsersThunk(1));
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
   }, [dispatch]);
-
 
   return (
     <BrowserRouter>
@@ -258,20 +253,30 @@ export const App: React.FC = () => {
           <Route path="auth/register" element={<RegisterContent />} />
           <Route path="skill/new" element={<SkillFormContent />} />
           <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
-          <Route path="demo/skill-details" element={<SkillDetailsDemoContent />} />
+          <Route
+            path="demo/skill-details"
+            element={<SkillDetailsDemoContent />}
+          />
 
           {/*заглушки*/}
           <Route path="skills/:id" element={<SkillPageStub />} />
           <Route path="favorites" element={<FavoritesPageStub />} />
           <Route path="requests" element={<RequestsPageStub />} />
+
+          {/* ПРОФИЛЬ */}
           <Route path="profile">
-            <Route index element={<ProfilePageStub />} />
-            <Route path="notifications" element={<NotificationsPageStub />} />
+            <Route index element={<ProfilePage />} />
+            {/* Все подразделы профиля ведут на 404 */}
+            <Route path="notifications" element={<NotFoundPage />} />
+            <Route path="requests" element={<NotFoundPage />} />
+            <Route path="exchanges" element={<NotFoundPage />} />
+            <Route path="favorites" element={<NotFoundPage />} />
+            <Route path="skills" element={<NotFoundPage />} />
           </Route>
 
           {/* Системные */}
-          <Route path="500" element={<Error500PageStub />} />
-          <Route path="*" element={<NotFoundPageStub />} />
+          <Route path="500" element={<ServerErrorPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

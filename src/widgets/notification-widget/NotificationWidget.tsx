@@ -7,7 +7,7 @@ import { Button } from "../../shared/ui/button/Button";
 
 interface Notification {
   id: number;
-  userName: string; // userId: number;
+  userName: string;
   action: string;
   details: string;
   time: string;
@@ -125,7 +125,7 @@ const NotificationCard: FC<{ notification: Notification; isNew: boolean }> = ({
 }) => (
   <div className={`${styles.notificationCard} ${isNew ? "" : styles.viewed}`}>
     <div className={styles.iconContainer}>
-      <Icon name="idea" size={40} />
+      <Icon name="idea" size={40} strokeWidth={1} />
     </div>
 
     <div className={styles.contentSection}>

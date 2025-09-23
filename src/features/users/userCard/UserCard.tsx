@@ -1,5 +1,3 @@
-// src/features/users/userCard/UserCard.tsx
-
 import { TSkillName } from '../../../shared/types/SkillName';
 import like from '../../../shared/assets/icons/like.png';
 import styles from './UserCard.module.css';
@@ -13,11 +11,10 @@ type UserCardProps = {
   from: string;
   age: string;
   avatar: string;
-  about?: string; // если есть, рендерит карточку с "о себе"
+  about?: string; //если есть, рендерит карточку с "о себе" 
   teachSkills: TSkillName;
   learnSkills: number[];
-  subCategories: TPlace[];
-  onDetailsClick?: () => void; // <-- добавили пропс
+  subCategories: TPlace[]
 };
 
 export const UserCard = ({
@@ -28,11 +25,16 @@ export const UserCard = ({
   about,
   teachSkills,
   learnSkills,
-  subCategories,
-  onDetailsClick
+  subCategories
 }: UserCardProps) => {
 
-  const { skillsCanRender, isRest, rest } = prepareSkillsToRender(learnSkills, subCategories);
+  // фича prepareSkillsToRender возвращает массив скилов
+  // таким образом, чтобы они уместились в строке целиком, без обрезания
+  const {
+    skillsCanRender,
+    isRest,
+    rest
+  } = prepareSkillsToRender(learnSkills, subCategories);
 
   return about ? (
       <article className={styles.card}
@@ -42,13 +44,16 @@ export const UserCard = ({
             <img src={avatar} alt='фото профиля' className={styles.avatar}/>
             <div className={styles.infoWrapper}>
               <p className={styles.userName}>{name}</p>
+              {/* Исправлено: заменены кавычки на обратные */}
               <p className={styles.fromAge}>{`${from}, ${age}`}</p>
             </div>
-
           </div>
-        </div>
-        <img src={like} alt='лайк' className={styles.like}/>
-      </section>
+          <img src={like} alt='лайк' className={styles.like}/>
+        </section>
+
+        <section className={styles.about}>
+          <p>{about}</p>
+        </section>
 
         <section>
           <div
@@ -80,41 +85,25 @@ export const UserCard = ({
                     </li>
                   )}
                 )}
-      <section>
-        <div className={styles.canTeach}>
-          <p className={styles.bid}>Может научить</p>
-          <ul className={styles.tagWrapper}>
-            <SkillTag skill={teachSkills} />
-          </ul>
-        </div>
-        <div>
-          <p className={styles.bid}>Хочет научиться</p>
-          <ul className={styles.tagWrapper}>
-            {skillsCanRender.map((item, index) => (
-              <li key={index} className={styles.tag}>
-                <SkillTag skill={item as TSkillName} />
-              </li>
-            ))}
-            {isRest && 
-              <li>
-                <SkillTag rest={rest} />
-              </li>
-            }
-          </ul>
-        </div>
-      </section>
 
-      <Button colored className={styles.button} onClick={onDetailsClick}>
-        Подробнее
-      </Button>
-    </article>
-  ) : (
+              {isRest && 
+              <li>
+                <SkillTag
+                  rest={rest} />
+              </li>
+              }
+            </ul>
+          </div>
+        </section>
+
+      </article>) : (
     <article className={styles.card}>
       <section className={styles.userInfo}>
         <div className={styles.userInfoContainer}>
           <img src={avatar} alt='фото профиля' className={styles.avatar}/>
           <div className={styles.infoWrapper}>
             <p className={styles.userName}>{name}</p>
+            {/* Исправлено: заменены кавычки на обратные */}
             <p className={styles.fromAge}>{`${from}, ${age}`}</p>
           </div>
         </div>
@@ -131,23 +120,28 @@ export const UserCard = ({
         <div>
           <p className={styles.offer}>Хочет научиться</p>
           <ul className={styles.tagWrapper}>
-            {skillsCanRender.map((item, index) => (
-              <li key={index} className={styles.tag}>
-                <SkillTag skill={item as TSkillName} />
-              </li>
-            ))}
+              {skillsCanRender.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    className={styles.tag}>
+                  <SkillTag 
+                    skill={item as TSkillName} />
+                  </li>
+                )}
+              )}
+
             {isRest && 
-              <li>
-                <SkillTag rest={rest} />
-              </li>
+            <li>
+              <SkillTag
+                rest={rest} />
+            </li>
             }
           </ul>
         </div>
       </section>
 
-      <Button colored className={styles.button} onClick={onDetailsClick}>
-        Подробнее
-      </Button>
+      <Button colored className={styles.button}>Подробнее</Button>
     </article>
-  );
+    )
 };

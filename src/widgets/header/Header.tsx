@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
 import { Button } from "../../shared/ui/button/Button";
@@ -12,6 +13,7 @@ import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
 export const Header: FC = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const user = useSelector(getUser);
+  const navigate = useNavigate();
 
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
@@ -19,6 +21,10 @@ export const Header: FC = () => {
 
   const closeNotifications = () => {
     setIsNotificationsOpen(false);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profile");
   };
 
   return (
@@ -56,7 +62,9 @@ export const Header: FC = () => {
               className={styles.notificationButton}
               onClick={toggleNotifications}
             >
-              <Icon name="notification" size="s" />
+              <div className={styles.iconWrapper}>
+                <Icon name="notification" size={20} strokeWidth={5} />
+              </div>
             </button>
             <button className={styles.likeButton}>
               <Icon name="like" size="s" />
@@ -66,7 +74,11 @@ export const Header: FC = () => {
 
         {/* Блок пользователя или кнопки входа */}
         {user ? (
-          <div className={styles.userAuthWrapper}>
+          <div
+            className={styles.userAuthWrapper}
+            onClick={handleProfileClick}
+            style={{ cursor: "pointer" }}
+          >
             <span className={styles.userName}>{user.name}</span>
             <img
               src={getImageUrl(user.photo)}

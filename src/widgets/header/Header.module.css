@@ -7,6 +7,7 @@
   gap: 32px;
   box-sizing: border-box;
   margin-bottom: 32px;
+  padding: 0 36px;
 }
 
 .navList {
@@ -38,6 +39,15 @@ li:has(img) {
 .rightSection {
   display: flex;
   align-items: center;
+}
+
+.iconWrapper {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 /* Общие стили для кнопок */

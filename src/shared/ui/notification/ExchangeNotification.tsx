@@ -50,6 +50,7 @@ export const ExchangeNotification: React.FC<ExchangeNotificationProps> = ({
             size="l"
             className={styles.icon}
             data-icon={content.icon}
+            strokeWidth={1.5}
           />
         </div>
         <div className={styles.content}>
