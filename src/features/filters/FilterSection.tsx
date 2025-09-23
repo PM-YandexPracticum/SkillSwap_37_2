@@ -1,13 +1,14 @@
 // src\features\filters\FilterSection.tsx
 
-import React, { useState } from 'react';
-import styles from './FilterSection.module.css';
-import { Icon } from '../../shared/ui/icon/Icon';
-import { RootState, useSelector } from '@store';
+import React, { useState } from "react";
+import styles from "./FilterSection.module.css";
+import { Icon } from "../../shared/ui/icon/Icon";
+import { RootState, useSelector } from "@store";
 
 interface FilterSectionProps {
   onGenderChange: (value: string) => void;
-  onPlaceChange: ( selectedPlaces: number[]) => void;
+  onPlaceChange: (selectedPlaces: number[]) => void;
+
   selectedGender: string;
   selectedPlaces: number[];
 }
@@ -16,7 +17,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
   onGenderChange,
   onPlaceChange,
   selectedGender,
-  selectedPlaces
+  selectedPlaces,
 }) => {
   // const places = useSelector(state => state.places.places);
   const places = useSelector((state: RootState) => state.places.places);
@@ -28,10 +29,12 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
   // добавляем/убираем из "списка id" "id города"
   const handlePlaceToggle = (placeId: number) => {
     const newPlaces = selectedPlaces.includes(placeId)
-      ? selectedPlaces.filter(id => id !== placeId)
+      ? selectedPlaces.filter((id) => id !== placeId)
       : [...selectedPlaces, placeId];
     onPlaceChange(newPlaces);
   };
+
+  const genderGroupId = React.useId();
 
   return (
     <div className={styles.filter}>
@@ -39,12 +42,12 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
       <div className={styles.group}>
         <h3 className={styles.title}>Пол автора</h3>
         <div className={styles.items}>
-                  <label className={styles.item}>
+          <label className={styles.item}>
             <input
               type="radio"
-              name="gender"
+              name={`gender-${genderGroupId}`}
               value=""
-              checked={selectedGender === ''}
+              checked={selectedGender === ""}
               onChange={(e) => onGenderChange(e.target.value)}
               className={styles.input}
             />
@@ -54,9 +57,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
           <label className={styles.item}>
             <input
               type="radio"
-              name="gender"
+              name={`gender-${genderGroupId}`}
               value="male"
-              checked={selectedGender === 'male'}
+              checked={selectedGender === "male"}
               onChange={(e) => onGenderChange(e.target.value)}
               className={styles.input}
             />
@@ -66,9 +69,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
           <label className={styles.item}>
             <input
               type="radio"
-              name="gender"
+              name={`gender-${genderGroupId}`}
               value="female"
-              checked={selectedGender === 'female'}
+              checked={selectedGender === "female"}
               onChange={(e) => onGenderChange(e.target.value)}
               className={styles.input}
             />
@@ -81,7 +84,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
       {/* Фильтр по городу */}
       <div className={styles.group}>
         <h3 className={styles.title}>Город</h3>
-        
+
         {/* Основные города */}
         <div className={styles.items}>
           {mainPlaces.map((place) => (
@@ -96,13 +99,16 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
               <span className={styles.text}>{place.name}</span>
             </label>
           ))}
-          
+
           {/* Переключатель с выпадающим списком */}
-          <div className={styles.toggle} onClick={() => setShowAllPlaces(!showAllPlaces)}>
+          <div
+            className={styles.toggle}
+            onClick={() => setShowAllPlaces(!showAllPlaces)}
+          >
             <span className={styles.text}>Все города</span>
-            <Icon 
-              name={showAllPlaces ? "chevronUp" : "chevronDown"} 
-              size="s" 
+            <Icon
+              name={showAllPlaces ? "chevronUp" : "chevronDown"}
+              size="s"
               className={styles.icon}
             />
           </div>
