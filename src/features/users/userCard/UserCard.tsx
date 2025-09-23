@@ -37,8 +37,8 @@ export const UserCard = ({
   } = prepareSkillsToRender(learnSkills, subCategories);
 
   return about ? (
-      <article className={styles.card} style={{padding: '32px'}}>
-
+      <article className={styles.card}
+        style={{padding: '32px', maxHeight: '27.75em'}}>
         <section className={styles.userInfo}>
           <div className={styles.userInfoContainer}>
             <img src={avatar} alt='фото профиля' className={styles.avatar}/>
@@ -55,14 +55,24 @@ export const UserCard = ({
         </section>
 
         <section>
-          <div className={styles.canTeach}>
-            <p className={styles.bid}>Может научить</p>
+          <div
+            className={styles.canTeach}
+            style={{marginBottom: '1.5em'}}>
+            <p 
+              className={styles.offer}
+              style={{marginBottom: '0.875em'}}>
+              Может научить
+            </p>
             <ul className={styles.tagWrapper}>
               <SkillTag skill={teachSkills} />
             </ul>
           </div>
           <div>
-            <p className={styles.bid}>Хочет научиться</p>
+            <p 
+              className={styles.offer}
+              style={{marginBottom: '0.875em'}}>
+                Хочет научиться
+            </p>
             <ul className={styles.tagWrapper}>
                 {skillsCanRender.map((item, index) => {
                   return (
@@ -100,13 +110,13 @@ export const UserCard = ({
 
       <section>
         <div className={styles.canTeach}>
-          <p className={styles.bid}>Может научить</p>
+          <p className={styles.offer}>Может научить</p>
           <ul className={styles.tagWrapper}>
             <SkillTag skill={teachSkills} />
           </ul>
         </div>
         <div>
-          <p className={styles.bid}>Хочет научиться</p>
+          <p className={styles.offer}>Хочет научиться</p>
           <ul className={styles.tagWrapper}>
               {skillsCanRender.map((item, index) => {
                 return (
