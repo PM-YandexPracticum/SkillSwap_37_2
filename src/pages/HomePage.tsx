@@ -39,6 +39,7 @@ import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
+import { OfferPage } from "../pages/OfferPage/OfferPage";
 import { SkillFilters } from '../features/filters/SkillFilters';
 import { TSkillType } from "shared/types/filters";
 import { FiltersContainer } from '../features/filters/FiltersContainer';
@@ -112,6 +113,8 @@ const handleCategoryToggle = (categoryId: string) => {
 
   return (<div className={styles.homePageWrapper}>
       <Header />
+      <OfferPage />
+
 
 
       <div className={styles.mainLayout}>
