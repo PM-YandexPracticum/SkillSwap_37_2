@@ -44,7 +44,7 @@ import styles from "./App.module.css";
 const Layout: React.FC = () => (
   <div className="layout">
     <Header />
-    <main className={styles.main} style={{paddingBottom: '232px'}}>
+    <main className={styles.main}>
       <Outlet />
     </main>
     <Footer />

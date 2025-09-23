@@ -111,13 +111,11 @@ const handleCategoryToggle = (categoryId: string) => {
     }
   };
 
-  return (<div className={styles.homePageWrapper}>
+  return (
+    <div className={styles.homePageWrapper}>
       <Header />
-      <OfferPage />
 
-
-
-      <div className={styles.mainLayout}>
+      <div className={styles.filterSectionWrapper}>
         <FiltersContainer title="Фильтры">
           <SkillFilters
             onSkillTypeChange={setSelectedSkillType}
@@ -127,7 +125,6 @@ const handleCategoryToggle = (categoryId: string) => {
             categories={categories}
             subcategories={subCategories}
           />
-
           <FilterSection
             onGenderChange={setSelectedGender}
             onPlaceChange={setSelectedPlaces}
@@ -147,83 +144,82 @@ const handleCategoryToggle = (categoryId: string) => {
               onLoadMore={handleLoadMore}
             />
           </CardShowcase>
+          <CardShowcase title="Новое" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+          <CardShowcase title="Рекомендуем">
+            <GridList
+              rows={1}
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
         </div>
       </div>
 
-
-
-      <CardShowcase
-        title="Подходящие предложения: "
-        buttonTitle="Сначала новые"
-        icon={<Icon name="sort" />}
-        isIconFirst
-      >
-        <GridList
-          users={users}
-          subCategories={subCategories}
-          loading={isLoading}
-          hasMore={hasMore}
-          onLoadMore={handleLoadMore}
-        />
-      </CardShowcase>
-
-
-      <div className={styles.showCaseWrapper}>
-        <CardShowcase title="Популярное" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
-          <GridList
-            rows={1}
-            users={users}
-            subCategories={subCategories}
-            loading={isLoading}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
+      <div className={styles.filterSectionWrapper}>
+        <FiltersContainer title="Фильтры">
+          <SkillFilters
+            onSkillTypeChange={setSelectedSkillType}
+            onCategoryToggle={handleCategoryToggle}
+            selectedSkillType={selectedSkillType}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            subcategories={subCategories}
           />
-        </CardShowcase>
-        <CardShowcase title="Новое" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
-          <GridList
-            rows={1}
-            users={users}
-            subCategories={subCategories}
-            loading={isLoading}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
+          <FilterSection
+            onGenderChange={setSelectedGender}
+            onPlaceChange={setSelectedPlaces}
+            selectedGender={selectedGender}
+            selectedPlaces={selectedPlaces}
           />
-        </CardShowcase>
-        <CardShowcase title="Рекомендуем">
-          <GridList
-            rows={1}
-            users={users}
-            subCategories={subCategories}
-            loading={isLoading}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
-          />
-        </CardShowcase>
+        </FiltersContainer>
+          <CardShowcase
+            title="Подходящие предложения: "
+            buttonTitle="Сначала новые"
+            icon={<Icon name="sort" />}
+            isIconFirst
+          >
+            <GridList
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
       </div>
 
+      <OfferPage />
 
-    <div >
-
-
-
-
-      {/* Все карточки пользователей */}
-      <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
-        {users.map((u) => (
-          <UserCard
-            key={u.id}
-            name={u.name}
-            from={u.from}
-            age={birthdayToFormatedAge(u.birthdate)}
-            avatar={getImageUrl(u.photo)}
-            about={u.about}
-            teachSkills={u.skill}
-            learnSkills={u.need_subcat}
-            subCategories={subCategories}
-            onDetailsClick={() => setSelectedUser(u)}
-          />
-        ))}
-      </div>
+      <div >
+        {/* Все карточки пользователей */}
+        <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
+          {users.map((u) => (
+            <UserCard
+              key={u.id}
+              name={u.name}
+              from={u.from}
+              age={birthdayToFormatedAge(u.birthdate)}
+              avatar={getImageUrl(u.photo)}
+              about={u.about}
+              teachSkills={u.skill}
+              learnSkills={u.need_subcat}
+              subCategories={subCategories}
+              onDetailsClick={() => setSelectedUser(u)}
+            />
+          ))}
+        </div>
 
       {/* SkillCardDetails выбранного пользователя */}
       {selectedUser && (
@@ -359,8 +355,6 @@ const handleCategoryToggle = (categoryId: string) => {
       </div>
 
       <Footer />
-
-
 
   </div>);
 };
