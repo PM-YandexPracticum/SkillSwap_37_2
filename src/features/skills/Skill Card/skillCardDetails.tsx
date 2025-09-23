@@ -19,44 +19,19 @@ type SkillCardDetailsProps = {
   skill: Skill;
 };
 
-export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
-  skill,
-}) => {
-  const {
-    title,
-    subtitle,
-    description,
-    mainImage,
-    smallImages = [],
-    icons = [],
-    buttonText = "Предложить обмен",
-    onExchange,
-  } = skill;
+export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({ skill }) => {
+  const { title, subtitle, description, mainImage, smallImages = [], icons = [], buttonText = "Предложить обмен", onExchange } = skill;
 
-  // Используем хук для управления модальными окнами
-  const {
-    isNotificationOpen,
-    openNotification,
-    closeNotification,
-    handleNavigateToExchange,
-  } = useExchangeNotification();
+  const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
 
   const handleExchangeClick = () => {
-    // 1. Показываем модалку "Предложение создано"
     openNotification({
       type: "info",
       title: "Ваше предложение создано",
       message: "Теперь вы можете предложить обмен",
       buttonText: "Готово",
     });
-    // 2. Вызываем оригинальный обработчик если есть
     onExchange?.();
-  };
-
-  const handleProposeExchange = () => {
-    // Логика отправки предложения обмена
-    console.log("Отправка предложения обмена...");
-    closeNotification();
   };
 
   return (
@@ -76,25 +51,19 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
             <div className="skill-card__icons">
               {icons.map((icon, i) => (
                 <button key={i} className="skill-card__icon-btn">
-                  <img
-                    src={icon}
-                    alt={`icon-${i}`}
-                    className="skill-card__icon-img"
-                  />
+                  <img src={icon} alt={`icon-${i}`} className="skill-card__icon-img" />
                 </button>
               ))}
             </div>
           )}
-
           <Gallery mainImage={mainImage} smallImages={smallImages} />
         </div>
       </div>
 
-      {/* Модальное окно уведомления */}
       <ExchangeNotification
         isOpen={isNotificationOpen}
         onClose={closeNotification}
-        onNavigateToExchange={handleProposeExchange}
+        onNavigateToExchange={() => console.log("Предложение обмена")}
         type="info"
       />
     </>
