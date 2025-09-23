@@ -39,6 +39,9 @@ import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
+import { SkillFilters } from '../features/filters/SkillFilters';
+import { TSkillType } from "shared/types/filters";
+import { FiltersContainer } from '../features/filters/FiltersContainer';
 
 import like from "../shared/assets/icons/like.png";
 import share from "../shared/assets/icons/share.png";
@@ -75,6 +78,32 @@ export const HomePage = () => {
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
+const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>('all');
+const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+// Получаем категории из Redux
+const categories = useSelector((s: RootState) => s.categories.categories);
+
+// Обработчик для категорий
+const handleCategoryToggle = (categoryId: string) => {
+  setSelectedCategories(prev =>
+    prev.includes(categoryId)
+      ? prev.filter(id => id !== categoryId)
+      : [...prev, categoryId]
+  );
+};
+
+  const [selectedGender, setSelectedGender] = useState<string>('');
+  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
+ 
+  const handleGenderChange = (gender: string) => {
+    setSelectedGender(gender);
+  };
+  const handlePlaceChange = (places: number[]) => {
+    setSelectedPlaces(places);
+  };
+
+  // функция загрузки последующих данных
   const handleLoadMore = () => {
     if (!isLoading && hasMore) {
       dispatch(getUsersThunk(page + 1));
@@ -150,6 +179,22 @@ export const HomePage = () => {
         <CardSlider users={users} subCategories={subCategories} />
       </CardShowcase>
 
+<div className={styles.mainLayout}>
+  <FiltersContainer title="Фильтры">
+    <SkillFilters
+      onSkillTypeChange={setSelectedSkillType}
+      onCategoryToggle={handleCategoryToggle}
+      selectedSkillType={selectedSkillType}
+      selectedCategories={selectedCategories}
+      categories={categories}
+      subcategories={subCategories}
+    />
+        <FilterSection
+        onGenderChange={handleGenderChange}
+        onPlaceChange={handlePlaceChange}
+        selectedGender={selectedGender}
+        selectedPlaces={selectedPlaces}
+          
       <main className={styles.mainWrapper}>
         <FilterSection
           onGenderChange={setSelectedGender}
@@ -198,6 +243,8 @@ export const HomePage = () => {
           selectedGender={selectedGender}
           selectedPlaces={selectedPlaces}
         />
+      </FiltersContainer>
+
         <CardShowcase
           title="Подходящие предложения: "
           buttonTitle="Сначала новые"

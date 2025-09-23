@@ -1,0 +1,1 @@
+export type TSkillType = 'all' | 'want-to-learn' | 'can-teach';
