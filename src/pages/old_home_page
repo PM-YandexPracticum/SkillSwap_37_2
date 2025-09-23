@@ -1,3 +1,31 @@
+;   работающий вариант
+  
+  return (
+    <div className={styles.homePageWrapper}>
+      <Header />
+
+      <div className={styles.wrapper}>
+        <FilterSection
+        onGenderChange={handleGenderChange}
+        onPlaceChange={handlePlaceChange}
+        selectedGender={selectedGender}
+        selectedPlaces={selectedPlaces}
+        />
+        <GridList
+          users={users}
+          subCategories={subCategories}
+          loading={isLoading}
+          hasMore={hasMore}
+          onLoadMore={handleLoadMore}
+        />
+      </div>
+
+      <Footer />
+    </div>
+  );
+
+
+
 // src/pages/HomePage.tsx
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
