@@ -60,10 +60,14 @@ export const HomePage = () => {
   const subCategories = useSelector(
     (s: RootState) => s.categories.subcategories
   );
+  const categories = useSelector((s: RootState) => s.categories.categories);
 
+  // состояния
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
-  const [selectedGender, setSelectedGender] = useState<string>("");
+  const [selectedGender, setSelectedGender] = useState<string>('');
   const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
+  const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>('all');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const {
     isNotificationOpen,
@@ -72,38 +76,25 @@ export const HomePage = () => {
     handleNavigateToExchange,
   } = useExchangeNotification();
 
+  // эффекты
   useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
     dispatch(getUsersThunk(1));
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
-const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>('all');
-const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
-// Получаем категории из Redux
-const categories = useSelector((s: RootState) => s.categories.categories);
-
-// Обработчик для категорий
-const handleCategoryToggle = (categoryId: string) => {
-  setSelectedCategories(prev =>
-    prev.includes(categoryId)
-      ? prev.filter(id => id !== categoryId)
-      : [...prev, categoryId]
-  );
-};
-
-  const [selectedGender, setSelectedGender] = useState<string>('');
-  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
- 
-  const handleGenderChange = (gender: string) => {
-    setSelectedGender(gender);
-  };
-  const handlePlaceChange = (places: number[]) => {
-    setSelectedPlaces(places);
+  // обработчики
+  const handleCategoryToggle = (categoryId: string) => {
+    setSelectedCategories(prev =>
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
   };
 
-  // функция загрузки последующих данных
+  const handleGenderChange = (gender: string) => setSelectedGender(gender);
+  const handlePlaceChange = (places: number[]) => setSelectedPlaces(places);
+
   const handleLoadMore = () => {
     if (!isLoading && hasMore) {
       dispatch(getUsersThunk(page + 1));
@@ -132,7 +123,7 @@ const handleCategoryToggle = (categoryId: string) => {
 
       {/* Все карточки пользователей */}
       <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
-        {users.map((u) => (
+        {users.map(u => (
           <UserCard
             key={u.id}
             name={u.name}
@@ -153,9 +144,7 @@ const handleCategoryToggle = (categoryId: string) => {
         <SkillCardDetails
           skill={{
             title: selectedUser.skill || "Навык не указан",
-            subtitle: `${selectedUser.cat_text || ""} / ${
-              selectedUser.sub_text || ""
-            }`,
+            subtitle: `${selectedUser.cat_text || ""} / ${selectedUser.sub_text || ""}`,
             description: selectedUser.description || "Описание отсутствует",
             mainImage: selectedUser.images?.[0] || "",
             smallImages: selectedUser.images?.slice(1) || [],
@@ -179,30 +168,27 @@ const handleCategoryToggle = (categoryId: string) => {
         <CardSlider users={users} subCategories={subCategories} />
       </CardShowcase>
 
-<div className={styles.mainLayout}>
-  <FiltersContainer title="Фильтры">
-    <SkillFilters
-      onSkillTypeChange={setSelectedSkillType}
-      onCategoryToggle={handleCategoryToggle}
-      selectedSkillType={selectedSkillType}
-      selectedCategories={selectedCategories}
-      categories={categories}
-      subcategories={subCategories}
-    />
-        <FilterSection
-        onGenderChange={handleGenderChange}
-        onPlaceChange={handlePlaceChange}
-        selectedGender={selectedGender}
-        selectedPlaces={selectedPlaces}
-          
-      <main className={styles.mainWrapper}>
-        <FilterSection
-          onGenderChange={setSelectedGender}
-          onPlaceChange={setSelectedPlaces}
-          selectedGender={selectedGender}
-          selectedPlaces={selectedPlaces}
-        />
-        <div className={styles.showCaseWrapper}>
+      {/* Основная секция с фильтрами */}
+      <div className={styles.mainLayout}>
+        <FiltersContainer title="Фильтры">
+          <SkillFilters
+            onSkillTypeChange={setSelectedSkillType}
+            onCategoryToggle={handleCategoryToggle}
+            selectedSkillType={selectedSkillType}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            subcategories={subCategories}
+          />
+
+          <FilterSection
+            onGenderChange={handleGenderChange}
+            onPlaceChange={handlePlaceChange}
+            selectedGender={selectedGender}
+            selectedPlaces={selectedPlaces}
+          />
+        </FiltersContainer>
+
+        <main className={styles.mainWrapper}>
           <CardShowcase title="Популярное" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
             <GridList
               rows={1}
@@ -213,6 +199,7 @@ const handleCategoryToggle = (categoryId: string) => {
               onLoadMore={handleLoadMore}
             />
           </CardShowcase>
+
           <CardShowcase title="Новое" buttonTitle="Смотреть все" icon={<Icon name="chevronRight" />}>
             <GridList
               rows={1}
@@ -223,6 +210,7 @@ const handleCategoryToggle = (categoryId: string) => {
               onLoadMore={handleLoadMore}
             />
           </CardShowcase>
+
           <CardShowcase title="Рекомендуем">
             <GridList
               rows={1}
@@ -233,35 +221,25 @@ const handleCategoryToggle = (categoryId: string) => {
               onLoadMore={handleLoadMore}
             />
           </CardShowcase>
-        </div>
-      </main>
 
-      <main className={styles.mainWrapper}>
-        <FilterSection
-          onGenderChange={setSelectedGender}
-          onPlaceChange={setSelectedPlaces}
-          selectedGender={selectedGender}
-          selectedPlaces={selectedPlaces}
-        />
-      </FiltersContainer>
+          <CardShowcase
+            title="Подходящие предложения: "
+            buttonTitle="Сначала новые"
+            icon={<Icon name="sort" />}
+            isIconFirst
+          >
+            <GridList
+              users={users}
+              subCategories={subCategories}
+              loading={isLoading}
+              hasMore={hasMore}
+              onLoadMore={handleLoadMore}
+            />
+          </CardShowcase>
+        </main>
+      </div>
 
-        <CardShowcase
-          title="Подходящие предложения: "
-          buttonTitle="Сначала новые"
-          icon={<Icon name="sort" />}
-          isIconFirst
-        >
-          <GridList
-            users={users}
-            subCategories={subCategories}
-            loading={isLoading}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
-          />
-        </CardShowcase>
-      </main>
-
-      {/* Демо-блоки */}
+      {/* Demo блоки */}
       <div>
         <h2>Кнопка для демонстрации success</h2>
         <button
