@@ -46,6 +46,7 @@ import { FiltersContainer } from "../features/filters/FiltersContainer";
 import like from "../shared/assets/icons/like.png";
 import share from "../shared/assets/icons/share.png";
 import more from "../shared/assets/icons/more-square.png";
+import { ActiveFiltersBar } from "../features/filters/ActiveFiltersBar";
 
 import styles from "./HomePage.module.css";
 
@@ -134,12 +135,28 @@ export const HomePage = () => {
     }
   };
 
+  const handleResetAll = () => {
+  setSelectedSkillType("all");
+  setSelectedCategories([]);
+  setSelectedGender("");
+  setSelectedPlaces([]);
+  };
+
+  const hasActiveFilters =
+    selectedSkillType !== "all" ||
+    selectedCategories.length > 0 ||
+    selectedGender !== "" ||
+    selectedPlaces.length > 0;
+
   return (
     <div className={styles.homePageWrapper}>
       <Header />
 
       <div className={styles.filterSectionWrapper}>
-        <FiltersContainer title="Фильтры">
+        <FiltersContainer
+          title="Фильтры"
+          onReset={hasActiveFilters ? handleResetAll : undefined}
+        >
           <SkillFilters
             onSkillTypeChange={setSelectedSkillType}
             onCategoryToggle={handleCategoryToggle}
@@ -157,6 +174,18 @@ export const HomePage = () => {
         </FiltersContainer>
 
         <div className={styles.showCaseWrapper}>
+          <ActiveFiltersBar
+            selectedSkillType={selectedSkillType}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            onSkillTypeChange={setSelectedSkillType}
+            onCategoryToggle={handleCategoryToggle}
+            selectedGender={selectedGender}
+            onChangeGender={setSelectedGender}
+            selectedPlaces={selectedPlaces}
+            onChangePlaces={setSelectedPlaces}
+          />
+
           <CardShowcase
             title="Популярное"
             buttonTitle="Смотреть все"
