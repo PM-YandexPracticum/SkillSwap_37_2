@@ -3,7 +3,6 @@ import styles from "./AuthForm.module.css";
 import clsx from "clsx";
 import { Button } from "../../shared/ui/button/Button";
 import { Input } from "../../shared/ui/input/Input";
-import { PasswordInput } from "../../shared/ui/input/password-input/PasswordInput";
 import { SocialButton } from "../../shared/ui/social-button/SocialButton";
 
 export const AuthForm: FC = () => {
@@ -12,7 +11,9 @@ export const AuthForm: FC = () => {
   const [passwordStatus, setPasswordStatus] = useState<
     "hint" | "error" | "success"
   >("hint");
-  const [emailStatus, setEmailStatus] = useState<"error" | "default">("default");
+  const [emailStatus, setEmailStatus] = useState<"error" | "default">(
+    "default"
+  );
   const [emailTouched, setEmailTouched] = useState(false);
 
   // временно
@@ -104,16 +105,22 @@ export const AuthForm: FC = () => {
             id="email"
           />
 
-          <PasswordInput
+          {/* Input с функционалом пароля */}
+          <Input
+            type="password"
             value={password}
             onChange={handlePasswordChange}
             placeholder="Придумайте надёжный пароль"
             status={passwordStatus}
-            message={passwordMessage}
+            errorMessage={passwordMessage}
             label="Пароль"
+            showPasswordToggle={true}
+            id="password"
           />
         </form>
-        <Button colored onClick={() => {}}>Далее</Button>
+        <Button colored onClick={() => {}}>
+          Далее
+        </Button>
       </div>
     </div>
   );

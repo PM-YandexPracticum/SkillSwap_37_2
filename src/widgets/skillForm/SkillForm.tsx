@@ -9,10 +9,12 @@ import {
   getSkillsSubCategoriesApi,
 } from "../../api/Api";
 import { TCategory, TSubcategory } from "../../api/types";
+import { Textarea } from "../../shared/ui/textarea/Textarea";
 
 export const SkillForm = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [categories, setCategories] = useState<TCategory[]>([]);
   const [subcategories, setSubcategories] = useState<TSubcategory[]>([]);
   const [filteredSubcategories, setFilteredSubcategories] = useState<
@@ -63,6 +65,10 @@ export const SkillForm = () => {
     }
   };
 
+  const handleDescriptionChange = (value: string) => {
+    setDescription(value);
+  };
+
   // Преобразование категорий в формат для Dropdown
   const categoryOptions = categories.map((category) => ({
     value: category.id.toString(),
@@ -100,13 +106,15 @@ export const SkillForm = () => {
             placeholder="Выберите подкатегорию навыка"
             id="3"
           />
-          <label className={styles.label}>
-            {"Описание"}
-            <textarea
-              placeholder="Коротко опишите, чему можете научить"
-              className={styles.textarea}
-            ></textarea>
-          </label>
+          <Textarea
+            label="Описание"
+            value={description}
+            onChange={handleDescriptionChange}
+            placeholder="Коротко опишите, чему можете научить"
+            rows={4}
+            showEditIcon={false} // Без иконки редактирования в форме навыка
+            id="description"
+          />
           <DragDrop />
         </fieldset>
         <div className={styles.buttonGroup}>

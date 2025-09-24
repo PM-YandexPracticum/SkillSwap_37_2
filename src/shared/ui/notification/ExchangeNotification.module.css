@@ -24,7 +24,6 @@
 
 .icon {
   background-color: white;
-  stroke-width: 0.5px;
 }
 
 .textContent {
@@ -32,7 +31,7 @@
 }
 
 .title {
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
   font-size: 24px;
   font-weight: 500;
   color: #253017;
@@ -40,7 +39,7 @@
 }
 
 .messageText {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   color: #253017;
   line-height: 1.5;
