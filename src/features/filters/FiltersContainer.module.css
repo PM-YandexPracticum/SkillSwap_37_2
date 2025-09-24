@@ -22,3 +22,23 @@
   flex-direction: column;
   gap: 0;
 }
+
+.filtersHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.resetButton {
+  display: flex;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  color: #508826; 
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.resetButton:hover { opacity: .85; }
