@@ -1,6 +1,8 @@
 import React from "react";
 import "./skillCardDetails.css";
 import { Gallery } from "../../../shared/ui/skillCardDetailsUI/skillCardDetailsUI";
+import { useExchangeNotification } from "../../../shared/ui/notification/useExchangeNotification";
+import { ExchangeNotification } from "../../../shared/ui/notification/ExchangeNotification";
 
 type Skill = {
   title: string;
@@ -18,41 +20,52 @@ type SkillCardDetailsProps = {
 };
 
 export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({ skill }) => {
-  const {
-    title,
-    subtitle,
-    description,
-    mainImage,
-    smallImages = [],
-    icons = [],
-    buttonText = "Предложить обмен",
-    onExchange,
-  } = skill;
+  const { title, subtitle, description, mainImage, smallImages = [], icons = [], buttonText = "Предложить обмен", onExchange } = skill;
+
+  const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
+
+  const handleExchangeClick = () => {
+    openNotification({
+      type: "info",
+      title: "Ваше предложение создано",
+      message: "Теперь вы можете предложить обмен",
+      buttonText: "Готово",
+    });
+    onExchange?.();
+  };
 
   return (
-    <div className="skill-card">
-      <div className="skill-card__info">
-        <h2 className="skill-card__title">{title}</h2>
-        <h3 className="skill-card__subtitle">{subtitle}</h3>
-        <p className="skill-card__description">{description}</p>
-        <button className="skill-card__button" onClick={onExchange}>
-          {buttonText}
-        </button>
+    <>
+      <div className="skill-card">
+        <div className="skill-card__info">
+          <h2 className="skill-card__title">{title}</h2>
+          <h3 className="skill-card__subtitle">{subtitle}</h3>
+          <p className="skill-card__description">{description}</p>
+          <button className="skill-card__button" onClick={handleExchangeClick}>
+            {buttonText}
+          </button>
+        </div>
+
+        <div className="skill-card__right">
+          {icons.length > 0 && (
+            <div className="skill-card__icons">
+              {icons.map((icon, i) => (
+                <button key={i} className="skill-card__icon-btn">
+                  <img src={icon} alt={`icon-${i}`} className="skill-card__icon-img" />
+                </button>
+              ))}
+            </div>
+          )}
+          <Gallery mainImage={mainImage} smallImages={smallImages} />
+        </div>
       </div>
 
-      <div className="skill-card__right">
-        {icons.length > 0 && (
-          <div className="skill-card__icons">
-            {icons.map((icon, i) => (
-              <button key={i} className="skill-card__icon-btn">
-                <img src={icon} alt={`icon-${i}`} className="skill-card__icon-img" />
-              </button>
-            ))}
-          </div>
-        )}
-
-        <Gallery mainImage={mainImage} smallImages={smallImages} />
-      </div>
-    </div>
+      <ExchangeNotification
+        isOpen={isNotificationOpen}
+        onClose={closeNotification}
+        onNavigateToExchange={() => console.log("Предложение обмена")}
+        type="info"
+      />
+    </>
   );
 };

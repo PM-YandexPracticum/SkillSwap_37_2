@@ -6,7 +6,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 32px
+  gap: 32px;
 }
 
 .inputGroup {
@@ -17,30 +17,5 @@
 
 .buttonGroup {
   display: flex;
-  gap: 20px
+  gap: 20px;
 }
-
-.label {
-  font-size: 16px;
-  color: #253017;
-  font-weight: 400;
-}
-
-.textarea {
-  width: 100%;
-  padding: 12px 20px 12px 12px;
-  border: 1px solid #69735d;
-  border-radius: 12px;
-  font-size: 16px;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-  resize: none;
-  min-height: 96px;
-}
-
-.textarea:focus {
-  outline: none;
-  border-color: #253017;
-  padding-right: 40px;
-}
-

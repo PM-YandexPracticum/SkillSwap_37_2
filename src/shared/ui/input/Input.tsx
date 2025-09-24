@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Input.module.css";
 import clsx from "clsx";
 import { FormMessage } from "../form-message/FormMessage";
+import { Icon } from "../icon/Icon";
 
 interface InputProps {
   label?: string;
@@ -15,7 +16,10 @@ interface InputProps {
   value?: string;
   onChange?: (value: string) => void;
   onBlur?: () => void;
-  required?: boolean; // Добавляем поле
+  required?: boolean;
+  showPasswordToggle?: boolean;
+  showEditIcon?: boolean;
+  disabled?: boolean;
 }
 
 export const Input = ({
@@ -31,9 +35,19 @@ export const Input = ({
   onChange,
   onBlur,
   required = false,
+  showPasswordToggle = false,
+  showEditIcon = false,
+  disabled = false,
   ...otherProps
 }: InputProps) => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const actualType = type === "password" && isPasswordVisible ? "text" : type;
   const isError = status === "error";
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
   return (
     <div className={styles.wrapper}>
       {label && (
@@ -52,19 +66,44 @@ export const Input = ({
             styles.input,
             {
               [styles.error]: isError,
-              [styles.withicon]: icon,
+              [styles.withIcon]: icon,
+              [styles.withRightIcon]: showPasswordToggle || showEditIcon,
+              [styles.disabled]: disabled,
             },
             className
           )}
           placeholder={placeholder}
           id={id}
-          type={type}
+          type={actualType}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           onBlur={onBlur}
           required={required}
+          disabled={disabled}
           {...otherProps}
         />
+
+        {/* Кнопка переключения видимости пароля */}
+        {showPasswordToggle && type === "password" && (
+          <button
+            type="button"
+            className={styles.eyeButton}
+            onClick={togglePasswordVisibility}
+            aria-label={isPasswordVisible ? "Скрыть пароль" : "Показать пароль"}
+          >
+            <Icon
+              name={isPasswordVisible ? "eyeSlash" : "eye"}
+              size="s"
+              className={styles.eyeIcon}
+            />
+          </button>
+        )}
+        {/* Иконка редактирования (статическая) */}
+        {showEditIcon && (
+          <div className={styles.editIconContainer}>
+            <Icon name="edit" size="s" className={styles.editIcon} />
+          </div>
+        )}
       </div>
       <FormMessage
         message={errorMessage}

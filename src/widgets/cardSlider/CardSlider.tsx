@@ -50,11 +50,26 @@ export const CardSlider = ({ users, subCategories }: CardSliderProps) => {
 
       {users.length > itemsPerPage && (
         <>
-            <button onClick={handlePrev} disabled={page === 0} className={clsx(styles.chevronLeft, styles.chevron)}>
-              <Icon name='chevronRight' size={16} className={styles.iconChevronLeft}/>
+            <button 
+              onClick={handlePrev}
+              disabled={page === 0}
+              className={clsx(styles.chevronLeft, styles.chevron)}
+            >
+              <Icon
+                name='chevronRight'
+                size={16}
+                className={styles.iconChevronLeft}
+              />
             </button>
-            <button onClick={handleNext} disabled={page === totalPages - 1} className={clsx(styles.chevronRight, styles.chevron)}>
-              <Icon name="chevronRight" size={16} />
+            <button 
+              onClick={handleNext}
+              disabled={page === totalPages - 1}
+              className={clsx(styles.chevronRight, styles.chevron)}
+            >
+              <Icon
+                name="chevronRight"
+                size={16}
+              />
             </button>
         </>
       )}

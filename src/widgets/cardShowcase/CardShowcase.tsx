@@ -1,47 +1,80 @@
-import { ReactElement, ReactNode } from "react";
-import styles from "./Button.module.css";
-import clsx from "clsx";
+import React, { ReactElement } from "react";
+import styles from "./CardShowcase.module.css";
+
+type TTitle = 
+  'Подходящие предложения: '
+  | 'Популярное'
+  | 'Новое'
+  | 'Точное совпадение'
+  | 'Новые идеи'
+  | 'Рекомендуем'
+  | 'Похожие предложения'
 
 type CardShowcaseProps = {
-  children: ReactNode;
-  className?: string;
-  onClick?: () => void;
-  title: string;
-  actionName?: string
-  icon?: ReactElement | null;
+  children: ReactElement;
+  title: TTitle;
+  buttonTitle?: string
+  icon?: ReactElement;
+  isIconFirst?: boolean; //если указан атрибут, то иконка слева от текста
 };
 
 export const CardShowcase = ({
   children,
-  className,
-  onClick,
   title,
-  actionName = '',
-  icon
-  // type = "button", 
+  buttonTitle = '',
+  icon,
+  isIconFirst
 }: CardShowcaseProps) => {
 
+   const showHideRowsHandle = () => {
+    if (title.startsWith('Подходящие предложения')) {
+      console.log('Сортировка...');
+    }
+    if (title.startsWith('Популярное')) {
+      console.log('Популярное...');
+    }
+    if (title.startsWith('Новое')) {
+      console.log('Новое...');
+    }
+    if (title.startsWith('Точное совпадение')) {
+      console.log('Точное совпадение...');
+    }
+    if (title.startsWith('Новые идеи')) {
+      console.log('Новые идеи...');
+    }
+  };
+
   return (
-    <>
-      <div>
-        <h2 className={styles.title}>
-          {title}
-        </h2>
-        {actionName && (
-          <button onClick={onClick}>
-            <span>
-              {icon}
-            </span>
-            <span>
-              {actionName}
-            </span>
-          </button>)}
+    <div className={styles.cardShowcase}>
+      <div className={styles.header}>
+        <div>
+          <h2 className={styles.title}>
+            {title}
+          </h2>
+        </div>
+        {buttonTitle && icon && !isIconFirst && (
+              <button
+                onClick={showHideRowsHandle} 
+                className={styles.button}>
+                <span>{buttonTitle}</span>
+                <span>{icon}</span>
+              </button>
+        )}
+        {buttonTitle && icon && isIconFirst && (
+              <button
+                onClick={showHideRowsHandle} 
+                className={styles.button}>
+                <span>{icon}</span>
+                <span>{buttonTitle}</span>
+              </button>
+        )}
       </div>
-      <div
-        className={clsx(styles.cardShowcase, className)}
-      >
-        {children}
+      <div className={styles.childsWrapper}>
+        {children &&
+        React.cloneElement(children, {
+          // здесь чилдрену можно передать какой-нибудь пропс 
+        })}
       </div>
-    </>
+    </div>
   );
 };

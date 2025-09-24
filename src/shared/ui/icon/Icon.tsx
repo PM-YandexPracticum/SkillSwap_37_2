@@ -81,6 +81,13 @@ const icons = {
   add: AddIcon,
   userCircle: UserCircleIcon,
   calendar: CalendarIcon,
+  done: DoneIcon,
+  sort: SortIcon,
+  galleryedit: GalleryEditIcon,
+  requests: RequestIcon,
+  messagetext: MessageIcon,
+  user: UserIcon,
+  edit: EditIcon,
 } as const;
 
 interface IconProps {
@@ -88,15 +95,22 @@ interface IconProps {
   size?: "s" | "m" | "l" | number;
   className?: string;
   color?: string;
+  strokeWidth?: number | string;
 }
 
-export const Icon: FC<IconProps> = ({ name, size = "s", className, color }) => {
+export const Icon: FC<IconProps> = ({
+  name,
+  size = "s",
+  className,
+  color,
+  strokeWidth,
+}) => {
   const IconComponent = icons[name];
 
   const sizeMap = {
-    s: 24, // маленький
-    m: 54, // средний
-    l: 75, // большой
+    s: 24,
+    m: 54,
+    l: 75,
   };
 
   const iconSize = typeof size === "number" ? size : sizeMap[size];
@@ -108,6 +122,7 @@ export const Icon: FC<IconProps> = ({ name, size = "s", className, color }) => {
         width: iconSize,
         height: iconSize,
         fill: color,
+        strokeWidth: strokeWidth,
       }}
     />
   );
