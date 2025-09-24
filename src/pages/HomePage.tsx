@@ -91,6 +91,7 @@ export const HomePage = () => {
 
   const {
     isNotificationOpen,
+    notificationConfig,
     openNotification,
     closeNotification,
     handleNavigateToExchange,
@@ -364,7 +365,9 @@ export const HomePage = () => {
           isOpen={isNotificationOpen}
           onClose={closeNotification}
           onNavigateToExchange={handleNavigateToExchange}
-          type="success"
+          type={notificationConfig.type}
+          message={notificationConfig.message}
+          title={notificationConfig.title}
         />
       </div>
 
