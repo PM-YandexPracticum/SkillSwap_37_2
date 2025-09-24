@@ -27,6 +27,7 @@ export const UserCard = ({
   teachSkills,
   learnSkills,
   subCategories,
+  onDetailsClick
 }: UserCardProps) => {
   // фича prepareSkillsToRender возвращает массив скилов
   // таким образом, чтобы они уместились в строке целиком, без обрезания
@@ -48,11 +49,6 @@ export const UserCard = ({
             <p className={styles.fromAge}>{`${from}, ${age}`}</p>
           </div>
         </div>
-        <img src={like} alt="лайк" className={styles.like} />
-      </section>
-
-      <section className={styles.about}>
-        <p>{about}</p>
       </section>
 
       <section className={styles.about}>
@@ -97,7 +93,6 @@ export const UserCard = ({
           <img src={avatar} alt="фото профиля" className={styles.avatar} />
           <div className={styles.infoWrapper}>
             <p className={styles.userName}>{name}</p>
-            {/* Исправлено: заменены кавычки на обратные */}
             <p className={styles.fromAge}>{`${from}, ${age}`}</p>
           </div>
         </div>
@@ -130,8 +125,8 @@ export const UserCard = ({
           </ul>
         </div>
       </section>
-
-      <Button colored className={styles.button}>
+ 
+      <Button colored className={styles.button} onClick={onDetailsClick}>
         Подробнее
       </Button>
     </article>

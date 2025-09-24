@@ -138,7 +138,52 @@ export const HomePage = () => {
   return (
     <div className={styles.homePageWrapper}>
       <Header />
-      <OfferPage />
+
+      {/* Отладочные ссылки */}
+      <div style={{ padding: "2rem", paddingBottom: "2.5rem" }}>
+        <h2>Debug Links</h2>
+        <ul>
+          <li>
+            <a href="/skills">/skills</a>
+          </li>
+          <li>
+            <a href="/auth/login">/auth/login</a>
+          </li>
+          <li>
+            <a href="/auth/register">/auth/register</a>
+          </li>
+          <li>
+            <a href="/skill/new">/skill/new</a>
+          </li>
+          <li>
+            <a href="/demo/dropdowns">/demo/dropdowns</a>
+          </li>
+          <li>
+            <a href="/demo/skill-details">/demo/skill-details</a>
+          </li>
+          <li>
+            <a href="/skills/123">/skills/:id</a>
+          </li>
+          <li>
+            <a href="/favorites">/favorites</a>
+          </li>
+          <li>
+            <a href="/requests">/requests</a>
+          </li>
+          <li>
+            <a href="/profile">/profile</a>
+          </li>
+          <li>
+            <a href="/profile/notifications">/profile/notifications</a>
+          </li>
+          <li>
+            <a href="/500">/500</a>
+          </li>
+          <li>
+            <a href="/nonexistent">/not-found</a>
+          </li>
+        </ul>
+      </div>
 
       <div className={styles.filterSectionWrapper}>
         <FiltersContainer title="Фильтры">
@@ -233,6 +278,8 @@ export const HomePage = () => {
         </CardShowcase>
       </div>
 
+      <OfferPage />
+
       <div>
         {/* Все карточки пользователей */}
         <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
@@ -318,17 +365,25 @@ export const HomePage = () => {
         >
           Показать уведомление Success
         </button>
+        <h2>Кнопка для демонстрации success</h2>
+        <button
+          style={{
+            fontSize: "32px",
+            color: "red",
+            height: "80px",
+            padding: "10px 20px",
+          }}
+          onClick={() => openNotification({ type: "info" })}
+        >
+          Показать уведомление Info
+        </button>
 
-        {/* <ExchangeNotification
-        type="success"
-        onNavigateToExchange={() => console.log('Переход к обмену')}
-      />
-
-<ExchangeNotification
-        type="info" 
-        onNavigateToExchange={() => console.log('Просмотр уведомления')}
-      />
- */}
+        <ExchangeNotification
+          isOpen={isNotificationOpen}
+          onClose={closeNotification}
+          onNavigateToExchange={handleNavigateToExchange}
+          type="success"
+        />
       </div>
 
       <h2>Форма регистрации (Шаг 2)</h2>
@@ -376,52 +431,6 @@ export const HomePage = () => {
       <SkillMenu />
       <NotFoundPage />
       <ServerErrorPage />
-
-      {/* Отладочные ссылки */}
-      <div style={{ padding: "2rem", paddingBottom: "20rem" }}>
-        <h2>Debug Links</h2>
-        <ul>
-          <li>
-            <a href="/skills">/skills</a>
-          </li>
-          <li>
-            <a href="/auth/login">/auth/login</a>
-          </li>
-          <li>
-            <a href="/auth/register">/auth/register</a>
-          </li>
-          <li>
-            <a href="/skill/new">/skill/new</a>
-          </li>
-          <li>
-            <a href="/demo/dropdowns">/demo/dropdowns</a>
-          </li>
-          <li>
-            <a href="/demo/skill-details">/demo/skill-details</a>
-          </li>
-          <li>
-            <a href="/skills/123">/skills/:id</a>
-          </li>
-          <li>
-            <a href="/favorites">/favorites</a>
-          </li>
-          <li>
-            <a href="/requests">/requests</a>
-          </li>
-          <li>
-            <a href="/profile">/profile</a>
-          </li>
-          <li>
-            <a href="/profile/notifications">/profile/notifications</a>
-          </li>
-          <li>
-            <a href="/500">/500</a>
-          </li>
-          <li>
-            <a href="/nonexistent">/not-found</a>
-          </li>
-        </ul>
-      </div>
 
       <Footer />
     </div>

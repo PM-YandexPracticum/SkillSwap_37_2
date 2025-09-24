@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  flex-grow: 0;
   /* max-width: 324px; Если карточка в каком-нибудь контейнере, max-width 
   сжимается до 319px, пока не могу побороть и оставляю фиксированно 324px */
   /* gap: 20px; */
