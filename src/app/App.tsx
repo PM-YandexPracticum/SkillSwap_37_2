@@ -53,7 +53,7 @@ import { getPlacesThunk } from "../services/places/actions";
 import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
 import { Button } from "../shared/ui/button/Button";
-import { OfferPage } from "../pages/OfferPage/OfferPage";
+import { OfferPage } from "../pages/Offer/OfferPage";
 
 import styles from "./App.module.css";
 
