@@ -27,9 +27,8 @@ import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 import { getSkillsSubCategoriesApi } from "@api/Api";
 import { TPlace } from "@api/types";
 import {
-  RegistrationOnBoardingOne,
-  RegistrationOnBoardingTwo,
-  RegistrationOnBoardingThree,
+  RegistrationOnBoarding,
+  onBoarding,
 } from "../features/onboarding/registrationBoard";
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
@@ -350,13 +349,13 @@ export const HomePage = () => {
       />
 
       <h2>onboarding register step 1</h2>
-      <RegistrationOnBoardingOne />
+      <RegistrationOnBoarding {...onBoarding[0]} />
 
       <h2>onboarding register step 2</h2>
-      <RegistrationOnBoardingTwo />
+      <RegistrationOnBoarding {...onBoarding[1]} />
 
       <h2>onboarding register step 3</h2>
-      <RegistrationOnBoardingThree />
+      <RegistrationOnBoarding {...onBoarding[2]} />
 
       <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
