@@ -39,7 +39,7 @@ import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
 
-import { OfferPage } from "../pages/OfferPage/OfferPage";
+import { OfferPage } from "./Offer/OfferPage";
 import { SkillFilters } from "../features/filters/SkillFilters";
 import { TSkillType } from "shared/types/filters";
 import { FiltersContainer } from "../features/filters/FiltersContainer";
