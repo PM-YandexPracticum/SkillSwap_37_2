@@ -29,4 +29,6 @@ export type IconName =
   | "requests"
   | "messagetext"
   | "user"
-  | "edit";
+  | "edit"
+  | "share"
+  | "more";
