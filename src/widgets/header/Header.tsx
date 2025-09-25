@@ -18,6 +18,7 @@ export const Header: FC = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const user = useSelector(getUser);
   const navigate = useNavigate();
+  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
   const togglePopup = () => {
     setPopupOpen(!isPopupOpen);
@@ -119,6 +120,7 @@ export const Header: FC = () => {
       <NotificationWidget
         isOpen={isNotificationsOpen}
         onClose={closeNotifications}
+        userId={API_USER_ID}
       />
       <Popup isOpen={isPopupOpen} onClose={closePopup}>
         <SkillMenu />
