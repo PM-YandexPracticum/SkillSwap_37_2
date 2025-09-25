@@ -1,6 +1,6 @@
 
 import { FC, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
 import { Button } from "../../shared/ui/button/Button";
@@ -39,9 +39,13 @@ export const Header: FC = () => {
     navigate("/profile");
   };
 
+  const handleLogoClick = () => navigate("/");
+
   return (
     <header className={styles.header}>
-      <Logo />
+      <Link to="/">
+        <Logo />
+      </Link>
       <nav>
         <ul className={styles.navList}>
           <li className={styles.li}>
