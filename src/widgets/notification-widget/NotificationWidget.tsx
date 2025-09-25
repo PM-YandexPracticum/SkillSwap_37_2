@@ -48,6 +48,29 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({
     }
   }, [isOpen, userId, dispatch]);
 
+  const formatDate = (dateString: string): string => {
+    const eventDate = new Date(dateString);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    if (eventDate.toDateString() === today.toDateString()) {
+      return "сегодня";
+    }
+    
+    if (eventDate.toDateString() === yesterday.toDateString()) {
+      return "вчера";
+    }
+    
+    const day = eventDate.getDate();
+    const months = [
+      'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+      'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+    ];
+    const month = months[eventDate.getMonth()];
+    return `${day} ${month}`;
+  };
+
   if (!isOpen) return null;
 
   const handleMarkAllAsRead = () => {
@@ -76,7 +99,7 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({
       userName: event.fromUserName,
       action,
       details,
-      time: event.date, // или можно форматировать дату
+      time: formatDate(event.date),
       viewed: event.seen === 1
     };
   };
