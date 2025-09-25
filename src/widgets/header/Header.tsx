@@ -14,6 +14,7 @@ export const Header: FC = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const user = useSelector(getUser);
   const navigate = useNavigate();
+  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
@@ -99,6 +100,7 @@ export const Header: FC = () => {
       <NotificationWidget
         isOpen={isNotificationsOpen}
         onClose={closeNotifications}
+        userId={API_USER_ID}
       />
     </header>
   );
