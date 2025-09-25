@@ -168,33 +168,32 @@ const DropdownsDemoContent: React.FC = () => (
 );
 
 //Демо: детальная карточка навыка (mock)
-const SkillDetailsDemoContent: React.FC = () => {
-  const mySkill = {
-    title: "Игра на барабанах",
-    subtitle: "Творчество и искусство / Музыка и звук",
-    description:
-      "Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене...",
-
-    mainImage: "/db/skills-photo/drums-1.jpg",
-    smallImages: [
-      "/db/skills-photo/drums-2.jpg",
-      "/db/skills-photo/drums-3.jpg",
-      "/db/skills-photo/+3.png",
-    ],
-    icons: [
-      "/src/shared/assets/icons/like.png",
-      "/src/shared/assets/icons/share.png",
-      "/src/shared/assets/icons/more-square.png",
-    ],
-    buttonText: "Предложить обмен",
-    onExchange: () => alert("Обмен предложен!"),
-  };
-  return (
-    <section className="page page-skill-details">
-      <SkillCardDetails skill={mySkill} />
-    </section>
-  );
-};
+// const SkillDetailsDemoContent: React.FC = () => {
+//   const mySkill = {
+//     title: "Игра на барабанах",
+//     subtitle: "Творчество и искусство / Музыка и звук",
+//     description:
+//       "Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене...",
+//     images: [
+//       "/db/skills-photo/drums-1.jpg",
+//       "/db/skills-photo/drums-2.jpg",
+//       "/db/skills-photo/drums-3.jpg",
+//       "/db/skills-photo/+3.png",
+//     ],
+//     icons: [
+//       "/src/shared/assets/icons/like.png",
+//       "/src/shared/assets/icons/share.png",
+//       "/src/shared/assets/icons/more-square.png",
+//     ],
+//     buttonText: "Предложить обмен",
+//     onExchange: () => alert("Обмен предложен!"),
+//   };
+//   return (
+//     <section className="page page-skill-details">
+//       <SkillCardDetails skill={mySkill} />
+//     </section>
+//   );
+// };
 
 /* ЗАГЛУШКИ*/
 

@@ -48,27 +48,23 @@ export const OfferPage: React.FC = () => {
                   )}
         </div>
         {user && (
-          <SkillCardDetails skill={{
-              title: user.skill || "Навык не указан",
-              subtitle: `${user.cat_text || ""} / ${user.sub_text || ""}`,
-              description: user.description || "Описание отсутствует",
-              mainImage: user.images[0] || "",
-              smallImages: user.images.slice(1) || [],
-              buttonText: "Предложить обмен",
-            }}
+          <SkillCardDetails
+              title={user.skill || "Навык не указан"}
+              subtitle={`${user.cat_text || ""} / ${user.sub_text || ""}`}
+              description={user.description || "Описание отсутствует"}
+              images={user.images || ""}
+              buttonText={"Предложить обмен"}
           />)
         }
       </section>
 
-      {user && <SkillCardDetails skill={{
-              checkEdit: true,
-              title: user.skill || "Навык не указан",
-              subtitle: `${user.cat_text || ""} / ${user.sub_text || ""}`,
-              description: user.description || "Описание отсутствует",
-              mainImage: user.images[0] || "",
-              smallImages: user.images.slice(1) || [],
-              buttonText: "Готово",
-            }}
+      {user && <SkillCardDetails
+              checkEdit={true}
+              title={user.skill || "Навык не указан"}
+              subtitle={`${user.cat_text || ""} / ${user.sub_text || ""}`}
+              description={user.description || "Описание отсутствует"}
+              images={user.images || ""}
+              buttonText={"Готово"}
           />}
 
       <section>

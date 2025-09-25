@@ -1,38 +1,55 @@
 import React from "react";
-import styles from './Gallery.module.css';
+import styles from "./Gallery.module.css";
 
 type GalleryProps = {
-  mainImage?: string;
-  smallImages?: string[];
+  images?: string[];
+  placeholder: string; // путь к фото-заглушке. Если указываете svg, то в конце дописать "...svg.?svg"
 };
 
-export const Gallery: React.FC<GalleryProps> = ({ mainImage, smallImages = [] }) => {
-  if (!mainImage && smallImages.length === 0) {
-    return <div className={styles.galleryEmpty}>Нет изображений</div>;
-  }
+export const Gallery: React.FC<GalleryProps> = ({ images = [], placeholder }) => {
+  const maxVisible = 4; // 1 большая + 3 маленькие
+  const visibleImages = images.slice(0, maxVisible);
+  const extraCount = images.length - maxVisible;
 
-  if (!mainImage && smallImages.length > 0) {
-    mainImage = smallImages[0];
-    smallImages = smallImages.slice(1);
-  }
+  const filledImages = [
+    ...visibleImages,
+    ...Array(Math.max(0, maxVisible - visibleImages.length)).fill(null),
+  ];
 
   return (
     <div className={styles.galleryGrid}>
-      {mainImage && (
-        <div className={styles.mainWrapper}>
-          <img src={`/db/skills-photo/${mainImage}`} alt="Главная" className={styles.mainImage} />
-        </div>
-      )}
+      {/* 1-я колонка (большая картинка) */}
+      <div className={styles.mainWrapper}>
+        <img
+          src={filledImages[0] ? `/db/skills-photo/${filledImages[0]}` : placeholder}
+          alt="Главная"
+          className={styles.mainImage}
+        />
+      </div>
 
-      {smallImages.length > 0 && (
-        <div className={styles.smallImages}>
-          {smallImages.map((img, i) => (
-            <div key={i} className={styles.smallImageWrapper}>
-              <img src={`/db/skills-photo/${img}`} alt={`Малое ${i + 1}`} className={styles.smallImage} />
-            </div>
-          ))}
-        </div>
-      )}
+      {/* 2-я колонка (три маленьких квадрата) */}
+      <div className={styles.smallImageWrapper}>
+        {filledImages.slice(1, 4).map((img, i) => (
+          <div key={i} className={styles.smallImages}>
+            {extraCount > 0 && i === 2 ? (
+              <>
+              <div className={styles.moreOverlay}>+{extraCount}</div>
+              <img
+                src={img ? `/db/skills-photo/${img}` : placeholder}
+                alt={`Миниатюра фото ${i + 1}`}
+                className={styles.smallImage}
+              />
+              </>
+            ) : (
+              <img
+                src={img ? `/db/skills-photo/${img}` : placeholder}
+                alt={`Миниатюра фото ${i + 1}`}
+                className={styles.smallImage}
+              />
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -44,10 +44,6 @@ import { SkillFilters } from "../features/filters/SkillFilters";
 import { TSkillType } from "shared/types/filters";
 import { FiltersContainer } from "../features/filters/FiltersContainer";
 
-import like from "../shared/assets/icons/like.png";
-import share from "../shared/assets/icons/share.png";
-import more from "../shared/assets/icons/more-square.png";
-
 import styles from "./HomePage.module.css";
 
 export const HomePage = () => {
@@ -271,7 +267,6 @@ export const HomePage = () => {
               from={u.from}
               age={birthdayToFormatedAge(u.birthdate)}
               avatar={getImageUrl(u.photo)}
-              // about={u.about}
               teachSkills={u.skill}
               learnSkills={u.need_subcat}
               subCategories={subCategories}
@@ -280,20 +275,35 @@ export const HomePage = () => {
           ))}
         </div>
 
+        {/* Чтобы компонент отобразился нужно тыкнуть в первых 10 пользователей 
+        из блока выше */}
+
         {/* SkillCardDetails выбранного пользователя */}
+        {<h2 style={{textAlign:'center'}}>SkillCardDetails</h2>}
         {selectedUser && (
           <SkillCardDetails
-            skill={{
-              title: selectedUser.skill || "Навык не указан",
-              subtitle: `${selectedUser.cat_text || ""} / ${
+              title={selectedUser.skill || "Навык не указан"}
+              subtitle={`${selectedUser.cat_text || ""} / ${
                 selectedUser.sub_text || ""
-              }`,
-              description: selectedUser.description || "Описание отсутствует",
-              mainImage: selectedUser.images?.[0] || "",
-              smallImages: selectedUser.images?.slice(1) || [],
-              icons: true,
-              buttonText: "Предложить обмен",
-            }}
+              }`}
+              description={selectedUser.description || "Описание отсутствует"}
+              images={selectedUser.images?.slice(1) || []}
+              buttonText={"Предложить обмен"}
+          />
+        )}
+
+        {/* SkillCardDetails с пропсом checkEdit */}
+        {<h2 style={{textAlign:'center'}}>SkillCardDetails с пропсом checkEdit</h2>}
+        {selectedUser && (
+          <SkillCardDetails
+              checkEdit={true}
+              title={selectedUser.skill || "Навык не указан"}
+              subtitle={`${selectedUser.cat_text || ""} / ${
+                selectedUser.sub_text || ""
+              }`}
+              description={selectedUser.description || "Описание отсутствует"}
+              images={selectedUser.images?.slice(1) || []}
+              buttonText={"Предложить обмен"}
           />
         )}
 
@@ -401,12 +411,6 @@ export const HomePage = () => {
       {/* появляется, если нажать на колокольчик в header
       <NotificationWidget /> */}
       <NotificationsTable userId={API_USER_ID} />
-
-      <h2>SkillCardDetails</h2>
-      {/* Настроить передачу свойств от текущего пользователя
-      образец user && SkillCard
-      все данные есть в user
-      убрать константу mySkill */}
 
       <SkillMenu />
       <NotFoundPage />

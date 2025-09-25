@@ -2,37 +2,30 @@ import React from "react";
 import { Gallery } from "../../../shared/ui/gallery/Gallery";
 import { useExchangeNotification } from "../../../shared/ui/notification/useExchangeNotification";
 import { ExchangeNotification } from "../../../shared/ui/notification/ExchangeNotification";
-// import "./skillCardDetails.css";
 import { Icon } from "../../../shared/ui/icon/Icon";
 import { Button } from "../../../shared/ui/button/Button";
+import photoPlaceholder from "../../../shared/assets/images/school-board.svg?.svg";
 import styles from './skillCardDetails.module.css';
 
-type Skill = {
+type SkillCardDetailsProps = {
   checkEdit?: boolean; //если указать проп, то компонент рендерится с кнопкой редактировать
   title: string;
   subtitle: string;
   description: string;
-  mainImage?: string;
-  smallImages?: string[];
+  images?: string[];
   buttonText?: string;
   onExchange?: () => void;
 };
 
-type SkillCardDetailsProps = {
-  skill: Skill;
-};
-
-export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({ skill }) => {
-  const {
-    checkEdit,
-    title,
-    subtitle,
-    description,
-    mainImage,
-    smallImages = [],
-    buttonText = "Предложить обмен",
-    onExchange
-  } = skill;
+export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
+  checkEdit,
+  title,
+  subtitle,
+  description,
+  images = [],
+  buttonText = "Предложить обмен",
+  onExchange
+}) => {
 
   const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
 
@@ -66,13 +59,13 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({ skill }) => 
       <div className={styles.skillCard}>
 
         <div className={styles.iconsBar}>
-          <button className={styles.buttonIcon} onClick={() => likeHandle}>
+          <button className={styles.buttonIcon} onClick={likeHandle}>
             <Icon name="like" />
           </button>
-          <button onClick={() => shareHandle} className={styles.buttonIcon}>
+          <button className={styles.buttonIcon} onClick={shareHandle}>
             <Icon name="share" />
           </button>
-          <button onClick={moreHandle} className={styles.buttonIcon}>
+          <button className={styles.buttonIcon} onClick={moreHandle}>
             <Icon name="more" />
           </button>
         </div>
@@ -94,8 +87,8 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({ skill }) => 
           </div>
           
           <div className={styles.rightSection}>
-            {mainImage && (
-              <Gallery mainImage={mainImage} smallImages={smallImages} />
+            {images && (
+              <Gallery images={images} placeholder={photoPlaceholder} />
             )}
           </div>
 
@@ -151,8 +144,8 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({ skill }) => 
           </div>
           
           <div className={styles.rightSection}>
-            {mainImage && (
-              <Gallery mainImage={mainImage} smallImages={smallImages} />
+            {images && (
+              <Gallery images={images} placeholder={photoPlaceholder} />
             )}
           </div>
 

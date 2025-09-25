@@ -11,6 +11,9 @@
       "images": [
         "drums-1.jpg",
         "drums-2.jpg",
+        "drums-3.jpg",
+        "drums-1.jpg",
+        "drums-2.jpg",
         "drums-3.jpg"
       ],
       "categoryId": 4,
@@ -38,7 +41,11 @@
       "images": [
         "team-management-1.webp",
         "team-management-2.webp",
-        "team-management-3.webp"
+        "team-management-3.webp",
+        "team-management-1.webp",
+        "team-management-2.webp",
+        "team-management-3.webp",
+        "team-management-1.webp"
       ],
       "categoryId": 1,
       "subCategoryId": 1,
@@ -63,7 +70,12 @@
       "images": [
         "marketing-advertising-1.webp",
         "marketing-advertising-2.webp",
-        "marketing-advertising-3.webp"
+        "marketing-advertising-3.webp",
+        "marketing-advertising-1.webp",
+        "marketing-advertising-2.webp",
+        "marketing-advertising-3.webp",
+        "marketing-advertising-1.webp",
+        "marketing-advertising-2.webp"
       ],
       "categoryId": 1,
       "subCategoryId": 2,
@@ -88,7 +100,8 @@
       "images": [
         "sales-negotiations-1.webp",
         "sales-negotiations-2.webp",
-        "sales-negotiations-3.webp"
+        "sales-negotiations-3.webp",
+        "sales-negotiations-1.webp"
       ],
       "categoryId": 1,
       "subCategoryId": 3,
@@ -114,7 +127,12 @@
       "images": [
         "personal-brand-1.webp",
         "personal-brand-2.webp",
-        "personal-brand-3.webp"
+        "personal-brand-3.webp",
+        "personal-brand-1.webp",
+        "personal-brand-2.webp",
+        "personal-brand-3.webp",
+        "personal-brand-1.webp",
+        "personal-brand-2.webp"
       ],
       "categoryId": 1,
       "subCategoryId": 4,
@@ -141,7 +159,9 @@
       "images": [
         "resume-interview-1.webp",
         "resume-interview-2.webp",
-        "resume-interview-3.webp"
+        "resume-interview-3.webp",
+        "resume-interview-1.webp",
+        "resume-interview-2.webp"
       ],
       "categoryId": 1,
       "subCategoryId": 5,
@@ -164,6 +184,9 @@
       "skill": "Тайм-менеджмент",
       "description": "Обучаю эффективному управлению временем — как планировать задачи, расставлять приоритеты и сохранять баланс между работой и личной жизнью.",
       "images": [
+        "time-management-1.webp",
+        "time-management-2.webp",
+        "time-management-3.webp",
         "time-management-1.webp",
         "time-management-2.webp",
         "time-management-3.webp"
@@ -193,7 +216,9 @@
       "images": [
         "project-management-1.webp",
         "project-management-2.webp",
-        "project-management-3.webp"
+        "project-management-3.webp",
+        "project-management-1.webp",
+        "project-management-2.webp"
       ],
       "categoryId": 1,
       "subCategoryId": 7,
@@ -220,7 +245,12 @@
       "images": [
         "entrepreneurship-1.webp",
         "entrepreneurship-2.webp",
-        "entrepreneurship-3.webp"
+        "entrepreneurship-3.webp",
+        "entrepreneurship-1.webp",
+        "entrepreneurship-2.webp",
+        "entrepreneurship-3.webp",
+        "entrepreneurship-1.webp",
+        "entrepreneurship-2.webp"
       ],
       "categoryId": 1,
       "subCategoryId": 8,
@@ -244,6 +274,9 @@
       "skill": "Английский",
       "description": "Помогаю изучать английский язык — от базовой грамматики и словарного запаса до свободного общения и подготовки к экзаменам.",
       "images": [
+        "english-1.webp",
+        "english-2.webp",
+        "english-3.webp",
         "english-1.webp",
         "english-2.webp",
         "english-3.webp"
