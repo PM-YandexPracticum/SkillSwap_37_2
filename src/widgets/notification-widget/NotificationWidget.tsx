@@ -54,11 +54,13 @@ const notifications: Notification[] = [
   },
 ];
 
-export const NotificationWidget: FC<NotificationWidgetProps> = ({
-  isOpen,
-  onClose,
-}) => {
-  if (!isOpen) return null;
+export const NotificationWidget = (
+  //{
+  //isOpen,
+  //onClose,
+//}
+) => {
+  //if (!isOpen) return null;
 
   const newNotifications = notifications.filter((n) => !n.viewed);
   const viewedNotifications = notifications.filter((n) => n.viewed);

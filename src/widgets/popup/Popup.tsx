@@ -14,25 +14,25 @@ const popupRoot = document.getElementById('popups');
 export const Popup = ({ children, isOpen, onClose }:TPopupProps) => {
 
   useEffect(() => {
-    const handle = (e:KeyboardEvent) => {
+    const handleEsc = (e: KeyboardEvent) => {
       e.key === 'Escape' && onClose()
     };
-    document.addEventListener('keydown', handle);
     
+    document.addEventListener('keydown', handleEsc);
 
     return () => {
-      document.removeEventListener('keydown', handle);
+      document.removeEventListener('keydown', handleEsc);
     };
-  }, [isOpen, onClose]);
+  }, [ isOpen, onClose ]);
 
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
     <>
-    <div className={styles.popup_container}>
-      <div className={styles.content}>{children}</div>
-    </div>
-    <OverlayUI onClick={onClose}/>
+      <div className={styles.popup_container}>
+        <div className={styles.content}>{children}</div>
+      </div>
+      <OverlayUI onClick={onClose}/>
     </>,
     popupRoot as HTMLDivElement
   )

@@ -116,10 +116,12 @@ export const Header: FC = () => {
         )}
       </div>
 
-      <NotificationWidget
-        isOpen={isNotificationsOpen}
-        onClose={closeNotifications}
-      />
+
+      {/* Попапы */}
+      <Popup isOpen={isNotificationsOpen} onClose={closeNotifications}>
+        <NotificationWidget/>
+      </Popup>
+
       <Popup isOpen={isPopupOpen} onClose={closePopup}>
         <SkillMenu />
       </Popup>
