@@ -88,6 +88,8 @@ const icons = {
   messagetext: MessageIcon,
   user: UserIcon,
   edit: EditIcon,
+  share: ShareIcon,
+  more: MoreIcon
 } as const;
 
 interface IconProps {

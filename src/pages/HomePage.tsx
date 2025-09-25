@@ -51,26 +51,6 @@ import more from "../shared/assets/icons/more-square.png";
 import styles from "./HomePage.module.css";
 
 export const HomePage = () => {
-  // Это нужно убрать!
-  // Ищем задачу в канбане
-  const mySkill = {
-    title: "Игра на барабанах",
-    subtitle: "Творчество и искусство / Музыка и звук",
-    description:
-      "Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене с живыми группами. Научу основам техники (и как не отбить себе пальцы), играть любимые ритмы и разбирать песни, импровизировать и звучать уверенно даже без партитуры.",
-    mainImage: "public/db/skills-photo/drums-1.jpg",
-    smallImages: [
-      "/public/db/skills-photo/drums-2.jpg",
-      "/public/db/skills-photo/drums-3.jpg",
-      "/db/skills-photo/+3.png",
-    ],
-    icons: [
-      "src/shared/assets/icons/like.png",
-      "src/shared/assets/icons/share.png",
-      "src/shared/assets/icons/more-square.png",
-    ],
-    buttonText: "Предложить обмен",
-  };
 
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
   const dispatch = useDispatch();
@@ -81,10 +61,11 @@ export const HomePage = () => {
   );
 
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
+  
   // const [selectedGender, setSelectedGender] = useState<string>("");
   // const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
-
   // const [subCategories, setSubCategories] = useState<TPlace[]>([]);
+
   const subCategories = useSelector(
     (s: RootState) => s.categories.subcategories
   );
@@ -290,7 +271,7 @@ export const HomePage = () => {
               from={u.from}
               age={birthdayToFormatedAge(u.birthdate)}
               avatar={getImageUrl(u.photo)}
-              about={u.about}
+              // about={u.about}
               teachSkills={u.skill}
               learnSkills={u.need_subcat}
               subCategories={subCategories}
@@ -310,7 +291,7 @@ export const HomePage = () => {
               description: selectedUser.description || "Описание отсутствует",
               mainImage: selectedUser.images?.[0] || "",
               smallImages: selectedUser.images?.slice(1) || [],
-              icons: [like, share, more],
+              icons: true,
               buttonText: "Предложить обмен",
             }}
           />
@@ -426,7 +407,6 @@ export const HomePage = () => {
       образец user && SkillCard
       все данные есть в user
       убрать константу mySkill */}
-      <SkillCardDetails skill={mySkill} />
 
       <SkillMenu />
       <NotFoundPage />
