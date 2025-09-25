@@ -1,5 +1,6 @@
-import { FC, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import { FC, useEffect, useRef, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
 import { Button } from "../../shared/ui/button/Button";
@@ -9,11 +10,23 @@ import { useSelector } from "react-redux";
 import { getUser } from "../../services/user/user-slice";
 import { getImageUrl } from "../../shared/lib/helpers";
 import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
+import { Popup } from "../popup/Popup";
+import { SkillMenu } from "../SkillMenu/SkillMenu";
 
 export const Header: FC = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isPopupOpen, setPopupOpen] = useState(false);
   const user = useSelector(getUser);
   const navigate = useNavigate();
+  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+
+  const togglePopup = () => {
+    setPopupOpen(!isPopupOpen);
+  };
+
+  const closePopup = () => {
+    setPopupOpen(false);
+  }
 
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
@@ -27,9 +40,13 @@ export const Header: FC = () => {
     navigate("/profile");
   };
 
+  const handleLogoClick = () => navigate("/");
+
   return (
     <header className={styles.header}>
-      <Logo />
+      <Link to="/">
+        <Logo />
+      </Link>
       <nav>
         <ul className={styles.navList}>
           <li className={styles.li}>
@@ -38,10 +55,14 @@ export const Header: FC = () => {
             </a>
           </li>
           <li className={styles.li}>
-            <a href="#" className={styles.link}>
+            <a href="#" className={styles.link} onClick={togglePopup} >
               Все навыки
+            <Icon
+              name={isPopupOpen ? 'chevronUp' : 'chevronDown'}
+              size="s"
+              className={styles.iconChevron} />
             </a>
-            <Icon name="chevronDown" size="s" className={styles.iconChevron} />
+            
           </li>
         </ul>
       </nav>
@@ -99,7 +120,11 @@ export const Header: FC = () => {
       <NotificationWidget
         isOpen={isNotificationsOpen}
         onClose={closeNotifications}
+        userId={API_USER_ID}
       />
+      <Popup isOpen={isPopupOpen} onClose={closePopup}>
+        <SkillMenu />
+      </Popup>
     </header>
   );
 };

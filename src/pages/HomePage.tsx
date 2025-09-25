@@ -27,9 +27,8 @@ import { AuthForm, FilterSection, SkillCardDetails } from "@features";
 import { getSkillsSubCategoriesApi } from "@api/Api";
 import { TPlace } from "@api/types";
 import {
-  RegistrationOnBoardingOne,
-  RegistrationOnBoardingTwo,
-  RegistrationOnBoardingThree,
+  RegistrationOnBoarding,
+  onBoarding,
 } from "../features/onboarding/registrationBoard";
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
@@ -43,6 +42,11 @@ import { OfferPage } from "./Offer/OfferPage";
 import { SkillFilters } from "../features/filters/SkillFilters";
 import { TSkillType } from "shared/types/filters";
 import { FiltersContainer } from "../features/filters/FiltersContainer";
+
+import like from "../shared/assets/icons/like.png";
+import share from "../shared/assets/icons/share.png";
+import more from "../shared/assets/icons/more-square.png";
+import { ActiveFiltersBar } from "../features/filters/ActiveFiltersBar";
 
 import styles from "./HomePage.module.css";
 
@@ -68,6 +72,7 @@ export const HomePage = () => {
 
   const {
     isNotificationOpen,
+    notificationConfig,
     openNotification,
     closeNotification,
     handleNavigateToExchange,
@@ -112,58 +117,28 @@ export const HomePage = () => {
     }
   };
 
+  const handleResetAll = () => {
+  setSelectedSkillType("all");
+  setSelectedCategories([]);
+  setSelectedGender("");
+  setSelectedPlaces([]);
+  };
+
+  const hasActiveFilters =
+    selectedSkillType !== "all" ||
+    selectedCategories.length > 0 ||
+    selectedGender !== "" ||
+    selectedPlaces.length > 0;
+
   return (
     <div className={styles.homePageWrapper}>
       <Header />
 
-      {/* Отладочные ссылки */}
-      <div style={{ padding: "2rem", paddingBottom: "2.5rem" }}>
-        <h2>Debug Links</h2>
-        <ul>
-          <li>
-            <a href="/skills">/skills</a>
-          </li>
-          <li>
-            <a href="/auth/login">/auth/login</a>
-          </li>
-          <li>
-            <a href="/auth/register">/auth/register</a>
-          </li>
-          <li>
-            <a href="/skill/new">/skill/new</a>
-          </li>
-          <li>
-            <a href="/demo/dropdowns">/demo/dropdowns</a>
-          </li>
-          <li>
-            <a href="/demo/skill-details">/demo/skill-details</a>
-          </li>
-          <li>
-            <a href="/skills/123">/skills/:id</a>
-          </li>
-          <li>
-            <a href="/favorites">/favorites</a>
-          </li>
-          <li>
-            <a href="/requests">/requests</a>
-          </li>
-          <li>
-            <a href="/profile">/profile</a>
-          </li>
-          <li>
-            <a href="/profile/notifications">/profile/notifications</a>
-          </li>
-          <li>
-            <a href="/500">/500</a>
-          </li>
-          <li>
-            <a href="/nonexistent">/not-found</a>
-          </li>
-        </ul>
-      </div>
-
       <div className={styles.filterSectionWrapper}>
-        <FiltersContainer title="Фильтры">
+        <FiltersContainer
+          title="Фильтры"
+          onReset={hasActiveFilters ? handleResetAll : undefined}
+        >
           <SkillFilters
             onSkillTypeChange={setSelectedSkillType}
             onCategoryToggle={handleCategoryToggle}
@@ -181,6 +156,18 @@ export const HomePage = () => {
         </FiltersContainer>
 
         <div className={styles.showCaseWrapper}>
+          <ActiveFiltersBar
+            selectedSkillType={selectedSkillType}
+            selectedCategories={selectedCategories}
+            categories={categories}
+            onSkillTypeChange={setSelectedSkillType}
+            onCategoryToggle={handleCategoryToggle}
+            selectedGender={selectedGender}
+            onChangeGender={setSelectedGender}
+            selectedPlaces={selectedPlaces}
+            onChangePlaces={setSelectedPlaces}
+          />
+
           <CardShowcase
             title="Популярное"
             buttonTitle="Смотреть все"
@@ -373,7 +360,9 @@ export const HomePage = () => {
           isOpen={isNotificationOpen}
           onClose={closeNotification}
           onNavigateToExchange={handleNavigateToExchange}
-          type="success"
+          type={notificationConfig.type}
+          message={notificationConfig.message}
+          title={notificationConfig.title}
         />
       </div>
 
@@ -387,13 +376,13 @@ export const HomePage = () => {
       />
 
       <h2>onboarding register step 1</h2>
-      <RegistrationOnBoardingOne />
+      <RegistrationOnBoarding {...onBoarding[0]} />
 
       <h2>onboarding register step 2</h2>
-      <RegistrationOnBoardingTwo />
+      <RegistrationOnBoarding {...onBoarding[1]} />
 
       <h2>onboarding register step 3</h2>
-      <RegistrationOnBoardingThree />
+      <RegistrationOnBoarding {...onBoarding[2]} />
 
       <h2>Вариант Dropdown 1</h2>
       <DropdownDemo />
