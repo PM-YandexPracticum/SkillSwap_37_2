@@ -62,9 +62,18 @@ export const ExchangeNotification: React.FC<ExchangeNotificationProps> = ({
           </div>
 
           {onNavigateToExchange && (
-            <Button onClick={onNavigateToExchange} colored>
-              {buttonText || content.defaultButtonText}
+            <Button
+              onClick={() => {
+                if (onNavigateToExchange) {
+                  onNavigateToExchange();
+              }
+              onClose();
+            }}
+            colored
+            >
+            {buttonText || content.defaultButtonText}
             </Button>
+            
           )}
         </div>
       </div>
