@@ -26,7 +26,7 @@ export const Header: FC = () => {
 
   const closePopup = () => {
     setPopupOpen(false);
-  }
+  };
 
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
@@ -117,14 +117,15 @@ export const Header: FC = () => {
         )}
       </div>
 
-      <NotificationWidget
-        isOpen={isNotificationsOpen}
-        onClose={closeNotifications}
-        userId={API_USER_ID}
-      />
+      {/* Попапы */}
+      <Popup isOpen={isNotificationsOpen} onClose={closeNotifications}> 
+        <NotificationWidget userId={API_USER_ID}/>
+      </Popup>
+
       <Popup isOpen={isPopupOpen} onClose={closePopup}>
         <SkillMenu />
       </Popup>
+
     </header>
   );
 };
