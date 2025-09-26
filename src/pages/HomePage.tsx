@@ -47,10 +47,14 @@ import like from "../shared/assets/icons/like.png";
 import share from "../shared/assets/icons/share.png";
 import more from "../shared/assets/icons/more-square.png";
 import { ActiveFiltersBar } from "../features/filters/ActiveFiltersBar";
+import { RegistrationProgress } from "../shared/ui/RegistrationProgress/RegistrationProgress";
 
 import styles from "./HomePage.module.css";
 
 export const HomePage = () => {
+
+  const [currentStep, setCurrentStep] = useState(1); // текущий шаг
+  const totalSteps = 3;
 
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
   const dispatch = useDispatch();
@@ -129,6 +133,7 @@ export const HomePage = () => {
     selectedCategories.length > 0 ||
     selectedGender !== "" ||
     selectedPlaces.length > 0;
+
 
   return (
     <div className={styles.homePageWrapper}>
@@ -366,14 +371,7 @@ export const HomePage = () => {
         />
       </div>
 
-      <h2>Форма регистрации (Шаг 2)</h2>
-      <RegisterStep2
-        onBack={() => console.log("Назад")}
-        onContinue={(data) => {
-          console.log("Данные регистрации:", data);
-          alert("Регистрация завершена!");
-        }}
-      />
+      
 
       <h2>onboarding register step 1</h2>
       <RegistrationOnBoarding {...onBoarding[0]} />
@@ -390,11 +388,30 @@ export const HomePage = () => {
       <h2>Вариант Dropdown 2</h2>
       <DropdownGroupedDemo />
 
-      <h2>SkillForm</h2>
-      <SkillForm />
+      
+      <RegistrationProgress currentStep={currentStep} totalSteps={totalSteps} />
 
-      <h2>AuthForm</h2>
-      <AuthForm />
+  {/* Форма регистрации по шагам */}
+  {currentStep === 1 && <AuthForm onContinue={() => setCurrentStep(2)} />}
+
+  {currentStep === 2 && (
+    <RegisterStep2
+      onBack={() => setCurrentStep(1)}
+      onContinue={(data) => {
+        console.log("Данные регистрации:", data);
+        setCurrentStep(3);
+      }}
+    />
+  )}
+
+  {currentStep === 3 && (
+    <SkillForm
+      onBack={() => setCurrentStep(2)}
+      onContinue={() => alert("Регистрация завершена!")}
+    />
+  )}
+
+
 
       <h2>NotificationsTable</h2>
       {/* появляется, если нажать на колокольчик в header

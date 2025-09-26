@@ -11,7 +11,12 @@ import {
 import { TCategory, TSubcategory } from "../../api/types";
 import { Textarea } from "../../shared/ui/textarea/Textarea";
 
-export const SkillForm = () => {
+type SkillFormProps = {
+  onBack: () => void;
+  onContinue: () => void;
+};
+
+export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue })  => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -118,7 +123,7 @@ export const SkillForm = () => {
           <DragDrop />
         </fieldset>
         <div className={styles.buttonGroup}>
-          <Button>Назад</Button>
+          <Button type="button" onClick={onBack}>Назад</Button>
           <Button colored>Продолжить</Button>
         </div>
       </form>

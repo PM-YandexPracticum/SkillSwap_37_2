@@ -5,7 +5,11 @@ import { Button } from "../../shared/ui/button/Button";
 import { Input } from "../../shared/ui/input/Input";
 import { SocialButton } from "../../shared/ui/social-button/SocialButton";
 
-export const AuthForm: FC = () => {
+type AuthFormProps = {
+  onContinue: () => void;
+};
+
+export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordStatus, setPasswordStatus] = useState<
@@ -118,9 +122,7 @@ export const AuthForm: FC = () => {
             id="password"
           />
         </form>
-        <Button colored onClick={() => {}}>
-          Далее
-        </Button>
+        <Button colored onClick={onContinue}>Далее</Button>
       </div>
     </div>
   );

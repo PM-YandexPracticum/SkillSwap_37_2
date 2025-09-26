@@ -241,7 +241,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
               type="submit"
               size={208}
               colored={true}
-              disabled={!isFormValid()}
+              disabled={false}
               className={styles.continueButton}
             >
               Продолжить
