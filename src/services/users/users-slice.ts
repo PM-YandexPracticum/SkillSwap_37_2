@@ -1,10 +1,11 @@
 // src\services\users\users-slice.ts
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUsersThunk } from './actions';
+import { getUsersThunk, pickUserOfferThunk } from './actions';
 import { TUser } from '@api/types';
 
 type UsersState = {
+  userOffer: TUser | null;
   users: TUser[];
   isLoading: boolean;
   error: string | null;
@@ -13,6 +14,7 @@ type UsersState = {
 };
 
 const initialState: UsersState = {
+  userOffer: null,
   users: [],
   isLoading: false,
   error: null,
@@ -40,6 +42,9 @@ export const usersSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+  },
+  selectors: {
+    getUserOffer: (state) => state.userOffer
   },
   extraReducers: builder => {
     builder
@@ -69,9 +74,22 @@ export const usersSlice = createSlice({
       .addCase(getUsersThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка загрузки пользователей';
+      })
+      .addCase(pickUserOfferThunk.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(pickUserOfferThunk.fulfilled, (state, action) => {
+        state.userOffer = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(pickUserOfferThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Ошибка выбора пользователя';
       });
   }
 });
 
+export const { getUserOffer } = usersSlice.selectors;
 export const { setPage, setHasMore, resetUsers } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;
