@@ -56,6 +56,7 @@ import { Button } from "../shared/ui/button/Button";
 import { OfferPage } from "../pages/Offer/OfferPage";
 
 import styles from "./App.module.css";
+import { getUserLikesThunk } from "../services/user/actions";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
@@ -241,6 +242,15 @@ export const App: React.FC = () => {
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
+const currentUser = useSelector((s: RootState) => s.user.user);
+
+React.useEffect(() => {
+  if (currentUser) {
+    dispatch(getUserLikesThunk(currentUser.id));
+  }
+}, [dispatch, currentUser]);
+
+  
   return (
     <BrowserRouter>
       <Routes>
