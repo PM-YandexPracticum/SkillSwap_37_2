@@ -59,10 +59,100 @@ import { getCategoriesThunk } from "../services/categories/actions";
 import { getUserLikesThunk, getUserThunk } from "../services/user/actions";
 
 
-import { Button } from "../shared/ui/button/Button";
 import { OfferPage } from "../pages/Offer/OfferPage";
 import { RegisterStep2Data } from "../features/auth/RegisterStep2";
 import styles from "./App.module.css";
+import { getPopularUsersThunk } from "../services/popularUsers/actions";
+
+
+
+export const App: React.FC = () => {
+  const dispatch = useDispatch();
+  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+
+  // Подгружаем данные при старте
+  React.useEffect(() => {
+    dispatch(getUserThunk(API_USER_ID));
+    dispatch(getUsersThunk(1));
+    dispatch(getPopularUsersThunk(1)); 
+    dispatch(getPlacesThunk());
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
+
+  const currentUser = useSelector((s: RootState) => s.user.user);
+
+  // лайки грузятся при смене пользователя
+  React.useEffect(() => {
+    if (currentUser) {
+      dispatch(getUserLikesThunk(currentUser.id));
+    }
+  }, [dispatch, currentUser]);
+
+  
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Главная БЕЗ Layout, тк есть внутри фотер и хедер */}
+        <Route index element={<HomePage />} />
+
+        {/* Все прочие — под Layout */}
+        <Route element={<Layout />}>
+          {/*То, что есть*/}
+          <Route path="skills" element={<CatalogContent />} />
+          <Route path="auth/login" element={<LoginContent />} />
+          <Route path="auth/register" element={<RegisterContent />} />
+          <Route path="skill/new" element={<SkillFormContent />} />
+          <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
+
+          <Route path="demo/skill-details" element={<OfferPage />} />
+
+      {/* Страницы регистрации */}
+          <Route path="registration/step1" element={
+            <RegistrationStep1 onContinue={(email, password) => {
+              console.log('Step 1 data:', email, password);
+              window.location.href = '/registration/step2';
+            }} />
+          } />
+          <Route path="registration/step2" element={
+            <RegistrationStep2 
+              onBack={() => window.location.href = '/registration/step1'}
+              onContinue={(data) => {
+                console.log('Step 2 data:', data);
+                window.location.href = '/registration/step3';
+              }}
+            />
+          } />
+          <Route path="registration/step3" element={
+            <RegistrationStep3 
+              onBack={() => window.location.href = '/registration/step2'}
+              onComplete={() => window.location.href = '/'}
+            />
+          } />
+
+          {/*заглушки*/}
+          <Route path="skills/:id" element={<SkillPageStub />} />
+          <Route path="favorites" element={<FavoritesPageStub />} />
+          <Route path="requests" element={<RequestsPageStub />} />
+
+          {/* ПРОФИЛЬ */}
+          <Route path="profile">
+            <Route index element={<ProfilePage />} />
+            {/* Все подразделы профиля ведут на 404 */}
+            <Route path="notifications" element={<NotFoundPage />} />
+            <Route path="requests" element={<NotFoundPage />} />
+            <Route path="exchanges" element={<NotFoundPage />} />
+            <Route path="favorites" element={<NotFoundPage />} />
+            <Route path="skills" element={<NotFoundPage />} />
+          </Route>
+
+          {/* Системные */}
+          <Route path="500" element={<ServerErrorPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 
 
@@ -81,9 +171,9 @@ const Layout: React.FC = () => (
 const CatalogContent: React.FC = () => {
   const users = useSelector((s: RootState) => s.users.users);
 
-  const subCategories = useSelector(
-    (s: RootState) => s.categories.subcategories
-  );
+  // const subCategories = useSelector(
+  //   (s: RootState) => s.categories.subcategories
+  // );
   const [selectedGender, setSelectedGender] = React.useState<string>("");
   const [selectedPlaces, setSelectedPlaces] = React.useState<number[]>([]);
 
@@ -196,92 +286,5 @@ const RequestsPageStub: React.FC = () => (
     <p>Страница в разработке.</p>
   </section>
 );
-
-export const App: React.FC = () => {
-  const dispatch = useDispatch();
-  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
-
-  // Подгружаем данные при старте
-  React.useEffect(() => {
-    dispatch(getUserThunk(API_USER_ID));
-    dispatch(getUsersThunk(1));
-    dispatch(getPlacesThunk());
-    dispatch(getCategoriesThunk());
-  }, [dispatch]);
-
-  const currentUser = useSelector((s: RootState) => s.user.user);
-
-  // лайки грузятся при смене пользователя
-  React.useEffect(() => {
-    if (currentUser) {
-      dispatch(getUserLikesThunk(currentUser.id));
-    }
-  }, [dispatch, currentUser]);
-
-  
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* Главная БЕЗ Layout, тк есть внутри фотер и хедер */}
-        <Route index element={<HomePage />} />
-
-        {/* Все прочие — под Layout */}
-        <Route element={<Layout />}>
-          {/*То, что есть*/}
-          <Route path="skills" element={<CatalogContent />} />
-          <Route path="auth/login" element={<LoginContent />} />
-          <Route path="auth/register" element={<RegisterContent />} />
-          <Route path="skill/new" element={<SkillFormContent />} />
-          <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
-
-          <Route path="demo/skill-details" element={<OfferPage />} />
-
-      {/* Страницы регистрации */}
-          <Route path="registration/step1" element={
-            <RegistrationStep1 onContinue={(email, password) => {
-              console.log('Step 1 data:', email, password);
-              window.location.href = '/registration/step2';
-            }} />
-          } />
-          <Route path="registration/step2" element={
-            <RegistrationStep2 
-              onBack={() => window.location.href = '/registration/step1'}
-              onContinue={(data) => {
-                console.log('Step 2 data:', data);
-                window.location.href = '/registration/step3';
-              }}
-            />
-          } />
-          <Route path="registration/step3" element={
-            <RegistrationStep3 
-              onBack={() => window.location.href = '/registration/step2'}
-              onComplete={() => window.location.href = '/'}
-            />
-          } />
-
-          {/*заглушки*/}
-          <Route path="skills/:id" element={<SkillPageStub />} />
-          <Route path="favorites" element={<FavoritesPageStub />} />
-          <Route path="requests" element={<RequestsPageStub />} />
-
-          {/* ПРОФИЛЬ */}
-          <Route path="profile">
-            <Route index element={<ProfilePage />} />
-            {/* Все подразделы профиля ведут на 404 */}
-            <Route path="notifications" element={<NotFoundPage />} />
-            <Route path="requests" element={<NotFoundPage />} />
-            <Route path="exchanges" element={<NotFoundPage />} />
-            <Route path="favorites" element={<NotFoundPage />} />
-            <Route path="skills" element={<NotFoundPage />} />
-          </Route>
-
-          {/* Системные */}
-          <Route path="500" element={<ServerErrorPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-};
 
 export default App;
