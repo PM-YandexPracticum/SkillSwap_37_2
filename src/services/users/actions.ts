@@ -28,10 +28,3 @@ export const getUsersThunk = createAsyncThunk<
     return response;
   }
 );
-
-export const pickUserOfferThunk = createAsyncThunk<TUser | null,number>(
-  FETCH_USER_BY_ID,
-  async (userId: number) => {
-    const user = await getUserByID(userId);
-    return user;
-  })
