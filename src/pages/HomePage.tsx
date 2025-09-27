@@ -1,14 +1,12 @@
 // src\pages\HomePage.tsx
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useSelector } from "react-redux";
 import { RootState, useDispatch } from "@store";
 
-import { getUserThunk } from "../services/user/actions";
 import { getUsersThunk } from "../services/users/actions";
 import { getUser } from "../services/user/user-slice";
-import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
 import { TUser } from "@api/types";
 import { UserCard } from "../features/users/userCard/UserCard";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
@@ -30,7 +28,6 @@ import {
 } from "../features/onboarding/registrationBoard";
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
-import { getCategoriesThunk } from "../services/categories/actions";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
@@ -72,12 +69,6 @@ export const HomePage = () => {
     closeNotification,
     handleNavigateToExchange,
   } = useExchangeNotification();
-
-  useEffect(() => {
-    dispatch(getUserThunk(API_USER_ID));
-    dispatch(getUsersThunk(1));
-    dispatch(getCategoriesThunk());
-  }, [dispatch]);
 
   const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>("all");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);

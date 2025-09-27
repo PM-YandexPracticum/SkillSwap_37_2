@@ -1,3 +1,5 @@
+// src\widgets\notification-widget\NotificationWidget.tsx
+
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "@store";
 import styles from "./NotificationWidget.module.css";
@@ -13,6 +15,7 @@ import {
 } from "../../services/notifications/notification-slice"
 
 import { getNotificationThunk } from "../../services/notifications/actions";
+import { getCurrentUser } from "../../services/user/user-slice";
 
 interface NotificationWidgetProps {
   isOpen: boolean;
@@ -33,7 +36,7 @@ interface NotificationDisplay {
 export const NotificationWidget: FC<NotificationWidgetProps> = ({
   isOpen,
   onClose,
-  userId,
+  userId
 }) => {
   const dispatch = useDispatch();
   
@@ -41,6 +44,8 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({
   const viewedNotifications = useSelector(getViewedNotifications);
   const isLoading = useSelector(getIsLoading);
   const unseenCount = useSelector(getUnseenCount);
+
+  const currentUser = useSelector(getCurrentUser);
 
   useEffect(() => {
     if (isOpen && userId) {

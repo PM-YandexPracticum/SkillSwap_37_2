@@ -62,8 +62,13 @@ export const userSlice = createSlice({
   }
 });
 
+// старые имена (используются сейчас в проекте)
 export const { getUser } = userSlice.selectors;
 export const { setUser } = userSlice.actions;
+
+// новые имена (рекомендуется использовать дальше)
+export const { getUser: getCurrentUser } = userSlice.selectors;
+export const { setUser: setCurrentUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
 

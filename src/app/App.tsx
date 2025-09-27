@@ -51,7 +51,7 @@ import { AuthForm, FilterSection } from "@features";
 import { getPlacesThunk } from "../services/places/actions";
 import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
-import { getUserLikesThunk } from "../services/user/actions";
+import { getUserLikesThunk, getUserThunk } from "../services/user/actions";
 
 
 import { Button } from "../shared/ui/button/Button";
@@ -205,24 +205,25 @@ const RequestsPageStub: React.FC = () => (
 );
 
 export const App: React.FC = () => {
-
-  // Подгружаем данные, чтобы всё нарисовать
   const dispatch = useDispatch();
+  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
+  // Подгружаем данные при старте
   React.useEffect(() => {
+    dispatch(getUserThunk(API_USER_ID));
     dispatch(getUsersThunk(1));
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
-const currentUser = useSelector((s: RootState) => s.user.user);
+  const currentUser = useSelector((s: RootState) => s.user.user);
 
-// лайки грузятся при смене пользователя
-React.useEffect(() => {
-  if (currentUser) {
-    dispatch(getUserLikesThunk(currentUser.id));
-  }
-}, [dispatch, currentUser]);
+  // лайки грузятся при смене пользователя
+  React.useEffect(() => {
+    if (currentUser) {
+      dispatch(getUserLikesThunk(currentUser.id));
+    }
+  }, [dispatch, currentUser]);
 
   
   return (

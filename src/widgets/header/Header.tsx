@@ -1,3 +1,4 @@
+// src\widgets\header\Header.tsx
 
 import { FC, useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -7,18 +8,21 @@ import { Button } from "../../shared/ui/button/Button";
 import { NotificationWidget } from "../notification-widget/NotificationWidget";
 import { Icon } from "../../shared/ui/icon/Icon";
 import { useSelector } from "react-redux";
-import { getUser } from "../../services/user/user-slice";
+// import { getUser } from "../../services/user/user-slice";
 import { getImageUrl } from "../../shared/lib/helpers";
 import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
 import { Popup } from "../popup/Popup";
 import { SkillMenu } from "../SkillMenu/SkillMenu";
+import { getCurrentUser } from "../../services/user/user-slice";
 
 export const Header: FC = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const user = useSelector(getUser);
+
+  const currentUser = useSelector(getCurrentUser);
+
   const navigate = useNavigate();
-  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+  // const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
   const togglePopup = () => {
     setPopupOpen(!isPopupOpen);
@@ -55,20 +59,21 @@ export const Header: FC = () => {
             </a>
           </li>
           <li className={styles.li}>
-            <a href="#" className={styles.link} onClick={togglePopup} >
+            {/* <a href="#" className={styles.link} onClick={togglePopup} > */}
+            <button className={styles.link} onClick={togglePopup}>
               Все навыки
-            <Icon
-              name={isPopupOpen ? 'chevronUp' : 'chevronDown'}
-              size="s"
-              className={styles.iconChevron} />
-            </a>
-            
+              <Icon
+                name={isPopupOpen ? 'chevronUp' : 'chevronDown'}
+                size="s"
+                className={styles.iconChevron}
+              />
+            </button>
           </li>
         </ul>
       </nav>
 
       {/* Используем компонент SearchBar с разной шириной */}
-      <SearchBar width={user ? 648 : 527} />
+      <SearchBar width={currentUser ? 648 : 527} />
 
       <div className={styles.rightSection}>
         {/* Иконка темы всегда видима */}
@@ -77,7 +82,7 @@ export const Header: FC = () => {
         </button>
 
         {/* Иконки уведомлений и лайков только для авторизованных */}
-        {user && (
+        {currentUser && (
           <>
             <button
               className={styles.notificationButton}
@@ -94,16 +99,16 @@ export const Header: FC = () => {
         )}
 
         {/* Блок пользователя или кнопки входа */}
-        {user ? (
+        {currentUser ? (
           <div
             className={styles.userAuthWrapper}
             onClick={handleProfileClick}
             style={{ cursor: "pointer" }}
           >
-            <span className={styles.userName}>{user.name}</span>
+            <span className={styles.userName}>{currentUser.name}</span>
             <img
-              src={getImageUrl(user.photo)}
-              alt={user.name}
+              src={getImageUrl(currentUser.photo)}
+              alt={currentUser.name}
               className={styles.userAvatar}
             />
           </div>
@@ -117,11 +122,14 @@ export const Header: FC = () => {
         )}
       </div>
 
-      <NotificationWidget
-        isOpen={isNotificationsOpen}
-        onClose={closeNotifications}
-        userId={API_USER_ID}
-      />
+      {currentUser ? (
+        <NotificationWidget
+          isOpen={isNotificationsOpen}
+          onClose={closeNotifications}
+          userId={currentUser.id}
+        />
+      ) : null}
+
       <Popup isOpen={isPopupOpen} onClose={closePopup}>
         <SkillMenu />
       </Popup>
