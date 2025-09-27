@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState, useDispatch } from "@store";
 
 import { getUsersThunk } from "../services/users/actions";
@@ -116,6 +117,7 @@ export const HomePage = () => {
     selectedGender !== "" ||
     selectedPlaces.length > 0;
 
+  const navigate = useNavigate();
 
   return (
     <div className={styles.homePageWrapper}>
@@ -247,7 +249,10 @@ export const HomePage = () => {
               // teachSkills={u.skill}
               // learnSkills={u.need_subcat}
               // subCategories={subCategories}
-              onDetailsClick={() => dispatch(setOfferUser(u))}
+              // onDetailsClick={() => {
+              //   dispatch(setOfferUser(u))
+              //   navigate(`skills/${u.id}`);              
+              // }}
             />
           ))}
         </div>
@@ -309,8 +314,9 @@ export const HomePage = () => {
         {user && (
           <UserCard
             user={user}
-            onDetailsClick={() => dispatch(setOfferUser(user))}
-
+            // onDetailsClick={() => {
+            //   alert(user.name);
+            // }}
             // id={user.id}
             // likedByMe={user.likedByMe}
             // name={user.name}
