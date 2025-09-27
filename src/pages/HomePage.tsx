@@ -3,12 +3,11 @@
 import { useState } from "react";
 
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { RootState, useDispatch } from "@store";
 
 import { getUsersThunk } from "../services/users/actions";
-import { getOfferUser, setOfferUser } from "../services/users/users-slice";
 import { getUser } from "../services/user/user-slice";
+import { TUser } from "@api/types";
 import { UserCard } from "../features/users/userCard/UserCard";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import {
@@ -57,7 +56,7 @@ export const HomePage = () => {
     (state: RootState) => state.users
   );
 
-  const offerUser = useSelector(getOfferUser);
+  const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
 
   const subCategories = useSelector(
     (s: RootState) => s.categories.subcategories
@@ -117,7 +116,6 @@ export const HomePage = () => {
     selectedGender !== "" ||
     selectedPlaces.length > 0;
 
-  const navigate = useNavigate();
 
   return (
     <div className={styles.homePageWrapper}>
@@ -263,10 +261,7 @@ export const HomePage = () => {
               // teachSkills={u.skill}
               // learnSkills={u.need_subcat}
               // subCategories={subCategories}
-              // onDetailsClick={() => {
-              //   dispatch(setOfferUser(u))
-              //   navigate(`skills/${u.id}`);              
-              // }}
+              onDetailsClick={() => setSelectedUser(u)}
             />
           ))}
         </div>
@@ -276,29 +271,29 @@ export const HomePage = () => {
 
         {/* SkillCardDetails выбранного пользователя */}
         {<h2 style={{textAlign:'center'}}>SkillCardDetails</h2>}
-        {offerUser && (
+        {selectedUser && (
           <SkillCardDetails
-              title={offerUser.skill || "Навык не указан"}
-              subtitle={`${offerUser.cat_text || ""} / ${
-                offerUser.sub_text || ""
+              title={selectedUser.skill || "Навык не указан"}
+              subtitle={`${selectedUser.cat_text || ""} / ${
+                selectedUser.sub_text || ""
               }`}
-              description={offerUser.description || "Описание отсутствует"}
-              images={offerUser.images?.slice(1) || []}
+              description={selectedUser.description || "Описание отсутствует"}
+              images={selectedUser.images?.slice(1) || []}
               buttonText={"Предложить обмен"}
           />
         )}
 
         {/* SkillCardDetails с пропсом checkEdit */}
         {<h2 style={{textAlign:'center'}}>SkillCardDetails с пропсом checkEdit</h2>}
-        {offerUser && (
+        {selectedUser && (
           <SkillCardDetails
               checkEdit={true}
-              title={offerUser.skill || "Навык не указан"}
-              subtitle={`${offerUser.cat_text || ""} / ${
-                offerUser.sub_text || ""
+              title={selectedUser.skill || "Навык не указан"}
+              subtitle={`${selectedUser.cat_text || ""} / ${
+                selectedUser.sub_text || ""
               }`}
-              description={offerUser.description || "Описание отсутствует"}
-              images={offerUser.images?.slice(1) || []}
+              description={selectedUser.description || "Описание отсутствует"}
+              images={selectedUser.images?.slice(1) || []}
               buttonText={"Предложить обмен"}
           />
         )}
@@ -328,9 +323,8 @@ export const HomePage = () => {
         {user && (
           <UserCard
             user={user}
-            // onDetailsClick={() => {
-            //   alert(user.name);
-            // }}
+            onDetailsClick={() => setSelectedUser(user)}
+
             // id={user.id}
             // likedByMe={user.likedByMe}
             // name={user.name}

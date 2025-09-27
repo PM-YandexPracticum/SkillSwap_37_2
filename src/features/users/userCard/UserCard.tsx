@@ -1,15 +1,15 @@
 // src\features\users\userCard\UserCard.tsx
 
 import { TSkillName } from "../../../shared/types/SkillName";
-import { useNavigate } from "react-router-dom";
+// import like from "../../../shared/assets/icons/like.png";
 import { Icon } from '../../../shared/ui/icon/Icon';
 import styles from "./UserCard.module.css";
 import { Button } from "../../../shared/ui/button/Button";
 import { SkillTag } from "../../skills/skillTag/SkillTag";
-import { TUser } from "../../../api/types";
+import { TPlace, TUser } from "../../../api/types";
 import { prepareSkillsToRender } from "../../../shared/lib/prepareSkillsToRender";
 import { RootState, useDispatch, useSelector } from '@store';
-import { setOfferUser, toggleLike } from '../../../services/users/users-slice';
+import { toggleLike } from '../../../services/users/users-slice';
 import { birthdayToFormatedAge, getImageUrl } from "../../../shared/lib/helpers";
 import { setUser } from "../../../services/user/user-slice";
 
@@ -26,6 +26,7 @@ type UserCardProps = {
   // learnSkills: number[];
   // subCategories: TPlace[];
   // likedByMe: boolean;
+  onDetailsClick?: () => void;
   needAbout?: boolean;
 };
 
@@ -41,10 +42,16 @@ export const UserCard = ({
   // learnSkills,
   // subCategories,
   // likedByMe,
+  onDetailsClick,
   needAbout = false
 }: UserCardProps) => {
   // фича prepareSkillsToRender возвращает массив скилов
   // таким образом, чтобы они уместились в строке целиком, без обрезания
+
+
+
+
+
 
 const subCategories = useSelector((s: RootState) => s.categories.subcategories);
 
@@ -63,14 +70,9 @@ const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
   // );
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const age = birthdayToFormatedAge(user.birthdate);
   const avatar = getImageUrl(user.photo);
-  const onDetailsClick = () => {
-    dispatch(setOfferUser(user));
-    navigate(`skills/${user.id}`);
-  }   
   
   return (
     <article className={styles.card}>
