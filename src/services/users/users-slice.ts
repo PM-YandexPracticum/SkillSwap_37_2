@@ -3,6 +3,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getUsersThunk, pickUserOfferThunk } from './actions';
 import { TUser } from '@api/types';
+import { getUserLikesThunk } from '../../services/user/actions';
 
 type UsersState = {
   userOffer: TUser | null;
@@ -42,6 +43,14 @@ export const usersSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+
+    // переключение лайка у пользователя по id
+    toggleLike: (state, action: PayloadAction<number>) => {
+      const user = state.users.find(u => u.id === action.payload);
+      if (user) {
+        user.likedByMe = !user.likedByMe;
+      }
+    },    
   },
   selectors: {
     getUserOffer: (state) => state.userOffer
@@ -62,7 +71,11 @@ export const usersSlice = createSlice({
         // так как одна новая карточка может перелистнуть целую страницу
         if (action.payload.users.length > 0) {
           const existingIds = new Set(state.users.map(u => u.id));
-          const newUsers = action.payload.users.filter(u => !existingIds.has(u.id));
+          // const newUsers = action.payload.users.filter(u => !existingIds.has(u.id));
+          const newUsers = action.payload.users.filter(
+            u => !existingIds.has(u.id))
+            .map(u => ({...u, likedByMe: u.likedByMe ?? false})
+          );
 
           if (newUsers.length > 0) {
             state.users = [...state.users, ...newUsers];
@@ -79,6 +92,20 @@ export const usersSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
+
+      // фокус!!! ловим чужие события
+      // проставляем лайки у всех пользователей
+      // на основании списка лайков залогиненного пользователя
+      .addCase(getUserLikesThunk.fulfilled, (state, action) => {
+        const likedIds = new Set(action.payload);
+        state.users = state.users.map(u => ({
+          ...u,
+          likedByMe: likedIds.has(u.id),
+        }));
+      })
+
+
+      
       .addCase(pickUserOfferThunk.fulfilled, (state, action) => {
         state.userOffer = action.payload;
         state.isLoading = false;
@@ -91,5 +118,5 @@ export const usersSlice = createSlice({
 });
 
 export const { getUserOffer } = usersSlice.selectors;
-export const { setPage, setHasMore, resetUsers } = usersSlice.actions;
+export const { setPage, setHasMore, resetUsers, toggleLike } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;

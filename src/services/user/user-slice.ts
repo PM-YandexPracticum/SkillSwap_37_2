@@ -1,10 +1,11 @@
 // src\services\user\user-slice.ts
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '../../api/types';
-import { getUserThunk } from './actions';
+import { getUserLikesThunk, getUserThunk } from './actions';
 
 export interface UserState {
   user: TUser | null;
+  likes: number[]; // id пользователей, которых лайкнул авторизованный юзер
   isAuthChecked: boolean;
   isLoading: boolean;
   error: string | null;
@@ -12,6 +13,7 @@ export interface UserState {
 
 const initialState: UserState = {
   user: null,   // это тот, кто сейчас залогинился
+  likes: [],
   isAuthChecked: false,
   isLoading: false,
   error: null
@@ -20,7 +22,13 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action: PayloadAction<TUser>) => {
+      state.user = action.payload;
+      // state.isAuthChecked = true; // чтобы выглядело как "залогинен"
+    }
+  },
+
   selectors: {
     getUser: (state) => state.user
   },
@@ -30,6 +38,7 @@ export const userSlice = createSlice({
         state.isLoading = true;
         state.error = null;
     })
+
     .addCase(getUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
@@ -37,11 +46,24 @@ export const userSlice = createSlice({
     .addCase(getUserThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка загрузки пользователя';
-    });
+    })
+    .addCase(getUserLikesThunk.pending, state => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(getUserLikesThunk.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.likes = action.payload; 
+    })
+    .addCase(getUserLikesThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message || 'Ошибка загрузки лайков';
+    })
   }
 });
 
 export const { getUser } = userSlice.selectors;
+export const { setUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
 

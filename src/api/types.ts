@@ -20,7 +20,8 @@ export type TUser = {
   birthdate: string; // др в формате YYYY-MM-DD
   email: string;
   created_at: string; //Дата создания аккаунта
-  about?: string; //Описание пользователя (вводится при регистрации)
+  about: string; //Описание пользователя (вводится при регистрации)
+  likedByMe: boolean;
 };
 
 export type TPlace = {
@@ -76,13 +77,3 @@ export type TResponseNotifications = {
   events: TNotificationEvent[];
 };  
 
-// export type TOfferResult = {
-//   offerUserId: number;
-//   offerUserName: string;
-//   skillOwnerId: number;
-//   skillOwnerName: string;
-//   confirm: number;
-//   sawOffer: number;
-//   offerDate: string;           // всегда есть
-//   confirmDate: string | null;  // только если confirm === 1
-// };
