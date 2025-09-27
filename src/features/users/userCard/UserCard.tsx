@@ -1,12 +1,19 @@
+// src\features\users\userCard\UserCard.tsx
+
 import { TSkillName } from "../../../shared/types/SkillName";
-import like from "../../../shared/assets/icons/like.png";
+// import like from "../../../shared/assets/icons/like.png";
+import { Icon } from '../../../shared/ui/icon/Icon';
 import styles from "./UserCard.module.css";
 import { Button } from "../../../shared/ui/button/Button";
 import { SkillTag } from "../../skills/skillTag/SkillTag";
 import { TPlace } from "../../../api/types";
 import { prepareSkillsToRender } from "../../../shared/lib/prepareSkillsToRender";
+import { useDispatch } from '@store';
+import { toggleLike } from '../../../services/users/users-slice';
+
 
 type UserCardProps = {
+  id: number; 
   name: string;
   from: string;
   age: string;
@@ -15,10 +22,12 @@ type UserCardProps = {
   teachSkills: TSkillName;
   learnSkills: number[];
   subCategories: TPlace[];
+  likedByMe: boolean;
   onDetailsClick?: () => void;
 };
 
 export const UserCard = ({
+  id,
   name,
   from,
   age,
@@ -27,6 +36,7 @@ export const UserCard = ({
   teachSkills,
   learnSkills,
   subCategories,
+  likedByMe,
   onDetailsClick
 }: UserCardProps) => {
   // фича prepareSkillsToRender возвращает массив скилов
@@ -36,6 +46,8 @@ export const UserCard = ({
     subCategories
   );
 
+  const dispatch = useDispatch();
+  
   return about ? (
     <article
       className={styles.card}
@@ -96,7 +108,14 @@ export const UserCard = ({
             <p className={styles.fromAge}>{`${from}, ${age}`}</p>
           </div>
         </div>
-        <img src={like} alt="лайк" className={styles.like} />
+
+        <Icon
+          name={likedByMe ? 'like-active' : 'like'}
+          alt={likedByMe ? 'уже лайкнул' : 'поставить лайк'}
+          className={styles.like}
+          onClick={() => dispatch(toggleLike(id))}
+        />        
+
       </section>
 
       <section>

@@ -33,9 +33,6 @@ export const userSlice = createSlice({
         state.error = null;
     })
 
-
-
-
     .addCase(getUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;

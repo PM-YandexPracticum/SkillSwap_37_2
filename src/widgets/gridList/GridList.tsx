@@ -45,6 +45,8 @@ export const GridList = ({
               ref={index === users.length - 1 ? lastElementRef : undefined}
             >
               <UserCard
+                id={user.id}
+                likedByMe={user.likedByMe}
                 name={user.name}
                 from={user.from}
                 age={birthdayToFormatedAge(user.birthdate)}

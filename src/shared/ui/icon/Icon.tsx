@@ -1,3 +1,5 @@
+// src\shared\ui\icon\Icon.tsx
+
 import { FC } from "react";
 import clsx from "clsx";
 import styles from "./Icon.module.css";
@@ -34,7 +36,7 @@ import HomeIcon from "../../assets/icons/home.svg?react";
 import IdeaIcon from "../../assets/icons/idea.svg?react";
 import LifeStyleIcon from "../../assets/icons/lifestyle.svg?react";
 import LikeIcon from "../../assets/icons/like.svg?react";
-import LikeActiveIcon from "../../assets/icons/Like-active.svg?react";
+import LikeActiveIcon from "../../assets/icons/like-active.svg?react";
 import LogoIcon from "../../assets/icons/Logo.svg?react";
 import LogoutIcon from "../../assets/icons/logout.svg?react";
 import MessageIcon from "../../assets/icons/message-text.svg?react";
@@ -57,40 +59,42 @@ import UserIcon from "../../assets/icons/user.svg?react";
 
 // Как называются иконки
 const icons = {
-  google: GoogleIcon,
+  add: AddIcon,
   apple: AppleIcon,
-  eye: EyeIcon,
-  eyeSlash: EyeSlashIcon,
-  chevronUp: ChevronUpIcon,
-  chevronRight: ChevronRightIcon,
-  chevronDown: ChevronDownIcon,
+  book: BookIcon,
+  briefcase: BriefcaseIcon,
+  calendar: CalendarIcon,
   checkboxDone: CheckboxDoneIcon,
   checkboxEmpty: CheckboxEmptyIcon,
-  search: SearchIcon,
-  moon: MoonIcon,
-  notification: NotificationIcon,
-  idea: IdeaIcon,
-  logo: LogoIcon,
-  like: LikeIcon,
-  lifestyle: LifeStyleIcon,
-  book: BookIcon,
-  palette: PaletteIcon,
-  home: HomeIcon,
-  global: GlobalIcon,
-  briefcase: BriefcaseIcon,
-  add: AddIcon,
-  userCircle: UserCircleIcon,
-  calendar: CalendarIcon,
+  chevronDown: ChevronDownIcon,
+  chevronRight: ChevronRightIcon,
+  chevronUp: ChevronUpIcon,
   done: DoneIcon,
-  sort: SortIcon,
-  galleryedit: GalleryEditIcon,
-  requests: RequestIcon,
-  messagetext: MessageIcon,
-  user: UserIcon,
   edit: EditIcon,
+  eye: EyeIcon,
+  eyeSlash: EyeSlashIcon,
+  galleryedit: GalleryEditIcon,
+  global: GlobalIcon,
+  google: GoogleIcon,
+  home: HomeIcon,
+  idea: IdeaIcon,
+  like: LikeIcon,
+  'like-active': LikeActiveIcon,
+  lifestyle: LifeStyleIcon,
+  logo: LogoIcon,
+  messagetext: MessageIcon,
+  moon: MoonIcon,
+  more: MoreIcon,
+  notification: NotificationIcon,
+  palette: PaletteIcon,
+  requests: RequestIcon,
+  search: SearchIcon,
   share: ShareIcon,
-  more: MoreIcon
+  sort: SortIcon,
+  user: UserIcon,
+  userCircle: UserCircleIcon,
 } as const;
+
 
 interface IconProps {
   name: IconName;
@@ -98,6 +102,8 @@ interface IconProps {
   className?: string;
   color?: string;
   strokeWidth?: number | string;
+  alt?: string;
+  onClick?: () => void;
 }
 
 export const Icon: FC<IconProps> = ({
@@ -105,8 +111,11 @@ export const Icon: FC<IconProps> = ({
   size = "s",
   className,
   color,
+  alt,
   strokeWidth,
+  onClick,
 }) => {
+
   const IconComponent = icons[name];
 
   const sizeMap = {
@@ -126,6 +135,9 @@ export const Icon: FC<IconProps> = ({
         fill: color,
         strokeWidth: strokeWidth,
       }}
+      role="img"
+      aria-label={alt}
+      onClick={onClick}
     />
   );
 };

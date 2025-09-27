@@ -24,8 +24,6 @@ import {
   SkillMenu,
 } from "@widgets";
 import { AuthForm, FilterSection, SkillCardDetails } from "@features";
-import { getSkillsSubCategoriesApi } from "@api/Api";
-import { TPlace } from "@api/types";
 import {
   RegistrationOnBoarding,
   onBoarding,
@@ -43,9 +41,6 @@ import { SkillFilters } from "../features/filters/SkillFilters";
 import { TSkillType } from "shared/types/filters";
 import { FiltersContainer } from "../features/filters/FiltersContainer";
 
-import like from "../shared/assets/icons/like.png";
-import share from "../shared/assets/icons/share.png";
-import more from "../shared/assets/icons/more-square.png";
 import { ActiveFiltersBar } from "../features/filters/ActiveFiltersBar";
 import { RegistrationProgress } from "../shared/ui/RegistrationProgress/RegistrationProgress";
 
@@ -65,10 +60,6 @@ export const HomePage = () => {
   );
 
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
-  
-  // const [selectedGender, setSelectedGender] = useState<string>("");
-  // const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
-  // const [subCategories, setSubCategories] = useState<TPlace[]>([]);
 
   const subCategories = useSelector(
     (s: RootState) => s.categories.subcategories
@@ -254,6 +245,8 @@ export const HomePage = () => {
         <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
           {users.map((u) => (
             <UserCard
+              id={u.id}
+              likedByMe={u.likedByMe}
               key={u.id}
               name={u.name}
               from={u.from}
@@ -323,6 +316,8 @@ export const HomePage = () => {
       <div style={{ display: "flex", gap: "20px" }}>
         {user && (
           <UserCard
+            id={user.id}
+            likedByMe={user.likedByMe}
             name={user.name}
             from={user.from}
             age={birthdayToFormatedAge(user.birthdate)}

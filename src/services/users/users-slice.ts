@@ -43,6 +43,14 @@ export const usersSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+
+    // переключение лайка у пользователя по id
+    toggleLike: (state, action: PayloadAction<number>) => {
+      const user = state.users.find(u => u.id === action.payload);
+      if (user) {
+        user.likedByMe = !user.likedByMe;
+      }
+    },    
   },
   selectors: {
     getUserOffer: (state) => state.userOffer
@@ -86,6 +94,8 @@ export const usersSlice = createSlice({
       })
 
       // фокус!!! ловим чужие события
+      // проставляем лайки у всех пользователей
+      // на основании списка лайков залогиненного пользователя
       .addCase(getUserLikesThunk.fulfilled, (state, action) => {
         const likedIds = new Set(action.payload);
         state.users = state.users.map(u => ({
@@ -108,5 +118,5 @@ export const usersSlice = createSlice({
 });
 
 export const { getUserOffer } = usersSlice.selectors;
-export const { setPage, setHasMore, resetUsers } = usersSlice.actions;
+export const { setPage, setHasMore, resetUsers, toggleLike } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;

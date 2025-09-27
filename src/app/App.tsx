@@ -46,17 +46,20 @@ import { ProfilePage } from "../pages/profile/ProfilePage";
 //Данные/типы/стор (для каталога)
 import { RootState, useDispatch } from "@store";
 import { useSelector } from "react-redux";
-import { TPlace } from "@api/types";
-import { AuthForm, FilterSection, SkillCardDetails } from "@features";
+import { AuthForm, FilterSection } from "@features";
 
 import { getPlacesThunk } from "../services/places/actions";
 import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
+import { getUserLikesThunk } from "../services/user/actions";
+
+
 import { Button } from "../shared/ui/button/Button";
 import { OfferPage } from "../pages/Offer/OfferPage";
 
 import styles from "./App.module.css";
-import { getUserLikesThunk } from "../services/user/actions";
+
+
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
@@ -101,7 +104,9 @@ const CatalogContent: React.FC = () => {
 //Логин — AuthForm
 const LoginContent: React.FC = () => (
   <section className="page page-auth">
-    <AuthForm />
+    <AuthForm 
+      onContinue={() => {}}
+    />
   </section>
 );
 
@@ -154,7 +159,10 @@ const RegisterContent: React.FC = () => {
 //Форма навыка
 const SkillFormContent: React.FC = () => (
   <section className="page page-skillform">
-    <SkillForm />
+    <SkillForm 
+      onContinue={() => { /* заглушка */ }}
+      onBack={() => { /* заглушка */ }}
+    />
   </section>
 );
 
@@ -168,35 +176,6 @@ const DropdownsDemoContent: React.FC = () => (
   </section>
 );
 
-//Демо: детальная карточка навыка (mock)
-// const SkillDetailsDemoContent: React.FC = () => {
-//   const mySkill = {
-//     title: "Игра на барабанах",
-//     subtitle: "Творчество и искусство / Музыка и звук",
-//     description:
-//       "Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене...",
-//     images: [
-//       "/db/skills-photo/drums-1.jpg",
-//       "/db/skills-photo/drums-2.jpg",
-//       "/db/skills-photo/drums-3.jpg",
-//       "/db/skills-photo/+3.png",
-//     ],
-//     icons: [
-//       "/src/shared/assets/icons/like.png",
-//       "/src/shared/assets/icons/share.png",
-//       "/src/shared/assets/icons/more-square.png",
-//     ],
-//     buttonText: "Предложить обмен",
-//     onExchange: () => alert("Обмен предложен!"),
-//   };
-//   return (
-//     <section className="page page-skill-details">
-//       <SkillCardDetails skill={mySkill} />
-//     </section>
-//   );
-// };
-
-/* ЗАГЛУШКИ*/
 
 // /skills/:id — детальная страница навыка (пока заглушка)
 const SkillPageStub: React.FC = () => {
@@ -225,15 +204,9 @@ const RequestsPageStub: React.FC = () => (
   </section>
 );
 
-// /profile/notifications
-const NotificationsPageStub: React.FC = () => (
-  <section className="page page-notifications">
-    <h1>Уведомления</h1>
-    <p>Страница в разработке.</p>
-  </section>
-);
-
 export const App: React.FC = () => {
+
+  // Подгружаем данные, чтобы всё нарисовать
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -244,6 +217,7 @@ export const App: React.FC = () => {
 
 const currentUser = useSelector((s: RootState) => s.user.user);
 
+// лайки грузятся при смене пользователя
 React.useEffect(() => {
   if (currentUser) {
     dispatch(getUserLikesThunk(currentUser.id));
