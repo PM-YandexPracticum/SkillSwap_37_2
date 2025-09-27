@@ -1,0 +1,36 @@
+.registrationContainer {
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.progressSection {
+  background: white;
+  padding: 20px;
+}
+
+.mainContent {
+  padding-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+
+.contentContainer {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  width: 100%;
+  justify-content: center;
+}
+
+.formSection {
+  flex: 0 0 auto;
+  width: 556px;
+}
+
+.onboardingSection {
+  flex: 0 0 auto;
+  width: 556px;
+}

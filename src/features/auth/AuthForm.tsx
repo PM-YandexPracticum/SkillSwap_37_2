@@ -6,7 +6,7 @@ import { Input } from "../../shared/ui/input/Input";
 import { SocialButton } from "../../shared/ui/social-button/SocialButton";
 
 type AuthFormProps = {
-  onContinue: () => void;
+  onContinue: (email: string, password: string) => void;
 };
 
 export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
@@ -122,7 +122,7 @@ export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
             id="password"
           />
         </form>
-        <Button colored onClick={onContinue}>Далее</Button>
+        <Button colored onClick={() => onContinue(email, password)}>Далее</Button>
       </div>
     </div>
   );

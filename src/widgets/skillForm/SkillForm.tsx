@@ -123,7 +123,7 @@ export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue })  => 
           <DragDrop />
         </fieldset>
         <div className={styles.buttonGroup}>
-          <Button type="button" onClick={onBack}>Назад</Button>
+          <Button type="button" onClick={onBack} className={styles.backButton}>Назад</Button>
           <Button colored>Продолжить</Button>
         </div>
       </form>
