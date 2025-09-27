@@ -1,5 +1,5 @@
 // src\services\user\user-slice.ts
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '../../api/types';
 import { getUserLikesThunk, getUserThunk } from './actions';
 
@@ -22,7 +22,13 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action: PayloadAction<TUser>) => {
+      state.user = action.payload;
+      // state.isAuthChecked = true; // чтобы выглядело как "залогинен"
+    }
+  },
+
   selectors: {
     getUser: (state) => state.user
   },
@@ -57,6 +63,7 @@ export const userSlice = createSlice({
 });
 
 export const { getUser } = userSlice.selectors;
+export const { setUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
 
