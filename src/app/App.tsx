@@ -92,7 +92,7 @@ const CatalogContent: React.FC = () => {
       />
       <GridList
         users={users}
-        subCategories={subCategories}
+        // subCategories={subCategories}
         loading={false}
         hasMore={false}
         onLoadMore={() => {}}

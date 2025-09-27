@@ -36,16 +36,19 @@ export const CardSlider = ({ users, subCategories }: CardSliderProps) => {
         
         {visibleUsers.map((user) => (
           <UserCard
-            id={user.id}
-            likedByMe={user.likedByMe}
-            key={user.id}
-            name={user.name}
-            from={user.from}
-            age={birthdayToFormatedAge(user.birthdate)}
-            avatar={getImageUrl(user.photo)}
-            teachSkills={user.skill}
-            learnSkills={user.need_subcat}
-            subCategories={subCategories}
+            user={user}
+            onDetailsClick={() => alert(user.name)}
+
+            // id={user.id}
+            // likedByMe={user.likedByMe}
+            // key={user.id}
+            // name={user.name}
+            // from={user.from}
+            // age={birthdayToFormatedAge(user.birthdate)}
+            // avatar={getImageUrl(user.photo)}
+            // teachSkills={user.skill}
+            // learnSkills={user.need_subcat}
+            // subCategories={subCategories}
           />
         ))}
       </div>

@@ -6,49 +6,74 @@ import { Icon } from '../../../shared/ui/icon/Icon';
 import styles from "./UserCard.module.css";
 import { Button } from "../../../shared/ui/button/Button";
 import { SkillTag } from "../../skills/skillTag/SkillTag";
-import { TPlace } from "../../../api/types";
+import { TPlace, TUser } from "../../../api/types";
 import { prepareSkillsToRender } from "../../../shared/lib/prepareSkillsToRender";
-import { useDispatch } from '@store';
+import { RootState, useDispatch, useSelector } from '@store';
 import { toggleLike } from '../../../services/users/users-slice';
+import { birthdayToFormatedAge, getImageUrl } from "../../../shared/lib/helpers";
 
 
 type UserCardProps = {
-  id: number; 
-  name: string;
-  from: string;
-  age: string;
-  avatar: string;
-  about?: string; //если есть, рендерит карточку с "о себе"
-  teachSkills: TSkillName;
-  learnSkills: number[];
-  subCategories: TPlace[];
-  likedByMe: boolean;
+  user: TUser;
+  // id: number; 
+  // name: string;
+  // from: string;
+  // age: string;
+  // avatar: string;
+  // about?: string; //если есть, рендерит карточку с "о себе"
+  // teachSkills: TSkillName;
+  // learnSkills: number[];
+  // subCategories: TPlace[];
+  // likedByMe: boolean;
   onDetailsClick?: () => void;
+  needAbout?: boolean;
 };
 
 export const UserCard = ({
-  id,
-  name,
-  from,
-  age,
-  avatar,
-  about,
-  teachSkills,
-  learnSkills,
-  subCategories,
-  likedByMe,
-  onDetailsClick
+  user,
+  // id,
+  // name,
+  // from,
+  // age,
+  // avatar,
+  // about,
+  // teachSkills,
+  // learnSkills,
+  // subCategories,
+  // likedByMe,
+  onDetailsClick,
+  needAbout = false
 }: UserCardProps) => {
   // фича prepareSkillsToRender возвращает массив скилов
   // таким образом, чтобы они уместились в строке целиком, без обрезания
-  const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
-    learnSkills,
-    subCategories
-  );
+
+
+
+
+
+
+const subCategories = useSelector((s: RootState) => s.categories.subcategories);
+
+const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
+  user.need_subcat,
+  subCategories
+);
+
+// const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
+//   user.need_subcat,   // массив id подкатегорий, чему хочет научиться
+//   user.subCategories       // справочник всех подкатегорий
+// );  
+  // const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
+  //   learnSkills,
+  //   subCategories
+  // );
 
   const dispatch = useDispatch();
+
+  const age = birthdayToFormatedAge(user.birthdate);
+  const avatar = getImageUrl(user.photo);
   
-  return about ? (
+  return needAbout ? (
     <article
       className={styles.card}
       style={{ padding: "32px", maxHeight: "27.75em" }}
@@ -57,14 +82,14 @@ export const UserCard = ({
         <div className={styles.userInfoContainer}>
           <img src={avatar} alt="фото профиля" className={styles.avatar} />
           <div className={styles.infoWrapper}>
-            <p className={styles.userName}>{name}</p>
-            <p className={styles.fromAge}>{`${from}, ${age}`}</p>
+            <p className={styles.userName}>{user.name}</p>
+            <p className={styles.fromAge}>{`${user.from}, ${age}`}</p>
           </div>
         </div>
       </section>
 
       <section className={styles.about}>
-        <p>{about}</p>
+        <p>{user.about}</p>
       </section>
 
       <section>
@@ -73,7 +98,8 @@ export const UserCard = ({
             Может научить
           </p>
           <ul className={styles.tagWrapper}>
-            <SkillTag skill={teachSkills} />
+            <SkillTag skill={user.sub_text} />
+            {/* <SkillTag skill={user.teachSkills} /> */}
           </ul>
         </div>
         <div>
@@ -104,16 +130,16 @@ export const UserCard = ({
         <div className={styles.userInfoContainer}>
           <img src={avatar} alt="фото профиля" className={styles.avatar} />
           <div className={styles.infoWrapper}>
-            <p className={styles.userName}>{name}</p>
-            <p className={styles.fromAge}>{`${from}, ${age}`}</p>
+            <p className={styles.userName}>{user.name}</p>
+            <p className={styles.fromAge}>{`${user.from}, ${age}`}</p>
           </div>
         </div>
 
         <Icon
-          name={likedByMe ? 'like-active' : 'like'}
-          alt={likedByMe ? 'уже лайкнул' : 'поставить лайк'}
+          name={user.likedByMe ? 'like-active' : 'like'}
+          alt={user.likedByMe ? 'уже лайкнул' : 'поставить лайк'}
           className={styles.like}
-          onClick={() => dispatch(toggleLike(id))}
+          onClick={() => dispatch(toggleLike(user.id))}
         />        
 
       </section>
@@ -122,7 +148,7 @@ export const UserCard = ({
         <div className={styles.canTeach}>
           <p className={styles.offer}>Может научить</p>
           <ul className={styles.tagWrapper}>
-            <SkillTag skill={teachSkills} />
+            <SkillTag skill={user.sub_text} />
           </ul>
         </div>
         <div>

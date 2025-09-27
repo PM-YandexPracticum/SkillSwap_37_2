@@ -172,7 +172,7 @@ export const HomePage = () => {
             <GridList
               rows={1}
               users={users}
-              subCategories={subCategories}
+              // subCategories={subCategories}
               loading={isLoading}
               hasMore={hasMore}
               onLoadMore={handleLoadMore}
@@ -186,7 +186,7 @@ export const HomePage = () => {
             <GridList
               rows={1}
               users={users}
-              subCategories={subCategories}
+              // subCategories={subCategories}
               loading={isLoading}
               hasMore={hasMore}
               onLoadMore={handleLoadMore}
@@ -196,7 +196,7 @@ export const HomePage = () => {
             <GridList
               rows={1}
               users={users}
-              subCategories={subCategories}
+              // subCategories={subCategories}
               loading={isLoading}
               hasMore={hasMore}
               onLoadMore={handleLoadMore}
@@ -230,7 +230,7 @@ export const HomePage = () => {
         >
           <GridList
             users={users}
-            subCategories={subCategories}
+            // subCategories={subCategories}
             loading={isLoading}
             hasMore={hasMore}
             onLoadMore={handleLoadMore}
@@ -245,16 +245,17 @@ export const HomePage = () => {
         <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
           {users.map((u) => (
             <UserCard
-              id={u.id}
-              likedByMe={u.likedByMe}
-              key={u.id}
-              name={u.name}
-              from={u.from}
-              age={birthdayToFormatedAge(u.birthdate)}
-              avatar={getImageUrl(u.photo)}
-              teachSkills={u.skill}
-              learnSkills={u.need_subcat}
-              subCategories={subCategories}
+              user={u}
+              // id={u.id}
+              // likedByMe={u.likedByMe}
+              // key={u.id}
+              // name={u.name}
+              // from={u.from}
+              // age={birthdayToFormatedAge(u.birthdate)}
+              // avatar={getImageUrl(u.photo)}
+              // teachSkills={u.skill}
+              // learnSkills={u.need_subcat}
+              // subCategories={subCategories}
               onDetailsClick={() => setSelectedUser(u)}
             />
           ))}
@@ -316,16 +317,19 @@ export const HomePage = () => {
       <div style={{ display: "flex", gap: "20px" }}>
         {user && (
           <UserCard
-            id={user.id}
-            likedByMe={user.likedByMe}
-            name={user.name}
-            from={user.from}
-            age={birthdayToFormatedAge(user.birthdate)}
-            avatar={getImageUrl(user.photo)}
-            about={user.about}
-            teachSkills={user.skill}
-            learnSkills={user.need_subcat}
-            subCategories={subCategories}
+            user={user}
+            onDetailsClick={() => setSelectedUser(user)}
+
+            // id={user.id}
+            // likedByMe={user.likedByMe}
+            // name={user.name}
+            // from={user.from}
+            // age={birthdayToFormatedAge(user.birthdate)}
+            // avatar={getImageUrl(user.photo)}
+            // about={user.about}
+            // teachSkills={user.skill}
+            // learnSkills={user.need_subcat}
+            // subCategories={subCategories}
           />
         )}
       </div>

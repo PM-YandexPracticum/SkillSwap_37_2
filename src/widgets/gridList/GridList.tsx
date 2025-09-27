@@ -1,3 +1,5 @@
+// src\widgets\gridList\GridList.tsx
+
 import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
@@ -10,7 +12,7 @@ type TRows = 1 | "auto";
 
 type GridListProps = {
   users: TUser[];
-  subCategories: TPlace[];
+  // subCategories: TPlace[];
   rows?: TRows;
   loading: boolean;
   hasMore: boolean;
@@ -19,7 +21,7 @@ type GridListProps = {
 
 export const GridList = ({
   users,
-  subCategories,
+  // subCategories,
   rows = "auto", //по умолчанию показывать все ряды(все карточки)
   loading,
   hasMore, //бесконечный скролл/подгрузка данных
@@ -45,15 +47,18 @@ export const GridList = ({
               ref={index === users.length - 1 ? lastElementRef : undefined}
             >
               <UserCard
-                id={user.id}
-                likedByMe={user.likedByMe}
-                name={user.name}
-                from={user.from}
-                age={birthdayToFormatedAge(user.birthdate)}
-                avatar={getImageUrl(user.photo)}
-                teachSkills={user.sub_text}
-                learnSkills={user.need_subcat}
-                subCategories={subCategories}
+                user = {user}
+                onDetailsClick={() => alert(user.name)}
+
+                // id={user.id}
+                // likedByMe={user.likedByMe}
+                // name={user.name}
+                // from={user.from}
+                // age={birthdayToFormatedAge(user.birthdate)}
+                // avatar={getImageUrl(user.photo)}
+                // teachSkills={user.sub_text}
+                // learnSkills={user.need_subcat}
+                // subCategories={subCategories}
               />
             </li>
           ))}

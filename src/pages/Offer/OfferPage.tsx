@@ -36,16 +36,19 @@ export const OfferPage: React.FC = () => {
         <div className={styles.userCard}>
           {user && (
                     <UserCard
-                      id={user.id}
-                      likedByMe={user.likedByMe}
-                      name={user.name}
-                      from={user.from}
-                      age={birthdayToFormatedAge(user.birthdate)}
-                      avatar={getImageUrl(user.photo)}
-                      about={user.about}
-                      teachSkills={user.skill}
-                      learnSkills={user.need_subcat}
-                      subCategories={subCategories}
+                      user={user}
+                      onDetailsClick={() => alert(user.name)}
+
+                      // id={user.id}
+                      // likedByMe={user.likedByMe}
+                      // name={user.name}
+                      // from={user.from}
+                      // age={birthdayToFormatedAge(user.birthdate)}
+                      // avatar={getImageUrl(user.photo)}
+                      // about={user.about}
+                      // teachSkills={user.skill}
+                      // learnSkills={user.need_subcat}
+                      // subCategories={subCategories}
                     />
                   )}
         </div>
