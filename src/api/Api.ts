@@ -40,6 +40,33 @@ export const getUsersApi = async (
   }
 };
 
+export const getPopularUsersApi = async (
+  page = 1,
+): Promise<TResponseUsers> => {
+  try {
+    const response = await fetch(USERS_JSON_FILE);
+    const data = await response.json();
+
+    // сортируем по likes_received (убывание)
+    const sortedUsers: TUser[] = [...data.users].sort(
+      (a, b) => b.likes_received - a.likes_received
+    );
+
+    // пагинация
+    const startIndex = (page - 1) * USERS_PAGE_SIZE;
+    const endIndex = startIndex + USERS_PAGE_SIZE;
+    const pagedUsers = sortedUsers.slice(startIndex, endIndex);
+
+    return {
+      users: pagedUsers,
+      hasMore: endIndex < sortedUsers.length,
+    };
+  } catch (error) {
+    console.error('Ошибка загрузки популярных пользователей:', error);
+    throw error;
+  }
+};
+
 export const getUserByID = async (userId: number): Promise<TUser | null> => {
   try {
     const response = await fetch(USERS_JSON_FILE);

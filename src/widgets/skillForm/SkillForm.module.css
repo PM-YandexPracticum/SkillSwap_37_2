@@ -19,3 +19,7 @@
   display: flex;
   gap: 20px;
 }
+
+.backButton {
+  border: 1px solid #abd27a !important;
+}
