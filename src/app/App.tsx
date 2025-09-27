@@ -53,7 +53,6 @@ import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
 import { getUserLikesThunk, getUserThunk } from "../services/user/actions";
 
-
 import { Button } from "../shared/ui/button/Button";
 import { OfferPage } from "../pages/Offer/OfferPage";
 
