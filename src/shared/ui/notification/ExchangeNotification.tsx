@@ -8,7 +8,7 @@ import { Modal } from "../modal/Modal";
 interface ExchangeNotificationProps {
   isOpen: boolean;
   onClose: () => void;
-  type: "success" | "info";
+  type: "success" | "info" | "notification";
   title?: string;
   message?: string;
   buttonText?: string;
@@ -31,10 +31,16 @@ export const ExchangeNotification: React.FC<ExchangeNotificationProps> = ({
       defaultMessage: "Теперь вы можете предложить обмен",
       defaultButtonText: "Готово",
     },
-    info: {
+    notification: {
       icon: "notification" as IconName,
       defaultTitle: "Вы предложили обмен",
       defaultMessage: "Теперь дождитесь подтверждения. Вам придет уведомление",
+      defaultButtonText: "Готово",
+    },
+    info: {
+      icon: "userCircle" as IconName,
+      defaultTitle: "Ваше предложение создано",
+      defaultMessage: "Теперь вы можете предложить обмен",
       defaultButtonText: "Готово",
     },
   };
@@ -50,7 +56,7 @@ export const ExchangeNotification: React.FC<ExchangeNotificationProps> = ({
             size="l"
             className={styles.icon}
             data-icon={content.icon}
-            strokeWidth={1.5}
+            strokeWidth={type === 'notification' ? 1.5 : 0.5}
           />
         </div>
         <div className={styles.content}>
@@ -61,20 +67,15 @@ export const ExchangeNotification: React.FC<ExchangeNotificationProps> = ({
             </span>
           </div>
 
-          {onNavigateToExchange && (
-            <Button
-              onClick={() => {
-                if (onNavigateToExchange) {
-                  onNavigateToExchange();
-              }
+          <Button
+            onClick={() => {
+              onNavigateToExchange?.();
               onClose();
             }}
             colored
-            >
+          >
             {buttonText || content.defaultButtonText}
-            </Button>
-            
-          )}
+          </Button>
         </div>
       </div>
     </Modal>

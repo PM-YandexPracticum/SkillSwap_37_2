@@ -43,6 +43,11 @@ import { HomePage } from "../pages/HomePage";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import { ProfilePage } from "../pages/profile/ProfilePage";
 
+// Страницы регистрации
+import { RegistrationStep1 } from "../pages/registration/RegistrationStep1";
+import { RegistrationStep2 } from "../pages/registration/RegistrationStep2";
+import { RegistrationStep3 } from "../pages/registration/RegistrationStep3";
+
 //Данные/типы/стор (для каталога)
 import { RootState, useDispatch } from "@store";
 import { useSelector } from "react-redux";
@@ -54,7 +59,7 @@ import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
 import { Button } from "../shared/ui/button/Button";
 import { OfferPage } from "../pages/Offer/OfferPage";
-
+import { RegisterStep2Data } from "../features/auth/RegisterStep2";
 import styles from "./App.module.css";
 
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
@@ -100,45 +105,36 @@ const CatalogContent: React.FC = () => {
 //Логин — AuthForm
 const LoginContent: React.FC = () => (
   <section className="page page-auth">
-    <AuthForm />
+    <AuthForm onContinue={(email, password) => {
+  console.log('Email:', email, 'Password:', password);
+ }}/>
   </section>
 );
 
-//Register
+// Регистрация 
 const RegisterContent: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [step2Data, setStep2Data] = useState<Partial<{
-    name: string;
-    birthdate: Date | null;
-    gender: string;
-    city: string;
-    selectedCategories: string[];
-    selectedSubcategories: string[];
-  }> | null>(null);
+  const [step2Data, setStep2Data] = useState<Partial<RegisterStep2Data> | null>(null);
 
-  const handleStep2Continue = (data: any) => {
+  const handleStep2Continue = (data: RegisterStep2Data) => {
     setStep2Data(data);
-
     console.log("Данные регистрации:", data);
     alert("Регистрация завершена! Данные: " + JSON.stringify(data, null, 2));
   };
 
   const handleBack = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    }
+    if (step > 1) setStep(step - 1);
+  };
+
+  const handleStep1Continue = (email: string, password: string) => {
+    console.log('Шаг 1 данные:', email, password);
+    setStep(2);
   };
 
   return (
     <section className="page page-auth">
       {step === 1 ? (
-        <div>
-          <h1>Регистрация</h1>
-          <p>Здесь будет форма регистрации</p>
-          <Button colored onClick={() => setStep(2)}>
-            Далее
-          </Button>
-        </div>
+        <AuthForm onContinue={handleStep1Continue} />
       ) : (
         <RegisterStep2
           onBack={handleBack}
@@ -153,7 +149,9 @@ const RegisterContent: React.FC = () => {
 //Форма навыка
 const SkillFormContent: React.FC = () => (
   <section className="page page-skillform">
-    <SkillForm />
+    <SkillForm 
+      onBack={() => console.log('Back')}
+      onContinue={() => console.log('Continue')}/>
   </section>
 );
 
@@ -258,6 +256,28 @@ export const App: React.FC = () => {
 
           <Route path="demo/skill-details" element={<OfferPage />} />
 
+      {/* Страницы регистрации */}
+          <Route path="registration/step1" element={
+            <RegistrationStep1 onContinue={(email, password) => {
+              console.log('Step 1 data:', email, password);
+              window.location.href = '/registration/step2';
+            }} />
+          } />
+          <Route path="registration/step2" element={
+            <RegistrationStep2 
+              onBack={() => window.location.href = '/registration/step1'}
+              onContinue={(data) => {
+                console.log('Step 2 data:', data);
+                window.location.href = '/registration/step3';
+              }}
+            />
+          } />
+          <Route path="registration/step3" element={
+            <RegistrationStep3 
+              onBack={() => window.location.href = '/registration/step2'}
+              onComplete={() => window.location.href = '/'}
+            />
+          } />
 
           {/*заглушки*/}
           <Route path="skills/:id" element={<SkillPageStub />} />

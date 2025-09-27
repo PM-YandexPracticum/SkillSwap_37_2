@@ -139,6 +139,20 @@ export const HomePage = () => {
     <div className={styles.homePageWrapper}>
       <Header />
 
+<div>
+  <button 
+    style={{
+      fontSize: "32px",
+      color: "red",
+      height: "80px",
+      padding: "10px 20px",
+    }}
+    onClick={() => window.location.href = '/registration/step1'}
+  >
+    Тестировать регистрацию 
+  </button>
+</div>
+
       <div className={styles.filterSectionWrapper}>
         <FiltersContainer
           title="Фильтры"
@@ -359,6 +373,19 @@ export const HomePage = () => {
           onClick={() => openNotification({ type: "info" })}
         >
           Показать уведомление Info
+        </button>
+
+       <h2>Кнопка для демонстрации notification</h2>
+        <button
+          style={{
+            fontSize: "32px",
+            color: "red",
+            height: "80px",
+            padding: "10px 20px",
+          }}
+          onClick={() => openNotification({ type: "notification" })}
+        >
+          Показать уведомление notification
         </button>
 
         <ExchangeNotification
