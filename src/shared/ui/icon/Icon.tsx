@@ -89,7 +89,8 @@ const icons = {
   user: UserIcon,
   edit: EditIcon,
   share: ShareIcon,
-  more: MoreIcon
+  more: MoreIcon,
+  logout: LogoutIcon,
 } as const;
 
 interface IconProps {

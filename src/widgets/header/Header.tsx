@@ -12,9 +12,11 @@ import { getImageUrl } from "../../shared/lib/helpers";
 import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
 import { Popup } from "../popup/Popup";
 import { SkillMenu } from "../SkillMenu/SkillMenu";
+import { ProfilePopup } from "../profile-popup/ProfilePopup";
 
 export const Header: FC = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const user = useSelector(getUser);
   const navigate = useNavigate();
@@ -26,7 +28,15 @@ export const Header: FC = () => {
 
   const closePopup = () => {
     setPopupOpen(false);
-  }
+  };
+
+  const toggleProfilePopup = () => {
+    setIsProfilePopupOpen(!isProfilePopupOpen);
+  };
+
+  const closeProfilePopup = () => {
+    setIsProfilePopupOpen(false);
+  };
 
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
@@ -97,7 +107,7 @@ export const Header: FC = () => {
         {user ? (
           <div
             className={styles.userAuthWrapper}
-            onClick={handleProfileClick}
+            onClick={toggleProfilePopup}
             style={{ cursor: "pointer" }}
           >
             <span className={styles.userName}>{user.name}</span>
@@ -124,6 +134,10 @@ export const Header: FC = () => {
       />
       <Popup isOpen={isPopupOpen} onClose={closePopup}>
         <SkillMenu />
+      </Popup>
+      
+      <Popup isOpen={isProfilePopupOpen} onClose={closeProfilePopup}>
+        <ProfilePopup />
       </Popup>
     </header>
   );

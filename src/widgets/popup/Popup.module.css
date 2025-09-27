@@ -2,6 +2,9 @@
   position: absolute;
   top: 94px;
   left: 36px;
+  border: 1px solid #69735D;
+  border-radius: 12px;
+  background-color: #fff;
   z-index: 4;
 }
   
