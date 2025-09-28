@@ -24,26 +24,6 @@ export const Header: FC = () => {
 
   // const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
-  /// ЗАКОММЕНТИРОВАЛ 
-// <!--   const togglePopup = () => {
-//     setPopupOpen(!isPopupOpen);
-//   };
-
-//   const closePopup = () => {
-//     setPopupOpen(false);
-//   };
-
-//   const toggleNotifications = () => {
-//     setIsNotificationsOpen(!isNotificationsOpen);
-//   };
-
-//   const closeNotifications = () => {
-//     setIsNotificationsOpen(false);
-//   };
-
-//   const handleProfileClick = () => {
-//     navigate("/profile"); -->
-
   const togglePopup = (popup: PopupType) => {
     setOpenPopup(prev => (prev === popup ? null : popup));
   };
@@ -67,7 +47,7 @@ export const Header: FC = () => {
               Все навыки
               <Icon
 //                name={isPopupOpen ? "chevronUp" : "chevronDown"}
-                name={isOpenPopup ? 'chevronUp' : 'chevronDown'}
+                name={isOpenPopup === 'skills' ? 'chevronUp' : 'chevronDown'}
                 size="s"
                 className={styles.iconChevron}
               />
