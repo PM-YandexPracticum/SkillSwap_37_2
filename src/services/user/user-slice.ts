@@ -26,6 +26,12 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<TUser>) => {
       state.user = action.payload;
       // state.isAuthChecked = true; // чтобы выглядело как "залогинен"
+    },
+    setLogout: (state) => {
+      state.user = null;
+      state.likes = [];
+      state.isAuthChecked = false;
+      state.error = null;
     }
   },
 
@@ -68,7 +74,7 @@ export const { setUser } = userSlice.actions;
 
 // новые имена (рекомендуется использовать дальше)
 export const { getUser: getCurrentUser } = userSlice.selectors;
-export const { setUser: setCurrentUser } = userSlice.actions;
+export const { setUser: setCurrentUser, setLogout } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
 

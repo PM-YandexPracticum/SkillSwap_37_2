@@ -24,6 +24,7 @@ export type IconName =
   | 'like-active'
   | 'lifestyle'
   | 'logo'
+  | 'logout'
   | 'messagetext'
   | 'moon'
   | 'more'
