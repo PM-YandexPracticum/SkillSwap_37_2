@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Gallery } from "../../../shared/ui/gallery/Gallery";
 import { useExchangeNotification } from "../../../shared/ui/notification/useExchangeNotification";
 import { ExchangeNotification } from "../../../shared/ui/notification/ExchangeNotification";
+import { RegistrationModal } from "../../registration/RegistrationModal";
 import { Icon } from "../../../shared/ui/icon/Icon";
 import { Button } from "../../../shared/ui/button/Button";
 import photoPlaceholder from "../../../shared/assets/images/school-board.svg?.svg";
@@ -15,6 +16,7 @@ type SkillCardDetailsProps = {
   images?: string[];
   buttonText?: string;
   onExchange?: () => void;
+  requireRegistration?: boolean;
 };
 
 export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
@@ -24,18 +26,34 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   description,
   images = [],
   buttonText = "Предложить обмен",
-  onExchange
+  onExchange,
+  requireRegistration = true
 }) => {
 
   const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
-
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false); // Состояние для модалки
+  
   const handleExchangeClick = () => {
+    if (requireRegistration) {
     openNotification({
       type: "info",
       title: "Ваше предложение создано",
       message: "Теперь вы можете предложить обмен",
       buttonText: "Готово",
     });
+    } else { // Если регистрация не требуется, сразу вызываем обмен
+    onExchange?.();
+    }
+  };
+
+   const handleNotificationButtonClick = () => {
+    // Открываем модалку регистрации
+    closeNotification();
+    setIsRegistrationModalOpen(true);
+  };
+
+  const handleRegistrationComplete = () => {
+    console.log("Регистрация завершена!");
     onExchange?.();
   };
 
@@ -95,17 +113,24 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
         </div>
       </div>
 
+    {/* Модалка регистрации */}
+      <RegistrationModal
+        isOpen={isRegistrationModalOpen}
+        onClose={() => setIsRegistrationModalOpen(false)}
+        onRegistrationComplete={handleRegistrationComplete}
+      />
+
       <ExchangeNotification
         isOpen={isNotificationOpen}
         onClose={closeNotification}
-        onNavigateToExchange={() => {
-          console.log("Предложение обмена");
-          closeNotification();
-        }}
+        onNavigateToExchange={handleNotificationButtonClick}
         type="info"
+        title="Ваше предложение создано"
+        message="Теперь вы можете предложить обмен"
+        buttonText="Готово"
       />
     </>
-  )};
+  )}
 
   return (
     <>
@@ -152,14 +177,21 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
         </div>
       </div>
 
+    {/* Модалка регистрации */}
+      <RegistrationModal
+        isOpen={isRegistrationModalOpen}
+        onClose={() => setIsRegistrationModalOpen(false)}
+        onRegistrationComplete={handleRegistrationComplete}
+      />
+
       <ExchangeNotification
         isOpen={isNotificationOpen}
         onClose={closeNotification}
-        onNavigateToExchange={() => {
-          console.log("Предложение обмена");
-          closeNotification();
-        }}
+        onNavigateToExchange={handleNotificationButtonClick}
         type="info"
+        title="Ваше предложение создано"
+        message="Теперь вы можете предложить обмен"
+        buttonText="Готово"
       />
     </>
   )

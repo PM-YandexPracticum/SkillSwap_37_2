@@ -25,24 +25,24 @@ export const Header: FC = () => {
   // const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
   /// ЗАКОММЕНТИРОВАЛ 
-  // const togglePopup = () => {
-  //   setPopupOpen(!isPopupOpen);
-  // };
+// <!--   const togglePopup = () => {
+//     setPopupOpen(!isPopupOpen);
+//   };
 
-  // const closePopup = () => {
-  //   setPopupOpen(false);
-  // };
+//   const closePopup = () => {
+//     setPopupOpen(false);
+//   };
 
-  // const toggleNotifications = () => {
-  //   setIsNotificationsOpen(!isNotificationsOpen);
-  // };
+//   const toggleNotifications = () => {
+//     setIsNotificationsOpen(!isNotificationsOpen);
+//   };
 
-  // const closeNotifications = () => {
-  //   setIsNotificationsOpen(false);
-  // };
+//   const closeNotifications = () => {
+//     setIsNotificationsOpen(false);
+//   };
 
-  // const handleProfileClick = () => {
-  //   navigate("/profile");
+//   const handleProfileClick = () => {
+//     navigate("/profile"); -->
 
   const togglePopup = (popup: PopupType) => {
     setOpenPopup(prev => (prev === popup ? null : popup));

@@ -96,6 +96,7 @@ const icons = {
   user: UserIcon,
   userCircle: UserCircleIcon,
   github: GitIcon,
+  cross: CrossIcon,
 } as const;
 
 
