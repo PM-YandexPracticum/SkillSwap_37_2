@@ -69,7 +69,7 @@ const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
   const avatar = getImageUrl(user.photo);
   const onDetailsClick = () => {
     dispatch(setOfferUser(user));
-    navigate(`skills/${user.id}`);
+    navigate(`/skills/${user.id}`);
   }   
   
   return (
