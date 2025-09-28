@@ -63,14 +63,14 @@ export const OfferPage: React.FC = () => {
         }
       </section>
 
-      {user && <SkillCardDetails
+      {/* {offerUser && <SkillCardDetails
               checkEdit={true}
               title={user.skill || "Навык не указан"}
               subtitle={`${user.cat_text || ""} / ${user.sub_text || ""}`}
               description={user.description || "Описание отсутствует"}
               images={user.images || ""}
               buttonText={"Готово"}
-          />}
+          />} */}
 
       <section>
         <CardShowcase
