@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-export type NotificationType = 'success' | 'info';
+export type NotificationType = 'success' | 'info' | 'notification';
 
 export interface NotificationConfig {
   type: NotificationType;

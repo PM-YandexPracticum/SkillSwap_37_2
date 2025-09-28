@@ -13,3 +13,7 @@
 .userOffer {
   flex-grow: 1;
 }
+
+.offerMissing {
+  margin: 0 auto;
+}

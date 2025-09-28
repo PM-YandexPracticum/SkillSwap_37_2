@@ -1,58 +1,40 @@
-import React, { useState, useEffect } from "react";
+// src\features\personalData\PersonalData.tsx
+
+import React, { useState } from "react";
 import styles from "./PersonalData.module.css";
 import { Input } from "../../shared/ui/input/Input";
 import { DatePicker } from "../../shared/ui/date-picker/DatePicker";
 import { Dropdown } from "../../shared/ui/input/input-dropdown/InputDropdown";
 import { Button } from "../../shared/ui/button/Button";
 import { Icon } from "../../shared/ui/icon/Icon";
-import { getUserByID } from "../../api/Api";
 import { TUser } from "../../api/types";
 import { genderOptions } from "../../shared/ui/input/input-dropdown/dropdownData";
 import { getImageUrl } from "../../shared/lib/helpers";
 import { Textarea } from "../../shared/ui/textarea/Textarea";
+import { useSelector } from "@store";
+import { getCurrentUser } from "../../services/user/user-slice";
+
+type FormData = Pick<TUser, 'email' | 'name' | 'gender' | 'from' | 'about'> & {
+  birthdate: Date | null; // у нас локально хранится Date
+};
 
 export const PersonalData = () => {
-  const [user, setUser] = useState<TUser | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({
-    email: "",
-    name: "",
-    birthdate: null as Date | null,
-    gender: "",
-    city: "",
-    about: "",
+
+  const currentUser = useSelector(getCurrentUser);
+  if (!currentUser) return null;
+
+  const [formData, setFormData] = useState<FormData>({
+    email: currentUser.email,
+    name: currentUser.name,
+    birthdate: currentUser.birthdate ? new Date(currentUser.birthdate) : null,
+    gender: currentUser.gender,
+    from: currentUser.from,
+    about: currentUser.about,
   });
-  const [avatar, setAvatar] = useState("");
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userId = Number(import.meta.env.VITE_AUTH_USER_ID);
-        const userData = await getUserByID(userId);
+  const [avatar, setAvatar] = useState(getImageUrl(currentUser.photo));
 
-        if (userData) {
-          setUser(userData);
-          setFormData({
-            email: userData.email || "",
-            name: userData.name || "",
-            birthdate: userData.birthdate ? new Date(userData.birthdate) : null,
-            gender: userData.gender || "",
-            city: userData.from || "",
-            about: userData.about || "",
-          });
-          setAvatar(userData.photo ? getImageUrl(userData.photo) : "");
-        }
-      } catch (error) {
-        console.error("Ошибка загрузки данных пользователя:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
+  const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -67,20 +49,13 @@ export const PersonalData = () => {
   };
 
   const handleDropdownChange =
-    (field: keyof typeof formData) => (value: string | string[]) => {
+    (field: keyof FormData) => (value: string | string[]) => {
       const stringValue = Array.isArray(value) ? value[0] || "" : value;
       setFormData((prev) => ({
         ...prev,
         [field]: stringValue,
       }));
-    };
-
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      about: e.target.value,
-    }));
-  };
+    };  
 
   const handlePasswordChange = () => {
     // Заглушка для изменения пароля
@@ -90,13 +65,10 @@ export const PersonalData = () => {
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setAvatar(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => setAvatar(e.target?.result as string);
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -104,14 +76,6 @@ export const PersonalData = () => {
     // Здесь будет логика сохранения данных
     console.log("Данные для сохранения:", { ...formData, avatar });
   };
-
-  if (loading) {
-    return <div className={styles.loading}>Загрузка...</div>;
-  }
-
-  if (!user) {
-    return <div className={styles.error}>Пользователь не найден</div>;
-  }
 
   return (
     <div className={styles.personalData}>
@@ -169,8 +133,8 @@ export const PersonalData = () => {
 
           <Input
             label="Город"
-            value={formData.city}
-            onChange={(value) => handleInputChange("city", value)}
+            value={formData.from}
+            onChange={(value) => handleInputChange("from", value)}
             placeholder="Введите ваш город"
           />
 

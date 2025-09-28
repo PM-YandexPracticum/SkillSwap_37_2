@@ -82,6 +82,7 @@ const icons = {
   'like-active': LikeActiveIcon,
   lifestyle: LifeStyleIcon,
   logo: LogoIcon,
+  logout: LogoutIcon,
   messagetext: MessageIcon,
   moon: MoonIcon,
   more: MoreIcon,

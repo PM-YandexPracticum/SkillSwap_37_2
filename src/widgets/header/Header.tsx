@@ -1,56 +1,33 @@
+// src\widgets\header\Header.tsx
 
-import { FC, useEffect, useRef, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { FC, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
 import { Button } from "../../shared/ui/button/Button";
 import { NotificationWidget } from "../notification-widget/NotificationWidget";
 import { Icon } from "../../shared/ui/icon/Icon";
 import { useSelector } from "react-redux";
-import { getUser } from "../../services/user/user-slice";
+// import { getUser } from "../../services/user/user-slice";
 import { getImageUrl } from "../../shared/lib/helpers";
 import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
 import { Popup } from "../popup/Popup";
 import { SkillMenu } from "../SkillMenu/SkillMenu";
+import { getCurrentUser } from "../../services/user/user-slice";
 import { ProfilePopup } from "../profile-popup/ProfilePopup";
 
+type PopupType = "skills" | "profile" | "notifications" | null;
+
 export const Header: FC = () => {
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const user = useSelector(getUser);
-  const navigate = useNavigate();
-  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+  const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
+  const currentUser = useSelector(getCurrentUser);
 
-  const togglePopup = () => {
-    setPopupOpen(!isPopupOpen);
+  // const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+
+  const togglePopup = (popup: PopupType) => {
+    setOpenPopup(prev => (prev === popup ? null : popup));
   };
-
-  const closePopup = () => {
-    setPopupOpen(false);
-  };
-
-  const toggleProfilePopup = () => {
-    setIsProfilePopupOpen(!isProfilePopupOpen);
-  };
-
-  const closeProfilePopup = () => {
-    setIsProfilePopupOpen(false);
-  };
-
-  const toggleNotifications = () => {
-    setIsNotificationsOpen(!isNotificationsOpen);
-  };
-
-  const closeNotifications = () => {
-    setIsNotificationsOpen(false);
-  };
-
-  const handleProfileClick = () => {
-    navigate("/profile");
-  };
-
-  const handleLogoClick = () => navigate("/");
+  const closePopup = () => setOpenPopup(null);
 
   return (
     <header className={styles.header}>
@@ -65,20 +42,21 @@ export const Header: FC = () => {
             </a>
           </li>
           <li className={styles.li}>
-            <a href="#" className={styles.link} onClick={togglePopup} >
+            {/* <a href="#" className={styles.link} onClick={togglePopup} > */}
+            <button className={styles.link} onClick={() => togglePopup('skills')}>
               Все навыки
-            <Icon
-              name={isPopupOpen ? 'chevronUp' : 'chevronDown'}
-              size="s"
-              className={styles.iconChevron} />
-            </a>
-            
+              <Icon
+                name={isOpenPopup ? 'chevronUp' : 'chevronDown'}
+                size="s"
+                className={styles.iconChevron}
+              />
+            </button>
           </li>
         </ul>
       </nav>
 
       {/* Используем компонент SearchBar с разной шириной */}
-      <SearchBar width={user ? 648 : 527} />
+      <SearchBar width={currentUser ? 648 : 527} />
 
       <div className={styles.rightSection}>
         {/* Иконка темы всегда видима */}
@@ -87,11 +65,11 @@ export const Header: FC = () => {
         </button>
 
         {/* Иконки уведомлений и лайков только для авторизованных */}
-        {user && (
+        {currentUser && (
           <>
             <button
               className={styles.notificationButton}
-              onClick={toggleNotifications}
+              onClick={() => togglePopup('notifications')}
             >
               <div className={styles.iconWrapper}>
                 <Icon name="notification" size={20} strokeWidth={5} />
@@ -104,16 +82,16 @@ export const Header: FC = () => {
         )}
 
         {/* Блок пользователя или кнопки входа */}
-        {user ? (
+        {currentUser ? (
           <div
             className={styles.userAuthWrapper}
-            onClick={toggleProfilePopup}
+            onClick={() => togglePopup('profile')}
             style={{ cursor: "pointer" }}
           >
-            <span className={styles.userName}>{user.name}</span>
+            <span className={styles.userName}>{currentUser.name}</span>
             <img
-              src={getImageUrl(user.photo)}
-              alt={user.name}
+              src={getImageUrl(currentUser.photo)}
+              alt={currentUser.name}
               className={styles.userAvatar}
             />
           </div>
@@ -127,16 +105,19 @@ export const Header: FC = () => {
         )}
       </div>
 
-      <NotificationWidget
-        isOpen={isNotificationsOpen}
-        onClose={closeNotifications}
-        userId={API_USER_ID}
-      />
-      <Popup isOpen={isPopupOpen} onClose={closePopup}>
+
+      {/* Попапы */}
+      {currentUser ? (
+        <Popup isOpen={isOpenPopup === 'notifications'} onClose={closePopup}>
+          <NotificationWidget userId={currentUser.id} />
+        </Popup>
+      ) : null}
+
+      <Popup isOpen={isOpenPopup === 'skills'} onClose={closePopup}>
         <SkillMenu />
       </Popup>
       
-      <Popup isOpen={isProfilePopupOpen} onClose={closeProfilePopup}>
+      <Popup isOpen={isOpenPopup === 'profile'} onClose={closePopup}>
         <ProfilePopup />
       </Popup>
     </header>

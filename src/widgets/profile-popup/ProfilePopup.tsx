@@ -1,28 +1,31 @@
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '../../shared/ui/icon/Icon'
 import styles from './ProfilePopup.module.css'
-import { setLogout } from '../../services/user/user-slice';
 import { useDispatch } from '@store';
+import { logoutThunk } from '../../services/user/actions';
 
 export const ProfilePopup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleClickProfile = () => {
     navigate("/profile");
   };
 
   const logout = () => {
-    dispatch(setLogout());
-    // navigate('/')
-  }
+    dispatch(logoutThunk());
+    navigate("/");
+  };
 
   return(
     <div className={styles.container}>
       <ul className={styles.content}>
-        <li className={styles.li} onClick={handleClickProfile}>Личный кабинет</li>
+        <li onClick={handleClickProfile}>
+          <span>Личный кабинет</span>
+        </li>
         <li className={styles.logoutContainer} onClick={logout}>
-          <p>Выйти из аккаунта</p>
-          <Icon name='logo'/>
+          <span>Выйти из аккаунта</span>
+          <Icon name='logout'/>
         </li>
       </ul>
     </div>

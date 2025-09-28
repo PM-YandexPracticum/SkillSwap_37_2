@@ -43,6 +43,11 @@ import { HomePage } from "../pages/HomePage";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import { ProfilePage } from "../pages/profile/ProfilePage";
 
+// Страницы регистрации
+import { RegistrationStep1 } from "../pages/registration/RegistrationStep1";
+import { RegistrationStep2 } from "../pages/registration/RegistrationStep2";
+import { RegistrationStep3 } from "../pages/registration/RegistrationStep3";
+
 //Данные/типы/стор (для каталога)
 import { RootState, useDispatch } from "@store";
 import { useSelector } from "react-redux";
@@ -51,13 +56,104 @@ import { AuthForm, FilterSection } from "@features";
 import { getPlacesThunk } from "../services/places/actions";
 import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
-import { getUserLikesThunk } from "../services/user/actions";
-
+import { getUserLikesThunk, getUserThunk } from "../services/user/actions";
 
 import { Button } from "../shared/ui/button/Button";
-import { OfferPage } from "../pages/Offer/OfferPage";
 
+import { OfferPage } from "../pages/Offer/OfferPage";
+import { RegisterStep2Data } from "../features/auth/RegisterStep2";
 import styles from "./App.module.css";
+import { getPopularUsersThunk } from "../services/popularUsers/actions";
+
+
+
+export const App: React.FC = () => {
+  const dispatch = useDispatch();
+  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+
+  // Подгружаем данные при старте
+  React.useEffect(() => {
+    dispatch(getUserThunk(API_USER_ID));
+    dispatch(getUsersThunk(1));
+    dispatch(getPopularUsersThunk(1)); 
+    dispatch(getPlacesThunk());
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
+
+  const currentUser = useSelector((s: RootState) => s.user.user);
+
+  // лайки грузятся при смене пользователя
+  React.useEffect(() => {
+    if (currentUser) {
+      dispatch(getUserLikesThunk(currentUser.id));
+    }
+  }, [dispatch, currentUser]);
+
+  
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Главная БЕЗ Layout, тк есть внутри фотер и хедер */}
+        <Route index element={<HomePage />} />
+
+        {/* Все прочие — под Layout */}
+        <Route element={<Layout />}>
+          {/*То, что есть*/}
+          <Route path="skills" element={<CatalogContent />} />
+          <Route path="auth/login" element={<LoginContent />} />
+          <Route path="auth/register" element={<RegisterContent />} />
+          <Route path="skill/new" element={<SkillFormContent />} />
+          <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
+
+          <Route path="demo/skill-details" element={<OfferPage />} />
+
+      {/* Страницы регистрации */}
+          <Route path="registration/step1" element={
+            <RegistrationStep1 onContinue={(email, password) => {
+              console.log('Step 1 data:', email, password);
+              window.location.href = '/registration/step2';
+            }} />
+          } />
+          <Route path="registration/step2" element={
+            <RegistrationStep2 
+              onBack={() => window.location.href = '/registration/step1'}
+              onContinue={(data) => {
+                console.log('Step 2 data:', data);
+                window.location.href = '/registration/step3';
+              }}
+            />
+          } />
+          <Route path="registration/step3" element={
+            <RegistrationStep3 
+              onBack={() => window.location.href = '/registration/step2'}
+              onComplete={() => window.location.href = '/'}
+            />
+          } />
+
+          {/*заглушки*/}
+          <Route path="skills/:id" element={<SkillPageStub />} />
+          <Route path="favorites" element={<FavoritesPageStub />} />
+          <Route path="requests" element={<RequestsPageStub />} />
+
+          {/* ПРОФИЛЬ */}
+          <Route path="profile">
+            <Route index element={<ProfilePage />} />
+            {/* Все подразделы профиля ведут на 404 */}
+            <Route path="notifications" element={<NotFoundPage />} />
+            <Route path="requests" element={<NotFoundPage />} />
+            <Route path="exchanges" element={<NotFoundPage />} />
+            <Route path="favorites" element={<NotFoundPage />} />
+            <Route path="skills" element={<NotFoundPage />} />
+          </Route>
+
+          {/* Системные */}
+          <Route path="500" element={<ServerErrorPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 
 
@@ -76,9 +172,9 @@ const Layout: React.FC = () => (
 const CatalogContent: React.FC = () => {
   const users = useSelector((s: RootState) => s.users.users);
 
-  const subCategories = useSelector(
-    (s: RootState) => s.categories.subcategories
-  );
+  // const subCategories = useSelector(
+  //   (s: RootState) => s.categories.subcategories
+  // );
   const [selectedGender, setSelectedGender] = React.useState<string>("");
   const [selectedPlaces, setSelectedPlaces] = React.useState<number[]>([]);
 
@@ -104,47 +200,36 @@ const CatalogContent: React.FC = () => {
 //Логин — AuthForm
 const LoginContent: React.FC = () => (
   <section className="page page-auth">
-    <AuthForm 
-      onContinue={() => {}}
-    />
+    <AuthForm onContinue={(email, password) => {
+  console.log('Email:', email, 'Password:', password);
+ }}/>
   </section>
 );
 
-//Register
+// Регистрация 
 const RegisterContent: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [step2Data, setStep2Data] = useState<Partial<{
-    name: string;
-    birthdate: Date | null;
-    gender: string;
-    city: string;
-    selectedCategories: string[];
-    selectedSubcategories: string[];
-  }> | null>(null);
+  const [step2Data, setStep2Data] = useState<Partial<RegisterStep2Data> | null>(null);
 
-  const handleStep2Continue = (data: any) => {
+  const handleStep2Continue = (data: RegisterStep2Data) => {
     setStep2Data(data);
-
     console.log("Данные регистрации:", data);
     alert("Регистрация завершена! Данные: " + JSON.stringify(data, null, 2));
   };
 
   const handleBack = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    }
+    if (step > 1) setStep(step - 1);
+  };
+
+  const handleStep1Continue = (email: string, password: string) => {
+    console.log('Шаг 1 данные:', email, password);
+    setStep(2);
   };
 
   return (
     <section className="page page-auth">
       {step === 1 ? (
-        <div>
-          <h1>Регистрация</h1>
-          <p>Здесь будет форма регистрации</p>
-          <Button colored onClick={() => setStep(2)}>
-            Далее
-          </Button>
-        </div>
+        <AuthForm onContinue={handleStep1Continue} />
       ) : (
         <RegisterStep2
           onBack={handleBack}
@@ -160,9 +245,8 @@ const RegisterContent: React.FC = () => {
 const SkillFormContent: React.FC = () => (
   <section className="page page-skillform">
     <SkillForm 
-      onContinue={() => { /* заглушка */ }}
-      onBack={() => { /* заглушка */ }}
-    />
+      onBack={() => console.log('Back')}
+      onContinue={() => console.log('Continue')}/>
   </section>
 );
 
@@ -204,25 +288,26 @@ const RequestsPageStub: React.FC = () => (
   </section>
 );
 
-export const App: React.FC = () => {
-
-  // Подгружаем данные, чтобы всё нарисовать
+export const AApp: React.FC = () => {
   const dispatch = useDispatch();
+  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
+  // Подгружаем данные при старте
   React.useEffect(() => {
+    dispatch(getUserThunk(API_USER_ID));
     dispatch(getUsersThunk(1));
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
-const currentUser = useSelector((s: RootState) => s.user.user);
+  const currentUser = useSelector((s: RootState) => s.user.user);
 
-// лайки грузятся при смене пользователя
-React.useEffect(() => {
-  if (currentUser) {
-    dispatch(getUserLikesThunk(currentUser.id));
-  }
-}, [dispatch, currentUser]);
+  // лайки грузятся при смене пользователя
+  React.useEffect(() => {
+    if (currentUser) {
+      dispatch(getUserLikesThunk(currentUser.id));
+    }
+  }, [dispatch, currentUser]);
 
   
   return (
@@ -238,13 +323,10 @@ React.useEffect(() => {
           <Route path="auth/login" element={<LoginContent />} />
           <Route path="auth/register" element={<RegisterContent />} />
           <Route path="skill/new" element={<SkillFormContent />} />
+          <Route path="skills/:id" element={<OfferPage />} />
           <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
 
-          <Route path="demo/skill-details" element={<OfferPage />} />
-
-
           {/*заглушки*/}
-          <Route path="skills/:id" element={<SkillPageStub />} />
           <Route path="favorites" element={<FavoritesPageStub />} />
           <Route path="requests" element={<RequestsPageStub />} />
 

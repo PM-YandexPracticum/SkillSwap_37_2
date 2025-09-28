@@ -29,6 +29,9 @@ export const userSlice = createSlice({
     },
     setLogout: (state) => {
       state.user = null;
+      state.likes = [];
+      state.isAuthChecked = false;
+      state.error = null;
     }
   },
 
@@ -65,8 +68,13 @@ export const userSlice = createSlice({
   }
 });
 
+// старые имена (используются сейчас в проекте)
 export const { getUser } = userSlice.selectors;
-export const { setUser, setLogout } = userSlice.actions;
+export const { setUser } = userSlice.actions;
+
+// новые имена (рекомендуется использовать дальше)
+export const { getUser: getCurrentUser } = userSlice.selectors;
+export const { setUser: setCurrentUser, setLogout } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
 

@@ -1,15 +1,14 @@
 // src\pages\HomePage.tsx
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState, useDispatch } from "@store";
 
-import { getUserThunk } from "../services/user/actions";
 import { getUsersThunk } from "../services/users/actions";
+import { getOfferUser, setOfferUser } from "../services/users/users-slice";
 import { getUser } from "../services/user/user-slice";
-import { birthdayToFormatedAge, getImageUrl } from "../shared/lib/helpers";
-import { TUser } from "@api/types";
 import { UserCard } from "../features/users/userCard/UserCard";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import {
@@ -30,7 +29,6 @@ import {
 } from "../features/onboarding/registrationBoard";
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
-import { getCategoriesThunk } from "../services/categories/actions";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
 import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
@@ -59,7 +57,7 @@ export const HomePage = () => {
     (state: RootState) => state.users
   );
 
-  const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
+  const offerUser = useSelector(getOfferUser);
 
   const subCategories = useSelector(
     (s: RootState) => s.categories.subcategories
@@ -72,12 +70,6 @@ export const HomePage = () => {
     closeNotification,
     handleNavigateToExchange,
   } = useExchangeNotification();
-
-  useEffect(() => {
-    dispatch(getUserThunk(API_USER_ID));
-    dispatch(getUsersThunk(1));
-    dispatch(getCategoriesThunk());
-  }, [dispatch]);
 
   const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>("all");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -125,10 +117,25 @@ export const HomePage = () => {
     selectedGender !== "" ||
     selectedPlaces.length > 0;
 
+  const navigate = useNavigate();
 
   return (
     <div className={styles.homePageWrapper}>
       <Header />
+
+<div>
+  <button 
+    style={{
+      fontSize: "32px",
+      color: "red",
+      height: "80px",
+      padding: "10px 20px",
+    }}
+    onClick={() => window.location.href = '/registration/step1'}
+  >
+    Тестировать регистрацию 
+  </button>
+</div>
 
       <div className={styles.filterSectionWrapper}>
         <FiltersContainer
@@ -256,7 +263,10 @@ export const HomePage = () => {
               // teachSkills={u.skill}
               // learnSkills={u.need_subcat}
               // subCategories={subCategories}
-              onDetailsClick={() => setSelectedUser(u)}
+              // onDetailsClick={() => {
+              //   dispatch(setOfferUser(u))
+              //   navigate(`skills/${u.id}`);              
+              // }}
             />
           ))}
         </div>
@@ -266,29 +276,29 @@ export const HomePage = () => {
 
         {/* SkillCardDetails выбранного пользователя */}
         {<h2 style={{textAlign:'center'}}>SkillCardDetails</h2>}
-        {selectedUser && (
+        {offerUser && (
           <SkillCardDetails
-              title={selectedUser.skill || "Навык не указан"}
-              subtitle={`${selectedUser.cat_text || ""} / ${
-                selectedUser.sub_text || ""
+              title={offerUser.skill || "Навык не указан"}
+              subtitle={`${offerUser.cat_text || ""} / ${
+                offerUser.sub_text || ""
               }`}
-              description={selectedUser.description || "Описание отсутствует"}
-              images={selectedUser.images?.slice(1) || []}
+              description={offerUser.description || "Описание отсутствует"}
+              images={offerUser.images?.slice(1) || []}
               buttonText={"Предложить обмен"}
           />
         )}
 
         {/* SkillCardDetails с пропсом checkEdit */}
         {<h2 style={{textAlign:'center'}}>SkillCardDetails с пропсом checkEdit</h2>}
-        {selectedUser && (
+        {offerUser && (
           <SkillCardDetails
               checkEdit={true}
-              title={selectedUser.skill || "Навык не указан"}
-              subtitle={`${selectedUser.cat_text || ""} / ${
-                selectedUser.sub_text || ""
+              title={offerUser.skill || "Навык не указан"}
+              subtitle={`${offerUser.cat_text || ""} / ${
+                offerUser.sub_text || ""
               }`}
-              description={selectedUser.description || "Описание отсутствует"}
-              images={selectedUser.images?.slice(1) || []}
+              description={offerUser.description || "Описание отсутствует"}
+              images={offerUser.images?.slice(1) || []}
               buttonText={"Предложить обмен"}
           />
         )}
@@ -318,8 +328,9 @@ export const HomePage = () => {
         {user && (
           <UserCard
             user={user}
-            onDetailsClick={() => setSelectedUser(user)}
-
+            // onDetailsClick={() => {
+            //   alert(user.name);
+            // }}
             // id={user.id}
             // likedByMe={user.likedByMe}
             // name={user.name}
@@ -358,6 +369,19 @@ export const HomePage = () => {
           onClick={() => openNotification({ type: "info" })}
         >
           Показать уведомление Info
+        </button>
+
+       <h2>Кнопка для демонстрации notification</h2>
+        <button
+          style={{
+            fontSize: "32px",
+            color: "red",
+            height: "80px",
+            padding: "10px 20px",
+          }}
+          onClick={() => openNotification({ type: "notification" })}
+        >
+          Показать уведомление notification
         </button>
 
         <ExchangeNotification
