@@ -36,7 +36,7 @@ import HomeIcon from "../../assets/icons/home.svg?react";
 import IdeaIcon from "../../assets/icons/idea.svg?react";
 import LifeStyleIcon from "../../assets/icons/lifestyle.svg?react";
 import LikeIcon from "../../assets/icons/like.svg?react";
-import LikeActiveIcon from "../../assets/icons/like-active.svg?react";
+//import LikeActiveIcon from "../../assets/icons/like-active.svg?react";
 import LogoIcon from "../../assets/icons/Logo.svg?react";
 import LogoutIcon from "../../assets/icons/logout.svg?react";
 import MessageIcon from "../../assets/icons/message-text.svg?react";
@@ -80,7 +80,7 @@ const icons = {
   home: HomeIcon,
   idea: IdeaIcon,
   like: LikeIcon,
-  'like-active': LikeActiveIcon,
+  //'like-active': LikeActiveIcon,
   lifestyle: LifeStyleIcon,
   logo: LogoIcon,
   logout: LogoutIcon,
@@ -96,6 +96,7 @@ const icons = {
   user: UserIcon,
   userCircle: UserCircleIcon,
   github: GitIcon,
+  cross: CrossIcon,
 } as const;
 
 

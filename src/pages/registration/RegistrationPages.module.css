@@ -1,10 +1,38 @@
-.registrationContainer {
+.registrationPage {
   min-height: 100vh;
-  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+}
+
+.registrationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  background: #f8f9fa;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Jost', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #253017;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .progressSection {
-  background: white;
+  background: #f8f9fa;
   padding: 20px;
 }
 
