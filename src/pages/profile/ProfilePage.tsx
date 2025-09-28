@@ -1,38 +1,67 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
 import styles from "./ProfilePage.module.css";
 import { ProfileMenu } from "../../widgets/profileMenu/ProfileMenu";
 import { PersonalData } from "../../features/personalData/PersonalData";
 
-export const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState<
-    "requests" | "exchanges" | "favorites" | "skills" | "personal"
-  >("personal");
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  const handleTabChange = (
-    tab: "requests" | "exchanges" | "favorites" | "skills" | "personal"
-  ) => {
-    if (tab !== "personal") {
-      // пока что для всех вкладок кроме "Личные данные" перенаправляем на 404
-      navigate(`/profile/${tab}`);
-    } else {
-      setActiveTab(tab);
-      // Если мы уже на странице профиля, просто активируем вкладку
-      if (location.pathname !== "/profile") {
-        navigate("/profile");
-      }
+import { RegistrationOnBoarding } from "../../features/onboarding/registrationBoard";
+import { onBoarding } from "../../features/onboarding/registrationBoard";
+
+type TabType = "requests" | "exchanges" | "favorites" | "skills" | "personal";
+
+export const ProfilePage = () => {
+  const [activeTab, setActiveTab] = useState<TabType>("personal");
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "personal":
+        return <PersonalData />;
+      case "skills":
+        return (
+          <RegistrationOnBoarding
+            title={onBoarding[2].title}
+            image={onBoarding[2].image}
+            alt={onBoarding[2].alt}
+            description={onBoarding[2].description}
+          />
+        );
+      case "requests":
+        return (
+          <RegistrationOnBoarding
+            title={onBoarding[0].title}
+            image={onBoarding[0].image}
+            alt={onBoarding[0].alt}
+            description={onBoarding[0].description}
+          />
+        );
+      case "exchanges":
+        return (
+          <RegistrationOnBoarding
+            title={onBoarding[1].title}
+            image={onBoarding[1].image}
+            alt={onBoarding[1].alt}
+            description={onBoarding[1].description}
+          />
+        );
+      case "favorites":
+        return (
+          <RegistrationOnBoarding
+            title="Избранное"
+            image={onBoarding[0].image}
+            alt="Избранное"
+            description="Здесь будут ваши избранные обмены"
+          />
+        );
+      default:
+        return null;
     }
   };
 
   return (
     <div className={styles.profilePage}>
       <div className={styles.container}>
-        <ProfileMenu activeTab={activeTab} onTabChange={handleTabChange} />
-        <div className={styles.content}>
-          <PersonalData />
-        </div>
+        <ProfileMenu activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className={styles.content}>{renderContent()}</div>
       </div>
     </div>
   );
