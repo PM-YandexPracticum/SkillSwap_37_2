@@ -7,6 +7,8 @@ import { placesSlice } from './places/places-slice';
 import { categoriesSlice } from './categories/categories-slice';
 import { notificationSlice } from './notifications/notification-slice';
 import { popularUsersSlice } from './popularUsers/popular-users-slice';
+import { createdAtUsersSlice } from './createdAtUsers/created-at-users-slice';
+import { randomUsersSlice } from './randomUsers/random-users-slice';
 
 export const rootReducer = combineSlices(
     categoriesSlice,
@@ -14,5 +16,7 @@ export const rootReducer = combineSlices(
     usersSlice,
     userSlice,
     notificationSlice,
-    popularUsersSlice
+    popularUsersSlice,
+    createdAtUsersSlice,
+    randomUsersSlice,
 );
