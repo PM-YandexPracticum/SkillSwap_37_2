@@ -1,12 +1,12 @@
 // src\services\users\users-slice.ts
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUsersThunk, pickUserOfferThunk } from './actions';
+import { getUsersThunk } from './actions';
 import { TUser } from '@api/types';
 import { getUserLikesThunk } from '../../services/user/actions';
 
 type UsersState = {
-  userOffer: TUser | null;
+  offerUser: TUser | null;
   users: TUser[];
   isLoading: boolean;
   error: string | null;
@@ -15,7 +15,7 @@ type UsersState = {
 };
 
 const initialState: UsersState = {
-  userOffer: null,
+  offerUser: null,
   users: [],
   isLoading: false,
   error: null,
@@ -35,6 +35,10 @@ export const usersSlice = createSlice({
     setHasMore: (state, action: PayloadAction<boolean>) => {
       state.hasMore = action.payload;
     },
+    // установка юзера с которым хотим сделать оффер
+    setOfferUser: (state, action: PayloadAction<TUser>) => {
+      state.offerUser = action.payload;
+    },
     // сброс состояния к начальному
     resetUsers: (state) => {
       state.users = [];
@@ -53,7 +57,7 @@ export const usersSlice = createSlice({
     },    
   },
   selectors: {
-    getUserOffer: (state) => state.userOffer
+    getOfferUser: (state) => state.offerUser
   },
   extraReducers: builder => {
     builder
@@ -88,11 +92,6 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка загрузки пользователей';
       })
-      .addCase(pickUserOfferThunk.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
-
       // фокус!!! ловим чужие события
       // проставляем лайки у всех пользователей
       // на основании списка лайков залогиненного пользователя
@@ -104,19 +103,9 @@ export const usersSlice = createSlice({
         }));
       })
 
-
-      
-      .addCase(pickUserOfferThunk.fulfilled, (state, action) => {
-        state.userOffer = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(pickUserOfferThunk.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message || 'Ошибка выбора пользователя';
-      });
   }
 });
 
-export const { getUserOffer } = usersSlice.selectors;
-export const { setPage, setHasMore, resetUsers, toggleLike } = usersSlice.actions;
+export const { getOfferUser } = usersSlice.selectors;
+export const { setPage, setHasMore, resetUsers, toggleLike, setOfferUser } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;

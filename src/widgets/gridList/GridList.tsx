@@ -48,7 +48,6 @@ export const GridList = ({
             >
               <UserCard
                 user = {user}
-                onDetailsClick={() => alert(user.name)}
 
                 // id={user.id}
                 // likedByMe={user.likedByMe}

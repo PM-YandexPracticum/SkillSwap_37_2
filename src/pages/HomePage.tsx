@@ -261,7 +261,6 @@ export const HomePage = () => {
               // teachSkills={u.skill}
               // learnSkills={u.need_subcat}
               // subCategories={subCategories}
-              onDetailsClick={() => setSelectedUser(u)}
             />
           ))}
         </div>
@@ -323,8 +322,6 @@ export const HomePage = () => {
         {user && (
           <UserCard
             user={user}
-            onDetailsClick={() => setSelectedUser(user)}
-
             // id={user.id}
             // likedByMe={user.likedByMe}
             // name={user.name}

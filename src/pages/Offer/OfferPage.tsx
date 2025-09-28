@@ -10,6 +10,8 @@ import { SkillCardDetails } from '../../features/skills/Skill Card/skillCardDeta
 import { useEffect } from 'react';
 import { getUserThunk } from '../../services/user/actions';
 import { getCategoriesThunk } from '../../services/categories/actions';
+import { getOfferUser } from '../../services/users/users-slice';
+import { Loader } from '../../shared/ui/loader/Loader';
 
 import styles from './OfferPage.module.css';
 
@@ -19,7 +21,7 @@ export const OfferPage: React.FC = () => {
   const dispatch = useDispatch();
   
     const subCategories = useSelector((s: RootState) => s.categories.subcategories);
-    const user = useSelector(getUser);
+    const offerUser = useSelector(getOfferUser);
     
     const { users, isLoading, hasMore, page } = useSelector(
       (state: RootState) => state.users
@@ -34,10 +36,10 @@ export const OfferPage: React.FC = () => {
     <>
       <section className={styles.skillSection}>
         <div className={styles.userCard}>
-          {user && (
+          {offerUser && (
                     <UserCard
-                      user={user}
-                      onDetailsClick={() => alert(user.name)}
+                      needAbout
+                      user={offerUser}
 
                       // id={user.id}
                       // likedByMe={user.likedByMe}
@@ -52,27 +54,22 @@ export const OfferPage: React.FC = () => {
                     />
                   )}
         </div>
-        {user && (
+        {offerUser && (
           <SkillCardDetails
-              title={user.skill || "Навык не указан"}
-              subtitle={`${user.cat_text || ""} / ${user.sub_text || ""}`}
-              description={user.description || "Описание отсутствует"}
-              images={user.images || ""}
+              title={offerUser.skill || "Навык не указан"}
+              subtitle={`${offerUser.cat_text || ""} / ${offerUser.sub_text || ""}`}
+              description={offerUser.description || "Описание отсутствует"}
+              images={offerUser.images || ""}
               buttonText={"Предложить обмен"}
           />)
         }
       </section>
 
-      {/* {offerUser && <SkillCardDetails
-              checkEdit={true}
-              title={user.skill || "Навык не указан"}
-              subtitle={`${user.cat_text || ""} / ${user.sub_text || ""}`}
-              description={user.description || "Описание отсутствует"}
-              images={user.images || ""}
-              buttonText={"Готово"}
-          />} */}
+      {!users && (
+        <Loader />
+      )}
 
-      <section>
+     <section>
         <CardShowcase
           title="Похожие предложения"
           icon={<Icon name="chevronRight" />}>
