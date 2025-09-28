@@ -2,7 +2,6 @@ import { useState } from "react";
 import { UserCard } from "../../features/users/userCard/UserCard";
 import { TUser, TPlace } from "../../api/types";
 import { Icon } from "../../shared/ui/icon/Icon";
-import { birthdayToFormatedAge, getImageUrl } from "../../shared/lib/helpers";
 import { Loader } from "../../shared/ui/loader/Loader";
 import styles from "./CardSlider.module.css";
 import clsx from "clsx";
@@ -37,17 +36,6 @@ export const CardSlider = ({ users, subCategories }: CardSliderProps) => {
         {visibleUsers.map((user) => (
           <UserCard
             user={user}
-
-            // id={user.id}
-            // likedByMe={user.likedByMe}
-            // key={user.id}
-            // name={user.name}
-            // from={user.from}
-            // age={birthdayToFormatedAge(user.birthdate)}
-            // avatar={getImageUrl(user.photo)}
-            // teachSkills={user.skill}
-            // learnSkills={user.need_subcat}
-            // subCategories={subCategories}
           />
         ))}
       </div>

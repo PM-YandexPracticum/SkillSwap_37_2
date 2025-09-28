@@ -16,6 +16,7 @@ type CardShowcaseProps = {
   buttonTitle?: string
   icon?: ReactElement;
   isIconFirst?: boolean; //если указан атрибут, то иконка слева от текста
+  titleSize?: string; 
 };
 
 export const CardShowcase = ({
@@ -23,7 +24,8 @@ export const CardShowcase = ({
   title,
   buttonTitle = '',
   icon,
-  isIconFirst
+  isIconFirst,
+  titleSize = '2em'
 }: CardShowcaseProps) => {
 
    const showHideRowsHandle = () => {
@@ -48,7 +50,10 @@ export const CardShowcase = ({
     <div className={styles.cardShowcase}>
       <div className={styles.header}>
         <div>
-          <h2 className={styles.title}>
+          <h2
+            className={styles.title}
+            style={{fontSize: `${titleSize}`}}
+          >
             {title}
           </h2>
         </div>

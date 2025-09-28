@@ -63,7 +63,6 @@ export const Header: FC = () => {
 </Link>
           </li>
           <li className={styles.li}>
-            {/* <a href="#" className={styles.link} onClick={togglePopup} > */}
             <button className={styles.link} onClick={() => togglePopup('skills')}>
               Все навыки
               <Icon

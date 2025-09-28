@@ -13,6 +13,12 @@
   max-height: 23em;
   padding: 1.25em;
   background-color: #FFFFFF;
+  border-radius: 0.75rem;
+}
+
+.cardAbout {
+  padding: 32px;
+  max-height: 27.75em;
 }
 
 .userInfo {
@@ -81,6 +87,11 @@
   margin-bottom: 0.75em;
 }
 
+.canTeachAbout {
+  /* margin-bottom: 12px; */
+  margin-bottom: 1.5em;
+}
+
 .offer {
   /* line-height: 24px;
   margin-bottom: 8px; */
@@ -88,6 +99,10 @@
   margin-bottom: 0.5em;
   font-weight: 500;
   letter-spacing: 2%;
+}
+
+.offerAbout {
+  margin-bottom: 0.875em;
 }
 
 .tagWrapper {

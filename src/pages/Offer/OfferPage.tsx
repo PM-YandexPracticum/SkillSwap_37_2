@@ -72,6 +72,7 @@ export const OfferPage: React.FC = () => {
      <section>
         <CardShowcase
           title="Похожие предложения"
+          titleSize='1.5em'
           icon={<Icon name="chevronRight" />}>
             <CardSlider users={users} subCategories={subCategories} />
         </CardShowcase>
