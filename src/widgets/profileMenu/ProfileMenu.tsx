@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./ProfileMenu.module.css";
 import { ProfileMenuItem } from "./ProfileMenuItem";
 import { IconName } from "../../shared/ui/icon/icons";
@@ -21,8 +20,6 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({
   activeTab,
   onTabChange,
 }) => {
-  const navigate = useNavigate();
-
   const menuItems: MenuItem[] = [
     { key: "requests", label: "Заявки", icon: "requests" },
     { key: "exchanges", label: "Мои обмены", icon: "messagetext" },
@@ -30,14 +27,6 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({
     { key: "skills", label: "Мои навыки", icon: "idea" },
     { key: "personal", label: "Личные данные", icon: "user" },
   ];
-
-  const handleMenuClick = (tab: TabType) => {
-    if (tab !== "personal") {
-      navigate(`/profile/${tab}`);
-    } else {
-      onTabChange(tab);
-    }
-  };
 
   return (
     <nav className={styles.menu}>
@@ -49,7 +38,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({
             label={item.label}
             iconName={item.icon}
             isActive={activeTab === item.key}
-            onClick={handleMenuClick}
+            onClick={onTabChange}
           />
         ))}
       </ul>
