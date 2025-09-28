@@ -39,7 +39,7 @@ import { FiltersContainer } from "../features/filters/FiltersContainer";
 
 import { ActiveFiltersBar } from "../features/filters/ActiveFiltersBar";
 import { RegistrationProgress } from "../shared/ui/RegistrationProgress/RegistrationProgress";
-
+import { LoginNotification } from "../shared/ui/notification/LoginNotification";
 import styles from "./HomePage.module.css";
 
 import { getUsersThunk } from "../services/users/actions";
@@ -143,6 +143,9 @@ export const HomePage = () => {
     handleNavigateToExchange,
   } = useExchangeNotification();
 
+  const [isLoginNotificationOpen, setIsLoginNotificationOpen] = useState(false);
+
+
   const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>("all");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -183,6 +186,17 @@ export const HomePage = () => {
     selectedGender !== "" ||
     selectedPlaces.length > 0;
 
+  const handleOpenLogin = () => {
+    setIsLoginNotificationOpen(true);
+  };
+
+  const handleLogin = () => {
+    console.log("Переход к странице входа/регистрации");
+  };
+  
+  const handleCancelLogin = () => {
+    console.log("Пользователь отменил вход");
+};
 
   return (
     <div className={styles.homePageWrapper}>
@@ -384,6 +398,21 @@ export const HomePage = () => {
           />
         )}
       </div>
+<div>
+   <h2>Кнопка для демонстрации Login Notification</h2>
+<button 
+    style={{
+      fontSize: "32px",
+      color: "red",
+      height: "80px",
+      padding: "10px 20px",
+      marginLeft: '20px'
+    }}
+    onClick={handleOpenLogin}
+  >
+  Показать уведомление Login Notification
+  </button>
+</div>
 
       <div>
         <h2>Кнопка для демонстрации success</h2>
@@ -432,8 +461,15 @@ export const HomePage = () => {
           message={notificationConfig.message}
           title={notificationConfig.title}
         />
-      </div>
+     
 
+   <LoginNotification
+          isOpen={isLoginNotificationOpen}
+          onClose={() => setIsLoginNotificationOpen(false)}
+          onLogin={handleLogin}
+          onCancel={handleCancelLogin}
+        />
+        </div>
       
 
       <h2>onboarding register step 1</h2>
