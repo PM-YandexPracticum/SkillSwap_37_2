@@ -65,11 +65,21 @@ export type TResponseSubcategories = {
   subcategories: TSubcategory[];
 }
 
+export const NotificationTypes = {
+  MY_NEW_OFFER: 'my_new_offer',
+  OFFER_TO_ME: 'offer_to_me',
+  ACCEPT_MY_OFFER: 'accept_my_offer',
+} as const;
+
+export type TNotificationType = typeof NotificationTypes[keyof typeof NotificationTypes];
+
+
 export type TNotificationEvent = {
-  type: 'offer' | 'accept';
+  type: TNotificationType;
+  // type: 'my_new_offer' | 'offer_to_me' | 'accept_my_affer';
   seen: 0 | 1;
-  fromUserId: number;
-  fromUserName: string;
+  anotherUserId: number;
+  anotherUserName: string;
   date: string; // ISO-строка с датой
 };
 

@@ -16,6 +16,7 @@ import {
 
 import { getNotificationThunk } from "../../services/notifications/actions";
 import { getCurrentUser } from "../../services/user/user-slice";
+import { NotificationTypes, TNotificationEvent } from "@api/types";
 
 interface NotificationWidgetProps {
   userId: number;
@@ -79,21 +80,28 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({userId}) => {
   };
 
   // Функция для преобразования данных в формат виджета
-  const mapToDisplayFormat = (event: any): NotificationDisplay => {
+  const mapToDisplayFormat = (event: TNotificationEvent): NotificationDisplay => {
     let action = "";
     let details = "";
     
-    if (event.type === 'offer') {
+    if (event.type === NotificationTypes.OFFER_TO_ME) {
       action = "предлагает вам обмен";
       details = "Примите обмен, чтобы обсудить детали";
-    } else if (event.type === 'accept') {
+    } else if (event.type === NotificationTypes.ACCEPT_MY_OFFER) {
       action = "принял ваш обмен";
       details = "Перейдите в профиль, чтобы обсудить детали";
     }
-
+    else if (event.type === NotificationTypes.MY_NEW_OFFER) {
+      action = "пока не принял ваш обмен";
+      details = "Перейдите в профиль, чтобы обсудить детали";
+    }
+    else {
+      action = "****";
+      details = "------";
+    }
     return {
-      id: event.id,
-      userName: event.fromUserName,
+      id: event.anotherUserId,
+      userName: event.anotherUserName,
       action,
       details,
       time: formatDate(event.date),
@@ -134,7 +142,7 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({userId}) => {
           {newNotifications.length > 0 ? (
             newNotifications.map((notification) => (
               <NotificationCard
-                key={notification.fromUserId}
+                key={notification.anotherUserId}
                 notification={mapToDisplayFormat(notification)}
                 isNew={true}
               />
@@ -158,7 +166,7 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({userId}) => {
             <div className={styles.viewedSection}>
               {viewedNotifications.map((notification) => (
                 <NotificationCard
-                  key={notification.fromUserId}
+                  key={notification.anotherUserId}
                   notification={mapToDisplayFormat(notification)}
                   isNew={false}
                 />

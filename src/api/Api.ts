@@ -15,6 +15,7 @@ import {
   TResponseSubcategories,
   TResponseNotifications,
   TNotificationEvent,
+  NotificationTypes,
 } from "@api/types";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
@@ -185,8 +186,8 @@ export const getNotificationsApi = async (
 ): Promise<TResponseNotifications> => {
   try {
     const [offersRes, usersRes] = await Promise.all([
-      fetch("/db/offers.json"),
-      fetch("/db/users.json"),
+      fetch(OFFERS_JSON_FILE),
+      fetch(USERS_JSON_FILE),
     ]);
 
     const offersData = await offersRes.json();
@@ -203,10 +204,10 @@ export const getNotificationsApi = async (
 
       if (offer.skillOwnerId === userId) {
         userEvents.push({
-          type: "offer",
+          type: NotificationTypes.OFFER_TO_ME,
           seen: offer.sawOffer as 0 | 1,
-          fromUserId: offer.offerUserId,
-          fromUserName: userMap.get(offer.offerUserId) || "Неизвестно",
+          anotherUserId: offer.offerUserId,
+          anotherUserName: userMap.get(offer.offerUserId) || "Неизвестно",
           date: new Date(
             today.getTime() - offer.daysSinceOffer * 24 * 60 * 60 * 1000
           )
@@ -217,12 +218,26 @@ export const getNotificationsApi = async (
 
       if (offer.offerUserId === userId && offer.accept === 1) {
         userEvents.push({
-          type: "accept",
+          type: NotificationTypes.ACCEPT_MY_OFFER,
           seen: offer.sawAccept as 0 | 1,
-          fromUserId: offer.skillOwnerId,
-          fromUserName: userMap.get(offer.skillOwnerId) || "Неизвестно",
+          anotherUserId: offer.skillOwnerId,
+          anotherUserName: userMap.get(offer.skillOwnerId) || "Неизвестно",
           date: new Date(
             today.getTime() - offer.daysSinceAccept * 24 * 60 * 60 * 1000
+          )
+            .toISOString()
+            .split("T")[0],
+        });
+      }
+
+      if (offer.offerUserId === userId && offer.accept === 0) {
+        userEvents.push({
+          type: NotificationTypes.MY_NEW_OFFER,
+          seen: 0,
+          anotherUserId: offer.skillOwnerId,
+          anotherUserName: userMap.get(offer.skillOwnerId) || "Неизвестно",
+          date: new Date(
+            today.getTime() - offer.daysSinceOffer * 24 * 60 * 60 * 1000
           )
             .toISOString()
             .split("T")[0],
