@@ -62,8 +62,12 @@ import { getUserLikesThunk, getUserThunk } from "../services/user/actions";
 
 import { OfferPage } from "../pages/Offer/OfferPage";
 import { RegisterStep2Data } from "../features/auth/RegisterStep2";
-import styles from "./App.module.css";
 import { getPopularUsersThunk } from "../services/popularUsers/actions";
+
+import { ScrollToTop } from "../features/scrollToTop/ScrollToTop";
+
+import styles from "./App.module.css";
+
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
 
@@ -99,6 +103,7 @@ export const App: React.FC = () => {
   
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* Главная БЕЗ Layout, тк есть внутри фотер и хедер */}
         <Route index element={<HomePage />} />
