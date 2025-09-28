@@ -103,9 +103,8 @@ export const App: React.FC = () => {
           <Route path="auth/login" element={<LoginContent />} />
           <Route path="auth/register" element={<RegisterContent />} />
           <Route path="skill/new" element={<SkillFormContent />} />
+          <Route path="skills/:id" element={<OfferPage />} />
           <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
-
-          <Route path="demo/skill-details" element={<OfferPage />} />
 
       {/* Страницы регистрации */}
           <Route path="registration/step1" element={
@@ -131,7 +130,7 @@ export const App: React.FC = () => {
           } />
 
           {/*заглушки*/}
-          <Route path="skills/:id" element={<SkillPageStub />} />
+          <Route path="skills/:id" element={<OfferPage />} />
           <Route path="favorites" element={<FavoritesPageStub />} />
           <Route path="requests" element={<RequestsPageStub />} />
 
