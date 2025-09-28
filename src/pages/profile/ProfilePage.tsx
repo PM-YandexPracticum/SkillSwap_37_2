@@ -3,10 +3,9 @@ import styles from "./ProfilePage.module.css";
 import { ProfileMenu } from "../../widgets/profileMenu/ProfileMenu";
 import { PersonalData } from "../../features/personalData/PersonalData";
 
-// Импорт картинок-заглушек
-import BoardImg from "../../shared/assets/images/BoardImg.png"
-import LightImg from "../../shared/assets/images/LightImg.png"
-import UserImg from "../../shared/assets/images/UserImg.png"
+
+import { RegistrationOnBoarding } from "../../features/onboarding/registrationBoard";
+import { onBoarding } from "../../features/onboarding/registrationBoard";
 
 type TabType = "requests" | "exchanges" | "favorites" | "skills" | "personal";
 
@@ -19,34 +18,38 @@ export const ProfilePage = () => {
         return <PersonalData />;
       case "skills":
         return (
-          <img
-            src={BoardImg}
-            alt="Мои навыки"
-            className={styles.placeholder}
+          <RegistrationOnBoarding
+            title={onBoarding[2].title}
+            image={onBoarding[2].image}
+            alt={onBoarding[2].alt}
+            description={onBoarding[2].description}
           />
         );
       case "requests":
         return (
-          <img
-            src={LightImg}
-            alt="Мои заявки"
-            className={styles.placeholder}
+          <RegistrationOnBoarding
+            title={onBoarding[0].title}
+            image={onBoarding[0].image}
+            alt={onBoarding[0].alt}
+            description={onBoarding[0].description}
           />
         );
       case "exchanges":
         return (
-          <img
-            src={UserImg}
-            alt="Мои обмены"
-            className={styles.placeholder}
+          <RegistrationOnBoarding
+            title={onBoarding[1].title}
+            image={onBoarding[1].image}
+            alt={onBoarding[1].alt}
+            description={onBoarding[1].description}
           />
         );
       case "favorites":
         return (
-          <img
-            src={BoardImg}
+          <RegistrationOnBoarding
+            title="Избранное"
+            image={onBoarding[0].image}
             alt="Избранное"
-            className={styles.placeholder}
+            description="Здесь будут ваши избранные обмены"
           />
         );
       default:
