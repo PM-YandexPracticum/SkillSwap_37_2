@@ -64,6 +64,8 @@ import { OfferPage } from "../pages/Offer/OfferPage";
 import { RegisterStep2Data } from "../features/auth/RegisterStep2";
 import styles from "./App.module.css";
 import { getPopularUsersThunk } from "../services/popularUsers/actions";
+import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
+import { getRandomUsersThunk } from "../services/randomUsers/actions";
 
 import { About } from "../pages/about/About";
 
@@ -75,8 +77,12 @@ export const App: React.FC = () => {
   // Подгружаем данные при старте
   React.useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
+
     dispatch(getUsersThunk(1));
     dispatch(getPopularUsersThunk(1)); 
+    dispatch(getCreatedAtUsersThunk(1)); 
+    dispatch(getRandomUsersThunk(1)); 
+
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
   }, [dispatch]);

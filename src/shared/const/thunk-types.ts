@@ -7,3 +7,8 @@ export const FETCH_PLACES_ALL = 'places/fetchAll';
 export const FETCH_POPULAR_USERS = 'popularUsers/fetchAll';
 export const FETCH_USER_BY_ID = 'user/fetchUserById';
 export const FETCH_USER_LIKES =   'user/getUserLikes';
+export const FETCH_LOGOUT_USER = 'user/logout'
+
+export const FETCH_USERS_BY_LIKES =   'user/getUsersByLikes';
+export const FETCH_USERS_BY_CREATE =   'user/getUsersByCreate';
+export const FETCH_USERS_RANDOM_ORDER =   'user/getUsersRandomOrder';

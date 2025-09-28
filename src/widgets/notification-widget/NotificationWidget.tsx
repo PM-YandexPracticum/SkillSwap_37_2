@@ -18,8 +18,6 @@ import { getNotificationThunk } from "../../services/notifications/actions";
 import { getCurrentUser } from "../../services/user/user-slice";
 
 interface NotificationWidgetProps {
-  isOpen: boolean;
-  onClose: () => void;
   userId: number;
 }
 
@@ -33,11 +31,7 @@ interface NotificationDisplay {
   viewed: boolean;
 }
 
-export const NotificationWidget: FC<NotificationWidgetProps> = ({
-  isOpen,
-  onClose,
-  userId
-}) => {
+export const NotificationWidget: FC<NotificationWidgetProps> = ({userId}) => {
   const dispatch = useDispatch();
   
   const newNotifications = useSelector(getNewNotifications);
@@ -48,10 +42,10 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({
   const currentUser = useSelector(getCurrentUser);
 
   useEffect(() => {
-    if (isOpen && userId) {
+    if (userId) {
       dispatch(getNotificationThunk(userId));
     }
-  }, [isOpen, userId, dispatch]);
+  }, [userId, dispatch]);
 
   const formatDate = (dateString: string): string => {
     const eventDate = new Date(dateString);
@@ -75,8 +69,6 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({
     const month = months[eventDate.getMonth()];
     return `${day} ${month}`;
   };
-
-  if (!isOpen) return null;
 
   const handleMarkAllAsRead = () => {
     dispatch(markAsSeen());

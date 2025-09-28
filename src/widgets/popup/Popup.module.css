@@ -1,7 +1,6 @@
 .popup_container {
   position: absolute;
-  top: 94px;
-  left: 36px;
+  top: 100%;
   z-index: 4;
 }
   

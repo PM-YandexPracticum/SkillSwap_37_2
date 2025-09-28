@@ -1,7 +1,7 @@
 // src\widgets\header\Header.tsx
 
-import { FC, useEffect, useRef, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { FC, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
 import { Button } from "../../shared/ui/button/Button";
@@ -14,17 +14,18 @@ import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
 import { Popup } from "../popup/Popup";
 import { SkillMenu } from "../SkillMenu/SkillMenu";
 import { getCurrentUser } from "../../services/user/user-slice";
+import { ProfilePopup } from "../profile-popup/ProfilePopup";
+
+type PopupType = "skills" | "profile" | "notifications" | null;
 
 export const Header: FC = () => {
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [isPopupOpen, setPopupOpen] = useState(false);
-
+  const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
   const currentUser = useSelector(getCurrentUser);
 
-  const navigate = useNavigate();
   // const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
-  const togglePopup = () => {
+  /// ЗАКОММЕНТИРОВАЛ 
+<!--   const togglePopup = () => {
     setPopupOpen(!isPopupOpen);
   };
 
@@ -41,10 +42,13 @@ export const Header: FC = () => {
   };
 
   const handleProfileClick = () => {
-    navigate("/profile");
-  };
+    navigate("/profile"); -->
 
-  const handleLogoClick = () => navigate("/");
+  const togglePopup = (popup: PopupType) => {
+    setOpenPopup(prev => (prev === popup ? null : popup));
+  };
+  
+  const closePopup = () => setOpenPopup(null);
 
   return (
     <header className={styles.header}>
@@ -60,10 +64,11 @@ export const Header: FC = () => {
           </li>
           <li className={styles.li}>
             {/* <a href="#" className={styles.link} onClick={togglePopup} > */}
-            <button className={styles.link} onClick={togglePopup}>
+            <button className={styles.link} onClick={() => togglePopup('skills')}>
               Все навыки
               <Icon
-                name={isPopupOpen ? "chevronUp" : "chevronDown"}
+//                name={isPopupOpen ? "chevronUp" : "chevronDown"}
+                name={isOpenPopup ? 'chevronUp' : 'chevronDown'}
                 size="s"
                 className={styles.iconChevron}
               />
@@ -86,7 +91,7 @@ export const Header: FC = () => {
           <>
             <button
               className={styles.notificationButton}
-              onClick={toggleNotifications}
+              onClick={() => togglePopup('notifications')}
             >
               <div className={styles.iconWrapper}>
                 <Icon name="notification" size={20} strokeWidth={5} />
@@ -102,7 +107,7 @@ export const Header: FC = () => {
         {currentUser ? (
           <div
             className={styles.userAuthWrapper}
-            onClick={handleProfileClick}
+            onClick={() => togglePopup('profile')}
             style={{ cursor: "pointer" }}
           >
             <span className={styles.userName}>{currentUser.name}</span>
@@ -122,16 +127,20 @@ export const Header: FC = () => {
         )}
       </div>
 
+
+      {/* Попапы */}
       {currentUser ? (
-        <NotificationWidget
-          isOpen={isNotificationsOpen}
-          onClose={closeNotifications}
-          userId={currentUser.id}
-        />
+        <Popup isOpen={isOpenPopup === 'notifications'} onClose={closePopup}>
+          <NotificationWidget userId={currentUser.id} />
+        </Popup>
       ) : null}
 
-      <Popup isOpen={isPopupOpen} onClose={closePopup}>
+      <Popup isOpen={isOpenPopup === 'skills'} onClose={closePopup}>
         <SkillMenu />
+      </Popup>
+      
+      <Popup isOpen={isOpenPopup === 'profile'} onClose={closePopup}>
+        <ProfilePopup />
       </Popup>
     </header>
   );
