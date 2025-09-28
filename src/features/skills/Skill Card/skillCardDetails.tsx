@@ -136,7 +136,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
               </Button>
               <Button
                 colored
-                onClick={onExchange}
+                onClick={handleExchangeClick}
               >
                 {buttonText}
               </Button>

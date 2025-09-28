@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { getUserThunk } from '../../services/user/actions';
 import { getCategoriesThunk } from '../../services/categories/actions';
 import { getOfferUser } from '../../services/users/users-slice';
+import { Loader } from '../../shared/ui/loader/Loader';
 
 import styles from './OfferPage.module.css';
 
@@ -39,6 +40,7 @@ export const OfferPage: React.FC = () => {
                     <UserCard
                       needAbout
                       user={offerUser}
+
                       // id={user.id}
                       // likedByMe={user.likedByMe}
                       // name={user.name}
@@ -63,16 +65,11 @@ export const OfferPage: React.FC = () => {
         }
       </section>
 
-      {/* {offerUser && <SkillCardDetails
-              checkEdit={true}
-              title={offerUser.skill || "Навык не указан"}
-              subtitle={`${offerUser.cat_text || ""} / ${offerUser.sub_text || ""}`}
-              description={offerUser.description || "Описание отсутствует"}
-              images={offerUser.images || ""}
-              buttonText={"Готово"}
-          />} */}
+      {!users && (
+        <Loader />
+      )}
 
-      <section>
+     <section>
         <CardShowcase
           title="Похожие предложения"
           icon={<Icon name="chevronRight" />}>

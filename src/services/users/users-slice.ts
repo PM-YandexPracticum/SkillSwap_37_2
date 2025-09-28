@@ -92,7 +92,6 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка загрузки пользователей';
       })
-
       // фокус!!! ловим чужие события
       // проставляем лайки у всех пользователей
       // на основании списка лайков залогиненного пользователя
@@ -103,6 +102,7 @@ export const usersSlice = createSlice({
           likedByMe: likedIds.has(u.id),
         }));
       })
+
   }
 });
 
