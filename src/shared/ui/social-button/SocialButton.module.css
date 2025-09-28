@@ -1,6 +1,7 @@
 .socialButton {
   width: 100%;
   max-width: 436px;
+  height: 48px;
   padding: 12px;
   margin-bottom: 16px;
   border: 1px solid #69735d;
@@ -13,6 +14,7 @@
   justify-content: center;
   gap: 12px;
   transition: background-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .socialButton:hover {

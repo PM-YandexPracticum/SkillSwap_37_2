@@ -24,9 +24,30 @@ export const Header: FC = () => {
 
   // const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
+  /// ЗАКОММЕНТИРОВАЛ 
+<!--   const togglePopup = () => {
+    setPopupOpen(!isPopupOpen);
+  };
+
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
+
+  const toggleNotifications = () => {
+    setIsNotificationsOpen(!isNotificationsOpen);
+  };
+
+  const closeNotifications = () => {
+    setIsNotificationsOpen(false);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profile"); -->
+
   const togglePopup = (popup: PopupType) => {
     setOpenPopup(prev => (prev === popup ? null : popup));
   };
+  
   const closePopup = () => setOpenPopup(null);
 
   return (
@@ -37,15 +58,16 @@ export const Header: FC = () => {
       <nav>
         <ul className={styles.navList}>
           <li className={styles.li}>
-            <a href="#" className={styles.link}>
-              О проекте
-            </a>
+            <Link to="/about" className={styles.link} onClick={() => console.log('Click on About link')}>
+  О проекте
+</Link>
           </li>
           <li className={styles.li}>
             {/* <a href="#" className={styles.link} onClick={togglePopup} > */}
             <button className={styles.link} onClick={() => togglePopup('skills')}>
               Все навыки
               <Icon
+//                name={isPopupOpen ? "chevronUp" : "chevronDown"}
                 name={isOpenPopup ? 'chevronUp' : 'chevronDown'}
                 size="s"
                 className={styles.iconChevron}

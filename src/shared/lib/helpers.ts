@@ -1,6 +1,6 @@
 // src\shared\lib\helpers.ts
 
-import { USERS_PHOTO_PATH } from "@const/paths";
+import { USERS_PHOTO_PATH, TEAM_PHOTO_PATH } from "@const/paths";
 
 export const birthdayToFormatedAge = (birthdate: string): string => {
   return formatAge(calculateAge(birthdate));
@@ -39,6 +39,14 @@ const calculateAge = (birthdate: string): string => {
   return age.toString();
 };
 
-export const getImageUrl = (photoPath: string): string => {
+export const getImageUrl = (photoPath: string, type: 'user' | 'team' = 'user'): string => {
+  if (type === 'team') {
+    return `${TEAM_PHOTO_PATH}${photoPath}`;
+  }
   return `${USERS_PHOTO_PATH}${photoPath}`;
 };
+
+/*
+export const getImageUrl = (photoPath: string): string => {
+  return `${USERS_PHOTO_PATH}${photoPath}`;
+};*/
