@@ -3,7 +3,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserByID, getUserLikesApi } from '../../api/Api';
 import { TUser } from '../../api/types';
-import { FETCH_USER_BY_ID, FETCH_USER_LIKES, LOGOUT_USER } from "@const/thunk-types";
+import { FETCH_LOGOUT_USER, FETCH_USER_BY_ID, FETCH_USER_LIKES } from "@const/thunk-types";
 import { setLogout } from "./user-slice";
 
 export const getUserThunk = createAsyncThunk<TUser | null, number>(
@@ -28,7 +28,7 @@ export const getUserLikesThunk = createAsyncThunk(
 
 //выход из профиля
 export const logoutThunk = createAsyncThunk(
-  LOGOUT_USER,
+  FETCH_LOGOUT_USER,
   async (_, { dispatch }) => {
     dispatch(setLogout());
   }

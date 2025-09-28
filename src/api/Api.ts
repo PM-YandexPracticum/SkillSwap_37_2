@@ -63,6 +63,59 @@ export const getPopularUsersApi = async (page = 1): Promise<TResponseUsers> => {
   }
 };
 
+
+// добавляем функцию для created_at
+export const getCreatedAtUsersApi = async (
+  page: number
+): Promise<TResponseUsers> => {
+  try {
+    const response = await fetch(USERS_JSON_FILE);
+    const data = await response.json();
+
+    // сортировка по created_at (новые выше) сравниваются строки!
+    const sorted = data.users.sort((a: any, b: any) =>
+      b.created_at.localeCompare(a.created_at)
+    );
+
+    // пагинация
+    const start = (page - 1) * USERS_PAGE_SIZE;
+    const end = start + USERS_PAGE_SIZE;
+    const usersPage = sorted.slice(start, end);
+
+    return {
+      users: usersPage,
+      hasMore: end < sorted.length,
+    };
+  } catch (error) {
+    console.error('Ошибка в getUsersByCreatedAtApi:', error);
+    throw error;
+  }
+};
+
+export const getUsersByRandomApi = async (
+  page: number
+): Promise<{ users: TUser[]; hasMore: boolean }> => {
+  try {
+    const response = await fetch('/db/users.json');
+    const data = await response.json();
+
+    const sorted = data.users.sort((a: TUser, b: TUser) => b.random - a.random);
+
+    const start = (page - 1) * USERS_PAGE_SIZE;
+    const end = start + USERS_PAGE_SIZE;
+    const paginated = sorted.slice(start, end);
+
+    return {
+      users: paginated,
+      hasMore: end < sorted.length,
+      };
+  } catch (error) {
+    console.error('Ошибка в getUsersByCreatedAtApi:', error);
+    throw error;
+  }
+};
+
+
 export const getUserByID = async (userId: number): Promise<TUser | null> => {
   try {
     const response = await fetch(USERS_JSON_FILE);

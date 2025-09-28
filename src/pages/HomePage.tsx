@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useDispatch } from "@store";
 
-import { getUsersThunk } from "../services/users/actions";
-import { getUser } from "../services/user/user-slice";
+import { getCurrentUser } from "../services/user/user-slice";
 import { TUser } from "@api/types";
 import { UserCard } from "../features/users/userCard/UserCard";
 import { RegisterStep2 } from "../features/auth/RegisterStep2";
@@ -43,6 +42,11 @@ import { RegistrationProgress } from "../shared/ui/RegistrationProgress/Registra
 
 import styles from "./HomePage.module.css";
 
+import { getUsersThunk } from "../services/users/actions";
+import { getPopularUsersThunk } from "../services/popularUsers/actions";
+import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
+import { getRandomUsersThunk } from "../services/randomUsers/actions";
+
 export const HomePage = () => {
 
   const [currentStep, setCurrentStep] = useState(1); // текущий шаг
@@ -51,12 +55,81 @@ export const HomePage = () => {
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
   const dispatch = useDispatch();
 
-  const user = useSelector(getUser);
-  const { users, isLoading, hasMore, page } = useSelector(
-    (state: RootState) => state.users
-  );
+  // Это авторизованный пользователь
+  const currentUser = useSelector(getCurrentUser);
 
+  // Это выбранный пользователь, например, предложение которого рассматривается 
   const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
+
+  // *************************************************
+  // пользоаватели без сортировки
+  const {
+    users: plainUsers,
+    isLoading: isUsersLoading,
+    hasMore: hasMoreUsers,
+    page: usersPage,
+  } = useSelector((state: RootState) => state.users);
+
+  // функция загрузки последующих данных
+  const handleLoadMorePlainUsers = () => {
+    if (!isUsersLoading && hasMoreUsers) {
+      const nextPage = usersPage + 1;
+      dispatch(getUsersThunk(nextPage));
+    }
+  };
+
+  // *************************************************
+  // популярные пользователи
+  const {
+    users: popularUsers,
+    isLoading: isPopularLoading,
+    hasMore: hasMorePopular,
+    page: popularPage,
+  } = useSelector((state: RootState) => state.popularUsers);
+
+  // функция загрузки последующих данных
+  const handleLoadMorePopularUsers = () => {
+    if (!isPopularLoading && hasMorePopular) {
+      const nextPage = popularPage + 1;
+      dispatch(getPopularUsersThunk(nextPage));
+    }
+  };
+
+  // *************************************************
+  // по created_at
+  const {
+    users: createdAtUsers,
+    isLoading: isCreatedAtLoading,
+    hasMore: hasMoreCreatedAt,
+    page: createdAtPage,
+  } = useSelector((state: RootState) => state.createdAtUsers);
+
+    // функция загрузки последующих данных
+  const handleLoadMoreCreatedAtUsers = () => {
+    if (!isCreatedAtLoading && hasMoreCreatedAt) {
+      const nextPage = createdAtPage + 1;
+      dispatch(getCreatedAtUsersThunk(nextPage));
+    }
+  };
+
+  // *************************************************
+  // случайные пользователи
+  const {
+    users: randomUsers,
+    isLoading: isRandomLoading,
+    hasMore: hasMoreRandom,
+    page: randomPage,
+  } = useSelector((state: RootState) => state.randomUsers);
+
+    // функция загрузки последующих данных
+  const handleLoadMoreRandomUsers = () => {
+    if (!isRandomLoading && hasMoreRandom) {
+      const nextPage = randomPage + 1;
+      dispatch(getRandomUsersThunk(nextPage));
+    }
+  };
+
+
 
   const subCategories = useSelector(
     (s: RootState) => s.categories.subcategories
@@ -95,13 +168,7 @@ export const HomePage = () => {
     setSelectedPlaces(places);
   };
 
-  // функция загрузки последующих данных
-  const handleLoadMore = () => {
-    if (!isLoading && hasMore) {
-      const nextPage = page + 1;
-      dispatch(getUsersThunk(nextPage));
-    }
-  };
+
 
   const handleResetAll = () => {
   setSelectedSkillType("all");
@@ -176,11 +243,10 @@ export const HomePage = () => {
           >
             <GridList
               rows={1}
-              users={users}
-              // subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
+              users={popularUsers}
+              loading={isPopularLoading}
+              hasMore={hasMorePopular}
+              onLoadMore={handleLoadMorePopularUsers}
             />
           </CardShowcase>
           <CardShowcase
@@ -190,21 +256,24 @@ export const HomePage = () => {
           >
             <GridList
               rows={1}
-              users={users}
-              // subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
+              users={createdAtUsers}
+              loading={isCreatedAtLoading}
+              hasMore={hasMoreCreatedAt}
+              onLoadMore={handleLoadMoreCreatedAtUsers}
             />
           </CardShowcase>
-          <CardShowcase title="Рекомендуем">
+
+          <CardShowcase
+            title="Рекомендуем"
+            buttonTitle="Смотреть все"
+            icon={<Icon name="chevronRight" />}
+          >
             <GridList
               rows={1}
-              users={users}
-              // subCategories={subCategories}
-              loading={isLoading}
-              hasMore={hasMore}
-              onLoadMore={handleLoadMore}
+              users={randomUsers}
+              loading={isRandomLoading}
+              hasMore={hasMoreRandom}
+              onLoadMore={handleLoadMoreRandomUsers}
             />
           </CardShowcase>
         </div>
@@ -234,11 +303,11 @@ export const HomePage = () => {
           isIconFirst
         >
           <GridList
-            users={users}
+            users={plainUsers}
             // subCategories={subCategories}
-            loading={isLoading}
-            hasMore={hasMore}
-            onLoadMore={handleLoadMore}
+            loading={isUsersLoading}
+            hasMore={hasMoreUsers}
+            onLoadMore={handleLoadMorePlainUsers}
           />
         </CardShowcase>
       </div>
@@ -248,19 +317,9 @@ export const HomePage = () => {
       <div>
         {/* Все карточки пользователей */}
         <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
-          {users.map((u) => (
+          {plainUsers.map((u) => (
             <UserCard
               user={u}
-              // id={u.id}
-              // likedByMe={u.likedByMe}
-              // key={u.id}
-              // name={u.name}
-              // from={u.from}
-              // age={birthdayToFormatedAge(u.birthdate)}
-              // avatar={getImageUrl(u.photo)}
-              // teachSkills={u.skill}
-              // learnSkills={u.need_subcat}
-              // subCategories={subCategories}
             />
           ))}
         </div>
@@ -297,10 +356,10 @@ export const HomePage = () => {
           />
         )}
 
-        {hasMore && !isLoading && (
+        {hasMoreUsers && !isUsersLoading && (
           <button
             style={{ margin: "20px", padding: "10px 20px" }}
-            onClick={handleLoadMore}
+            onClick={handleLoadMorePlainUsers}
           >
             Загрузить ещё
           </button>
@@ -311,7 +370,7 @@ export const HomePage = () => {
           title="Похожие предложения"
           icon={<Icon name="chevronRight" />}
         >
-          <CardSlider users={users} subCategories={subCategories} />
+          <CardSlider users={plainUsers} subCategories={subCategories} />
         </CardShowcase>
       </div>
 
@@ -319,19 +378,9 @@ export const HomePage = () => {
 
       <h2>Блок текущего пользователя</h2>
       <div style={{ display: "flex", gap: "20px" }}>
-        {user && (
+        {currentUser && (
           <UserCard
-            user={user}
-            // id={user.id}
-            // likedByMe={user.likedByMe}
-            // name={user.name}
-            // from={user.from}
-            // age={birthdayToFormatedAge(user.birthdate)}
-            // avatar={getImageUrl(user.photo)}
-            // about={user.about}
-            // teachSkills={user.skill}
-            // learnSkills={user.need_subcat}
-            // subCategories={subCategories}
+            user={currentUser}
           />
         )}
       </div>

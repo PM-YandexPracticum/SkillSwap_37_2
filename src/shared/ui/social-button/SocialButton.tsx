@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Icon } from "../icon/Icon";
 
 interface SocialButtonProps {
-  provider: "google" | "apple";
+  provider: "google" | "apple" | "github";
   onClick?: () => void;
   children: string;
   className?: string;

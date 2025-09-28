@@ -22,6 +22,7 @@ export type TUser = {
   created_at: string; //Дата создания аккаунта
   about: string; //Описание пользователя (вводится при регистрации)
   likedByMe: boolean;
+  random: number;
 };
 
 export type TPlace = {

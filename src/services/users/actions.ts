@@ -2,25 +2,26 @@
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@store";
-import { FETCH_ALL_USERS, FETCH_USER_BY_ID } from "@const/thunk-types";
-import { getUserByID, getUsersApi } from "@api/Api";
-import { TUser } from "@api/types";
+import { FETCH_ALL_USERS } from "@const/thunk-types";
+import { getUsersApi } from "@api/Api";
+import { TResponseUsers, TUser } from "@api/types";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
 
-// запрашиваем страницу с данными
 export const getUsersThunk = createAsyncThunk<
-  Awaited<ReturnType<typeof getUsersApi>>,   // тип успешного ответа
-  number,                           // аргумент (page)
-  { state: RootState }              // вот тут мы описываем тип состояния
+  TResponseUsers,  
+  number,           // аргумент (page)
+  { state: RootState }
 >(
   FETCH_ALL_USERS,
   async (page, { getState }) => {
-    const currentUsersCount = getState().users.users.length;
+    // количество в списке пользователей
+    const state = getState().users;
+    const usersCount = state.users.length;
     const expectedMinIndex = (page - 1) * USERS_PAGE_SIZE;
 
     // если уже загружено больше, чем нужно - возвращаем пустоту
-    if (currentUsersCount > expectedMinIndex) {
+    if (usersCount > expectedMinIndex) {
       return { users: [], hasMore: true };
     }
 
