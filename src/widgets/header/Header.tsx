@@ -30,7 +30,7 @@ export const Header: FC = () => {
 
   const closePopup = () => {
     setPopupOpen(false);
-  }
+  };
 
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
@@ -54,16 +54,16 @@ export const Header: FC = () => {
       <nav>
         <ul className={styles.navList}>
           <li className={styles.li}>
-            <a href="#" className={styles.link}>
-              О проекте
-            </a>
+            <Link to="/about" className={styles.link} onClick={() => console.log('Click on About link')}>
+  О проекте
+</Link>
           </li>
           <li className={styles.li}>
             {/* <a href="#" className={styles.link} onClick={togglePopup} > */}
             <button className={styles.link} onClick={togglePopup}>
               Все навыки
               <Icon
-                name={isPopupOpen ? 'chevronUp' : 'chevronDown'}
+                name={isPopupOpen ? "chevronUp" : "chevronDown"}
                 size="s"
                 className={styles.iconChevron}
               />

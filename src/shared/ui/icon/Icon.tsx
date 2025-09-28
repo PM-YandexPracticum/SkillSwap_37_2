@@ -56,6 +56,7 @@ import SortIcon from "../../assets/icons/sort.svg?react";
 import SunIcon from "../../assets/icons/sun.svg?react";
 import UserCircleIcon from "../../assets/icons/user-circle.svg?react";
 import UserIcon from "../../assets/icons/user.svg?react";
+import GitIcon from "../../assets/icons/github.svg?react";
 
 // Как называются иконки
 const icons = {
@@ -93,6 +94,7 @@ const icons = {
   sort: SortIcon,
   user: UserIcon,
   userCircle: UserCircleIcon,
+  github: GitIcon,
 } as const;
 
 

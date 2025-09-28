@@ -34,4 +34,5 @@ export type IconName =
   | 'share'
   | 'sort'
   | 'user'
-  | 'userCircle';
+  | 'userCircle'
+  | 'github';

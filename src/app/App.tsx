@@ -15,6 +15,7 @@
 /demo/skill-details SkillDetailsDemoContent
 /500              Error500PageStub
 /*                NotFoundPageStub
+/about            About
 =========================== */
 
 import React, { useState } from "react";
@@ -64,6 +65,7 @@ import { RegisterStep2Data } from "../features/auth/RegisterStep2";
 import styles from "./App.module.css";
 import { getPopularUsersThunk } from "../services/popularUsers/actions";
 
+import { About } from "../pages/about/About";
 
 
 export const App: React.FC = () => {
@@ -104,6 +106,7 @@ export const App: React.FC = () => {
           <Route path="skill/new" element={<SkillFormContent />} />
           <Route path="skills/:id" element={<OfferPage />} />
           <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
+          <Route path="about" element={<About />} />
 
       {/* Страницы регистрации */}
           <Route path="registration/step1" element={
