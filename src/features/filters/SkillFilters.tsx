@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './SkillFilters.module.css';
 import { Icon } from '../../shared/ui/icon/Icon';
 import { TCategory, TSubcategory } from '../../api/types';
-import { TSkillType } from '../../shared/types/filters';
+import { SKILL_TYPES, TSkillType } from '../../shared/types/filters';
 
 interface SkillFiltersProps {
   onSkillTypeChange: (type: TSkillType) => void;
@@ -38,10 +38,13 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
   };
 
   const handleSkillTypeChange = (value: string): TSkillType => {
-    if (value === 'all' || value === 'want-to-learn' || value === 'can-teach') {
+    if (value === SKILL_TYPES.ALL 
+      || value === SKILL_TYPES.WANT_TO_LEARN 
+      || value === SKILL_TYPES.CAN_TEACH
+    ) {
       return value as TSkillType;
     }
-    return 'all';
+    return SKILL_TYPES.ALL;
   };
 
   if (!categories || !Array.isArray(categories)) {
@@ -58,8 +61,8 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
             <input
               type="radio"
               name={`skill-type-${skillTypeGroupId}`}
-              value="all"
-              checked={selectedSkillType === 'all'}
+              value={SKILL_TYPES.ALL}
+              checked={selectedSkillType === SKILL_TYPES.ALL}
               onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))}
               className={styles.input}
             />
@@ -70,8 +73,8 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
             <input
               type="radio"
               name={`skill-type-${skillTypeGroupId}`}
-              value="want-to-learn"
-              checked={selectedSkillType === 'want-to-learn'}
+              value={SKILL_TYPES.WANT_TO_LEARN}
+              checked={selectedSkillType === SKILL_TYPES.WANT_TO_LEARN}
               onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))}
               className={styles.input}
             />
@@ -82,8 +85,8 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
             <input
               type="radio"
               name={`skill-type-${skillTypeGroupId}`}
-              value="can-teach"
-              checked={selectedSkillType === 'can-teach'}
+              value={SKILL_TYPES.CAN_TEACH}
+              checked={selectedSkillType === SKILL_TYPES.CAN_TEACH}
               onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))}
               className={styles.input}
             />

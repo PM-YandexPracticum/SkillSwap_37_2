@@ -1,8 +1,9 @@
 // src/features/filters/ActiveFiltersBar.tsx
+
 import React from "react";
 import styles from "./ActiveFiltersBar.module.css";
-import { TSkillType } from "shared/types/filters";
-
+import { SKILL_TYPES, TSkillType } from "../../shared/types/filters";
+import { GENDERS, TGender } from "@api/types";
 
 // Поддержим разные варианты названия поля у категорий
 type Category = { id: string | number; name?: string; title?: string };
@@ -15,8 +16,8 @@ type Props = {
   onSkillTypeChange: (value: TSkillType) => void;
   onCategoryToggle: (categoryId: string) => void;
 
-  selectedGender: string;
-  onChangeGender: (value: string) => void;
+  selectedGender: TGender;
+  onChangeGender: (value: TGender) => void;
 
   selectedPlaces: number[];
   onChangePlaces: (values: number[]) => void;
@@ -24,16 +25,16 @@ type Props = {
 
 const placeLabel = (id: number) => String(id);
 
-const skillTypeLabel: Record<string, string> = {
-  all: "Все навыки",
-  "want-to-learn": "Хочу научиться",
-  "can-teach": "Могу научить",
+export const SKILL_TYPE_LABELS: Record<TSkillType, string> = {
+  [SKILL_TYPES.ALL]: "Все навыки",
+  [SKILL_TYPES.WANT_TO_LEARN]: "Хочу научиться",
+  [SKILL_TYPES.CAN_TEACH]: "Могу научить",
 };
 
-const genderLabel: Record<string, string> = {
-  male: "Мужчины",
-  female: "Женщины",
-  "": "Пол не выбран",
+export const GENDER_LABELS: Record<TGender, string> = {
+  [GENDERS.MALE]: "Мужчины",
+  [GENDERS.FEMALE]: "Женщины",
+  [GENDERS.UNSPECIFIED]: "Пол не выбран",
 };
 
 export const ActiveFiltersBar: React.FC<Props> = (props) => {
@@ -46,13 +47,13 @@ export const ActiveFiltersBar: React.FC<Props> = (props) => {
 
   const chips: { key: string; label: string; onRemove: () => void }[] = [];
 
-  if (selectedSkillType !== "all") {
+  if (selectedSkillType !== SKILL_TYPES.ALL) {
     chips.push({
         key: "skillType",
-        label: skillTypeLabel[selectedSkillType] ?? String(selectedSkillType),
-        onRemove: () => onSkillTypeChange("all"),
+        label:  SKILL_TYPE_LABELS[selectedSkillType],
+        onRemove: () => onSkillTypeChange(SKILL_TYPES.ALL),
     });
-}
+  }
 
   selectedCategories.forEach((id) => {
     const cat = categories.find((c) => String(c.id) === String(id));
@@ -63,11 +64,11 @@ export const ActiveFiltersBar: React.FC<Props> = (props) => {
     });
   });
 
-  if (selectedGender) {
+  if (selectedGender !== GENDERS.UNSPECIFIED) {
     chips.push({
       key: "gender",
-      label: genderLabel[selectedGender] ?? selectedGender,
-      onRemove: () => onChangeGender(""),
+      label: GENDER_LABELS[selectedGender],
+      onRemove: () => onChangeGender(GENDERS.UNSPECIFIED),
     });
   }
 

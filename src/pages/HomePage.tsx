@@ -34,11 +34,10 @@ import { useExchangeNotification } from "../shared/ui/notification/useExchangeNo
 
 import { OfferPage } from "./Offer/OfferPage";
 import { SkillFilters } from "../features/filters/SkillFilters";
-import { TSkillType } from "shared/types/filters";
+import { SKILL_TYPES, TSkillType } from "../shared/types/filters";
 import { FiltersContainer } from "../features/filters/FiltersContainer";
 
 import { ActiveFiltersBar } from "../features/filters/ActiveFiltersBar";
-// import { RegistrationProgress } from "../shared/ui/RegistrationProgress/RegistrationProgress";
 import { LoginNotification } from "../shared/ui/notification/LoginNotification";
 import styles from "./HomePage.module.css";
 
@@ -47,6 +46,8 @@ import { getPopularUsersThunk } from "../services/popularUsers/actions";
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
 import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
+import { resetFilters, setGender } from "../services/filters/filters-slice";
+import { resetFilteredUsers } from "../services/filteredUsers/filtered-users-slice";
 
 export const HomePage = () => {
 
@@ -132,8 +133,8 @@ export const HomePage = () => {
 
   // *************************************************
   // отфильтрованные пользователи
-
-  const selectedGenderDebugConst: TGender = GENDERS.MALE;
+  const filters = useSelector((s: RootState) => s.filters);
+  const selectedGender = useSelector((s: RootState) => s.filters.gender);
   
   const {
     users: filteredUsers,
@@ -148,7 +149,7 @@ export const HomePage = () => {
       const nextPage = filteredPage + 1;
       dispatch(getFilteredUsersThunk({ 
         page: nextPage, 
-        gender: selectedGenderDebugConst
+        gender: selectedGender
       }));
     }
   };
@@ -170,7 +171,7 @@ export const HomePage = () => {
   const [isLoginNotificationOpen, setIsLoginNotificationOpen] = useState(false);
 
 
-  const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>("all");
+  const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>(SKILL_TYPES.ALL);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   // Получаем категории из Redux
@@ -185,28 +186,44 @@ export const HomePage = () => {
     );
   };
 
-  const [selectedGender, setSelectedGender] = useState<string>("");
+  // const [selectedGender, setSelectedGender] = useState<string>("");
   const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
 
-  const handleGenderChange = (gender: string) => {
-    setSelectedGender(gender);
+  // const handleGenderChange = (gender: string) => {
+  //   setSelectedGender(gender);
+  // };
+
+
+  const handleGenderChange = (gender: TGender) => {
+    dispatch(setGender(gender));
+    dispatch(resetFilteredUsers()); // очистим список
+    dispatch(getFilteredUsersThunk({ page: 1, gender }));
   };
+
   const handlePlaceChange = (places: number[]) => {
     setSelectedPlaces(places);
   };
 
   const handleResetAll = () => {
-  setSelectedSkillType("all");
-  setSelectedCategories([]);
-  setSelectedGender("");
-  setSelectedPlaces([]);
+    dispatch(resetFilters());
+    dispatch(resetFilteredUsers());
+    // setSelectedSkillType("all");
+    // setSelectedCategories([]);
+    // setSelectedGender("");
+    // setSelectedPlaces([]);
   };
 
+
   const hasActiveFilters =
-    selectedSkillType !== "all" ||
-    selectedCategories.length > 0 ||
-    selectedGender !== "" ||
-    selectedPlaces.length > 0;
+    filters.skillType !== SKILL_TYPES.ALL ||
+    filters.categories.length > 0 ||
+    filters.gender !== GENDERS.UNSPECIFIED ||
+    filters.places.length > 0;
+
+    // selectedSkillType !== "all" ||
+    // selectedCategories.length > 0 ||
+    // selectedGender !== "" ||
+    // selectedPlaces.length > 0;
 
   const handleOpenLogin = () => {
     setIsLoginNotificationOpen(true);
@@ -238,7 +255,8 @@ export const HomePage = () => {
             subcategories={subCategories}
           />
           <FilterSection
-            onGenderChange={setSelectedGender}
+            onGenderChange={handleGenderChange}
+            // onGenderChange={setSelectedGender}
             onPlaceChange={setSelectedPlaces}
             selectedGender={selectedGender}
             selectedPlaces={selectedPlaces}
@@ -253,7 +271,7 @@ export const HomePage = () => {
             onSkillTypeChange={setSelectedSkillType}
             onCategoryToggle={handleCategoryToggle}
             selectedGender={selectedGender}
-            onChangeGender={setSelectedGender}
+            onChangeGender={handleGenderChange}
             selectedPlaces={selectedPlaces}
             onChangePlaces={setSelectedPlaces}
           />

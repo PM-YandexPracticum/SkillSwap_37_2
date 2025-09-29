@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import styles from "./FilterSection.module.css";
 import { Icon } from "../../shared/ui/icon/Icon";
 import { RootState, useSelector } from "@store";
+import { GENDERS, TGender } from "@api/types";
 
 interface FilterSectionProps {
-  onGenderChange: (value: string) => void;
+  onGenderChange: (value: TGender) => void;
   onPlaceChange: (selectedPlaces: number[]) => void;
 
-  selectedGender: string;
+  selectedGender: TGender;
   selectedPlaces: number[];
 }
 
@@ -46,9 +47,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
             <input
               type="radio"
               name={`gender-${genderGroupId}`}
-              value=""
-              checked={selectedGender === ""}
-              onChange={(e) => onGenderChange(e.target.value)}
+              value={GENDERS.UNSPECIFIED}
+              checked={selectedGender === GENDERS.UNSPECIFIED}
+              onChange={(e) => onGenderChange(e.target.value as TGender)}
               className={styles.input}
             />
             <span className={styles.radio}></span>
@@ -58,9 +59,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
             <input
               type="radio"
               name={`gender-${genderGroupId}`}
-              value="male"
-              checked={selectedGender === "male"}
-              onChange={(e) => onGenderChange(e.target.value)}
+              value={GENDERS.MALE}
+              checked={selectedGender === GENDERS.MALE}
+              onChange={(e) => onGenderChange(e.target.value as TGender)}
               className={styles.input}
             />
             <span className={styles.radio}></span>
@@ -70,9 +71,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
             <input
               type="radio"
               name={`gender-${genderGroupId}`}
-              value="female"
-              checked={selectedGender === "female"}
-              onChange={(e) => onGenderChange(e.target.value)}
+              value={GENDERS.FEMALE}
+              checked={selectedGender === GENDERS.FEMALE}
+              onChange={(e) => onGenderChange(e.target.value as TGender)}
               className={styles.input}
             />
             <span className={styles.radio}></span>
