@@ -9,6 +9,7 @@ import { notificationSlice } from './notifications/notification-slice';
 import { popularUsersSlice } from './popularUsers/popular-users-slice';
 import { createdAtUsersSlice } from './createdAtUsers/created-at-users-slice';
 import { randomUsersSlice } from './randomUsers/random-users-slice';
+import { filteredUsersSlice } from './filteredUsers/filtered-users-slice';
 
 export const rootReducer = combineSlices(
     categoriesSlice,
@@ -19,4 +20,5 @@ export const rootReducer = combineSlices(
     popularUsersSlice,
     createdAtUsersSlice,
     randomUsersSlice,
+    filteredUsersSlice,
 );

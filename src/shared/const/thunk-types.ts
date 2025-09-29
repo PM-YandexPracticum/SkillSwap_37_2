@@ -12,3 +12,4 @@ export const FETCH_LOGOUT_USER = 'user/logout'
 export const FETCH_USERS_BY_LIKES =   'user/getUsersByLikes';
 export const FETCH_USERS_BY_CREATE =   'user/getUsersByCreate';
 export const FETCH_USERS_RANDOM_ORDER =   'user/getUsersRandomOrder';
+export const FETCH_USERS_FILTERED =   'user/getUsersFiltered';

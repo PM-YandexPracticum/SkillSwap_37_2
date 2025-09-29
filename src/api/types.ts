@@ -3,10 +3,18 @@
 import { TSkillName } from "../shared/types/SkillName";
 import { IconName } from "shared/ui/icon/icons";
 
+export const GENDERS = {
+  MALE: 'male',
+  FEMALE: 'female',
+  UNSPECIFIED: 'unspecified',
+} as const;
+
+export type TGender = (typeof GENDERS)[keyof typeof GENDERS];
+
 export type TUser = {
   id: number;
   name: string;
-  gender: "male" | "female" | 'unspecified';
+  gender: TGender;
   photo: string; //Фото профиля
   from: string; //Город пользователя
   skill: TSkillName; //Текстовое название подкатегории (из skills_subcategories.json)
@@ -23,6 +31,11 @@ export type TUser = {
   about: string; //Описание пользователя (вводится при регистрации)
   likedByMe: boolean;
   random: number;
+};
+
+export type TGetFilteredUsersArgs = {
+  page: number;
+  gender?: TGender;
 };
 
 export type TPlace = {

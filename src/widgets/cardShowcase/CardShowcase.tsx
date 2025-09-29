@@ -1,18 +1,21 @@
 import React, { ReactElement } from "react";
 import styles from "./CardShowcase.module.css";
 
-type TTitle = 
-  'Подходящие предложения: '
-  | 'Популярное'
-  | 'Новое'
-  | 'Точное совпадение'
-  | 'Новые идеи'
-  | 'Рекомендуем'
-  | 'Похожие предложения'
+export const SHOWCASE_TITLES = {
+  MATCHING: 'Подходящие предложения: ',
+  POPULAR: 'Популярное',
+  NEW: 'Новое',
+  EXACT: 'Точное совпадение',
+  IDEAS: 'Новые идеи',
+  RECOMMEND: 'Рекомендуем',
+  SIMILAR: 'Похожие предложения',
+} as const;
+
+export type TShowcaseTitle = (typeof SHOWCASE_TITLES)[keyof typeof SHOWCASE_TITLES];  
 
 type CardShowcaseProps = {
   children: ReactElement;
-  title: TTitle;
+  title: TShowcaseTitle;
   buttonTitle?: string
   icon?: ReactElement;
   isIconFirst?: boolean; //если указан атрибут, то иконка слева от текста
@@ -28,21 +31,12 @@ export const CardShowcase = ({
   titleSize = '2em'
 }: CardShowcaseProps) => {
 
-   const showHideRowsHandle = () => {
-    if (title.startsWith('Подходящие предложения')) {
-      console.log('Сортировка...');
-    }
-    if (title.startsWith('Популярное')) {
-      console.log('Популярное...');
-    }
-    if (title.startsWith('Новое')) {
-      console.log('Новое...');
-    }
-    if (title.startsWith('Точное совпадение')) {
-      console.log('Точное совпадение...');
-    }
-    if (title.startsWith('Новые идеи')) {
-      console.log('Новые идеи...');
+  const showHideRowsHandle = () => {
+    for (const [, value] of Object.entries(SHOWCASE_TITLES)) {
+      if (title.startsWith(value)) {
+        console.log(`Нашли заголовок: ${value}...`);
+        break;
+      }
     }
   };
 

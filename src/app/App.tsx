@@ -72,6 +72,8 @@ import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
 
 import { About } from "../pages/about/About";
+import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
+import { GENDERS } from "@api/types";
 
 
 export const App: React.FC = () => {
@@ -86,6 +88,7 @@ export const App: React.FC = () => {
     dispatch(getPopularUsersThunk(1)); 
     dispatch(getCreatedAtUsersThunk(1)); 
     dispatch(getRandomUsersThunk(1)); 
+    dispatch(getFilteredUsersThunk({page:1, gender:GENDERS.MALE})); 
 
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
