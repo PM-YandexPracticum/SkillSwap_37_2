@@ -46,14 +46,12 @@ import { getUsersThunk } from "../services/users/actions";
 import { getPopularUsersThunk } from "../services/popularUsers/actions";
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
-import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
 
 export const HomePage = () => {
 
   const [currentStep, setCurrentStep] = useState(1); // текущий шаг
   const totalSteps = 3;
 
-  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
   const dispatch = useDispatch();
 
   // Это авторизованный пользователь
@@ -172,8 +170,6 @@ export const HomePage = () => {
     setSelectedPlaces(places);
   };
 
-
-
   const handleResetAll = () => {
   setSelectedSkillType("all");
   setSelectedCategories([]);
@@ -202,20 +198,6 @@ export const HomePage = () => {
   return (
     <div className={styles.homePageWrapper}>
       <Header />
-
-<div>
-  <button 
-    style={{
-      fontSize: "32px",
-      color: "red",
-      height: "80px",
-      padding: "10px 20px",
-    }}
-    onClick={() => window.location.href = '/registration/step1'}
-  >
-    Тестировать регистрацию 
-  </button>
-</div>
 
       <div className={styles.filterSectionWrapper}>
         <FiltersContainer

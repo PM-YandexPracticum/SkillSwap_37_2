@@ -50,6 +50,10 @@ export const Header: FC = () => {
     dispatch(setUser(randomUser));
   };
 
+  const handleRegistration = () => {
+    window.location.href = '/registration/step1'
+  }
+
   return (
     <header className={styles.header}>
       <Link to="/">
@@ -119,7 +123,7 @@ export const Header: FC = () => {
         ) : (
           <div className={styles.buttonsWrapper}>
             <Button size={92} onClick={handleLogin}>Войти</Button>
-            <Button size={208} colored>
+            <Button size={208} onClick={handleRegistration} colored>
               Зарегистрироваться
             </Button>
           </div>
