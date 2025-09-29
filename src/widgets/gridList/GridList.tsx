@@ -4,8 +4,9 @@ import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
 import { Loader } from '../../shared/ui/loader/Loader';
-import { birthdayToFormatedAge, getImageUrl } from '../../shared/lib/helpers';
 import { TPlace, TUser } from '@api/types';
+import { useSelector } from '@store';
+import { getCurrentUser } from '../../services/user/user-slice';
 
 //количество отображаемых в гриде рядов 1 или максимум
 type TRows = 1 | "auto";
@@ -33,7 +34,11 @@ export const GridList = ({
 
   // 3 колонки * rows строк
   const maxItems = typeof(rows) === "number" ? rows * 3 : users.length; 
-  const visibleUsers = users.slice(0, maxItems);
+  const currentUser = useSelector(getCurrentUser);
+  const currentUserId = currentUser?.id
+  const visibleUsers = users
+    .filter(u => u.id !== currentUserId) // убираем текущего
+    .slice(0, maxItems); 
 
   return (
     <div>
