@@ -2,14 +2,20 @@ import React, { useState, ChangeEvent, DragEvent } from "react";
 import styles from './DragDrop.module.css';
 import galleryAddImg from '../../assets/icons/gallery-add.svg';
 
-export const DragDrop = () => {
+type DragDropProps = {
+  onChange?: (files: File[]) => void;
+};
+
+export const DragDrop: React.FC<DragDropProps> = ({ onChange }) => {
   const [files, setFiles] = useState<File[]>([]);
-  const [dragActive, setDragActive] = useState<boolean>(false);
+  const [dragActive, setDragActive] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      setFiles(Array.from(e.target.files));
+      const fileArray = Array.from(e.target.files);
+      setFiles(fileArray);
+      onChange?.(fileArray);
     }
   };
 
@@ -30,7 +36,9 @@ export const DragDrop = () => {
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFiles(Array.from(e.dataTransfer.files));
+      const fileArray = Array.from(e.dataTransfer.files);
+      setFiles(fileArray);
+      onChange?.(fileArray);
     }
   };
 
@@ -41,7 +49,7 @@ export const DragDrop = () => {
         onDragOver={handleDrag}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-      > 
+      >
         <label className={styles.label}>
           {files.length > 0 ? (
             <p>Выбранный файл: {files[0].name}</p>
@@ -65,4 +73,4 @@ export const DragDrop = () => {
       </div>
     </div>
   );
-}
+};
