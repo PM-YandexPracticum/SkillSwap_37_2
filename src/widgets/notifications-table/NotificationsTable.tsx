@@ -12,19 +12,30 @@ export const NotificationsTable = () => {
 
   // Это авторизованный пользователь
   const currentUser = useSelector(getCurrentUser);
-  if (currentUser === null) {
-    return (<div></div>)
-  }
 
   useEffect(() => {
+    if (!currentUser) {
+      setEvents([]);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
     getNotificationsApi(currentUser.id)
       .then((res) => setEvents(res.events))
       .finally(() => setLoading(false));
   }, [currentUser]);
 
-  if (loading) return <p>Загрузка...</p>;
+  // если нет авторизованного пользователя
+  if (!currentUser) {
+    return <div>Нет пользователя</div>;
+  }
 
-  console.log(events)
+  // если запрос в процессе
+  if (loading) {
+    return <p>Загрузка...</p>;
+  }
+
   return (
     <table>
       <thead>

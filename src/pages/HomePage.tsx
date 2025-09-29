@@ -498,10 +498,10 @@ export const HomePage = () => {
       <ServerErrorPage />
 
 
-      {/* <h2>NotificationsTable</h2>
-      <div  style={{ marginBottom: '100px' }}>
+      <h2>NotificationsTable</h2>
+      <div  style={{ marginBottom: '300px' }}>
         <NotificationsTable/>
-      </div> */}
+      </div>
 
       {/* <NotificationWidget /> */}
 
