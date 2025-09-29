@@ -15,7 +15,14 @@ import { SkillMenu } from "../SkillMenu/SkillMenu";
 import { getCurrentUser } from "../../services/user/user-slice";
 import { ProfilePopup } from "../profile-popup/ProfilePopup";
 
-type PopupType = "skills" | "profile" | "notifications" | null;
+// type PopupType = "skills" | "profile" | "notifications" | null;
+export const POPUP_TYPES = {
+  SKILLS: 'skills',
+  PROFILE: 'profile',
+  NOTIFICATIONS: 'notifications',
+} as const;
+
+export type PopupType = typeof POPUP_TYPES[keyof typeof POPUP_TYPES] | null;
 
 export const Header: FC = () => {
   const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
@@ -42,10 +49,10 @@ export const Header: FC = () => {
             </Link>
           </li>
           <li className={styles.li}>
-            <button className={styles.link} onClick={() => togglePopup('skills')}>
+            <button className={styles.link} onClick={() => togglePopup(POPUP_TYPES.SKILLS)}>
               Все навыки
               <Icon
-                name={isOpenPopup === 'skills' ? 'chevronUp' : 'chevronDown'}
+                name={isOpenPopup === POPUP_TYPES.SKILLS ? 'chevronUp' : 'chevronDown'}
                 size="s"
                 className={styles.iconChevron}
               />
@@ -68,7 +75,7 @@ export const Header: FC = () => {
           <>
             <button
               className={styles.notificationButton}
-              onClick={() => togglePopup('notifications')}
+              onClick={() => togglePopup(POPUP_TYPES.NOTIFICATIONS)}
             >
               <div className={styles.iconWrapper}>
                 <Icon name="notification" size={20} strokeWidth={5} />
@@ -84,7 +91,7 @@ export const Header: FC = () => {
         {currentUser ? (
           <div
             className={styles.userAuthWrapper}
-            onClick={() => togglePopup('profile')}
+            onClick={() => togglePopup(POPUP_TYPES.PROFILE)}
             style={{ cursor: "pointer" }}
           >
             <span className={styles.userName}>{currentUser.name}</span>
@@ -107,17 +114,17 @@ export const Header: FC = () => {
 
       {/* Попапы */}
       {currentUser ? (
-        <Popup isOpen={isOpenPopup === 'notifications'} onClose={closePopup}>
+        <Popup isOpen={isOpenPopup === POPUP_TYPES.NOTIFICATIONS} onClose={closePopup}>
           <NotificationWidget/>
         </Popup>
       ) : null}
 
-      <Popup isOpen={isOpenPopup === 'skills'} onClose={closePopup}>
+      <Popup isOpen={isOpenPopup === POPUP_TYPES.SKILLS} onClose={closePopup}>
         <SkillMenu />
       </Popup>
       
 
-      <Popup isOpen={isOpenPopup === 'profile'} onClose={closePopup}>
+      <Popup isOpen={isOpenPopup === POPUP_TYPES.PROFILE} onClose={closePopup}>
         <ProfilePopup onClose={closePopup} />
       </Popup>
 
