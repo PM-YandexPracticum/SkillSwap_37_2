@@ -27,11 +27,6 @@ export const GridList = ({
   onLoadMore,
 }: GridListProps) => {
 
-  const lastElementRef = useInfiniteScroll(onLoadMore, hasMore, loading);
-  if (users.length === 0 && !loading) {
-    return <div className={styles.empty}>Пользователи не найдены</div>;
-  }
-
   // 3 колонки * rows строк
   const maxItems = typeof(rows) === "number" ? rows * 3 : users.length; 
   const currentUser = useSelector(getCurrentUser);
@@ -39,12 +34,20 @@ export const GridList = ({
   const visibleUsers = users
     .filter(u => u.id !== currentUserId) // убираем текущего
     .slice(0, maxItems); 
+  // const visibleUsers = users
+  //   .slice(0, maxItems); 
+
+
+  const lastElementRef = useInfiniteScroll(onLoadMore, hasMore, loading);
+  if (users.length === 0 && !loading) {
+    return <div className={styles.empty}>Пользователи не найдены</div>;
+  }
 
   return (
     <div>
       <ul className={styles.grid}>
         {visibleUsers.map((user, index) => (
-            <li
+              <li
               key={user.id}
               className={styles.gridItem}
               ref={index === users.length - 1 ? lastElementRef : undefined}
