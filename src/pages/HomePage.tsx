@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState, useDispatch } from "@store";
 
 import { getCurrentUser } from "../services/user/user-slice";
-import { TUser } from "@api/types";
+import { GENDERS, TGender, TUser } from "@api/types";
 import { UserCard } from "../features/users/userCard/UserCard";
 // import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import {
@@ -28,7 +28,7 @@ import {
 import { NotFoundPage } from "./not-found-page/NotFoundPage";
 import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
 import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
-import { CardShowcase } from "../widgets/cardShowcase/CardShowcase";
+import { CardShowcase, SHOWCASE_TITLES } from "../widgets/cardShowcase/CardShowcase";
 import { Icon } from "../shared/ui/icon/Icon";
 import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
 
@@ -46,6 +46,7 @@ import { getUsersThunk } from "../services/users/actions";
 import { getPopularUsersThunk } from "../services/popularUsers/actions";
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
+import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
 
 export const HomePage = () => {
 
@@ -125,6 +126,30 @@ export const HomePage = () => {
     if (!isRandomLoading && hasMoreRandom) {
       const nextPage = randomPage + 1;
       dispatch(getRandomUsersThunk(nextPage));
+    }
+  };
+
+
+  // *************************************************
+  // отфильтрованные пользователи
+
+  const selectedGenderDebugConst: TGender = GENDERS.MALE;
+  
+  const {
+    users: filteredUsers,
+    isLoading: isFilteredLoading,
+    hasMore: hasMoreFiltered,
+    page: filteredPage,
+  } = useSelector((state: RootState) => state.filteredUsers);
+
+  // функция загрузки последующих данных
+  const handleLoadMoreFilteredUsers = ( ) => {
+    if (!isFilteredLoading && hasMoreFiltered) {
+      const nextPage = filteredPage + 1;
+      dispatch(getFilteredUsersThunk({ 
+        page: nextPage, 
+        gender: selectedGenderDebugConst
+      }));
     }
   };
 
@@ -234,7 +259,7 @@ export const HomePage = () => {
           />
 
           <CardShowcase
-            title="Популярное"
+            title={SHOWCASE_TITLES.POPULAR}
             buttonTitle="Смотреть все"
             icon={<Icon name="chevronRight" />}
           >
@@ -247,7 +272,7 @@ export const HomePage = () => {
             />
           </CardShowcase>
           <CardShowcase
-            title="Новое"
+            title={SHOWCASE_TITLES.NEW}
             buttonTitle="Смотреть все"
             icon={<Icon name="chevronRight" />}
           >
@@ -261,7 +286,7 @@ export const HomePage = () => {
           </CardShowcase>
 
           <CardShowcase
-            title="Рекомендуем"
+            title={SHOWCASE_TITLES.RECOMMEND}
             buttonTitle="Смотреть все"
             icon={<Icon name="chevronRight" />}
           >
@@ -277,34 +302,17 @@ export const HomePage = () => {
       </div>
 
       <div className={styles.filterSectionWrapper}>
-        {/* <FiltersContainer title="Фильтры">
-          <SkillFilters
-            onSkillTypeChange={setSelectedSkillType}
-            onCategoryToggle={handleCategoryToggle}
-            selectedSkillType={selectedSkillType}
-            selectedCategories={selectedCategories}
-            categories={categories}
-            subcategories={subCategories}
-          />
-          <FilterSection
-            onGenderChange={setSelectedGender}
-            onPlaceChange={setSelectedPlaces}
-            selectedGender={selectedGender}
-            selectedPlaces={selectedPlaces}
-          />
-        </FiltersContainer> */}
         <CardShowcase
-          title="Подходящие предложения: "
+          title={SHOWCASE_TITLES.MATCHING}
           buttonTitle="Сначала новые"
           icon={<Icon name="sort" />}
           isIconFirst
         >
           <GridList
-            users={plainUsers}
-            // subCategories={subCategories}
-            loading={isUsersLoading}
-            hasMore={hasMoreUsers}
-            onLoadMore={handleLoadMorePlainUsers}
+            users={filteredUsers}
+            loading={isFilteredLoading}
+            hasMore={hasMoreFiltered}
+            onLoadMore={handleLoadMoreFilteredUsers}
           />
         </CardShowcase>
       </div>
@@ -364,7 +372,7 @@ export const HomePage = () => {
 
         {/* Showcase блоки */}
         <CardShowcase
-          title="Похожие предложения"
+          title={SHOWCASE_TITLES.SIMILAR}
           icon={<Icon name="chevronRight" />}
         >
           <CardSlider users={plainUsers} subCategories={subCategories} />

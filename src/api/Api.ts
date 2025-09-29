@@ -16,9 +16,47 @@ import {
   TResponseNotifications,
   TNotificationEvent,
   NotificationTypes,
+  GENDERS,
+  TGetFilteredUsersArgs,
 } from "@api/types";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
+
+
+// filtered
+export const getFilteredUsersApi = async (
+  { page, gender }: TGetFilteredUsersArgs
+): Promise<TResponseUsers> => {
+  try {
+    const response = await fetch(USERS_JSON_FILE);
+    const data = await response.json();
+
+    // Фильтрация
+    // фильтрация по полу
+    let filtered = data.users;
+    if (gender && gender !== GENDERS.UNSPECIFIED) {
+      filtered = filtered.filter((u: any) => u.gender === gender);
+    }
+
+    // пагинация
+    const start = (page - 1) * USERS_PAGE_SIZE;
+    const end = start + USERS_PAGE_SIZE;
+    const usersPage = filtered.slice(start, end);
+
+    return {
+      users: usersPage,
+      hasMore: end < filtered.length,
+    };
+  } catch (error) {
+    console.error('Ошибка в getFilteredUsersApi:', error);
+    throw error;
+  }
+};
+
+
+
+
+
 
 export const getUsersApi = async (page = 1): Promise<TResponseUsers> => {
   try {
