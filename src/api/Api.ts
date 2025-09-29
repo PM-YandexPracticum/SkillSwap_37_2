@@ -25,7 +25,7 @@ const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
 
 // filtered
 export const getFilteredUsersApi = async (
-  { page, gender }: TGetFilteredUsersArgs
+  { page, gender, places }: TGetFilteredUsersArgs
 ): Promise<TResponseUsers> => {
   try {
     const response = await fetch(USERS_JSON_FILE);
@@ -36,6 +36,11 @@ export const getFilteredUsersApi = async (
     let filtered = data.users;
     if (gender && gender !== GENDERS.UNSPECIFIED) {
       filtered = filtered.filter((u: any) => u.gender === gender);
+    }
+
+    // фильтрация по месту жительства
+    if (places.length > 0) {
+      filtered = filtered.filter((u: any) => places.includes(u.from));
     }
 
     // пагинация

@@ -8,31 +8,30 @@ import { GENDERS, TGender } from "@api/types";
 
 interface FilterSectionProps {
   onGenderChange: (value: TGender) => void;
-  onPlaceChange: (selectedPlaces: number[]) => void;
+  onPlacesChange: (selectedPlaces: string[]) => void;
 
   selectedGender: TGender;
-  selectedPlaces: number[];
+  selectedPlaces: string[];
 }
 
 export const FilterSection: React.FC<FilterSectionProps> = ({
   onGenderChange,
-  onPlaceChange,
+  onPlacesChange,
   selectedGender,
   selectedPlaces,
 }) => {
-  // const places = useSelector(state => state.places.places);
   const places = useSelector((state: RootState) => state.places.places);
   const [showAllPlaces, setShowAllPlaces] = useState(false);
 
   const mainPlaces = places.slice(0, 5);
   const otherPlaces = places.slice(5);
 
-  // добавляем/убираем из "списка id" "id города"
-  const handlePlaceToggle = (placeId: number) => {
-    const newPlaces = selectedPlaces.includes(placeId)
-      ? selectedPlaces.filter((id) => id !== placeId)
-      : [...selectedPlaces, placeId];
-    onPlaceChange(newPlaces);
+  // добавляем/убираем из списка мест
+  const handlePlaceToggle = (placeName: string) => {
+    const newPlaces = selectedPlaces.includes(placeName)
+      ? selectedPlaces.filter((n) => n !== placeName)
+      : [...selectedPlaces, placeName];
+    onPlacesChange(newPlaces);
   };
 
   const genderGroupId = React.useId();
@@ -92,8 +91,8 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
             <label key={place.id} className={styles.item}>
               <input
                 type="checkbox"
-                checked={selectedPlaces.includes(place.id)}
-                onChange={() => handlePlaceToggle(place.id)}
+                checked={selectedPlaces.includes(place.name)}
+                onChange={() => handlePlaceToggle(place.name)}
                 className={styles.input}
               />
               <span className={styles.checkbox}></span>
@@ -123,8 +122,8 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
                 <label key={place.id} className={styles.item}>
                   <input
                     type="checkbox"
-                    checked={selectedPlaces.includes(place.id)}
-                    onChange={() => handlePlaceToggle(place.id)}
+                    checked={selectedPlaces.includes(place.name)}
+                    onChange={() => handlePlaceToggle(place.name)}
                     className={styles.input}
                   />
                   <span className={styles.checkbox}></span>
