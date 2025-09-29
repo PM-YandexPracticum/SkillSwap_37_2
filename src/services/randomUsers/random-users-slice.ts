@@ -3,6 +3,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@api/types';
 import { getRandomUsersThunk } from './actions';
+import { toggleLikeAction } from '../../services/users/actions';
 
 type RandomUsersState = {
   users: TUser[];
@@ -53,7 +54,14 @@ export const randomUsersSlice = createSlice({
       .addCase(getRandomUsersThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Ошибка загрузки случайных пользователей';
-      });
+      })
+
+      .addCase(toggleLikeAction, (state, action) => {
+        const user = state.users.find(u => u.id === action.payload);
+        if (user) {
+          user.likedByMe = !user.likedByMe;
+        }
+      });         
   },
 });
 

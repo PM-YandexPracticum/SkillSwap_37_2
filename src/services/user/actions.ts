@@ -1,15 +1,14 @@
 // src\services\user\actions.ts
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserByID, getUserLikesApi } from '../../api/Api';
+import { getUserByIdAPI, getUserLikesApi, logoutApi } from '../../api/Api';
 import { TUser } from '../../api/types';
 import { FETCH_LOGOUT_USER, FETCH_USER_BY_ID, FETCH_USER_LIKES } from "@const/thunk-types";
-import { setLogout } from "./user-slice";
 
 export const getUserThunk = createAsyncThunk<TUser | null, number>(
   FETCH_USER_BY_ID,
   async (userId: number) => {
-    const user = await getUserByID(userId);
+    const user = await getUserByIdAPI(userId);
     return user;
   }
 );
@@ -26,10 +25,11 @@ export const getUserLikesThunk = createAsyncThunk(
   }
 );
 
-//выход из профиля
+
 export const logoutThunk = createAsyncThunk(
   FETCH_LOGOUT_USER,
-  async (_, { dispatch }) => {
-    dispatch(setLogout());
+  async () => {
+    const response = await logoutApi();
+    return response.success;   // вернём true при удаче
   }
 );

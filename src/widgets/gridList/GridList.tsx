@@ -12,7 +12,6 @@ type TRows = 1 | "auto";
 
 type GridListProps = {
   users: TUser[];
-  // subCategories: TPlace[];
   rows?: TRows;
   loading: boolean;
   hasMore: boolean;
@@ -21,7 +20,6 @@ type GridListProps = {
 
 export const GridList = ({
   users,
-  // subCategories,
   rows = "auto", //по умолчанию показывать все ряды(все карточки)
   loading,
   hasMore, //бесконечный скролл/подгрузка данных
@@ -48,16 +46,6 @@ export const GridList = ({
             >
               <UserCard
                 user = {user}
-
-                // id={user.id}
-                // likedByMe={user.likedByMe}
-                // name={user.name}
-                // from={user.from}
-                // age={birthdayToFormatedAge(user.birthdate)}
-                // avatar={getImageUrl(user.photo)}
-                // teachSkills={user.sub_text}
-                // learnSkills={user.need_subcat}
-                // subCategories={subCategories}
               />
             </li>
           ))}

@@ -1,7 +1,7 @@
 // src\services\user\user-slice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '../../api/types';
-import { getUserLikesThunk, getUserThunk } from './actions';
+import { getUserLikesThunk, getUserThunk, logoutThunk } from './actions';
 
 export interface UserState {
   user: TUser | null;
@@ -25,14 +25,7 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<TUser>) => {
       state.user = action.payload;
-      // state.isAuthChecked = true; // чтобы выглядело как "залогинен"
     },
-    setLogout: (state) => {
-      state.user = null;
-      state.likes = [];
-      state.isAuthChecked = false;
-      state.error = null;
-    }
   },
 
   selectors: {
@@ -65,6 +58,21 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message || 'Ошибка загрузки лайков';
     })
+
+      .addCase(logoutThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(logoutThunk.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthChecked = false;
+        state.isLoading = false;
+      })
+      .addCase(logoutThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Ошибка при выходе';
+      });
+
   }
 });
 
@@ -74,7 +82,7 @@ export const { setUser } = userSlice.actions;
 
 // новые имена (рекомендуется использовать дальше)
 export const { getUser: getCurrentUser } = userSlice.selectors;
-export const { setUser: setCurrentUser, setLogout } = userSlice.actions;
+export const { setUser: setCurrentUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
 

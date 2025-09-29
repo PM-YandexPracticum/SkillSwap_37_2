@@ -46,6 +46,7 @@ import { getUsersThunk } from "../services/users/actions";
 import { getPopularUsersThunk } from "../services/popularUsers/actions";
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
+import { NotificationWidget } from "../widgets/notification-widget/NotificationWidget";
 
 export const HomePage = () => {
 
@@ -510,16 +511,17 @@ export const HomePage = () => {
     />
   )}
 
-
-
-      <h2>NotificationsTable</h2>
-      {/* появляется, если нажать на колокольчик в header
-      <NotificationWidget /> */}
-      <NotificationsTable userId={API_USER_ID} />
-
-      <SkillMenu />
+      {/* <SkillMenu /> */}
       <NotFoundPage />
       <ServerErrorPage />
+
+
+      {/* <h2>NotificationsTable</h2>
+      <div  style={{ marginBottom: '100px' }}>
+        <NotificationsTable/>
+      </div> */}
+
+      {/* <NotificationWidget /> */}
 
       <Footer />
     </div>

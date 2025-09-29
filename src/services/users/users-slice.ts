@@ -1,7 +1,7 @@
 // src\services\users\users-slice.ts
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUsersThunk } from './actions';
+import { getUsersThunk, toggleLikeAction } from './actions';
 import { TUser } from '@api/types';
 import { getUserLikesThunk } from '../../services/user/actions';
 
@@ -39,6 +39,7 @@ export const usersSlice = createSlice({
     setOfferUser: (state, action: PayloadAction<TUser>) => {
       state.offerUser = action.payload;
     },
+
     // сброс состояния к начальному
     resetUsers: (state) => {
       state.users = [];
@@ -48,13 +49,14 @@ export const usersSlice = createSlice({
       state.error = null;
     },
 
-    // переключение лайка у пользователя по id
-    toggleLike: (state, action: PayloadAction<number>) => {
-      const user = state.users.find(u => u.id === action.payload);
-      if (user) {
-        user.likedByMe = !user.likedByMe;
-      }
-    },    
+    // // переключение лайка у пользователя по id
+    // toggleLike: (state, action: PayloadAction<number>) => {
+    //   const user = state.users.find(u => u.id === action.payload);
+    //   if (user) {
+    //     user.likedByMe = !user.likedByMe;
+    //   }
+    // },
+
   },
   selectors: {
     getOfferUser: (state) => state.offerUser
@@ -102,6 +104,13 @@ export const usersSlice = createSlice({
           likedByMe: likedIds.has(u.id),
         }));
       })
+
+      .addCase(toggleLikeAction, (state, action) => {
+        const user = state.users.find(u => u.id === action.payload);
+        if (user) {
+          user.likedByMe = !user.likedByMe;
+        }
+      });      
 
   }
 });

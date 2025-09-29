@@ -3,6 +3,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@api/types';
 import { getCreatedAtUsersThunk } from './actions';
+import { toggleLikeAction } from '../../services/users/actions';
 
 type CreatedAtUsersState = {
   users: TUser[];
@@ -54,6 +55,13 @@ export const createdAtUsersSlice = createSlice({
         state.isLoading = false;
         state.error =
           action.error.message || 'Ошибка загрузки пользователей по created_at';
+      })
+      
+      .addCase(toggleLikeAction, (state, action) => {
+        const user = state.users.find(u => u.id === action.payload);
+        if (user) {
+          user.likedByMe = !user.likedByMe;
+        }
       });
   },
 });

@@ -8,11 +8,12 @@ import { SkillTag } from "../../skills/skillTag/SkillTag";
 import { TUser } from "../../../api/types";
 import { prepareSkillsToRender } from "../../../shared/lib/prepareSkillsToRender";
 import { RootState, useDispatch, useSelector } from '@store';
-import { setOfferUser, toggleLike } from '../../../services/users/users-slice';
+import { setOfferUser } from '../../../services/users/users-slice';
 import { birthdayToFormatedAge, getImageUrl } from "../../../shared/lib/helpers";
 import { setUser } from "../../../services/user/user-slice";
 import clsx from "clsx";
 import styles from "./UserCard.module.css";
+import { toggleLikeAction } from "../../../services/users/actions";
 
 
 type UserCardProps = {
@@ -69,7 +70,8 @@ const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
             name={user.likedByMe ? 'like-active' : 'like'}
             alt={user.likedByMe ? 'уже лайкнул' : 'поставить лайк'}
             className={styles.like}
-            onClick={() => dispatch(toggleLike(user.id))}
+            // onClick={() => dispatch(toggleLike(user.id))}
+            onClick={() => dispatch(toggleLikeAction(user.id))}
           />        
         )}
 

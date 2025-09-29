@@ -117,7 +117,7 @@ export const getUsersByRandomApi = async (
 };
 
 
-export const getUserByID = async (userId: number): Promise<TUser | null> => {
+export const getUserByIdAPI = async (userId: number): Promise<TUser | null> => {
   try {
     const response = await fetch(USERS_JSON_FILE);
     const data = await response.json();
@@ -264,6 +264,17 @@ export const getUserLikesApi = async (userId: number) => {
     return data.filter((like: any) => like.liker_id === userId);
   } catch (error) {
     console.error("Ошибка загрузки лайков:", error);
+    throw error;
+  }
+};
+
+
+export const logoutApi = async (): Promise<{ success: boolean }> => {
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 50)); 
+    return { success: true };
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 };

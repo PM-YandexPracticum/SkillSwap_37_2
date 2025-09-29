@@ -3,20 +3,24 @@
 import { useEffect, useState } from 'react';
 import { TNotificationEvent } from '@api/types';
 import { getNotificationsApi } from '@api/Api';
+import { useSelector } from '@store';
+import { getCurrentUser } from '../../services/user/user-slice';
 
-type Props = {
-  userId: number;
-};
-
-export const NotificationsTable = ({ userId }: Props) => {
+export const NotificationsTable = () => {
   const [events, setEvents] = useState<TNotificationEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Это авторизованный пользователь
+  const currentUser = useSelector(getCurrentUser);
+  if (currentUser === null) {
+    return (<div></div>)
+  }
+
   useEffect(() => {
-    getNotificationsApi(userId)
+    getNotificationsApi(currentUser.id)
       .then((res) => setEvents(res.events))
       .finally(() => setLoading(false));
-  }, [userId]);
+  }, [currentUser]);
 
   if (loading) return <p>Загрузка...</p>;
 

@@ -1,3 +1,5 @@
+// src\widgets\popup\Popup.tsx
+
 import { ReactNode, useEffect, useRef } from "react";
 import styles from './Popup.module.css';
 

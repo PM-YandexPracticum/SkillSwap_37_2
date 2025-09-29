@@ -18,10 +18,6 @@ import { getNotificationThunk } from "../../services/notifications/actions";
 import { getCurrentUser } from "../../services/user/user-slice";
 import { NotificationTypes, TNotificationEvent } from "@api/types";
 
-interface NotificationWidgetProps {
-  userId: number;
-}
-
 // Интерфейс для преобразования данных (если нужно)
 interface NotificationDisplay {
   id: number;
@@ -32,21 +28,27 @@ interface NotificationDisplay {
   viewed: boolean;
 }
 
-export const NotificationWidget: FC<NotificationWidgetProps> = ({userId}) => {
+export const NotificationWidget: FC = () => {
   const dispatch = useDispatch();
+  
+  // Это авторизованный пользователь
+  const currentUser = useSelector(getCurrentUser);
+  if (currentUser === null) {
+    return (<div></div>)
+  }
+
+  const currentUserId = currentUser.id
   
   const newNotifications = useSelector(getNewNotifications);
   const viewedNotifications = useSelector(getViewedNotifications);
   const isLoading = useSelector(getIsLoading);
   const unseenCount = useSelector(getUnseenCount);
 
-  const currentUser = useSelector(getCurrentUser);
-
   useEffect(() => {
-    if (userId) {
-      dispatch(getNotificationThunk(userId));
+    if (currentUserId) {
+      dispatch(getNotificationThunk(currentUserId));
     }
-  }, [userId, dispatch]);
+  }, [currentUserId, dispatch]);
 
   const formatDate = (dateString: string): string => {
     const eventDate = new Date(dateString);
@@ -95,10 +97,7 @@ export const NotificationWidget: FC<NotificationWidgetProps> = ({userId}) => {
       action = "пока не принял ваш обмен";
       details = "Перейдите в профиль, чтобы обсудить детали";
     }
-    else {
-      action = "****";
-      details = "------";
-    }
+
     return {
       id: event.anotherUserId,
       userName: event.anotherUserName,

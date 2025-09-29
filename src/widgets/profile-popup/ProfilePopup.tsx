@@ -1,19 +1,27 @@
+// src\widgets\profile-popup\ProfilePopup.tsx
+
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '../../shared/ui/icon/Icon'
 import styles from './ProfilePopup.module.css'
 import { useDispatch } from '@store';
 import { logoutThunk } from '../../services/user/actions';
 
-export const ProfilePopup = () => {
+type ProfilePopupProps = {
+  onClose: () => void;
+};
+
+export const ProfilePopup = ({ onClose }: ProfilePopupProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleClickProfile = () => {
+    onClose();
     navigate("/profile");
   };
 
   const logout = () => {
     dispatch(logoutThunk());
+    onClose();
     navigate("/");
   };
 

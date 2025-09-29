@@ -21,7 +21,6 @@ export const About: FC = () => {
         setLoading(false);
       }
     };
-
     fetchTeamData();
   }, []);
 
