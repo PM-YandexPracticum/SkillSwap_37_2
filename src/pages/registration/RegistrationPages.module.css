@@ -1,5 +1,6 @@
 .registrationPage {
-  min-height: 100vh;
+  width: 1440px;
+  height: 1024px;
   display: flex;
   flex-direction: column;
   background: #f8f9fa;
@@ -24,11 +25,11 @@
 }
 
 .closeButton {
-  background: none;
+  background: #fff;
   border: none;
   cursor: pointer;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .progressSection {
@@ -48,9 +49,11 @@
 .contentContainer {
   display: flex;
   gap: 24px;
-  max-width: 1200px;
+  max-width: 1136px;
   width: 100%;
   justify-content: center;
+  margin: 0 auto;
+
 }
 
 .formSection {
