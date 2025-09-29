@@ -48,18 +48,10 @@ export const usersSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
-
-    // // переключение лайка у пользователя по id
-    // toggleLike: (state, action: PayloadAction<number>) => {
-    //   const user = state.users.find(u => u.id === action.payload);
-    //   if (user) {
-    //     user.likedByMe = !user.likedByMe;
-    //   }
-    // },
-
   },
   selectors: {
-    getOfferUser: (state) => state.offerUser
+    getOfferUser: (state) => state.offerUser,
+    getPlainUsers: (state) => state.users
   },
   extraReducers: builder => {
     builder
@@ -115,6 +107,6 @@ export const usersSlice = createSlice({
   }
 });
 
-export const { getOfferUser } = usersSlice.selectors;
-export const { setPage, setHasMore, resetUsers, toggleLike, setOfferUser } = usersSlice.actions;
+export const { getOfferUser, getPlainUsers } = usersSlice.selectors;
+export const { setPage, setHasMore, resetUsers, setOfferUser } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;

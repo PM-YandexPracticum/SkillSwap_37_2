@@ -12,8 +12,10 @@ import { getImageUrl } from "../../shared/lib/helpers";
 import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
 import { Popup } from "../popup/Popup";
 import { SkillMenu } from "../SkillMenu/SkillMenu";
-import { getCurrentUser } from "../../services/user/user-slice";
+import { getCurrentUser, setUser } from "../../services/user/user-slice";
 import { ProfilePopup } from "../profile-popup/ProfilePopup";
+import { getPlainUsers } from "../../services/users/users-slice";
+import { useDispatch } from "@store";
 
 // type PopupType = "skills" | "profile" | "notifications" | null;
 export const POPUP_TYPES = {
@@ -25,15 +27,28 @@ export const POPUP_TYPES = {
 export type PopupType = typeof POPUP_TYPES[keyof typeof POPUP_TYPES] | null;
 
 export const Header: FC = () => {
+  
+  const dispatch = useDispatch();
   const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
   
   const currentUser = useSelector(getCurrentUser);
+  const plainUsers = useSelector(getPlainUsers);
 
   const togglePopup = (popup: PopupType) => {
     setOpenPopup(prev => (prev === popup ? null : popup));
   };
   
   const closePopup = () => setOpenPopup(null);
+
+  const handleLogin = () => {
+    if (plainUsers.length === 0) {
+      console.warn('Нет загруженных пользователей для входа');
+      return;
+    }
+    const randomIndex = Math.floor(Math.random() * plainUsers.length);
+    const randomUser = plainUsers[randomIndex];
+    dispatch(setUser(randomUser));
+  };
 
   return (
     <header className={styles.header}>
@@ -103,7 +118,7 @@ export const Header: FC = () => {
           </div>
         ) : (
           <div className={styles.buttonsWrapper}>
-            <Button size={92}>Войти</Button>
+            <Button size={92} onClick={handleLogin}>Войти</Button>
             <Button size={208} colored>
               Зарегистрироваться
             </Button>
