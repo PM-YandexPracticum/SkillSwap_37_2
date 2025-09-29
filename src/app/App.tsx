@@ -73,7 +73,7 @@ import { getRandomUsersThunk } from "../services/randomUsers/actions";
 
 import { About } from "../pages/about/About";
 import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
-import { GENDERS } from "@api/types";
+import { GENDERS, TGender } from "@api/types";
 
 
 export const App: React.FC = () => {
@@ -190,7 +190,7 @@ const CatalogContent: React.FC = () => {
   // const subCategories = useSelector(
   //   (s: RootState) => s.categories.subcategories
   // );
-  const [selectedGender, setSelectedGender] = React.useState<string>("");
+  const [selectedGender, setSelectedGender] = React.useState<TGender>(GENDERS.UNSPECIFIED);
   const [selectedPlaces, setSelectedPlaces] = React.useState<number[]>([]);
 
   return (
