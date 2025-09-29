@@ -1,24 +1,18 @@
+// src\pages\Offer\OfferPage.tsx
+
 import { RootState, useDispatch } from '@store';
 import { useSelector } from 'react-redux';
 import { UserCard } from '../../features/users/userCard/UserCard';
-import { getUser } from '../../services/user/user-slice';
-import { birthdayToFormatedAge, getImageUrl } from '../../shared/lib/helpers';
 import { Icon } from '../../shared/ui/icon/Icon';
 import { CardShowcase } from '../../widgets/cardShowcase/CardShowcase';
 import { CardSlider } from '@widgets';
 import { SkillCardDetails } from '../../features/skills/Skill Card/skillCardDetails';
-import { useEffect } from 'react';
-import { getUserThunk } from '../../services/user/actions';
-import { getCategoriesThunk } from '../../services/categories/actions';
 import { getOfferUser } from '../../services/users/users-slice';
 import { Loader } from '../../shared/ui/loader/Loader';
 
 import styles from './OfferPage.module.css';
 
 export const OfferPage: React.FC = () => {
-  
-  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
-  const dispatch = useDispatch();
   
     const subCategories = useSelector((s: RootState) => s.categories.subcategories);
     const offerUser = useSelector(getOfferUser);
@@ -27,32 +21,16 @@ export const OfferPage: React.FC = () => {
       (state: RootState) => state.users
     );
   
-    useEffect(() => {
-      dispatch(getUserThunk(API_USER_ID));
-      dispatch(getCategoriesThunk());
-    }, [dispatch]);
-
   return (
     <>
       <section className={styles.skillSection}>
         <div className={styles.userCard}>
           {offerUser && (
-                    <UserCard
-                      needAbout
-                      user={offerUser}
-
-                      // id={user.id}
-                      // likedByMe={user.likedByMe}
-                      // name={user.name}
-                      // from={user.from}
-                      // age={birthdayToFormatedAge(user.birthdate)}
-                      // avatar={getImageUrl(user.photo)}
-                      // about={user.about}
-                      // teachSkills={user.skill}
-                      // learnSkills={user.need_subcat}
-                      // subCategories={subCategories}
-                    />
-                  )}
+            <UserCard
+              needAbout
+              user={offerUser}
+            />
+          )}
         </div>
         {offerUser && (
           <SkillCardDetails
@@ -69,6 +47,11 @@ export const OfferPage: React.FC = () => {
         <Loader />
       )}
 
+{/* 
+      похожие предложения должны браться из API
+      к примеру у тебя 10000 пользователей. а загружено в users 100
+      твой поиск будет только среди 100
+ */}
      <section>
         <CardShowcase
           title="Похожие предложения"

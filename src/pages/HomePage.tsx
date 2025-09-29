@@ -8,7 +8,7 @@ import { RootState, useDispatch } from "@store";
 import { getCurrentUser } from "../services/user/user-slice";
 import { TUser } from "@api/types";
 import { UserCard } from "../features/users/userCard/UserCard";
-import { RegisterStep2 } from "../features/auth/RegisterStep2";
+// import { RegisterStep2 } from "../features/auth/RegisterStep2";
 import {
   CardSlider,
   DropdownDemo,
@@ -38,7 +38,7 @@ import { TSkillType } from "shared/types/filters";
 import { FiltersContainer } from "../features/filters/FiltersContainer";
 
 import { ActiveFiltersBar } from "../features/filters/ActiveFiltersBar";
-import { RegistrationProgress } from "../shared/ui/RegistrationProgress/RegistrationProgress";
+// import { RegistrationProgress } from "../shared/ui/RegistrationProgress/RegistrationProgress";
 import { LoginNotification } from "../shared/ui/notification/LoginNotification";
 import styles from "./HomePage.module.css";
 
@@ -49,8 +49,8 @@ import { getRandomUsersThunk } from "../services/randomUsers/actions";
 
 export const HomePage = () => {
 
-  const [currentStep, setCurrentStep] = useState(1); // текущий шаг
-  const totalSteps = 3;
+  // const [currentStep, setCurrentStep] = useState(1); // текущий шаг
+  // const totalSteps = 3;
 
   const dispatch = useDispatch();
 
@@ -277,7 +277,7 @@ export const HomePage = () => {
       </div>
 
       <div className={styles.filterSectionWrapper}>
-        <FiltersContainer title="Фильтры">
+        {/* <FiltersContainer title="Фильтры">
           <SkillFilters
             onSkillTypeChange={setSelectedSkillType}
             onCategoryToggle={handleCategoryToggle}
@@ -292,7 +292,7 @@ export const HomePage = () => {
             selectedGender={selectedGender}
             selectedPlaces={selectedPlaces}
           />
-        </FiltersContainer>
+        </FiltersContainer> */}
         <CardShowcase
           title="Подходящие предложения: "
           buttonTitle="Сначала новые"
@@ -470,29 +470,6 @@ export const HomePage = () => {
       <h2>Вариант Dropdown 2</h2>
       <DropdownGroupedDemo />
 
-      
-      <RegistrationProgress currentStep={currentStep} totalSteps={totalSteps} />
-
-  {/* Форма регистрации по шагам */}
-  {currentStep === 1 && <AuthForm onContinue={() => setCurrentStep(2)} />}
-
-  {currentStep === 2 && (
-    <RegisterStep2
-      onBack={() => setCurrentStep(1)}
-      onContinue={(data) => {
-        console.log("Данные регистрации:", data);
-        setCurrentStep(3);
-      }}
-    />
-  )}
-
-  {currentStep === 3 && (
-    <SkillForm
-      onBack={() => setCurrentStep(2)}
-      onContinue={() => alert("Регистрация завершена!")}
-    />
-  )}
-
       {/* <SkillMenu /> */}
       <NotFoundPage />
       <ServerErrorPage />
@@ -509,3 +486,27 @@ export const HomePage = () => {
     </div>
   );
 };
+
+
+
+      {/* <RegistrationProgress currentStep={currentStep} totalSteps={totalSteps} /> */}
+
+  {/* Форма регистрации по шагам */}
+  {/* {currentStep === 1 && <AuthForm onContinue={() => setCurrentStep(2)} />}
+
+  {currentStep === 2 && (
+    <RegisterStep2
+      onBack={() => setCurrentStep(1)}
+      onContinue={(data) => {
+        console.log("Данные регистрации:", data);
+        setCurrentStep(3);
+      }}
+    />
+  )}
+
+  {currentStep === 3 && (
+    <SkillForm
+      onBack={() => setCurrentStep(2)}
+      onContinue={() => alert("Регистрация завершена!")}
+    />
+  )} */}
