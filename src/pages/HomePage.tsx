@@ -275,7 +275,8 @@ export const HomePage = () => {
             selectedPlaces={selectedPlaces}
             onChangePlaces={setSelectedPlaces}
           />
-
+{filters.gender === GENDERS.UNSPECIFIED ? (
+        <>
           <CardShowcase
             title={SHOWCASE_TITLES.POPULAR}
             buttonTitle="Смотреть все"
@@ -316,8 +317,9 @@ export const HomePage = () => {
               onLoadMore={handleLoadMoreRandomUsers}
             />
           </CardShowcase>
-        </div>
-      </div>
+
+        </>
+):(
 
       <div className={styles.filterSectionWrapper}>
         <CardShowcase
@@ -334,6 +336,13 @@ export const HomePage = () => {
           />
         </CardShowcase>
       </div>
+
+
+)
+}
+        </div>
+      </div>
+
 
       <OfferPage />
 
