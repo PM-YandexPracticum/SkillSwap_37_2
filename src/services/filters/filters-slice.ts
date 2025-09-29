@@ -8,7 +8,7 @@ type FiltersState = {
   skillType: TSkillType;
   categories: string[];
   gender: TGender;
-  places: number[];
+  places: string[];
 };
 
 const getInitialState = (): FiltersState => ({
@@ -19,6 +19,15 @@ const getInitialState = (): FiltersState => ({
 });
 
 const initialState = getInitialState();
+
+export const isFiltersEmpty = (state: FiltersState): boolean => {
+  return (
+    state.skillType === SKILL_TYPES.ALL &&
+    state.categories.length === 0 &&
+    state.gender === GENDERS.UNSPECIFIED &&
+    state.places.length === 0
+  );
+};
 
 export const filtersSlice = createSlice({
   name: 'filters',
@@ -37,7 +46,7 @@ export const filtersSlice = createSlice({
     setGender: (state, action: PayloadAction<TGender>) => {
       state.gender = action.payload;
     },
-    setPlaces: (state, action: PayloadAction<number[]>) => {
+    setPlaces: (state, action: PayloadAction<string[]>) => {
       state.places = action.payload;
     },
     resetFilters: () => getInitialState(),

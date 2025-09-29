@@ -2,16 +2,11 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '@store';
-import { TGender, TResponseUsers } from '@api/types';
+import { TGetFilteredUsersArgs, TResponseUsers } from '@api/types';
 import { FETCH_USERS_FILTERED } from '@const/thunk-types';
 import { getFilteredUsersApi } from '@api/Api';
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
-
-type TGetFilteredUsersArgs = {
-  page: number;
-  gender?: TGender;
-};
 
 export const getFilteredUsersThunk = createAsyncThunk<
   TResponseUsers,      // что вернём
@@ -19,7 +14,7 @@ export const getFilteredUsersThunk = createAsyncThunk<
   { state: RootState } // доступ к getState
 >(
   FETCH_USERS_FILTERED,
-    async ({ page, gender }, { getState }) => {
+    async ({ page, gender, places }, { getState }) => {
         // количество в списке отфильтрованных пользователей
         const state = getState().filteredUsers;
         const usersCount = state.users.length;
@@ -29,7 +24,7 @@ export const getFilteredUsersThunk = createAsyncThunk<
           return { users: [], hasMore: true };
         }
 
-        const response = await getFilteredUsersApi({page, gender});
+        const response = await getFilteredUsersApi({page, gender, places});
         return response;
   }
 );

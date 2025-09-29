@@ -46,7 +46,7 @@ import { getPopularUsersThunk } from "../services/popularUsers/actions";
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
 import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
-import { resetFilters, setGender } from "../services/filters/filters-slice";
+import { isFiltersEmpty, resetFilters, setGender, setPlaces } from "../services/filters/filters-slice";
 import { resetFilteredUsers } from "../services/filteredUsers/filtered-users-slice";
 
 export const HomePage = () => {
@@ -149,7 +149,8 @@ export const HomePage = () => {
       const nextPage = filteredPage + 1;
       dispatch(getFilteredUsersThunk({ 
         page: nextPage, 
-        gender: selectedGender
+        gender: selectedGender,
+        places: selectedPlaces
       }));
     }
   };
@@ -186,22 +187,19 @@ export const HomePage = () => {
     );
   };
 
-  // const [selectedGender, setSelectedGender] = useState<string>("");
-  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
-
-  // const handleGenderChange = (gender: string) => {
-  //   setSelectedGender(gender);
-  // };
-
+    const selectedPlaces = useSelector((s: RootState) => s.filters.places);
 
   const handleGenderChange = (gender: TGender) => {
     dispatch(setGender(gender));
     dispatch(resetFilteredUsers()); // очистим список
-    dispatch(getFilteredUsersThunk({ page: 1, gender }));
+    dispatch(getFilteredUsersThunk({ page: 1, gender, places: selectedPlaces }));
   };
 
-  const handlePlaceChange = (places: number[]) => {
-    setSelectedPlaces(places);
+
+  const handlePlacesChange = (places: string[]) => {
+    dispatch(setPlaces(places));
+    dispatch(resetFilteredUsers()); // очистим список
+    dispatch(getFilteredUsersThunk({ page: 1, gender: selectedGender, places }));
   };
 
   const handleResetAll = () => {
@@ -256,8 +254,7 @@ export const HomePage = () => {
           />
           <FilterSection
             onGenderChange={handleGenderChange}
-            // onGenderChange={setSelectedGender}
-            onPlaceChange={setSelectedPlaces}
+            onPlacesChange={handlePlacesChange}
             selectedGender={selectedGender}
             selectedPlaces={selectedPlaces}
           />
@@ -273,9 +270,11 @@ export const HomePage = () => {
             selectedGender={selectedGender}
             onChangeGender={handleGenderChange}
             selectedPlaces={selectedPlaces}
-            onChangePlaces={setSelectedPlaces}
+            onChangePlaces={handlePlacesChange }
           />
-{filters.gender === GENDERS.UNSPECIFIED ? (
+
+{isFiltersEmpty(filters) ? (          
+// {filters.gender === GENDERS.UNSPECIFIED ? (
         <>
           <CardShowcase
             title={SHOWCASE_TITLES.POPULAR}

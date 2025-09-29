@@ -36,6 +36,7 @@ export type TUser = {
 export type TGetFilteredUsersArgs = {
   page: number;
   gender?: TGender;
+  places: string[];
 };
 
 export type TPlace = {

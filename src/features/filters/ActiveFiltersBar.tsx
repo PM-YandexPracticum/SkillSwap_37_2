@@ -19,11 +19,11 @@ type Props = {
   selectedGender: TGender;
   onChangeGender: (value: TGender) => void;
 
-  selectedPlaces: number[];
-  onChangePlaces: (values: number[]) => void;
+  selectedPlaces: string[];
+  onChangePlaces: (values: string[]) => void;
 };
 
-const placeLabel = (id: number) => String(id);
+// const placeLabel = (id: number) => String(id);
 
 export const SKILL_TYPE_LABELS: Record<TSkillType, string> = {
   [SKILL_TYPES.ALL]: "Все навыки",
@@ -72,12 +72,12 @@ export const ActiveFiltersBar: React.FC<Props> = (props) => {
     });
   }
 
-  selectedPlaces.forEach((p) =>
+  selectedPlaces.forEach((placeName) =>
     chips.push({
-      key: `place-${p}`,
-      label: placeLabel(p),
+      key: `place-${placeName}`,
+      label: placeName,
       onRemove: () =>
-        onChangePlaces(selectedPlaces.filter((x) => x !== p)),
+        onChangePlaces(selectedPlaces.filter((x) => x !== placeName)),
     })
   );
 
