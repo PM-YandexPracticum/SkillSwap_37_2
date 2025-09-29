@@ -1,5 +1,5 @@
 .container {
-  margin: 0 auto;
+  margin: auto;
   display: grid;
   grid-template-columns: 324px 1fr;
   gap: 24px;
@@ -14,3 +14,16 @@
   min-width: 0;
 }
 
+.fullContent{
+ min-width: 100%;
+ margin: 0 auto;
+ padding-left: 200px;
+ padding-right: 200px;
+}
+
+.saved{
+  min-width: 100%;
+ margin: 0 auto;
+ padding-left: 210px;
+ padding-right: 210px;
+}
