@@ -32,7 +32,7 @@ import { RegistrationStep3 } from "../pages/registration/RegistrationStep3";
 
 //Данные/типы/стор (для каталога)
 import { RootState, useDispatch } from "@store";
-import { useSelector } from "react-redux";
+import { useSelector } from "@store";
 import { AuthForm, FilterSection } from "@features";
 
 import { getPlacesThunk } from "../services/places/actions";
@@ -46,16 +46,17 @@ import { getPopularUsersThunk } from "../services/popularUsers/actions";
 
 import { ScrollToTop } from "../features/scrollToTop/ScrollToTop";
 
-import styles from "./App.module.css";
-
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
 
 import { About } from "../pages/about/About";
 // import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
 import { GENDERS, TGender } from "@api/types";
+import { getOffersThunk } from "../services/offers/actions";
+import { getOffers } from "../services/offers/offers-slice";
 import { getUsersThunk } from "../services/users/actions";
 
+import styles from "./App.module.css";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ export const App: React.FC = () => {
 
   // Подгружаем данные при старте
   React.useEffect(() => {
+    dispatch(getOffersThunk()); //подгружаем все офферы
     // dispatch(getUserThunk(API_USER_ID));
 
     dispatch(getUsersThunk(1));
@@ -76,16 +78,18 @@ export const App: React.FC = () => {
 
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
+    
   }, [dispatch]);
-
+  
   const currentUser = useSelector((s: RootState) => s.user.user);
+  const offers = useSelector(getOffers);
 
   // лайки грузятся при смене пользователя
   React.useEffect(() => {
     if (currentUser) {
-      dispatch(getUserLikesThunk(currentUser.id));
+      dispatch(getUserLikesThunk(currentUser.id));        
     }
-  }, [dispatch, currentUser]);
+  }, [dispatch, currentUser, offers]);
 
   
   return (
@@ -130,7 +134,6 @@ export const App: React.FC = () => {
           } />
 
           {/*заглушки*/}
-          <Route path="skills/:id" element={<OfferPage />} />
           <Route path="favorites" element={<FavoritesPageStub />} />
           <Route path="requests" element={<RequestsPageStub />} />
 

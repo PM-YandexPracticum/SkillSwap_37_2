@@ -9,6 +9,8 @@ import { RegistrationModal } from "../../registration/RegistrationModal";
 import { Icon } from "../../../shared/ui/icon/Icon";
 import { Button } from "../../../shared/ui/button/Button";
 import photoPlaceholder from "../../../shared/assets/images/school-board.svg?.svg";
+import { useSelector } from "@store";
+import { isOfferCreated } from "../../../services/offers/offers-slice";
 import styles from './skillCardDetails.module.css';
 
 type SkillCardDetailsProps = {
@@ -33,7 +35,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   requireRegistration = true,
 }) => {
   const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
-  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+  const isOfferReady = useSelector(isOfferCreated);
 
   // Получаем пользователя из Redux
   const currentUser = useSelector((s: RootState) => s.user.user);
@@ -94,22 +96,49 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
             </button>
           </div>
 
-          <div className={styles.mainSection}>
-            <div className={styles.leftSection}>
-              <div className={styles.info}>
-                <h2 className={styles.title}>{title}</h2>
-                <h3 className={styles.subtitle}>{subtitle}</h3>
-                <p className={styles.description}>{description}</p>
-              </div>
-              <Button
-                className={styles.buttonOffer}
-                colored
-                onClick={handleExchangeClick}
-              >
-                {buttonText}
-              </Button>
-            </div>
+        <div className={styles.iconsBar}>
+          <button className={styles.buttonIcon} onClick={likeHandle}>
+            <Icon name="like" />
+          </button>
+          <button className={styles.buttonIcon} onClick={shareHandle}>
+            <Icon name="share" />
+          </button>
+          <button className={styles.buttonIcon} onClick={moreHandle}>
+            <Icon name="more" />
+          </button>
+        </div>
 
+        <div className={styles.mainSection}>
+
+          <div className={styles.leftSection}>
+            <div className={styles.info}>
+              <h2 className={styles.title}>{title}</h2>
+              <h3 className={styles.subtitle}>{subtitle}</h3>
+              <p className={styles.description}>{description}</p>
+            </div>
+              {!isOfferReady && (
+                <Button className={styles.buttonOffer}
+                  colored
+                  onClick={handleExchangeClick}
+                >
+                  {buttonText}
+                </Button>
+              )}
+              {isOfferReady && (
+                <Button
+                  className={(styles.buttonOffer, styles.buttonOfferReady)}
+                  onClick={handleExchangeClick}
+              >
+                  <Icon name='clock'/> Обмен предложен
+              </Button>
+              )}
+          </div>
+          
+          <div className={styles.rightSection}>
+            {images && (
+              <Gallery images={images} placeholder={photoPlaceholder} />
+            )}
+          </div>
             <div className={styles.rightSection}>
               {images && <Gallery images={images} placeholder={photoPlaceholder} />}
             </div>

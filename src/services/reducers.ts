@@ -12,6 +12,7 @@ import { popularUsersSlice } from './popularUsers/popular-users-slice';
 import { randomUsersSlice } from './randomUsers/random-users-slice';
 import { userSlice } from './user/user-slice';
 import { usersSlice } from './users/users-slice';
+import { offersSlice } from './offers/offers-slice';
 
 export const rootReducer = combineSlices(
   categoriesSlice,
@@ -24,4 +25,5 @@ export const rootReducer = combineSlices(
   randomUsersSlice,
   userSlice,
   usersSlice,
+  offersSlice
 );

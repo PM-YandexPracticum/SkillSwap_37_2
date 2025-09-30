@@ -19,8 +19,9 @@ import {
   NotificationTypes,
   GENDERS,
   TGetFilteredUsersArgs,
+  TResponseOffers,
+  TOffer,
   TLikeType,
-  TOfferType,
 } from "@api/types";
 import { SKILL_TYPES, TSkillType } from "../shared/types/filters";
 
@@ -257,16 +258,25 @@ export const getSkillsSubCategoriesApi =
     }
   };
 
+export const getOffersApi = 
+  async (): Promise<TResponseOffers> => {
+    try {
+      const response = await fetch(OFFERS_JSON_FILE);
+      const data = await response.json();
+      return data;
+    }
+    catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
 export const getNotificationsApi = async (
-  userId: number
+  userId: number,
+  offers: TOffer[]
 ): Promise<TResponseNotifications> => {
   try {
-    const [offersRes, usersRes] = await Promise.all([
-      fetch(OFFERS_JSON_FILE),
-      fetch(USERS_JSON_FILE),
-    ]);
-
-    const offersData = await offersRes.json();
+    const usersRes = await fetch(USERS_JSON_FILE);
     const usersData = await usersRes.json();
 
     const userMap = new Map<number, string>(
@@ -275,7 +285,7 @@ export const getNotificationsApi = async (
 
     const today = new Date();
 
-    const events = offersData.offers.flatMap((offer: TOfferType) => {
+    const events = offers.flatMap((offer: TOffer) => {
       const userEvents: TNotificationEvent[] = [];
 
       if (offer.skillOwnerId === userId) {

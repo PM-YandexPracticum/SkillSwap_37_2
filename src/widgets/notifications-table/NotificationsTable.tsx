@@ -5,6 +5,7 @@ import { TNotificationEvent } from '@api/types';
 import { getNotificationsApi } from '@api/Api';
 import { useSelector } from '@store';
 import { getCurrentUser } from '../../services/user/user-slice';
+import { getOffers } from '../../services/offers/offers-slice';
 
 export const NotificationsTable = () => {
   const [events, setEvents] = useState<TNotificationEvent[]>([]);
@@ -12,6 +13,7 @@ export const NotificationsTable = () => {
 
   // Это авторизованный пользователь
   const currentUser = useSelector(getCurrentUser);
+  const offers = useSelector(getOffers);
 
   useEffect(() => {
     if (!currentUser) {
@@ -21,7 +23,7 @@ export const NotificationsTable = () => {
     }
 
     setLoading(true);
-    getNotificationsApi(currentUser.id)
+    getNotificationsApi(currentUser.id, offers)
       .then((res) => setEvents(res.events))
       .finally(() => setLoading(false));
   }, [currentUser]);

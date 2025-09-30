@@ -1,11 +1,12 @@
 // src\services\user\user-slice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TUser } from '../../api/types';
+import { TNotificationEvent, TUser } from '../../api/types';
 import { getUserLikesThunk, getUserThunk, logoutThunk } from './actions';
 
 export interface UserState {
   user: TUser | null;
   likes: number[]; // id пользователей, которых лайкнул авторизованный юзер
+  currentOffers: TNotificationEvent[];
   isAuthChecked: boolean;
   isLoading: boolean;
   error: string | null;
@@ -14,6 +15,7 @@ export interface UserState {
 const initialState: UserState = {
   user: null,   // это тот, кто сейчас залогинился
   likes: [],
+  currentOffers: [],
   isAuthChecked: false,
   isLoading: false,
   error: null
@@ -26,10 +28,16 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<TUser>) => {
       state.user = action.payload;
     },
+    setCurrentOffers: (state, action: PayloadAction<TNotificationEvent[]>) => {
+      state.currentOffers = action.payload;
+    },
+    addCurrentOffers: (state, action: PayloadAction<TNotificationEvent>) => {
+      state.currentOffers.push(action.payload);
+    }
   },
-
   selectors: {
-    getUser: (state) => state.user
+    getUser: (state) => state.user,
+    getOffers: (state) => state.currentOffers
   },
   extraReducers: builder => {
     builder
@@ -59,20 +67,19 @@ export const userSlice = createSlice({
       state.error = action.error.message || 'Ошибка загрузки лайков';
     })
 
-      .addCase(logoutThunk.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(logoutThunk.fulfilled, (state) => {
-        state.user = null;
-        state.isAuthChecked = false;
-        state.isLoading = false;
-      })
-      .addCase(logoutThunk.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message || 'Ошибка при выходе';
-      });
-
+    .addCase(logoutThunk.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(logoutThunk.fulfilled, (state) => {
+      state.user = null;
+      state.isAuthChecked = false;
+      state.isLoading = false;
+    })
+    .addCase(logoutThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message || 'Ошибка при выходе';
+    });
   }
 });
 
@@ -81,8 +88,16 @@ export const { getUser } = userSlice.selectors;
 export const { setUser } = userSlice.actions;
 
 // новые имена (рекомендуется использовать дальше)
-export const { getUser: getCurrentUser } = userSlice.selectors;
-export const { setUser: setCurrentUser } = userSlice.actions;
+export const {
+  getUser: getCurrentUser,
+  getOffers
+} = userSlice.selectors;
+
+export const {
+  setUser: setCurrentUser,
+  setCurrentOffers,
+  addCurrentOffers
+} = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
 

@@ -14,7 +14,6 @@ import clsx from "clsx";
 import styles from "./UserCard.module.css";
 import { toggleLikeAction } from "../../../services/users/actions";
 
-
 type UserCardProps = {
   user: TUser;
   needAbout?: boolean;
@@ -94,7 +93,7 @@ const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
             Может научить
           </p>
           <ul className={styles.tagWrapper}>
-            <SkillTag skill={user.sub_text} />
+              <SkillTag skill={user.sub_text as TSkillName} />
           </ul>
         </div>
         <div>

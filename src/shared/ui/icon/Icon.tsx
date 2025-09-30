@@ -97,6 +97,7 @@ const icons = {
   userCircle: UserCircleIcon,
   github: GitIcon,
   cross: CrossIcon,
+  clock: ClockIcon
 } as const;
 
 

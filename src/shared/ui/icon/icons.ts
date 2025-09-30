@@ -37,4 +37,5 @@ export type IconName =
   | 'user'
   | 'userCircle'
   | 'github'
-  | 'cross';
+  | 'cross'
+  | 'clock';

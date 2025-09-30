@@ -1,23 +1,27 @@
 // src\pages\Offer\OfferPage.tsx
 
-import { RootState } from '@store';
+import { RootState, useDispatch } from '@store';
 import { useSelector } from 'react-redux';
 import { UserCard } from '../../features/users/userCard/UserCard';
 import { Icon } from '../../shared/ui/icon/Icon';
 import { CardShowcase } from '../../widgets/cardShowcase/CardShowcase';
 import { CardSlider } from '@widgets';
-import { SkillCardDetails } from '../../features/skills/Skill Card/skillCardDetails';
+import { SkillCardDetails } from '../../features/skills/skillCardDetails/skillCardDetails';
 import { getOfferUser } from '../../services/users/users-slice';
 import { Loader } from '../../shared/ui/loader/Loader';
+import { getCurrentUser } from '../../services/user/user-slice';
+import { addOfferThunk } from '../../services/offers/actions';
 
 import styles from './OfferPage.module.css';
 
 export const OfferPage: React.FC = () => {
   
-    const offerUser = useSelector(getOfferUser);
-    
-    const {users} = useSelector((state: RootState) => state.users);
-  
+  const dispatch = useDispatch();
+
+  const currentUser = useSelector(getCurrentUser);
+  const offerUser = useSelector(getOfferUser);
+  const {users} = useSelector((state: RootState) => state.users);
+
   return (
     <>
       <section className={styles.skillSection}>
@@ -36,6 +40,15 @@ export const OfferPage: React.FC = () => {
               description={offerUser.description || "Описание отсутствует"}
               images={offerUser.images || ""}
               buttonText={"Предложить обмен"}
+              onExchange={() => {
+                if (currentUser?.subCategoryId) {
+                dispatch(addOfferThunk({
+                  offerUserId: offerUser.id,
+                  skillOwnerId: currentUser.subCategoryId
+                }))
+                }
+                else {alert('Необходима авторизация')} //временно, пока не сделают норм атворизацию
+              }}
           />)
         }
       </section>

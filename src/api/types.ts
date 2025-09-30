@@ -89,10 +89,8 @@ export const NotificationTypes = {
 
 export type TNotificationType = typeof NotificationTypes[keyof typeof NotificationTypes];
 
-
 export type TNotificationEvent = {
   type: TNotificationType;
-  // type: 'my_new_offer' | 'offer_to_me' | 'accept_my_affer';
   seen: 0 | 1;
   anotherUserId: number;
   anotherUserName: string;
@@ -102,7 +100,7 @@ export type TNotificationEvent = {
 export type TResponseNotifications = {
   userId: number;
   events: TNotificationEvent[];
-};
+};  
 
 export type TLikeType = {
   id: number;
@@ -111,12 +109,16 @@ export type TLikeType = {
   timestamp: string; // ISO-строка с датой
 };
 
-export type TOfferType = {
+export type TOffer = {
   "offerUserId": number;
   "skillOwnerId": number;
-  "accept": 0 | 1;
   "daysSinceOffer": number;
   "daysSinceAccept": number;
+  "accept": 0 | 1;
   "sawOffer": 0 | 1,
   "sawAccept": 0 | 1,
 };
+
+export type TResponseOffers = {
+  offers: TOffer[];
+}
