@@ -6,7 +6,7 @@ import { RegistrationModal } from "../../registration/RegistrationModal";
 import { Icon } from "../../../shared/ui/icon/Icon";
 import { Button } from "../../../shared/ui/button/Button";
 import photoPlaceholder from "../../../shared/assets/images/school-board.svg?.svg";
-import styles from './skillCardDetails.module.css';
+import styles from "./skillCardDetails.module.css";
 
 type SkillCardDetailsProps = {
   checkEdit?: boolean; //если указать проп, то компонент рендерится с кнопкой редактировать
@@ -27,125 +27,131 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   images = [],
   buttonText = "Предложить обмен",
   onExchange,
-  requireRegistration = true
+  requireRegistration = true,
 }) => {
-
-  const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
+  const { isNotificationOpen, openNotification, closeNotification } =
+    useExchangeNotification();
   const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false); // Состояние для модалки
-  
+
   const handleExchangeClick = () => {
     if (requireRegistration) {
+      // Если требуется регистрация — открываем модалку
+      setIsRegistrationModalOpen(true);
+    } else {
+      // Если регистрация не требуется, сразу выполняем обмен и показываем уведомление
+      onExchange?.();
+      openNotification({
+        type: "info",
+        title: "Ваше предложение создано",
+        message: "Теперь вы можете предложить обмен",
+        buttonText: "Готово",
+      });
+    }
+  };
+
+  const handleRegistrationComplete = () => {
+    console.log("Регистрация завершена!");
+    setIsRegistrationModalOpen(false);
+
+    // После успешной регистрации выполняем обмен
+    onExchange?.();
+
+    // И только теперь показываем уведомление
     openNotification({
       type: "info",
       title: "Ваше предложение создано",
       message: "Теперь вы можете предложить обмен",
       buttonText: "Готово",
     });
-    } else { // Если регистрация не требуется, сразу вызываем обмен
-    onExchange?.();
-    }
-  };
-
-   const handleNotificationButtonClick = () => {
-    // Открываем модалку регистрации
-    closeNotification();
-    setIsRegistrationModalOpen(true);
-  };
-
-  const handleRegistrationComplete = () => {
-    console.log("Регистрация завершена!");
-    onExchange?.();
   };
 
   const likeHandle = () => {
     console.log("Liked!");
-  }
+  };
   const shareHandle = () => {
     console.log("Shared!");
-  }
+  };
   const moreHandle = () => {
     console.log("More...");
-  }
-
+  };
   const editHandle = () => {
-    console.log("Edit...")
-  }
+    console.log("Edit...");
+  };
 
   if (!checkEdit) {
     return (
-    <>
-      <div className={styles.skillCard}>
+      <>
+        <div className={styles.skillCard}>
+          <div className={styles.iconsBar}>
+            <button className={styles.buttonIcon} onClick={likeHandle}>
+              <Icon name="like" />
+            </button>
+            <button className={styles.buttonIcon} onClick={shareHandle}>
+              <Icon name="share" />
+            </button>
+            <button className={styles.buttonIcon} onClick={moreHandle}>
+              <Icon name="more" />
+            </button>
+          </div>
 
-        <div className={styles.iconsBar}>
-          <button className={styles.buttonIcon} onClick={likeHandle}>
-            <Icon name="like" />
-          </button>
-          <button className={styles.buttonIcon} onClick={shareHandle}>
-            <Icon name="share" />
-          </button>
-          <button className={styles.buttonIcon} onClick={moreHandle}>
-            <Icon name="more" />
-          </button>
-        </div>
-
-        <div className={styles.mainSection}>
-
-          <div className={styles.leftSection}>
-            <div className={styles.info}>
-              <h2 className={styles.title}>{title}</h2>
-              <h3 className={styles.subtitle}>{subtitle}</h3>
-              <p className={styles.description}>{description}</p>
-            </div>
-              <Button className={styles.buttonOffer}
+          <div className={styles.mainSection}>
+            <div className={styles.leftSection}>
+              <div className={styles.info}>
+                <h2 className={styles.title}>{title}</h2>
+                <h3 className={styles.subtitle}>{subtitle}</h3>
+                <p className={styles.description}>{description}</p>
+              </div>
+              <Button
+                className={styles.buttonOffer}
                 colored
                 onClick={handleExchangeClick}
               >
                 {buttonText}
               </Button>
-          </div>
-          
-          <div className={styles.rightSection}>
-            {images && (
-              <Gallery images={images} placeholder={photoPlaceholder} />
-            )}
-          </div>
+            </div>
 
+            <div className={styles.rightSection}>
+              {images && (
+                <Gallery images={images} placeholder={photoPlaceholder} />
+              )}
+            </div>
+          </div>
         </div>
-      </div>
 
-    {/* Модалка регистрации */}
-      <RegistrationModal
-        isOpen={isRegistrationModalOpen}
-        onClose={() => setIsRegistrationModalOpen(false)}
-        onRegistrationComplete={handleRegistrationComplete}
-      />
+        {/* Модалка регистрации */}
+        <RegistrationModal
+          isOpen={isRegistrationModalOpen}
+          onClose={() => setIsRegistrationModalOpen(false)}
+          onRegistrationComplete={handleRegistrationComplete}
+        />
 
-      <ExchangeNotification
-        isOpen={isNotificationOpen}
-        onClose={closeNotification}
-        onNavigateToExchange={handleNotificationButtonClick}
-        type="info"
-        title="Ваше предложение создано"
-        message="Теперь вы можете предложить обмен"
-        buttonText="Готово"
-      />
-    </>
-  )}
+        <ExchangeNotification
+          isOpen={isNotificationOpen}
+          onClose={closeNotification}
+          onNavigateToExchange={closeNotification}
+          type="info"
+          title="Ваше предложение создано"
+          message="Теперь вы можете предложить обмен"
+          buttonText="Готово"
+        />
+      </>
+    );
+  }
 
   return (
     <>
       <div
         className={styles.skillCard}
-        style={{padding: '2.75em 3.75em 4.5em'}}
+        style={{ padding: "2.75em 3.75em 4.5em" }}
       >
-
         <div className={styles.headSection}>
           <h3 className={styles.headTitle}>Ваше предложение</h3>
-          <p className={styles.headText}>Пожалуйста, проверьте и подтвердите правильность данных</p>
+          <p className={styles.headText}>
+            Пожалуйста, проверьте и&nbsp;подтвердите правильность данных
+          </p>
         </div>
 
         <div className={styles.mainSection}>
-
           <div className={styles.leftSection}>
             <div className={styles.info}>
               <h2 className={styles.title}>{title}</h2>
@@ -153,31 +159,24 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
               <p className={styles.description}>{description}</p>
             </div>
             <div className={styles.buttonsContainer}>
-              <Button 
-                className={styles.buttonEdit}
-                onClick={editHandle}
-              >
+              <Button className={styles.buttonEdit} onClick={editHandle}>
                 Редактировать <Icon name="edit" />
               </Button>
-              <Button
-                colored
-                onClick={handleExchangeClick}
-              >
+              <Button colored onClick={handleExchangeClick}>
                 {buttonText}
               </Button>
             </div>
           </div>
-          
+
           <div className={styles.rightSection}>
             {images && (
               <Gallery images={images} placeholder={photoPlaceholder} />
             )}
           </div>
-
         </div>
       </div>
 
-    {/* Модалка регистрации */}
+      {/* Модалка регистрации */}
       <RegistrationModal
         isOpen={isRegistrationModalOpen}
         onClose={() => setIsRegistrationModalOpen(false)}
@@ -187,12 +186,12 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
       <ExchangeNotification
         isOpen={isNotificationOpen}
         onClose={closeNotification}
-        onNavigateToExchange={handleNotificationButtonClick}
+        onNavigateToExchange={closeNotification}
         type="info"
         title="Ваше предложение создано"
         message="Теперь вы можете предложить обмен"
         buttonText="Готово"
       />
     </>
-  )
+  );
 };
