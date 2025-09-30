@@ -5,7 +5,7 @@ import styles from './SkillFilters.module.css';
 import { Icon } from '../../shared/ui/icon/Icon';
 import { TCategory, TSubcategory } from '../../api/types';
 import { SKILL_TYPES, TSkillType } from '../../shared/types/filters';
-import { setSkillType } from '../../services/filters/filters-slice';
+import { setSubcategories } from '../../services/filters/filters-slice';
 import { useDispatch } from '@store';
 
 interface SkillFiltersProps {
@@ -25,9 +25,9 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
   categories = [],
   subcategories = [],
 }) => {
-  const dispatch = useDispatch();
   const [expandedCategories, setExpandedCategories] = useState<number[]>([]);
-  const skillTypeGroupId = React.useId();
+  const skillTypeGroupId = React.useId()
+  const dispatch = useDispatch();
 
   const handleCategoryExpand = (categoryId: number) => {
     setExpandedCategories(prev =>
@@ -54,6 +54,24 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
   if (!categories || !Array.isArray(categories)) {
     return <div className={styles.skillFilters}>Загрузка категорий...</div>;
   }
+
+  const handleCategoryToggle = (categoryId: number) => {
+  const subs = getSubcategoriesForCategory(categoryId).map((s) => s.id);
+
+  const allSelected = subs.every((id) => selectedSubcategories.includes(id));
+
+  if (allSelected) {
+    // 🚀 если все выбраны → убираем их
+    dispatch(setSubcategories(
+      selectedSubcategories.filter((id) => !subs.includes(id))
+    ));
+  } else {
+    // 🚀 если не все выбраны → добавляем недостающие
+    const newSubs = subs.filter((id) => !selectedSubcategories.includes(id));
+    dispatch(setSubcategories([...selectedSubcategories, ...newSubs]));
+  }
+
+};
 
   return (
     <div className={styles.skillFilters}>
@@ -113,12 +131,15 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
               <div key={category.id} className={styles.categoryItem}>
                 <div className={styles.categoryHeader}>
                   <label className={styles.item}>
-                    {/* <input
+                    <input
                       type="checkbox"
-                      checked={selectedCategories.includes(category.id.toString())}
-                      onChange={() => onCategoryToggle(category.id.toString())}
+                      checked={getSubcategoriesForCategory(category.id).every((s) =>
+                        selectedSubcategories.includes(s.id)
+                      )}
+                      onChange={() => handleCategoryToggle(category.id)} 
+                      // checked={selectedCategories.includes(category.id)}
                       className={styles.input}
-                    /> */}
+                    />
                     <span className={styles.checkbox}></span>
                     <span className={styles.text}>{category.name}</span>
                   </label>
