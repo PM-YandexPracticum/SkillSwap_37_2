@@ -35,6 +35,7 @@ export const CardSlider = ({ users, subCategories }: CardSliderProps) => {
         
         {visibleUsers.map((user) => (
           <UserCard
+            key={user.id}
             user={user}
           />
         ))}

@@ -1,7 +1,8 @@
 // src\api\types.ts
 
-import { TSkillName } from "../shared/types/SkillName";
-import { IconName } from "shared/ui/icon/icons";
+import { TSkillType } from "shared/types/filters";
+// import { TSkillName } from "../shared/types/SkillName";
+import { IconName } from "../shared/ui/icon/icons";
 
 export const GENDERS = {
   MALE: 'male',
@@ -17,10 +18,10 @@ export type TUser = {
   gender: TGender;
   photo: string; //Фото профиля
   from: string; //Город пользователя
-  skill: TSkillName; //Текстовое название подкатегории (из skills_subcategories.json)
+  skill: string; // это текст пользователя
   need_subcat: number[]; //Массив подкатегорий, которым пользователь хочет научиться
   cat_text: string; //Текстовое название категории (из skills_categories.json)
-  sub_text: TSkillName; //Текстовое название подкатегории (из skills_subcategories.json)
+  sub_text: string; //Текстовое название подкатегории (из skills_subcategories.json)
   categoryId: number; //ID категории навыка
   subCategoryId: number; //ID подкатегории навыка
   description: string; //Описание навыка
@@ -37,6 +38,8 @@ export type TGetFilteredUsersArgs = {
   page: number;
   gender?: TGender;
   places: string[];
+  skillType?: TSkillType;
+  subcategories?: number[];  
 };
 
 export type TPlace = {

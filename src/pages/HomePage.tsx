@@ -46,13 +46,10 @@ import { getPopularUsersThunk } from "../services/popularUsers/actions";
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
 import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
-import { isFiltersEmpty, resetFilters, setGender, setPlaces } from "../services/filters/filters-slice";
+import { isFiltersEmpty, resetFilters, setGender, setPlaces, setSkillType, setSubcategories } from "../services/filters/filters-slice";
 import { resetFilteredUsers } from "../services/filteredUsers/filtered-users-slice";
 
 export const HomePage = () => {
-
-  // const [currentStep, setCurrentStep] = useState(1); // текущий шаг
-  // const totalSteps = 3;
 
   const dispatch = useDispatch();
 
@@ -130,7 +127,6 @@ export const HomePage = () => {
     }
   };
 
-
   // *************************************************
   // отфильтрованные пользователи
   const filters = useSelector((s: RootState) => s.filters);
@@ -150,12 +146,14 @@ export const HomePage = () => {
       dispatch(getFilteredUsersThunk({ 
         page: nextPage, 
         gender: selectedGender,
-        places: selectedPlaces
+        places: selectedPlaces,
+        skillType: selectedSkillType,
+        subcategories: selectedSubcategories,
       }));
     }
   };
 
-
+  const selectedSubcategories = useSelector((s: RootState) => s.filters.subcategories);
 
   const subCategories = useSelector(
     (s: RootState) => s.categories.subcategories
@@ -172,68 +170,104 @@ export const HomePage = () => {
   const [isLoginNotificationOpen, setIsLoginNotificationOpen] = useState(false);
 
 
-  const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>(SKILL_TYPES.ALL);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  // const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>(SKILL_TYPES.ALL);
+  const selectedSkillType = useSelector((s: RootState) => s.filters.skillType);
+
+  // const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   // Получаем категории из Redux
   const categories = useSelector((s: RootState) => s.categories.categories);
 
-  // Обработчик для категорий
-  const handleCategoryToggle = (categoryId: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
-    );
+  // // Обработчик для категорий
+  // const handleCategoryToggle = (categoryId: string) => {
+  //   setSelectedCategories((prev) =>
+  //     prev.includes(categoryId)
+  //       ? prev.filter((id) => id !== categoryId)
+  //       : [...prev, categoryId]
+  //   );
+  // };
+
+  const handleSubcategoryToggle = (id: number) => {
+    const current = [...selectedSubcategories];
+    if (current.includes(id)) {
+      dispatch(setSubcategories(current.filter((x) => x !== id)));
+    } else {
+      dispatch(setSubcategories([...current, id]));
+    }
+    dispatch(resetFilteredUsers());
+    dispatch(getFilteredUsersThunk({
+      page: 1,
+      gender: selectedGender,
+      places: selectedPlaces,
+      skillType: selectedSkillType,
+      subcategories: current.includes(id)
+        ? current.filter((x) => x !== id)
+        : [...current, id],
+    }));
   };
 
-    const selectedPlaces = useSelector((s: RootState) => s.filters.places);
+  const selectedPlaces = useSelector((s: RootState) => s.filters.places);
 
   const handleGenderChange = (gender: TGender) => {
     dispatch(setGender(gender));
     dispatch(resetFilteredUsers()); // очистим список
-    dispatch(getFilteredUsersThunk({ page: 1, gender, places: selectedPlaces }));
+    dispatch(getFilteredUsersThunk({ 
+      page: 1,
+      gender,
+      places: selectedPlaces,
+      skillType: selectedSkillType,
+      subcategories: selectedSubcategories
+   }));
   };
 
 
   const handlePlacesChange = (places: string[]) => {
     dispatch(setPlaces(places));
     dispatch(resetFilteredUsers()); // очистим список
-    dispatch(getFilteredUsersThunk({ page: 1, gender: selectedGender, places }));
+    dispatch(getFilteredUsersThunk({ 
+      page: 1,
+      gender: selectedGender,
+      places,
+      skillType: selectedSkillType,
+      subcategories: selectedSubcategories,
+    }));
   };
 
   const handleResetAll = () => {
     dispatch(resetFilters());
     dispatch(resetFilteredUsers());
-    // setSelectedSkillType("all");
-    // setSelectedCategories([]);
-    // setSelectedGender("");
-    // setSelectedPlaces([]);
   };
+
+  const handleSkillTypeChange = (newType: TSkillType) => {
+    dispatch(setSkillType(newType));
+    dispatch(resetFilteredUsers());
+    dispatch(getFilteredUsersThunk({
+      page: 1,
+      gender: selectedGender,
+      places: selectedPlaces,
+      skillType: newType,
+      subcategories: selectedSubcategories,
+  }));
+};
 
 
   const hasActiveFilters =
     filters.skillType !== SKILL_TYPES.ALL ||
-    filters.categories.length > 0 ||
+    filters.subcategories.length > 0 ||
     filters.gender !== GENDERS.UNSPECIFIED ||
     filters.places.length > 0;
 
-    // selectedSkillType !== "all" ||
-    // selectedCategories.length > 0 ||
-    // selectedGender !== "" ||
-    // selectedPlaces.length > 0;
+    const handleOpenLogin = () => {
+      setIsLoginNotificationOpen(true);
+    };
 
-  const handleOpenLogin = () => {
-    setIsLoginNotificationOpen(true);
+    const handleLogin = () => {
+      console.log("Переход к странице входа/регистрации");
+    };
+    
+    const handleCancelLogin = () => {
+      console.log("Пользователь отменил вход");
   };
-
-  const handleLogin = () => {
-    console.log("Переход к странице входа/регистрации");
-  };
-  
-  const handleCancelLogin = () => {
-    console.log("Пользователь отменил вход");
-};
 
   return (
     <div className={styles.homePageWrapper}>
@@ -244,13 +278,16 @@ export const HomePage = () => {
           title="Фильтры"
           onReset={hasActiveFilters ? handleResetAll : undefined}
         >
+
+  
           <SkillFilters
-            onSkillTypeChange={setSelectedSkillType}
-            onCategoryToggle={handleCategoryToggle}
+            onSkillTypeChange={handleSkillTypeChange}
+            // onSkillTypeChange={(newType) => dispatch(setSkillType(newType))}
             selectedSkillType={selectedSkillType}
-            selectedCategories={selectedCategories}
             categories={categories}
             subcategories={subCategories}
+            selectedSubcategories={selectedSubcategories}
+            onSubcategoryToggle={handleSubcategoryToggle}
           />
           <FilterSection
             onGenderChange={handleGenderChange}
@@ -263,14 +300,14 @@ export const HomePage = () => {
         <div className={styles.showCaseWrapper}>
           <ActiveFiltersBar
             selectedSkillType={selectedSkillType}
-            selectedCategories={selectedCategories}
-            categories={categories}
-            onSkillTypeChange={setSelectedSkillType}
-            onCategoryToggle={handleCategoryToggle}
             selectedGender={selectedGender}
-            onChangeGender={handleGenderChange}
             selectedPlaces={selectedPlaces}
-            onChangePlaces={handlePlacesChange }
+            selectedSubcategories={selectedSubcategories}
+            onSkillTypeChange={handleSkillTypeChange}
+            // onSkillTypeChange={(newType) => dispatch(setSkillType(newType))}
+            onChangeGender={handleGenderChange}
+            onChangePlaces={handlePlacesChange}
+            onSubcategoryToggle={handleSubcategoryToggle}
           />
 
 {isFiltersEmpty(filters) ? (          
@@ -350,6 +387,7 @@ export const HomePage = () => {
         <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
           {plainUsers.map((u) => (
             <UserCard
+              key={u.id}
               user={u}
             />
           ))}
@@ -411,6 +449,7 @@ export const HomePage = () => {
       <div style={{ display: "flex", gap: "20px" }}>
         {currentUser && (
           <UserCard
+            key={u.id}  
             user={currentUser}
           />
         )}
