@@ -13,13 +13,13 @@ interface ProfileMenuItemProps {
   onClick: (tab: TabType) => void;
 }
 
-const iconMap: Record<TabType, string> = {
-  requests: "requests",
-  exchanges: "messagetext",
-  favorites: "like",
-  skills: "idea",
-  personal: "user",
-};
+// const iconMap: Record<TabType, string> = {
+//   requests: "requests",
+//   exchanges: "messagetext",
+//   favorites: "like",
+//   skills: "idea",
+//   personal: "user",
+// };
 
 export const ProfileMenuItem: React.FC<ProfileMenuItemProps> = ({
   tab,

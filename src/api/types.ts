@@ -103,5 +103,21 @@ export type TNotificationEvent = {
 export type TResponseNotifications = {
   userId: number;
   events: TNotificationEvent[];
-};  
+};
 
+export type TLikeType = {
+  id: number;
+  liker_id: number;
+  liked_id: number;
+  timestamp: string; // ISO-строка с датой
+};
+
+export type TOfferType = {
+  "offerUserId": number;
+  "skillOwnerId": number;
+  "accept": 0 | 1;
+  "daysSinceOffer": number;
+  "daysSinceAccept": number;
+  "sawOffer": 0 | 1,
+  "sawAccept": 0 | 1,
+};

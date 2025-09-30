@@ -1,8 +1,5 @@
 // src\pages\HomePage.tsx
 
-// React
-import { useState } from 'react';
-
 // External libs
 import { useSelector } from 'react-redux';
 
@@ -25,7 +22,7 @@ import {
 import { resetFilteredUsers } from '../services/filteredUsers/filtered-users-slice';
 
 // Types
-import { GENDERS, TGender, TUser } from '@api/types';
+import { GENDERS, TGender } from '@api/types';
 import { SKILL_TYPES, TSkillType } from '../shared/types/filters';
 
 // Features

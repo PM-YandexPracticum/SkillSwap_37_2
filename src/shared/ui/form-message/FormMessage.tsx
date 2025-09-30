@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './FormMessage.module.css';
 import { memo } from 'react';
 import clsx from 'clsx';
@@ -25,7 +24,9 @@ type FormMessageProps = {
  * @param type Тип сообщения ('error', 'success', 'hint')
  */
 
-export const FormMessage = memo(({ message, type = 'error' }: FormMessageProps) => {
+
+// export const FormMessage = memo(({ message, type = 'error' }: FormMessageProps) => {
+export const FormMessage = memo(function FormMessage({ message, type = 'error' }: FormMessageProps) {
   if (!message || message.trim() === '') return null;
   
   return (

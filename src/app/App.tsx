@@ -1,30 +1,11 @@
 // src/app/App.tsx
 
-/* ===== Карта роутов =====
-/                 HomePage
-/skills           CatalogContent
-/skills/:id       SkillPageStub
-/auth/login       LoginContent
-/auth/register    RegisterContent
-/skill/new        SkillFormContent
-/favorites        FavoritesPageStub
-/requests         RequestsPageStub
-/profile          ProfilePageStub
-/profile/notifications NotificationsPageStub
-/demo/dropdowns   DropdownsDemoContent
-/demo/skill-details SkillDetailsDemoContent
-/500              Error500PageStub
-/*                NotFoundPageStub
-/about            About
-=========================== */
-
 import React, { useState } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
   Outlet,
-  useParams,
 } from "react-router-dom";
 
 import {
@@ -55,9 +36,8 @@ import { useSelector } from "react-redux";
 import { AuthForm, FilterSection } from "@features";
 
 import { getPlacesThunk } from "../services/places/actions";
-import { getUsersThunk } from "../services/users/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
-import { getUserLikesThunk, getUserThunk } from "../services/user/actions";
+import { getUserLikesThunk } from "../services/user/actions";
 
 
 import { OfferPage } from "../pages/Offer/OfferPage";
@@ -72,23 +52,26 @@ import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
 
 import { About } from "../pages/about/About";
-import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
+// import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
 import { GENDERS, TGender } from "@api/types";
 
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
-  const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
+  // const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
 
   // Подгружаем данные при старте
   React.useEffect(() => {
-    dispatch(getUserThunk(API_USER_ID));
+    // dispatch(getUserThunk(API_USER_ID));
 
-    dispatch(getUsersThunk(1));
+    // dispatch(getUsersThunk(1));
     dispatch(getPopularUsersThunk(1)); 
     dispatch(getCreatedAtUsersThunk(1)); 
     dispatch(getRandomUsersThunk(1)); 
-    dispatch(getFilteredUsersThunk({page:1, gender:GENDERS.MALE})); 
+    // dispatch(getFilteredUsersThunk({
+    //   page:1,
+    //   gender:GENDERS.MALE,
+    // })); 
 
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
@@ -187,11 +170,8 @@ const Layout: React.FC = () => (
 const CatalogContent: React.FC = () => {
   const users = useSelector((s: RootState) => s.users.users);
 
-  // const subCategories = useSelector(
-  //   (s: RootState) => s.categories.subcategories
-  // );
   const [selectedGender, setSelectedGender] = React.useState<TGender>(GENDERS.UNSPECIFIED);
-  const [selectedPlaces, setSelectedPlaces] = React.useState<number[]>([]);
+  const [selectedPlaces, setSelectedPlaces] = React.useState<string[]>([]);
 
   return (
     <section className="page page-catalog">
@@ -275,17 +255,16 @@ const DropdownsDemoContent: React.FC = () => (
   </section>
 );
 
-
 // /skills/:id — детальная страница навыка (пока заглушка)
-const SkillPageStub: React.FC = () => {
-  const { id } = useParams();
-  return (
-    <section className="page page-skill">
-      <h1>Навык #{id}</h1>
-      <p>Здесь будет детальная страница навыка.</p>
-    </section>
-  );
-};
+// const SkillPageStub: React.FC = () => {
+//   const { id } = useParams();
+//   return (
+//     <section className="page page-skill">
+//       <h1>Навык #{id}</h1>
+//       <p>Здесь будет детальная страница навыка.</p>
+//     </section>
+//   );
+// };
 
 // /favorites
 const FavoritesPageStub: React.FC = () => (

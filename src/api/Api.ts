@@ -19,11 +19,12 @@ import {
   NotificationTypes,
   GENDERS,
   TGetFilteredUsersArgs,
+  TLikeType,
+  TOfferType,
 } from "@api/types";
 import { SKILL_TYPES, TSkillType } from "../shared/types/filters";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
-
 
 // filtered
 export const getFilteredUsersApi = async (
@@ -274,7 +275,7 @@ export const getNotificationsApi = async (
 
     const today = new Date();
 
-    const events = offersData.offers.flatMap((offer: any) => {
+    const events = offersData.offers.flatMap((offer: TOfferType) => {
       const userEvents: TNotificationEvent[] = [];
 
       if (offer.skillOwnerId === userId) {
@@ -336,7 +337,7 @@ export const getUserLikesApi = async (userId: number) => {
     const data = await response.json();
 
     // отфильтруем только те лайки, где текущий юзер = liker_id
-    return data.filter((like: any) => like.liker_id === userId);
+    return data.filter((like: TLikeType) => like.liker_id === userId);
   } catch (error) {
     console.error("Ошибка загрузки лайков:", error);
     throw error;

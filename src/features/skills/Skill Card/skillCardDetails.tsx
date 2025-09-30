@@ -141,7 +141,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
 
         <div className={styles.headSection}>
           <h3 className={styles.headTitle}>Ваше предложение</h3>
-          <p className={styles.headText}>Пожалуйста, проверьте и подтвердите правильность данных</p>
+          <p className={styles.headText}>Пожалуйста, проверьте и подтвердите правильность данных</p>
         </div>
 
         <div className={styles.mainSection}>

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styles from "./Textarea.module.css";
 import clsx from "clsx";
 import { FormMessage } from "../form-message/FormMessage";
@@ -38,19 +38,11 @@ export const Textarea = ({
   showEditIcon = false,
   ...otherProps
 }: TextareaProps) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const isError = status === "error";
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange?.(e.target.value);
-
-    /* 
-   // Автоматическое изменение высоты
-    const textarea = e.target;
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
-    */
-  };
+  }
 
   return (
     <div className={styles.wrapper}>
