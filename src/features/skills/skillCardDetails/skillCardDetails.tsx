@@ -37,7 +37,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   const isOfferReady = useSelector(isOfferCreated);
   
   const handleExchangeClick = () => {
-    if (!requireRegistration) {
+    if (requireRegistration) {
     openNotification({
       type: "info",
       title: "Ваше предложение создано",
