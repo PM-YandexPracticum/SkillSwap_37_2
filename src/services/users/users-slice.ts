@@ -6,7 +6,7 @@ import { TUser } from '@api/types';
 import { getUserLikesThunk } from '../../services/user/actions';
 
 type UsersState = {
-  offerUser: TUser | null;
+  offerUser: TUser | null; //пользователь с кем делаем обмен
   users: TUser[];
   isLoading: boolean;
   error: string | null;

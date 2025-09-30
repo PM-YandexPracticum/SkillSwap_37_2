@@ -2,4 +2,4 @@
 
 export { AuthForm } from './auth/AuthForm';
 export { FilterSection } from './filters/FilterSection';
-export { SkillCardDetails } from './skills/Skill Card/skillCardDetails';
+export { SkillCardDetails } from './skills/skillCardDetails/skillCardDetails';

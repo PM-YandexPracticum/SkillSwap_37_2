@@ -19,6 +19,7 @@ import {
   GENDERS,
   TGetFilteredUsersArgs,
   TResponseOffers,
+  TOffer,
 } from "@api/types";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
@@ -239,15 +240,11 @@ export const getOffersApi =
   }
 
 export const getNotificationsApi = async (
-  userId: number
+  userId: number,
+  offers: TOffer[]
 ): Promise<TResponseNotifications> => {
   try {
-    const [offersRes, usersRes] = await Promise.all([
-      fetch(OFFERS_JSON_FILE),
-      fetch(USERS_JSON_FILE),
-    ]);
-
-    const offersData = await offersRes.json();
+    const usersRes = await fetch(USERS_JSON_FILE);
     const usersData = await usersRes.json();
 
     const userMap = new Map<number, string>(
@@ -256,7 +253,7 @@ export const getNotificationsApi = async (
 
     const today = new Date();
 
-    const events = offersData.offers.flatMap((offer: any) => {
+    const events = offers.flatMap((offer: any) => {
       const userEvents: TNotificationEvent[] = [];
 
       if (offer.skillOwnerId === userId) {

@@ -89,7 +89,6 @@ export type TNotificationType = typeof NotificationTypes[keyof typeof Notificati
 
 export type TNotificationEvent = {
   type: TNotificationType;
-  // type: 'my_new_offer' | 'offer_to_me' | 'accept_my_affer';
   seen: 0 | 1;
   anotherUserId: number;
   anotherUserName: string;
@@ -102,6 +101,7 @@ export type TResponseNotifications = {
 };  
 
 export type TOffer = {
+  offerUserId: number;
   skillOwnerId: number,
   accept: number,
   daysSinceOffer: number,

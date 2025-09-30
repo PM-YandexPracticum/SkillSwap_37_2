@@ -1,5 +1,6 @@
 import { getNotificationsApi, getOffersApi } from "@api/Api";
-import { FETCH_OFFERS } from "@const/thunk-types";
+import { TOffer } from "@api/types";
+import { FETCH_ADD_OFFER, FETCH_OFFERS } from "@const/thunk-types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getOffersThunk = createAsyncThunk(
@@ -10,9 +11,27 @@ export const getOffersThunk = createAsyncThunk(
   }
 );
 
-export const addOfferThunk = createAsyncThunk(
-  FETCH_OFFERS,
-  async (userId) => {
-    
+export const addOfferThunk = createAsyncThunk<
+TOffer, 
+{ offerUserId: number; skillOwnerId: number }
+>(
+  FETCH_ADD_OFFER,
+  async ({ offerUserId, skillOwnerId }) => {
+
+    //имитация задержки сервера
+    await new Promise((resolve) => setTimeout( (resolve), 1000));
+
+    //предзаполняем поля оффера
+    const offer: TOffer = {
+      offerUserId,
+      skillOwnerId,
+      accept: 0,
+      daysSinceOffer: 0,
+      daysSinceAccept: 0,
+      sawOffer: 0,
+      sawAccept: 0,
+    };
+
+    return offer;
   }
 );

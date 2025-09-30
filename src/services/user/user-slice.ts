@@ -35,7 +35,6 @@ export const userSlice = createSlice({
       state.currentOffers.push(action.payload);
     }
   },
-
   selectors: {
     getUser: (state) => state.user,
     getOffers: (state) => state.currentOffers
@@ -68,20 +67,19 @@ export const userSlice = createSlice({
       state.error = action.error.message || 'Ошибка загрузки лайков';
     })
 
-      .addCase(logoutThunk.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(logoutThunk.fulfilled, (state) => {
-        state.user = null;
-        state.isAuthChecked = false;
-        state.isLoading = false;
-      })
-      .addCase(logoutThunk.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message || 'Ошибка при выходе';
-      });
-
+    .addCase(logoutThunk.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(logoutThunk.fulfilled, (state) => {
+      state.user = null;
+      state.isAuthChecked = false;
+      state.isLoading = false;
+    })
+    .addCase(logoutThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message || 'Ошибка при выходе';
+    });
   }
 });
 

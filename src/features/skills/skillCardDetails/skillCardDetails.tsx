@@ -6,6 +6,8 @@ import { RegistrationModal } from "../../registration/RegistrationModal";
 import { Icon } from "../../../shared/ui/icon/Icon";
 import { Button } from "../../../shared/ui/button/Button";
 import photoPlaceholder from "../../../shared/assets/images/school-board.svg?.svg";
+import { useSelector } from "@store";
+import { isOfferCreated } from "../../../services/offers/offers-slice";
 import styles from './skillCardDetails.module.css';
 
 type SkillCardDetailsProps = {
@@ -32,9 +34,10 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
 
   const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
   const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false); // Состояние для модалки
+  const isOfferReady = useSelector(isOfferCreated);
   
   const handleExchangeClick = () => {
-    if (requireRegistration) {
+    if (!requireRegistration) {
     openNotification({
       type: "info",
       title: "Ваше предложение создано",
@@ -96,12 +99,21 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
               <h3 className={styles.subtitle}>{subtitle}</h3>
               <p className={styles.description}>{description}</p>
             </div>
-              <Button className={styles.buttonOffer}
-                colored
-                onClick={handleExchangeClick}
+              {!isOfferReady && (
+                <Button className={styles.buttonOffer}
+                  colored
+                  onClick={handleExchangeClick}
+                >
+                  {buttonText}
+                </Button>
+              )}
+              {isOfferReady && (
+                <Button className={styles.buttonOffer}
+                  onClick={handleExchangeClick}
               >
-                {buttonText}
+                  <Icon name='clock'/> Обмен предложен
               </Button>
+              )}
           </div>
           
           <div className={styles.rightSection}>

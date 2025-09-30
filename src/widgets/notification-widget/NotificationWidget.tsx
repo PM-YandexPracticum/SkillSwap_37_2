@@ -17,6 +17,7 @@ import {
 import { getNotificationThunk } from "../../services/notifications/actions";
 import { getCurrentUser } from "../../services/user/user-slice";
 import { NotificationTypes, TNotificationEvent } from "@api/types";
+import { getOffers } from "../../services/offers/offers-slice";
 
 // Интерфейс для преобразования данных (если нужно)
 interface NotificationDisplay {
@@ -43,10 +44,11 @@ export const NotificationWidget: FC = () => {
   const viewedNotifications = useSelector(getViewedNotifications);
   const isLoading = useSelector(getIsLoading);
   const unseenCount = useSelector(getUnseenCount);
+  const offers = useSelector(getOffers);
 
   useEffect(() => {
     if (currentUserId) {
-      dispatch(getNotificationThunk(currentUserId));
+      dispatch(getNotificationThunk({userId: currentUserId, offers}));
     }
   }, [currentUserId, dispatch]);
 

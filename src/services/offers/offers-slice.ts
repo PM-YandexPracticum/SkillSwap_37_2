@@ -1,17 +1,18 @@
 // src\services\user\user-slice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TUser, TResponseNotifications, TNotificationEvent, TOffer } from '../../api/types';
-import { getOffersThunk } from './actions';
-// import {  } from './actions';
+import { createSlice } from '@reduxjs/toolkit';
+import { TOffer } from '../../api/types';
+import { addOfferThunk, getOffersThunk } from './actions';
 
 export interface OffersState {
-  offers: TOffer[] | [];
+  offers: TOffer[];
+  isOfferCreated: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: OffersState = {
   offers: [],
+  isOfferCreated: false,
   isLoading: false,
   error: null
 };
@@ -21,9 +22,9 @@ export const offersSlice = createSlice({
   initialState,
   reducers: {
   },
-
   selectors: {
-    getOffers: (state) => state.offers
+    getOffers: (state) => state.offers,
+    isOfferCreated: (state) => state.isOfferCreated
   },
   extraReducers: builder => {
     builder
@@ -38,14 +39,27 @@ export const offersSlice = createSlice({
     })
     .addCase(getOffersThunk.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Ошибка загрузки пользователя';
+        state.error = action.error.message || 'Ошибка загрузки предложений';
+    })
+    .addCase(addOfferThunk.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+    })
+
+    .addCase(addOfferThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.offers.push(action.payload);
+        state.isOfferCreated = true;
+    })
+    .addCase(addOfferThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Ошибка создания предложения';
     })
 
   }
 });
 
-export const { getOffers } = offersSlice.selectors;
-export const {  } = offersSlice.actions;
+export const { getOffers, isOfferCreated } = offersSlice.selectors;
 
 export const offersReducer = offersSlice.reducer;
 

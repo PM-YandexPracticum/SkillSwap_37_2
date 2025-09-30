@@ -51,7 +51,7 @@ import { RegistrationStep3 } from "../pages/registration/RegistrationStep3";
 
 //Данные/типы/стор (для каталога)
 import { RootState, useDispatch } from "@store";
-import { useSelector } from "react-redux";
+import { useSelector } from "@store";
 import { AuthForm, FilterSection } from "@features";
 
 import { getPlacesThunk } from "../services/places/actions";
@@ -66,42 +66,46 @@ import { getPopularUsersThunk } from "../services/popularUsers/actions";
 
 import { ScrollToTop } from "../features/scrollToTop/ScrollToTop";
 
-import styles from "./App.module.css";
-
 import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
 import { getRandomUsersThunk } from "../services/randomUsers/actions";
 
 import { About } from "../pages/about/About";
 import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
 import { GENDERS, TGender } from "@api/types";
+import { getOffersThunk } from "../services/offers/actions";
+import { getOffers } from "../services/offers/offers-slice";
 
+import styles from "./App.module.css";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
   const API_USER_ID = Number(import.meta.env.VITE_AUTH_USER_ID);
-
+  
   // Подгружаем данные при старте
   React.useEffect(() => {
     dispatch(getUserThunk(API_USER_ID));
-
+    dispatch(getOffersThunk()); //подгружаем все офферы
+    
     dispatch(getUsersThunk(1));
     dispatch(getPopularUsersThunk(1)); 
     dispatch(getCreatedAtUsersThunk(1)); 
     dispatch(getRandomUsersThunk(1)); 
     dispatch(getFilteredUsersThunk({page:1, gender:GENDERS.MALE})); 
-
+    
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
+    
   }, [dispatch]);
-
+  
   const currentUser = useSelector((s: RootState) => s.user.user);
+  const offers = useSelector(getOffers);
 
   // лайки грузятся при смене пользователя
   React.useEffect(() => {
     if (currentUser) {
-      dispatch(getUserLikesThunk(currentUser.id));
+      dispatch(getUserLikesThunk(currentUser.id));        
     }
-  }, [dispatch, currentUser]);
+  }, [dispatch, currentUser, offers]);
 
   
   return (
@@ -146,7 +150,6 @@ export const App: React.FC = () => {
           } />
 
           {/*заглушки*/}
-          <Route path="skills/:id" element={<OfferPage />} />
           <Route path="favorites" element={<FavoritesPageStub />} />
           <Route path="requests" element={<RequestsPageStub />} />
 
