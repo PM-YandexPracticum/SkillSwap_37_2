@@ -1,6 +1,5 @@
 // src\features\users\userCard\UserCard.tsx
 
-import { TSkillName } from "../../../shared/types/SkillName";
 import { useNavigate } from "react-router-dom";
 import { Icon } from '../../../shared/ui/icon/Icon';
 import { Button } from "../../../shared/ui/button/Button";
@@ -109,7 +108,7 @@ const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
             {skillsCanRender.map((item, index) => {
               return (
                 <li key={index} className={styles.tag}>
-                  <SkillTag skill={item as TSkillName} />
+                  <SkillTag skill={item as string} />
                 </li>
               );
             })}

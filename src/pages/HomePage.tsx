@@ -45,10 +45,33 @@ import { Icon } from '../shared/ui/icon/Icon';
 
 // Styles
 import styles from './HomePage.module.css';
+import { getUsersThunk } from '../services/users/actions';
 
 export const HomePage = () => {
 
   const dispatch = useDispatch();
+
+// *********************************************************************
+  // ЭТИ СТРОКИ ВЛИЯЮТ ТОЛЬКО НА ЧИТТЕРСКИЙ ВХОД ПО КНОПКЕ "ВОЙТИ"
+  // *************************************************
+  // пользоаватели без сортировки
+  const {
+    users: plainUsers,
+    isLoading: isUsersLoading,
+    hasMore: hasMoreUsers,
+    page: usersPage,
+  } = useSelector((state: RootState) => state.users);
+
+  // функция загрузки последующих данных
+  const handleLoadMorePlainUsers = () => {
+    if (!isUsersLoading && hasMoreUsers) {
+      const nextPage = usersPage + 1;
+      dispatch(getUsersThunk(nextPage));
+    }
+  };
+// *********************************************************************
+// *********************************************************************
+
 
   // *************************************************
   // популярные пользователи

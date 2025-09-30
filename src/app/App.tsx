@@ -54,6 +54,7 @@ import { getRandomUsersThunk } from "../services/randomUsers/actions";
 import { About } from "../pages/about/About";
 // import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
 import { GENDERS, TGender } from "@api/types";
+import { getUsersThunk } from "../services/users/actions";
 
 
 export const App: React.FC = () => {
@@ -64,7 +65,7 @@ export const App: React.FC = () => {
   React.useEffect(() => {
     // dispatch(getUserThunk(API_USER_ID));
 
-    // dispatch(getUsersThunk(1));
+    dispatch(getUsersThunk(1));
     dispatch(getPopularUsersThunk(1)); 
     dispatch(getCreatedAtUsersThunk(1)); 
     dispatch(getRandomUsersThunk(1)); 
