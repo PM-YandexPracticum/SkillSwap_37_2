@@ -9,6 +9,7 @@ type FiltersState = {
   gender: TGender;
   places: string[];
   subcategories: number[];
+  q: string;
 };
 
 const getInitialState = (): FiltersState => ({
@@ -16,6 +17,7 @@ const getInitialState = (): FiltersState => ({
   gender: GENDERS.UNSPECIFIED,
   places: [],
   subcategories: [],
+  q: ''
 });
 
 const initialState = getInitialState();
@@ -48,7 +50,9 @@ export const filtersSlice = createSlice({
     setPlaces: (state, action: PayloadAction<string[]>) => {
       state.places = action.payload;
     },
-
+    setQuery: (state, action: PayloadAction<string>) => {
+      state.q = action.payload;
+    },
     setSubcategories: (state, action: PayloadAction<number[]>) => {
       state.subcategories = action.payload;
     },
@@ -56,5 +60,5 @@ export const filtersSlice = createSlice({
   },
 });
 
-export const { setSkillType, setGender, setPlaces, resetFilters, setSubcategories } = filtersSlice.actions;
+export const { setSkillType, setGender, setPlaces, setQuery, resetFilters, setSubcategories } = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;
