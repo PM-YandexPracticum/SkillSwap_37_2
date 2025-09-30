@@ -87,7 +87,6 @@ export const NotificationTypes = {
 
 export type TNotificationType = typeof NotificationTypes[keyof typeof NotificationTypes];
 
-
 export type TNotificationEvent = {
   type: TNotificationType;
   // type: 'my_new_offer' | 'offer_to_me' | 'accept_my_affer';
@@ -101,4 +100,17 @@ export type TResponseNotifications = {
   userId: number;
   events: TNotificationEvent[];
 };  
+
+export type TOffer = {
+  skillOwnerId: number,
+  accept: number,
+  daysSinceOffer: number,
+  daysSinceAccept: number,
+  sawOffer: number,
+  sawAccept: number
+}
+
+export type TResponseOffers = {
+  offers: TOffer[];
+}
 

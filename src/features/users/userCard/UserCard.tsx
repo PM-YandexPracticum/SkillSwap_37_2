@@ -15,7 +15,6 @@ import clsx from "clsx";
 import styles from "./UserCard.module.css";
 import { toggleLikeAction } from "../../../services/users/actions";
 
-
 type UserCardProps = {
   user: TUser;
   needAbout?: boolean;

@@ -18,6 +18,7 @@ import {
   NotificationTypes,
   GENDERS,
   TGetFilteredUsersArgs,
+  TResponseOffers,
 } from "@api/types";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
@@ -223,6 +224,19 @@ export const getSkillsSubCategoriesApi =
       throw error;
     }
   };
+
+export const getOffersApi = 
+  async (): Promise<TResponseOffers> => {
+    try {
+      const response = await fetch(OFFERS_JSON_FILE);
+      const data = await response.json();
+      return data;
+    }
+    catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 
 export const getNotificationsApi = async (
   userId: number
