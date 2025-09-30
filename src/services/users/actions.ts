@@ -10,7 +10,7 @@ const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
 
 export const getUsersThunk = createAsyncThunk<
   TResponseUsers,  
-  number,           // аргумент (page)
+  number,
   { state: RootState }
 >(
   FETCH_ALL_USERS,

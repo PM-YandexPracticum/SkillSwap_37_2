@@ -1,3 +1,4 @@
+// SkillTag.tsx
 import { skillColors } from './skillColors';
 import { SkillTagUI } from '../../../shared/ui/skillTag/SkillTagUI';
 

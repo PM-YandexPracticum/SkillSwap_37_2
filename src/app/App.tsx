@@ -54,6 +54,7 @@ import { About } from "../pages/about/About";
 import { GENDERS, TGender } from "@api/types";
 import { getOffersThunk } from "../services/offers/actions";
 import { getOffers } from "../services/offers/offers-slice";
+import { getUsersThunk } from "../services/users/actions";
 
 import styles from "./App.module.css";
 
@@ -65,7 +66,8 @@ export const App: React.FC = () => {
   React.useEffect(() => {
     dispatch(getOffersThunk()); //подгружаем все офферы
     // dispatch(getUserThunk(API_USER_ID));
-    // dispatch(getUsersThunk(1));
+
+    dispatch(getUsersThunk(1));
     dispatch(getPopularUsersThunk(1)); 
     dispatch(getCreatedAtUsersThunk(1)); 
     dispatch(getRandomUsersThunk(1)); 
@@ -179,7 +181,7 @@ const CatalogContent: React.FC = () => {
     <section className="page page-catalog">
       <FilterSection
         onGenderChange={setSelectedGender}
-        onPlaceChange={setSelectedPlaces}
+        onPlacesChange={setSelectedPlaces}
         selectedGender={selectedGender}
         selectedPlaces={selectedPlaces}
       />
