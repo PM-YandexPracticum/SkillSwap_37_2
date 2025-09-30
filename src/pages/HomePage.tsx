@@ -449,7 +449,7 @@ export const HomePage = () => {
       <div style={{ display: "flex", gap: "20px" }}>
         {currentUser && (
           <UserCard
-            key={u.id}  
+            key={currentUser.id}  
             user={currentUser}
           />
         )}
