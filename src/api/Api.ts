@@ -149,7 +149,7 @@ export const getCreatedAtUsersApi = async (
     const data = await response.json();
 
     // сортировка по created_at (новые выше) сравниваются строки!
-    const sorted = data.users.sort((a: any, b: any) =>
+    const sorted = data.users.sort((a: TUser, b: TUser) =>
       b.created_at.localeCompare(a.created_at)
     );
 
