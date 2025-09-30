@@ -109,13 +109,6 @@ export const Dropdown: FC<DropdownProps> = ({
     e.stopPropagation();
   };
 
-  const handleButtonClick = () => {
-    if (!disabled) {
-      setIsOpen(!isOpen);
-      setSearchTerm("");
-    }
-  };
-
   return (
     <div
       ref={dropdownRef}

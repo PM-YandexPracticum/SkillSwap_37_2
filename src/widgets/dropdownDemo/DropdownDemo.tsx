@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Dropdown } from "../../shared/ui/input/input-dropdown/InputDropdown";
 import { genderOptions } from "../../shared/ui/input/input-dropdown/dropdownData";
 import {
@@ -87,17 +87,6 @@ export const DropdownDemo = () => {
     value: subcategory.id.toString(),
     label: subcategory.name,
   }));
-
-  // Функции для получения названий по ID
-  const getCategoryName = (id: string) => {
-    const category = categories.find((cat) => cat.id.toString() === id);
-    return category ? category.name : id;
-  };
-
-  const getSubcategoryName = (id: string) => {
-    const subcategory = subcategories.find((sub) => sub.id.toString() === id);
-    return subcategory ? subcategory.name : id;
-  };
 
   return (
     <div style={{ padding: "20px", maxWidth: "400px", margin: "0 auto" }}>

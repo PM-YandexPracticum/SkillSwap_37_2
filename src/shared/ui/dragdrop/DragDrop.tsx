@@ -8,7 +8,7 @@ type DragDropProps = {
 
 export const DragDrop: React.FC<DragDropProps> = ({ onChange }) => {
   const [files, setFiles] = useState<File[]>([]);
-  const [dragActive, setDragActive] = useState(false);
+  const [, setDragActive] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

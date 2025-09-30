@@ -1,6 +1,6 @@
 // src\pages\Offer\OfferPage.tsx
 
-import { RootState, useDispatch } from '@store';
+import { RootState } from '@store';
 import { useSelector } from 'react-redux';
 import { UserCard } from '../../features/users/userCard/UserCard';
 import { Icon } from '../../shared/ui/icon/Icon';
@@ -14,12 +14,9 @@ import styles from './OfferPage.module.css';
 
 export const OfferPage: React.FC = () => {
   
-    const subCategories = useSelector((s: RootState) => s.categories.subcategories);
     const offerUser = useSelector(getOfferUser);
     
-    const { users, isLoading, hasMore, page } = useSelector(
-      (state: RootState) => state.users
-    );
+    const {users} = useSelector((state: RootState) => state.users);
   
   return (
     <>
@@ -57,7 +54,7 @@ export const OfferPage: React.FC = () => {
           title="Похожие предложения"
           titleSize='1.5em'
           icon={<Icon name="chevronRight" />}>
-            <CardSlider users={users} subCategories={subCategories} />
+            <CardSlider users={users}/>
         </CardShowcase>
       </section>
     </>
