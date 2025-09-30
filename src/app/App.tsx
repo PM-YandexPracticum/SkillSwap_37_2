@@ -177,7 +177,7 @@ const CatalogContent: React.FC = () => {
     <section className="page page-catalog">
       <FilterSection
         onGenderChange={setSelectedGender}
-        onPlaceChange={setSelectedPlaces}
+        onPlacesChange={setSelectedPlaces}
         selectedGender={selectedGender}
         selectedPlaces={selectedPlaces}
       />
