@@ -37,7 +37,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   const isOfferReady = useSelector(isOfferCreated);
   
   const handleExchangeClick = () => {
-    if (!requireRegistration) {
+    if (requireRegistration) {
     openNotification({
       type: "info",
       title: "Ваше предложение создано",
@@ -108,7 +108,8 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
                 </Button>
               )}
               {isOfferReady && (
-                <Button className={styles.buttonOffer}
+                <Button
+                  className={(styles.buttonOffer, styles.buttonOfferReady)}
                   onClick={handleExchangeClick}
               >
                   <Icon name='clock'/> Обмен предложен

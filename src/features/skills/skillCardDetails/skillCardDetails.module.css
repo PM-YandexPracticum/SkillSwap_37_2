@@ -98,3 +98,8 @@
 .buttonOffer {
   margin-top: auto;
 }
+
+.buttonOfferReady {
+  margin-top: auto;
+  border: 1px solid #ABD27A;
+}
