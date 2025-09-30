@@ -1,4 +1,5 @@
 // src\api\Api.ts
+
 import {
   CATEGORIES_JSON_FILE,
   LIKES_JSON_FILE,
@@ -20,14 +21,15 @@ import {
   TGetFilteredUsersArgs,
   TResponseOffers,
   TOffer,
+  TLikeType,
 } from "@api/types";
+import { SKILL_TYPES, TSkillType } from "../shared/types/filters";
 
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
 
-
 // filtered
 export const getFilteredUsersApi = async (
-  { page, gender, places }: TGetFilteredUsersArgs
+  { page, gender, places = [], skillType, subcategories = [] }: TGetFilteredUsersArgs
 ): Promise<TResponseUsers> => {
   try {
     const response = await fetch(USERS_JSON_FILE);
@@ -37,13 +39,43 @@ export const getFilteredUsersApi = async (
     // фильтрация по полу
     let filtered = data.users;
     if (gender && gender !== GENDERS.UNSPECIFIED) {
-      filtered = filtered.filter((u: any) => u.gender === gender);
+      filtered = filtered.filter((u: TUser) => u.gender === gender);
     }
 
     // фильтрация по месту жительства
     if (places.length > 0) {
-      filtered = filtered.filter((u: any) => places.includes(u.from));
+      filtered = filtered.filter((u: TUser) => places.includes(u.from));
     }
+const st = skillType as TSkillType
+// SKILL_TYPES.CAN_TEACH as TSkillType
+
+    // фильтрация по типу навыка
+    if (st && subcategories && subcategories.length > 0) {
+      switch (st) {
+        // его навык есть среди переданных подкатегорий
+        case SKILL_TYPES.CAN_TEACH:
+          filtered = filtered.filter((u: TUser) =>
+            subcategories.includes(u.subCategoryId)
+          );
+          break;
+
+        case SKILL_TYPES.WANT_TO_LEARN:
+          // хотя бы один навык из его списка need_subcat есть среди переданных подкатегорий
+          filtered = filtered.filter(
+            (u: TUser) => u.need_subcat.some((id) => subcategories.includes(id))
+          );
+          break;
+
+        case SKILL_TYPES.ALL:
+          // вариант 1 ИЛИ вариант 2
+          filtered = filtered.filter(
+            (u: TUser) =>
+              subcategories.includes(u.subCategoryId) ||
+              u.need_subcat.some((id) => subcategories.includes(id))
+          );
+          break;
+      }
+    }   
 
     // пагинация
     const start = (page - 1) * USERS_PAGE_SIZE;
@@ -119,7 +151,7 @@ export const getCreatedAtUsersApi = async (
     const data = await response.json();
 
     // сортировка по created_at (новые выше) сравниваются строки!
-    const sorted = data.users.sort((a: any, b: any) =>
+    const sorted = data.users.sort((a: TUser, b: TUser) =>
       b.created_at.localeCompare(a.created_at)
     );
 
@@ -253,7 +285,7 @@ export const getNotificationsApi = async (
 
     const today = new Date();
 
-    const events = offers.flatMap((offer: any) => {
+    const events = offers.flatMap((offer: TOffer) => {
       const userEvents: TNotificationEvent[] = [];
 
       if (offer.skillOwnerId === userId) {
@@ -315,7 +347,7 @@ export const getUserLikesApi = async (userId: number) => {
     const data = await response.json();
 
     // отфильтруем только те лайки, где текущий юзер = liker_id
-    return data.filter((like: any) => like.liker_id === userId);
+    return data.filter((like: TLikeType) => like.liker_id === userId);
   } catch (error) {
     console.error("Ошибка загрузки лайков:", error);
     throw error;

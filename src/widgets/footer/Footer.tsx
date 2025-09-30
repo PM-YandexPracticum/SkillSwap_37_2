@@ -38,7 +38,7 @@ export const Footer: FC = () => {
           </a>
         </div>
       </div>
-      <p className={styles.copyright}>SkillSwap — 2025</p>
+      <p className={styles.copyright}>SkillSwap — 2025</p>
     </footer>
   );
 };

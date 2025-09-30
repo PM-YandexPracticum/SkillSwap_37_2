@@ -1,8 +1,8 @@
 // src\services\user\actions.ts
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getNotificationsApi, getUserByIdAPI, getUserLikesApi, logoutApi } from '../../api/Api';
-import { TNotificationEvent, TNotificationType, TUser } from '../../api/types';
+import { getUserByIdAPI, getUserLikesApi, logoutApi } from '../../api/Api';
+import { TUser,TLikeType } from '../../api/types';
 import { FETCH_LOGOUT_USER, FETCH_USER_BY_ID, FETCH_USER_LIKES } from "@const/thunk-types";
 
 export const getUserThunk = createAsyncThunk<TUser | null, number>(
@@ -20,7 +20,7 @@ export const getUserLikesThunk = createAsyncThunk(
     // 
     const likes = await getUserLikesApi(userId);
     // оставляем только id пользователей, которых лайкнул текущий юзер
-    return likes.map((like: any) => like.liked_id);
+    return likes.map((like: TLikeType) => like.liked_id);
   }
 );
 

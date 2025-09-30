@@ -80,7 +80,7 @@ const icons = {
   home: HomeIcon,
   idea: IdeaIcon,
   like: LikeIcon,
-  'like-active': LikeActiveIcon,
+ 'like-active': LikeActiveIcon,
   lifestyle: LifeStyleIcon,
   logo: LogoIcon,
   logout: LogoutIcon,

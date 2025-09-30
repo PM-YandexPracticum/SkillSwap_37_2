@@ -1,83 +1,54 @@
 // src\pages\HomePage.tsx
 
-import { useState } from "react";
+// External libs
+import { useSelector } from 'react-redux';
 
-import { useSelector } from "react-redux";
-import { RootState, useDispatch } from "@store";
+// Store
+import { RootState, useDispatch } from '@store';
 
-import { getCurrentUser } from "../services/user/user-slice";
-import { GENDERS, TGender, TUser } from "@api/types";
-import { UserCard } from "../features/users/userCard/UserCard";
-// import { RegisterStep2 } from "../features/auth/RegisterStep2";
+// Services (slices & actions)
+import { getPopularUsersThunk } from '../services/popularUsers/actions';
+import { getCreatedAtUsersThunk } from '../services/createdAtUsers/actions';
+import { getRandomUsersThunk } from '../services/randomUsers/actions';
+import { getFilteredUsersThunk } from '../services/filteredUsers/actions';
 import {
-  CardSlider,
-  DropdownDemo,
-  DropdownGroupedDemo,
+  isFiltersEmpty,
+  resetFilters,
+  setGender,
+  setPlaces,
+  setSkillType,
+  setSubcategories,
+} from '../services/filters/filters-slice';
+import { resetFilteredUsers } from '../services/filteredUsers/filtered-users-slice';
+
+// Types
+import { GENDERS, TGender } from '@api/types';
+import { SKILL_TYPES, TSkillType } from '../shared/types/filters';
+
+// Features
+import { FilterSection } from '@features';
+import { SkillFilters } from '../features/filters/SkillFilters';
+import { FiltersContainer } from '../features/filters/FiltersContainer';
+import { ActiveFiltersBar } from '../features/filters/ActiveFiltersBar';
+
+// Widgets
+import {
   Footer,
   GridList,
   Header,
   NotificationsTable,
-  SkillForm,
-  SkillMenu,
-} from "@widgets";
-import { AuthForm, FilterSection, SkillCardDetails } from "@features";
-import {
-  RegistrationOnBoarding,
-  onBoarding,
-} from "../features/onboarding/registrationBoard";
-import { NotFoundPage } from "./not-found-page/NotFoundPage";
-import { ServerErrorPage } from "./server-error-page/ServerErrorPage";
-import { ExchangeNotification } from "../shared/ui/notification/ExchangeNotification";
-import { CardShowcase, SHOWCASE_TITLES } from "../widgets/cardShowcase/CardShowcase";
-import { Icon } from "../shared/ui/icon/Icon";
-import { useExchangeNotification } from "../shared/ui/notification/useExchangeNotification";
+} from '@widgets';
+import { CardShowcase, SHOWCASE_TITLES } from '../widgets/cardShowcase/CardShowcase';
 
-import { OfferPage } from "./Offer/OfferPage";
-import { SkillFilters } from "../features/filters/SkillFilters";
-import { SKILL_TYPES, TSkillType } from "../shared/types/filters";
-import { FiltersContainer } from "../features/filters/FiltersContainer";
+// Shared
+import { Icon } from '../shared/ui/icon/Icon';
 
-import { ActiveFiltersBar } from "../features/filters/ActiveFiltersBar";
-import { LoginNotification } from "../shared/ui/notification/LoginNotification";
-import styles from "./HomePage.module.css";
-
-import { getUsersThunk } from "../services/users/actions";
-import { getPopularUsersThunk } from "../services/popularUsers/actions";
-import { getCreatedAtUsersThunk } from "../services/createdAtUsers/actions";
-import { getRandomUsersThunk } from "../services/randomUsers/actions";
-import { getFilteredUsersThunk } from "../services/filteredUsers/actions";
-import { isFiltersEmpty, resetFilters, setGender, setPlaces } from "../services/filters/filters-slice";
-import { resetFilteredUsers } from "../services/filteredUsers/filtered-users-slice";
+// Styles
+import styles from './HomePage.module.css';
 
 export const HomePage = () => {
 
-  // const [currentStep, setCurrentStep] = useState(1); // текущий шаг
-  // const totalSteps = 3;
-
   const dispatch = useDispatch();
-
-  // Это авторизованный пользователь
-  const currentUser = useSelector(getCurrentUser);
-
-  // Это выбранный пользователь, например, предложение которого рассматривается 
-  const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
-
-  // *************************************************
-  // пользоаватели без сортировки
-  const {
-    users: plainUsers,
-    isLoading: isUsersLoading,
-    hasMore: hasMoreUsers,
-    page: usersPage,
-  } = useSelector((state: RootState) => state.users);
-
-  // функция загрузки последующих данных
-  const handleLoadMorePlainUsers = () => {
-    if (!isUsersLoading && hasMoreUsers) {
-      const nextPage = usersPage + 1;
-      dispatch(getUsersThunk(nextPage));
-    }
-  };
 
   // *************************************************
   // популярные пользователи
@@ -130,7 +101,6 @@ export const HomePage = () => {
     }
   };
 
-
   // *************************************************
   // отфильтрованные пользователи
   const filters = useSelector((s: RootState) => s.filters);
@@ -150,90 +120,93 @@ export const HomePage = () => {
       dispatch(getFilteredUsersThunk({ 
         page: nextPage, 
         gender: selectedGender,
-        places: selectedPlaces
+        places: selectedPlaces,
+        skillType: selectedSkillType,
+        subcategories: selectedSubcategories,
       }));
     }
   };
 
-
+  const selectedSubcategories = useSelector((s: RootState) => s.filters.subcategories);
 
   const subCategories = useSelector(
     (s: RootState) => s.categories.subcategories
   );
 
-  const {
-    isNotificationOpen,
-    notificationConfig,
-    openNotification,
-    closeNotification,
-    handleNavigateToExchange,
-  } = useExchangeNotification();
-
-  const [isLoginNotificationOpen, setIsLoginNotificationOpen] = useState(false);
-
-
-  const [selectedSkillType, setSelectedSkillType] = useState<TSkillType>(SKILL_TYPES.ALL);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const selectedSkillType = useSelector((s: RootState) => s.filters.skillType);
 
   // Получаем категории из Redux
   const categories = useSelector((s: RootState) => s.categories.categories);
 
-  // Обработчик для категорий
-  const handleCategoryToggle = (categoryId: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
-    );
+  const handleSubcategoryToggle = (id: number) => {
+    const current = [...selectedSubcategories];
+    if (current.includes(id)) {
+      dispatch(setSubcategories(current.filter((x) => x !== id)));
+    } else {
+      dispatch(setSubcategories([...current, id]));
+    }
+    dispatch(resetFilteredUsers());
+    dispatch(getFilteredUsersThunk({
+      page: 1,
+      gender: selectedGender,
+      places: selectedPlaces,
+      skillType: selectedSkillType,
+      subcategories: current.includes(id)
+        ? current.filter((x) => x !== id)
+        : [...current, id],
+    }));
   };
 
-    const selectedPlaces = useSelector((s: RootState) => s.filters.places);
+  const selectedPlaces = useSelector((s: RootState) => s.filters.places);
 
   const handleGenderChange = (gender: TGender) => {
     dispatch(setGender(gender));
     dispatch(resetFilteredUsers()); // очистим список
-    dispatch(getFilteredUsersThunk({ page: 1, gender, places: selectedPlaces }));
+    dispatch(getFilteredUsersThunk({ 
+      page: 1,
+      gender,
+      places: selectedPlaces,
+      skillType: selectedSkillType,
+      subcategories: selectedSubcategories
+   }));
   };
 
 
   const handlePlacesChange = (places: string[]) => {
     dispatch(setPlaces(places));
     dispatch(resetFilteredUsers()); // очистим список
-    dispatch(getFilteredUsersThunk({ page: 1, gender: selectedGender, places }));
+    dispatch(getFilteredUsersThunk({ 
+      page: 1,
+      gender: selectedGender,
+      places,
+      skillType: selectedSkillType,
+      subcategories: selectedSubcategories,
+    }));
   };
 
   const handleResetAll = () => {
     dispatch(resetFilters());
     dispatch(resetFilteredUsers());
-    // setSelectedSkillType("all");
-    // setSelectedCategories([]);
-    // setSelectedGender("");
-    // setSelectedPlaces([]);
   };
+
+  const handleSkillTypeChange = (newType: TSkillType) => {
+    dispatch(setSkillType(newType));
+    dispatch(resetFilteredUsers());
+    dispatch(getFilteredUsersThunk({
+      page: 1,
+      gender: selectedGender,
+      places: selectedPlaces,
+      skillType: newType,
+      subcategories: selectedSubcategories,
+  }));
+};
 
 
   const hasActiveFilters =
     filters.skillType !== SKILL_TYPES.ALL ||
-    filters.categories.length > 0 ||
+    filters.subcategories.length > 0 ||
     filters.gender !== GENDERS.UNSPECIFIED ||
     filters.places.length > 0;
-
-    // selectedSkillType !== "all" ||
-    // selectedCategories.length > 0 ||
-    // selectedGender !== "" ||
-    // selectedPlaces.length > 0;
-
-  const handleOpenLogin = () => {
-    setIsLoginNotificationOpen(true);
-  };
-
-  const handleLogin = () => {
-    console.log("Переход к странице входа/регистрации");
-  };
-  
-  const handleCancelLogin = () => {
-    console.log("Пользователь отменил вход");
-};
 
   return (
     <div className={styles.homePageWrapper}>
@@ -244,13 +217,15 @@ export const HomePage = () => {
           title="Фильтры"
           onReset={hasActiveFilters ? handleResetAll : undefined}
         >
+ 
           <SkillFilters
-            onSkillTypeChange={setSelectedSkillType}
-            onCategoryToggle={handleCategoryToggle}
+            onSkillTypeChange={handleSkillTypeChange}
+            // onSkillTypeChange={(newType) => dispatch(setSkillType(newType))}
             selectedSkillType={selectedSkillType}
-            selectedCategories={selectedCategories}
             categories={categories}
             subcategories={subCategories}
+            selectedSubcategories={selectedSubcategories}
+            onSubcategoryToggle={handleSubcategoryToggle}
           />
           <FilterSection
             onGenderChange={handleGenderChange}
@@ -263,284 +238,88 @@ export const HomePage = () => {
         <div className={styles.showCaseWrapper}>
           <ActiveFiltersBar
             selectedSkillType={selectedSkillType}
-            selectedCategories={selectedCategories}
-            categories={categories}
-            onSkillTypeChange={setSelectedSkillType}
-            onCategoryToggle={handleCategoryToggle}
             selectedGender={selectedGender}
-            onChangeGender={handleGenderChange}
             selectedPlaces={selectedPlaces}
-            onChangePlaces={handlePlacesChange }
+            selectedSubcategories={selectedSubcategories}
+            onSkillTypeChange={handleSkillTypeChange}
+            // onSkillTypeChange={(newType) => dispatch(setSkillType(newType))}
+            onChangeGender={handleGenderChange}
+            onChangePlaces={handlePlacesChange}
+            onSubcategoryToggle={handleSubcategoryToggle}
           />
 
-{isFiltersEmpty(filters) ? (          
-// {filters.gender === GENDERS.UNSPECIFIED ? (
-        <>
-          <CardShowcase
-            title={SHOWCASE_TITLES.POPULAR}
-            buttonTitle="Смотреть все"
-            icon={<Icon name="chevronRight" />}
-          >
-            <GridList
-              rows={1}
-              users={popularUsers}
-              loading={isPopularLoading}
-              hasMore={hasMorePopular}
-              onLoadMore={handleLoadMorePopularUsers}
-            />
-          </CardShowcase>
-          <CardShowcase
-            title={SHOWCASE_TITLES.NEW}
-            buttonTitle="Смотреть все"
-            icon={<Icon name="chevronRight" />}
-          >
-            <GridList
-              rows={1}
-              users={createdAtUsers}
-              loading={isCreatedAtLoading}
-              hasMore={hasMoreCreatedAt}
-              onLoadMore={handleLoadMoreCreatedAtUsers}
-            />
-          </CardShowcase>
+        {isFiltersEmpty(filters) ? (          
+                <>
+                  <CardShowcase
+                    title={SHOWCASE_TITLES.POPULAR}
+                    buttonTitle="Смотреть все"
+                    icon={<Icon name="chevronRight" />}
+                  >
+                    <GridList
+                      rows={1}
+                      users={popularUsers}
+                      loading={isPopularLoading}
+                      hasMore={hasMorePopular}
+                      onLoadMore={handleLoadMorePopularUsers}
+                    />
+                  </CardShowcase>
+                  <CardShowcase
+                    title={SHOWCASE_TITLES.NEW}
+                    buttonTitle="Смотреть все"
+                    icon={<Icon name="chevronRight" />}
+                  >
+                    <GridList
+                      rows={1}
+                      users={createdAtUsers}
+                      loading={isCreatedAtLoading}
+                      hasMore={hasMoreCreatedAt}
+                      onLoadMore={handleLoadMoreCreatedAtUsers}
+                    />
+                  </CardShowcase>
 
-          <CardShowcase
-            title={SHOWCASE_TITLES.RECOMMEND}
-            buttonTitle="Смотреть все"
-            icon={<Icon name="chevronRight" />}
-          >
-            <GridList
-              rows={1}
-              users={randomUsers}
-              loading={isRandomLoading}
-              hasMore={hasMoreRandom}
-              onLoadMore={handleLoadMoreRandomUsers}
-            />
-          </CardShowcase>
+                  <CardShowcase
+                    title={SHOWCASE_TITLES.RECOMMEND}
+                    buttonTitle="Смотреть все"
+                    icon={<Icon name="chevronRight" />}
+                  >
+                    <GridList
+                      rows={1}
+                      users={randomUsers}
+                      loading={isRandomLoading}
+                      hasMore={hasMoreRandom}
+                      onLoadMore={handleLoadMoreRandomUsers}
+                    />
+                  </CardShowcase>
 
-        </>
-):(
+                </>
+        ):(
 
-      <div className={styles.filterSectionWrapper}>
-        <CardShowcase
-          title={SHOWCASE_TITLES.MATCHING}
-          buttonTitle="Сначала новые"
-          icon={<Icon name="sort" />}
-          isIconFirst
-        >
-          <GridList
-            users={filteredUsers}
-            loading={isFilteredLoading}
-            hasMore={hasMoreFiltered}
-            onLoadMore={handleLoadMoreFilteredUsers}
-          />
-        </CardShowcase>
-      </div>
-
-
-)
-}
+              <div className={styles.filterSectionWrapper}>
+                <CardShowcase
+                  title={SHOWCASE_TITLES.MATCHING}
+                  buttonTitle="Сначала новые"
+                  icon={<Icon name="sort" />}
+                  isIconFirst
+                >
+                  <GridList
+                    users={filteredUsers}
+                    loading={isFilteredLoading}
+                    hasMore={hasMoreFiltered}
+                    onLoadMore={handleLoadMoreFilteredUsers}
+                  />
+                </CardShowcase>
+              </div>
+          )
+        }
         </div>
       </div>
-
-
-      <OfferPage />
-
-      <div>
-        {/* Все карточки пользователей */}
-        <div style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}>
-          {plainUsers.map((u) => (
-            <UserCard
-              user={u}
-            />
-          ))}
-        </div>
-
-        {/* Чтобы компонент отобразился нужно тыкнуть в первых 10 пользователей 
-        из блока выше */}
-
-        {/* SkillCardDetails выбранного пользователя */}
-        {<h2 style={{textAlign:'center'}}>SkillCardDetails</h2>}
-        {selectedUser && (
-          <SkillCardDetails
-              title={selectedUser.skill || "Навык не указан"}
-              subtitle={`${selectedUser.cat_text || ""} / ${
-                selectedUser.sub_text || ""
-              }`}
-              description={selectedUser.description || "Описание отсутствует"}
-              images={selectedUser.images?.slice(1) || []}
-              buttonText={"Предложить обмен"}
-          />
-        )}
-
-        {/* SkillCardDetails с пропсом checkEdit */}
-        {<h2 style={{textAlign:'center'}}>SkillCardDetails с пропсом checkEdit</h2>}
-        {selectedUser && (
-          <SkillCardDetails
-              checkEdit={true}
-              title={selectedUser.skill || "Навык не указан"}
-              subtitle={`${selectedUser.cat_text || ""} / ${
-                selectedUser.sub_text || ""
-              }`}
-              description={selectedUser.description || "Описание отсутствует"}
-              images={selectedUser.images?.slice(1) || []}
-              buttonText={"Предложить обмен"}
-          />
-        )}
-
-        {hasMoreUsers && !isUsersLoading && (
-          <button
-            style={{ margin: "20px", padding: "10px 20px" }}
-            onClick={handleLoadMorePlainUsers}
-          >
-            Загрузить ещё
-          </button>
-        )}
-
-        {/* Showcase блоки */}
-        <CardShowcase
-          title={SHOWCASE_TITLES.SIMILAR}
-          icon={<Icon name="chevronRight" />}
-        >
-          <CardSlider users={plainUsers} subCategories={subCategories} />
-        </CardShowcase>
-      </div>
-
-      <h1>Демо-блоки</h1>
-
-      <h2>Блок текущего пользователя</h2>
-      <div style={{ display: "flex", gap: "20px" }}>
-        {currentUser && (
-          <UserCard
-            user={currentUser}
-          />
-        )}
-      </div>
-<div>
-   <h2>Кнопка для демонстрации Login Notification</h2>
-<button 
-    style={{
-      fontSize: "32px",
-      color: "red",
-      height: "80px",
-      padding: "10px 20px",
-      marginLeft: '20px'
-    }}
-    onClick={handleOpenLogin}
-  >
-  Показать уведомление Login Notification
-  </button>
-</div>
-
-      <div>
-        <h2>Кнопка для демонстрации success</h2>
-        <button
-          style={{
-            fontSize: "32px",
-            color: "red",
-            height: "80px",
-            padding: "10px 20px",
-          }}
-          onClick={() => openNotification({ type: "success" })}
-        >
-          Показать уведомление Success
-        </button>
-        <h2>Кнопка для демонстрации success</h2>
-        <button
-          style={{
-            fontSize: "32px",
-            color: "red",
-            height: "80px",
-            padding: "10px 20px",
-          }}
-          onClick={() => openNotification({ type: "info" })}
-        >
-          Показать уведомление Info
-        </button>
-
-       <h2>Кнопка для демонстрации notification</h2>
-        <button
-          style={{
-            fontSize: "32px",
-            color: "red",
-            height: "80px",
-            padding: "10px 20px",
-          }}
-          onClick={() => openNotification({ type: "notification" })}
-        >
-          Показать уведомление notification
-        </button>
-
-        <ExchangeNotification
-          isOpen={isNotificationOpen}
-          onClose={closeNotification}
-          onNavigateToExchange={handleNavigateToExchange}
-          type={notificationConfig.type}
-          message={notificationConfig.message}
-          title={notificationConfig.title}
-        />
-     
-
-   <LoginNotification
-          isOpen={isLoginNotificationOpen}
-          onClose={() => setIsLoginNotificationOpen(false)}
-          onLogin={handleLogin}
-          onCancel={handleCancelLogin}
-        />
-        </div>
-      
-
-      <h2>onboarding register step 1</h2>
-      <RegistrationOnBoarding {...onBoarding[0]} />
-
-      <h2>onboarding register step 2</h2>
-      <RegistrationOnBoarding {...onBoarding[1]} />
-
-      <h2>onboarding register step 3</h2>
-      <RegistrationOnBoarding {...onBoarding[2]} />
-
-      <h2>Вариант Dropdown 1</h2>
-      <DropdownDemo />
-
-      <h2>Вариант Dropdown 2</h2>
-      <DropdownGroupedDemo />
-
-      {/* <SkillMenu /> */}
-      <NotFoundPage />
-      <ServerErrorPage />
-
 
       <h2>NotificationsTable</h2>
       <div  style={{ marginBottom: '300px' }}>
         <NotificationsTable/>
       </div>
 
-      {/* <NotificationWidget /> */}
-
       <Footer />
     </div>
   );
 };
-
-
-
-      {/* <RegistrationProgress currentStep={currentStep} totalSteps={totalSteps} /> */}
-
-  {/* Форма регистрации по шагам */}
-  {/* {currentStep === 1 && <AuthForm onContinue={() => setCurrentStep(2)} />}
-
-  {currentStep === 2 && (
-    <RegisterStep2
-      onBack={() => setCurrentStep(1)}
-      onContinue={(data) => {
-        console.log("Данные регистрации:", data);
-        setCurrentStep(3);
-      }}
-    />
-  )}
-
-  {currentStep === 3 && (
-    <SkillForm
-      onBack={() => setCurrentStep(2)}
-      onContinue={() => alert("Регистрация завершена!")}
-    />
-  )} */}

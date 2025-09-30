@@ -9,12 +9,12 @@ import { getFilteredUsersApi } from '@api/Api';
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
 
 export const getFilteredUsersThunk = createAsyncThunk<
-  TResponseUsers,      // что вернём
-  TGetFilteredUsersArgs,       // что передаём в thunk (page + gender)
-  { state: RootState } // доступ к getState
+  TResponseUsers,
+  TGetFilteredUsersArgs,
+  { state: RootState }
 >(
   FETCH_USERS_FILTERED,
-    async ({ page, gender, places }, { getState }) => {
+    async ({ page, gender, places, skillType, subcategories }, { getState }) => {
         // количество в списке отфильтрованных пользователей
         const state = getState().filteredUsers;
         const usersCount = state.users.length;
@@ -24,7 +24,7 @@ export const getFilteredUsersThunk = createAsyncThunk<
           return { users: [], hasMore: true };
         }
 
-        const response = await getFilteredUsersApi({page, gender, places});
+        const response = await getFilteredUsersApi({page, gender, places, skillType, subcategories});
         return response;
   }
 );

@@ -1,29 +1,33 @@
+// src\features\filters\SkillFilters.tsx
+
 import React, { useState } from 'react';
 import styles from './SkillFilters.module.css';
 import { Icon } from '../../shared/ui/icon/Icon';
 import { TCategory, TSubcategory } from '../../api/types';
 import { SKILL_TYPES, TSkillType } from '../../shared/types/filters';
+import { setSubcategories } from '../../services/filters/filters-slice';
+import { useDispatch } from '@store';
 
 interface SkillFiltersProps {
   onSkillTypeChange: (type: TSkillType) => void;
-  onCategoryToggle: (categoryId: string) => void;
   selectedSkillType: TSkillType;
-  selectedCategories: string[];
+  selectedSubcategories: number[];
+  onSubcategoryToggle: (subcategoryId: number) => void;
   categories: TCategory[];
   subcategories: TSubcategory[];
 }
 
 export const SkillFilters: React.FC<SkillFiltersProps> = ({
   onSkillTypeChange,
-  onCategoryToggle,
   selectedSkillType,
-  selectedCategories,
+  selectedSubcategories,
+  onSubcategoryToggle,
   categories = [],
   subcategories = [],
 }) => {
   const [expandedCategories, setExpandedCategories] = useState<number[]>([]);
-
-  const skillTypeGroupId = React.useId();
+  const skillTypeGroupId = React.useId()
+  const dispatch = useDispatch();
 
   const handleCategoryExpand = (categoryId: number) => {
     setExpandedCategories(prev =>
@@ -51,6 +55,24 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
     return <div className={styles.skillFilters}>Загрузка категорий...</div>;
   }
 
+  const handleCategoryToggle = (categoryId: number) => {
+  const subs = getSubcategoriesForCategory(categoryId).map((s) => s.id);
+
+  const allSelected = subs.every((id) => selectedSubcategories.includes(id));
+
+  if (allSelected) {
+    // 🚀 если все выбраны → убираем их
+    dispatch(setSubcategories(
+      selectedSubcategories.filter((id) => !subs.includes(id))
+    ));
+  } else {
+    // 🚀 если не все выбраны → добавляем недостающие
+    const newSubs = subs.filter((id) => !selectedSubcategories.includes(id));
+    dispatch(setSubcategories([...selectedSubcategories, ...newSubs]));
+  }
+
+};
+
   return (
     <div className={styles.skillFilters}>
       {/* Фильтр по типу навыка */}
@@ -63,7 +85,7 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
               name={`skill-type-${skillTypeGroupId}`}
               value={SKILL_TYPES.ALL}
               checked={selectedSkillType === SKILL_TYPES.ALL}
-              onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))}
+              onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))} 
               className={styles.input}
             />
             <span className={styles.radio}></span>
@@ -75,7 +97,7 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
               name={`skill-type-${skillTypeGroupId}`}
               value={SKILL_TYPES.WANT_TO_LEARN}
               checked={selectedSkillType === SKILL_TYPES.WANT_TO_LEARN}
-              onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))}
+              onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))} 
               className={styles.input}
             />
             <span className={styles.radio}></span>
@@ -87,7 +109,7 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
               name={`skill-type-${skillTypeGroupId}`}
               value={SKILL_TYPES.CAN_TEACH}
               checked={selectedSkillType === SKILL_TYPES.CAN_TEACH}
-              onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))}
+              onChange={(e) => onSkillTypeChange(handleSkillTypeChange(e.target.value))} 
               className={styles.input}
             />
             <span className={styles.radio}></span>
@@ -111,8 +133,11 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
                   <label className={styles.item}>
                     <input
                       type="checkbox"
-                      checked={selectedCategories.includes(category.id.toString())}
-                      onChange={() => onCategoryToggle(category.id.toString())}
+                      checked={getSubcategoriesForCategory(category.id).every((s) =>
+                        selectedSubcategories.includes(s.id)
+                      )}
+                      onChange={() => handleCategoryToggle(category.id)} 
+                      // checked={selectedCategories.includes(category.id)}
                       className={styles.input}
                     />
                     <span className={styles.checkbox}></span>
@@ -138,8 +163,12 @@ export const SkillFilters: React.FC<SkillFiltersProps> = ({
                       <label key={subcategory.id} className={`${styles.item} ${styles.subcategoryItem}`}>
                         <input
                           type="checkbox"
-                          checked={selectedCategories.includes(subcategory.id.toString())}
-                          onChange={() => onCategoryToggle(subcategory.id.toString())}
+
+                          checked={selectedSubcategories.includes(subcategory.id)}
+                          onChange={() => onSubcategoryToggle(subcategory.id)}  
+
+                          // checked={selectedCategories.includes(subcategory.id.toString())}
+                          // onChange={() => onCategoryToggle(subcategory.id.toString())}
                           className={styles.input}
                         />
                         <span className={styles.checkbox}></span>

@@ -1,6 +1,6 @@
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
+import { useForm, Controller } from "react-hook-form";
 import styles from "./AuthForm.module.css";
-import clsx from "clsx";
 import { Button } from "../../shared/ui/button/Button";
 import { Input } from "../../shared/ui/input/Input";
 import { SocialButton } from "../../shared/ui/social-button/SocialButton";
@@ -9,74 +9,32 @@ type AuthFormProps = {
   onContinue: (email: string, password: string) => void;
 };
 
+type FormData = {
+  email: string;
+  password: string;
+};
+
 export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordStatus, setPasswordStatus] = useState<
-    "hint" | "error" | "success"
-  >("hint");
-  const [emailStatus, setEmailStatus] = useState<"error" | "default">(
-    "default"
-  );
-  const [emailTouched, setEmailTouched] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    mode: "onChange",       // Обновляем валидность при каждом изменении
+    reValidateMode: "onChange",
+  });
 
-  // временно
-  const checkPassword = (value: string) => {
-    if (value.length === 0) {
-      return {
-        type: "hint" as const,
-        message: "Пароль должен содержать не менее 8 знаков",
-      };
-    } else if (value.length < 8) {
-      return {
-        type: "error" as const,
-        message: "Пароль должен содержать не менее 8 знаков",
-      };
-    } else {
-      return { type: "success" as const, message: "Надёжный" };
-    }
-  };
-
-  const handlePasswordChange = (value: string) => {
-    setPassword(value);
-    const status = checkPassword(value);
-    setPasswordStatus(status.type);
-  };
-
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
-
-    if (emailTouched) {
-      // пока что такая валидация
-      const isValid = /\S+@\S+\.\S+/.test(value);
-      setEmailStatus(isValid ? "default" : "error");
-    }
-  };
-
-  const handleEmailBlur = () => {
-    // Устанавливаем, что пользователь взаимодействовал с полем
-    setEmailTouched(true);
-
-    // Проверяем email при уходе с поля
-    const isValid = /\S+@\S+\.\S+/.test(email);
-    setEmailStatus(isValid ? "default" : "error");
+  const onSubmit = (data: FormData) => {
+    onContinue(data.email, data.password);
   };
 
   const handleGoogleLogin = () => {
     console.log("Google login clicked");
-    // логика для Google
   };
 
   const handleAppleLogin = () => {
     console.log("Apple login clicked");
-    //  логика для Apple
   };
-
-  const passwordMessage = checkPassword(password).message;
-  const emailMessage =
-    emailTouched && emailStatus === "error"
-      ? "Введите корректный email"
-      : undefined;
 
   return (
     <div className={styles.authForm}>
@@ -96,33 +54,67 @@ export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
         </div>
 
         {/* Форма */}
-        <form className={styles.form}>
-          <Input
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            onBlur={handleEmailBlur}
-            placeholder="Введите email"
-            status={emailStatus}
-            errorMessage={emailMessage}
-            label="Email"
-            id="email"
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          {/* Email */}
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: "Email обязателен",
+              pattern: {
+                value: /^\S+@\S+\.\S+$/,
+                message: "Введите корректный email",
+              },
+            }}
+            render={({ field }) => (
+              <Input
+                type="email"
+                label="Email"
+                id="email"
+                placeholder="Введите email"
+                {...field} // передаем value, onChange, onBlur
+                status={errors.email ? "error" : "default"}
+                errorMessage={errors.email?.message}
+              />
+            )}
           />
 
-          {/* Input с функционалом пароля */}
-          <Input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="Придумайте надёжный пароль"
-            status={passwordStatus}
-            errorMessage={passwordMessage}
-            label="Пароль"
-            showPasswordToggle={true}
-            id="password"
+          {/* Пароль */}
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: "Пароль обязателен",
+              minLength: {
+                value: 8,
+                message: "Пароль должен быть не менее 8 символов",
+              },
+              validate: {
+                hasNumber: (v) =>
+                  /\d/.test(v) || "Пароль должен содержать хотя бы одну цифру",
+                hasLetter: (v) =>
+                  /[a-zA-Z]/.test(v) ||
+                  "Пароль должен содержать хотя бы одну букву",
+              },
+            }}
+            render={({ field }) => (
+              <Input
+                type="password"
+                label="Пароль"
+                id="password"
+                placeholder="Придумайте надёжный пароль"
+                showPasswordToggle
+                {...field} // передаем value, onChange, onBlur
+                status={errors.password ? "error" : "default"}
+                errorMessage={errors.password?.message}
+              />
+            )}
           />
+
+          <Button colored type="submit" disabled={!isValid}>
+            Далее
+          </Button>
         </form>
-        <Button colored onClick={() => onContinue(email, password)}>Далее</Button>
       </div>
     </div>
   );

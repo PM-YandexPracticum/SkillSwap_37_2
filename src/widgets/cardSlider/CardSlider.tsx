@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { UserCard } from "../../features/users/userCard/UserCard";
-import { TUser, TPlace } from "../../api/types";
+import { TUser } from "../../api/types";
 import { Icon } from "../../shared/ui/icon/Icon";
 import { Loader } from "../../shared/ui/loader/Loader";
 import styles from "./CardSlider.module.css";
@@ -8,10 +8,9 @@ import clsx from "clsx";
 
 type CardSliderProps = {
   users: TUser[];
-  subCategories: TPlace[];
 };
 
-export const CardSlider = ({ users, subCategories }: CardSliderProps) => {
+export const CardSlider = ({ users }: CardSliderProps) => {
   const [page, setPage] = useState(0);
   const itemsPerPage = 4;
 
@@ -35,6 +34,7 @@ export const CardSlider = ({ users, subCategories }: CardSliderProps) => {
         
         {visibleUsers.map((user) => (
           <UserCard
+            key={user.id}
             user={user}
           />
         ))}

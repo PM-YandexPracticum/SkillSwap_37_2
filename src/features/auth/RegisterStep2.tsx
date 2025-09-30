@@ -14,12 +14,6 @@ import {
 import { TCategory, TSubcategory, TPlace } from "../../api/types";
 import { Icon } from "../../shared/ui/icon/Icon";
 
-interface RegisterStep2Props {
-  onBack: () => void;
-  onContinue: (data: RegisterStep2Data) => void;
-  initialData?: Partial<RegisterStep2Data>;
-}
-
 export interface RegisterStep2Data {
   name: string;
   birthdate: Date | null;
@@ -28,6 +22,12 @@ export interface RegisterStep2Data {
   selectedCategories: string[];
   selectedSubcategories: string[];
   avatar?: string;
+}
+
+interface RegisterStep2Props {
+  onBack: () => void;
+  onContinue: (data: RegisterStep2Data) => void;
+  initialData?: Partial<RegisterStep2Data>;
 }
 
 export const RegisterStep2: React.FC<RegisterStep2Props> = ({
@@ -42,7 +42,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
     city: initialData.city || "",
     selectedCategories: initialData.selectedCategories || [],
     selectedSubcategories: initialData.selectedSubcategories || [],
-    avatar: initialData.avatar,
+    avatar: initialData.avatar || "",
   });
 
   const [categories, setCategories] = useState<TCategory[]>([]);
@@ -50,7 +50,6 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
   const [cities, setCities] = useState<TPlace[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Загрузка данных
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,8 +60,8 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             getPlacesApi(),
           ]);
 
-        setCategories(categoriesResponse.categories);
-        setSubcategories(subcategoriesResponse.subcategories);
+        setCategories(categoriesResponse.categories || []);
+        setSubcategories(subcategoriesResponse.subcategories || []);
         setCities(placesResponse.places || []);
       } catch (error) {
         console.error("Ошибка загрузки данных:", error);
@@ -97,15 +96,18 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onContinue(formData);
+    if (isFormValid()) {
+      onContinue(formData);
+    }
   };
 
-  const isFormValid = () => {
+  const isFormValid = (): boolean => {
     return (
+      formData.avatar?.trim() !== "" && // теперь аватар обязателен
       formData.name.trim() !== "" &&
       formData.birthdate !== null &&
-      formData.gender !== "" &&
-      formData.city !== "" &&
+      formData.gender.trim() !== "" &&
+      formData.city.trim() !== "" &&
       formData.selectedCategories.length > 0 &&
       formData.selectedSubcategories.length > 0
     );
@@ -115,13 +117,11 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
     return <div className={styles.loading}>Загрузка...</div>;
   }
 
-  // Преобразование городов в формат для Dropdown
   const cityOptions = cities.map((city) => ({
     value: city.id.toString(),
     label: city.name,
   }));
 
-  // Преобразование категорий в формат для Dropdown
   const categoryOptions = categories.map((category) => ({
     value: category.id.toString(),
     label: category.name,
@@ -203,7 +203,9 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
           <Dropdown
             label="Категория навыка, которому хотите научиться"
             value={formData.selectedCategories}
-            onChange={(value) => handleInputChange("selectedCategories", value)}
+            onChange={(value) =>
+              handleInputChange("selectedCategories", value)
+            }
             options={categoryOptions}
             multiple={true}
             placeholder="Выберите категории"
@@ -241,7 +243,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
               type="submit"
               size={208}
               colored={true}
-              disabled={false}
+              disabled={!isFormValid()} // кнопка неактивна, пока не заполнены все поля включая аватар
               className={styles.continueButton}
             >
               Продолжить

@@ -1,4 +1,4 @@
-import { getNotificationsApi, getOffersApi } from "@api/Api";
+import { getOffersApi } from "@api/Api";
 import { TOffer } from "@api/types";
 import { FETCH_ADD_OFFER, FETCH_OFFERS } from "@const/thunk-types";
 import { createAsyncThunk } from "@reduxjs/toolkit";

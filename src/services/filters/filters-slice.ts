@@ -6,26 +6,25 @@ import { SKILL_TYPES, TSkillType } from '../../shared/types/filters';
 
 type FiltersState = {
   skillType: TSkillType;
-  categories: string[];
   gender: TGender;
   places: string[];
+  subcategories: number[];
 };
 
 const getInitialState = (): FiltersState => ({
   skillType: SKILL_TYPES.ALL,
-  categories: [],
   gender: GENDERS.UNSPECIFIED,
   places: [],
+  subcategories: [],
 });
 
 const initialState = getInitialState();
 
 export const isFiltersEmpty = (state: FiltersState): boolean => {
   return (
-    state.skillType === SKILL_TYPES.ALL &&
-    state.categories.length === 0 &&
     state.gender === GENDERS.UNSPECIFIED &&
-    state.places.length === 0
+    state.places.length === 0 &&
+    state.subcategories.length === 0
   );
 };
 
@@ -36,22 +35,26 @@ export const filtersSlice = createSlice({
     setSkillType: (state, action: PayloadAction<TSkillType>) => {
       state.skillType = action.payload;
     },
-    toggleCategory: (state, action: PayloadAction<string>) => {
-      if (state.categories.includes(action.payload)) {
-        state.categories = state.categories.filter(c => c !== action.payload);
-      } else {
-        state.categories.push(action.payload);
-      }
-    },
+    // toggleCategory: (state, action: PayloadAction<string>) => {
+    //   if (state.categories.includes(action.payload)) {
+    //     state.categories = state.categories.filter(c => c !== action.payload);
+    //   } else {
+    //     state.categories.push(action.payload);
+    //   }
+    // },
     setGender: (state, action: PayloadAction<TGender>) => {
       state.gender = action.payload;
     },
     setPlaces: (state, action: PayloadAction<string[]>) => {
       state.places = action.payload;
     },
+
+    setSubcategories: (state, action: PayloadAction<number[]>) => {
+      state.subcategories = action.payload;
+    },
     resetFilters: () => getInitialState(),
   },
 });
 
-export const { setSkillType, toggleCategory, setGender, setPlaces, resetFilters } = filtersSlice.actions;
+export const { setSkillType, setGender, setPlaces, resetFilters, setSubcategories } = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;

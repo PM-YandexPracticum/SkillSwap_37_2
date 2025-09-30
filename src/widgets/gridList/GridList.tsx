@@ -4,7 +4,7 @@ import { UserCard } from '../../features/users/userCard/UserCard';
 import styles from './GridList.module.css';
 import { useInfiniteScroll } from '../../shared/hooks/useInfiniteScroll';
 import { Loader } from '../../shared/ui/loader/Loader';
-import { TPlace, TUser } from '@api/types';
+import { TUser } from '@api/types';
 import { useSelector } from '@store';
 import { getCurrentUser } from '../../services/user/user-slice';
 

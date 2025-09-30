@@ -1,3 +1,5 @@
+// src\shared\ui\search-bar\SearchBar.tsx
+
 import { FC } from "react";
 import styles from "./SearchBar.module.css";
 import { Icon } from "../icon/Icon";

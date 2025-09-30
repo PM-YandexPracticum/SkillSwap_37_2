@@ -4,26 +4,19 @@ import React from "react";
 import styles from "./ActiveFiltersBar.module.css";
 import { SKILL_TYPES, TSkillType } from "../../shared/types/filters";
 import { GENDERS, TGender } from "@api/types";
-
-// Поддержим разные варианты названия поля у категорий
-type Category = { id: string | number; name?: string; title?: string };
+import { RootState, useSelector } from "@store";
 
 type Props = {
   selectedSkillType: TSkillType;
-  selectedCategories: string[];
-  categories: Category[];
+  selectedGender: TGender;
+  selectedPlaces: string[];
+  selectedSubcategories: number[];
 
   onSkillTypeChange: (value: TSkillType) => void;
-  onCategoryToggle: (categoryId: string) => void;
-
-  selectedGender: TGender;
   onChangeGender: (value: TGender) => void;
-
-  selectedPlaces: string[];
   onChangePlaces: (values: string[]) => void;
+  onSubcategoryToggle: (subcategoryId: number) => void;
 };
-
-// const placeLabel = (id: number) => String(id);
 
 export const SKILL_TYPE_LABELS: Record<TSkillType, string> = {
   [SKILL_TYPES.ALL]: "Все навыки",
@@ -39,11 +32,20 @@ export const GENDER_LABELS: Record<TGender, string> = {
 
 export const ActiveFiltersBar: React.FC<Props> = (props) => {
   const {
-    selectedSkillType, selectedCategories, categories,
-    onSkillTypeChange, onCategoryToggle,
-    selectedGender, onChangeGender,
-    selectedPlaces, onChangePlaces
+    selectedSkillType,
+    selectedGender,
+    selectedPlaces,
+    selectedSubcategories,
+
+    onSkillTypeChange,
+    onChangeGender,
+    onChangePlaces,
+    onSubcategoryToggle,
   } = props;
+  
+  const subcategories = useSelector(
+    (s: RootState) => s.categories.subcategories
+  );
 
   const chips: { key: string; label: string; onRemove: () => void }[] = [];
 
@@ -54,15 +56,6 @@ export const ActiveFiltersBar: React.FC<Props> = (props) => {
         onRemove: () => onSkillTypeChange(SKILL_TYPES.ALL),
     });
   }
-
-  selectedCategories.forEach((id) => {
-    const cat = categories.find((c) => String(c.id) === String(id));
-    chips.push({
-      key: `cat-${id}`,
-      label: cat?.name ?? cat?.title ?? id,
-      onRemove: () => onCategoryToggle(id),
-    });
-  });
 
   if (selectedGender !== GENDERS.UNSPECIFIED) {
     chips.push({
@@ -80,6 +73,18 @@ export const ActiveFiltersBar: React.FC<Props> = (props) => {
         onChangePlaces(selectedPlaces.filter((x) => x !== placeName)),
     })
   );
+
+  selectedSubcategories.forEach((id) => {
+    const subcat = subcategories.find((s) => s.id === id);
+    chips.push({
+      key: `subcat-${id}`,
+      label: subcat?.name ?? `Подкатегория ${id}`,
+      onRemove: () => onSubcategoryToggle(id),
+    });
+  });
+
+
+
 
   if (!chips.length) return null;
 

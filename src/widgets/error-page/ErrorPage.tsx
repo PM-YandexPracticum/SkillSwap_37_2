@@ -1,5 +1,6 @@
 import styles from './ErrorPage.module.css'
 import { Button } from '../../shared/ui/button/Button'
+import { useNavigate } from 'react-router';
 
 type ErrorPageProps = {
   title: string;
@@ -9,6 +10,8 @@ type ErrorPageProps = {
 }
 
 export const ErrorPage = ({ title, text, alt, image }: ErrorPageProps) => {
+  const navigate = useNavigate();
+  
   return(
     <div className={styles.container}>
       <div className={styles.error_block}>
@@ -20,7 +23,7 @@ export const ErrorPage = ({ title, text, alt, image }: ErrorPageProps) => {
           </div>
           <div className={styles.button_block}>
             <Button className={styles.button}>Сообщить об ошибке</Button>
-            <Button colored>На главную</Button>
+            <Button colored onClick={() => navigate('/')}>На главную</Button>
           </div>
         </div>
       </div>

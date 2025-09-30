@@ -15,16 +15,11 @@ import { addOfferThunk } from '../../services/offers/actions';
 import styles from './OfferPage.module.css';
 
 export const OfferPage: React.FC = () => {
-  
     const dispatch = useDispatch();
 
     const currentUser = useSelector(getCurrentUser);
-    const subCategories = useSelector((s: RootState) => s.categories.subcategories);
     const offerUser = useSelector(getOfferUser);
-    
-    const { users } = useSelector(
-      (state: RootState) => state.users
-    );
+    const {users} = useSelector((state: RootState) => state.users);
   
   return (
     <>
@@ -46,7 +41,6 @@ export const OfferPage: React.FC = () => {
               buttonText={"Предложить обмен"}
               onExchange={() => {
                 if (currentUser?.subCategoryId) {
-                console.log('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF9999999999999999999999999999999');
                 dispatch(addOfferThunk({
                   offerUserId: offerUser.id,
                   skillOwnerId: currentUser.subCategoryId
@@ -72,7 +66,7 @@ export const OfferPage: React.FC = () => {
           title="Похожие предложения"
           titleSize='1.5em'
           icon={<Icon name="chevronRight" />}>
-            <CardSlider users={users} subCategories={subCategories} />
+            <CardSlider users={users}/>
         </CardShowcase>
       </section>
     </>
