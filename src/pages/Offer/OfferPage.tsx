@@ -15,12 +15,13 @@ import { addOfferThunk } from '../../services/offers/actions';
 import styles from './OfferPage.module.css';
 
 export const OfferPage: React.FC = () => {
-    const dispatch = useDispatch();
-
-    const currentUser = useSelector(getCurrentUser);
-    const offerUser = useSelector(getOfferUser);
-    const {users} = useSelector((state: RootState) => state.users);
   
+  const dispatch = useDispatch();
+
+  const currentUser = useSelector(getCurrentUser);
+  const offerUser = useSelector(getOfferUser);
+  const {users} = useSelector((state: RootState) => state.users);
+
   return (
     <>
       <section className={styles.skillSection}>

@@ -1,10 +1,8 @@
-// SkillTag.tsx
-import { TSkillName } from '../../../shared/types/SkillName';
 import { skillColors } from './skillColors';
 import { SkillTagUI } from '../../../shared/ui/skillTag/SkillTagUI';
 
 type SkillTagProps = {
-  skill?: TSkillName;
+  skill?: string;
   rest?: number;
   className?: string;
 };
