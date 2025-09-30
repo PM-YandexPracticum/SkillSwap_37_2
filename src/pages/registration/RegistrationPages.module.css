@@ -1,9 +1,11 @@
 .registrationPage {
-  width: 1440px;
-  height: 1024px;
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background: #f8f9fa;
+  overflow-y: auto;
+  padding-bottom: 40px;
 }
 
 .registrationHeader {

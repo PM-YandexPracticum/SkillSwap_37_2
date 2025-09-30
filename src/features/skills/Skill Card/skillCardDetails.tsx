@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@store";
+
 import { Gallery } from "../../../shared/ui/gallery/Gallery";
 import { useExchangeNotification } from "../../../shared/ui/notification/useExchangeNotification";
 import { ExchangeNotification } from "../../../shared/ui/notification/ExchangeNotification";
@@ -9,7 +12,7 @@ import photoPlaceholder from "../../../shared/assets/images/school-board.svg?.sv
 import styles from './skillCardDetails.module.css';
 
 type SkillCardDetailsProps = {
-  checkEdit?: boolean; //если указать проп, то компонент рендерится с кнопкой редактировать
+  checkEdit?: boolean;
   title: string;
   subtitle: string;
   description: string;
@@ -27,125 +30,122 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   images = [],
   buttonText = "Предложить обмен",
   onExchange,
-  requireRegistration = true
+  requireRegistration = true,
 }) => {
-
   const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
-  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false); // Состояние для модалки
-  
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+
+  // Получаем пользователя из Redux
+  const currentUser = useSelector((s: RootState) => s.user.user);
+  const isUserLoggedIn = !!currentUser;
+
+  // Клик по кнопке обмена
   const handleExchangeClick = () => {
-    if (requireRegistration) {
-    openNotification({
-      type: "info",
-      title: "Ваше предложение создано",
-      message: "Теперь вы можете предложить обмен",
-      buttonText: "Готово",
-    });
-    } else { // Если регистрация не требуется, сразу вызываем обмен
-    onExchange?.();
+    if (requireRegistration && !isUserLoggedIn) {
+      // пользователь не авторизован → открываем модалку регистрации
+      setIsRegistrationModalOpen(true);
+    } else {
+      // пользователь авторизован или регистрация не нужна → создаём обмен и уведомление
+      onExchange?.();
+      openNotification({
+        type: "info",
+        title: "Ваше предложение создано",
+        message: "Теперь вы можете предложить обмен",
+        buttonText: "Готово",
+      });
     }
   };
 
-   const handleNotificationButtonClick = () => {
-    // Открываем модалку регистрации
-    closeNotification();
-    setIsRegistrationModalOpen(true);
-  };
-
+  // После завершения регистрации
   const handleRegistrationComplete = () => {
-    console.log("Регистрация завершена!");
+    setIsRegistrationModalOpen(false);
     onExchange?.();
+
+    setTimeout(() => {
+      openNotification({
+        type: "info",
+        title: "Ваше предложение создано",
+        message: "Теперь вы можете предложить обмен",
+        buttonText: "Готово",
+      });
+    }, 0);
   };
 
-  const likeHandle = () => {
-    console.log("Liked!");
-  }
-  const shareHandle = () => {
-    console.log("Shared!");
-  }
-  const moreHandle = () => {
-    console.log("More...");
-  }
+  // Хендлеры кнопок
+  const likeHandle = () => console.log("Liked!");
+  const shareHandle = () => console.log("Shared!");
+  const moreHandle = () => console.log("More...");
+  const editHandle = () => console.log("Edit...");
 
-  const editHandle = () => {
-    console.log("Edit...")
-  }
-
+  // ----------------- Рендер без кнопки редактирования -----------------
   if (!checkEdit) {
     return (
-    <>
-      <div className={styles.skillCard}>
+      <>
+        <div className={styles.skillCard}>
+          <div className={styles.iconsBar}>
+            <button className={styles.buttonIcon} onClick={likeHandle}>
+              <Icon name="like" />
+            </button>
+            <button className={styles.buttonIcon} onClick={shareHandle}>
+              <Icon name="share" />
+            </button>
+            <button className={styles.buttonIcon} onClick={moreHandle}>
+              <Icon name="more" />
+            </button>
+          </div>
 
-        <div className={styles.iconsBar}>
-          <button className={styles.buttonIcon} onClick={likeHandle}>
-            <Icon name="like" />
-          </button>
-          <button className={styles.buttonIcon} onClick={shareHandle}>
-            <Icon name="share" />
-          </button>
-          <button className={styles.buttonIcon} onClick={moreHandle}>
-            <Icon name="more" />
-          </button>
-        </div>
-
-        <div className={styles.mainSection}>
-
-          <div className={styles.leftSection}>
-            <div className={styles.info}>
-              <h2 className={styles.title}>{title}</h2>
-              <h3 className={styles.subtitle}>{subtitle}</h3>
-              <p className={styles.description}>{description}</p>
-            </div>
-              <Button className={styles.buttonOffer}
+          <div className={styles.mainSection}>
+            <div className={styles.leftSection}>
+              <div className={styles.info}>
+                <h2 className={styles.title}>{title}</h2>
+                <h3 className={styles.subtitle}>{subtitle}</h3>
+                <p className={styles.description}>{description}</p>
+              </div>
+              <Button
+                className={styles.buttonOffer}
                 colored
                 onClick={handleExchangeClick}
               >
                 {buttonText}
               </Button>
-          </div>
-          
-          <div className={styles.rightSection}>
-            {images && (
-              <Gallery images={images} placeholder={photoPlaceholder} />
-            )}
-          </div>
+            </div>
 
+            <div className={styles.rightSection}>
+              {images && <Gallery images={images} placeholder={photoPlaceholder} />}
+            </div>
+          </div>
         </div>
-      </div>
 
-    {/* Модалка регистрации */}
-      <RegistrationModal
-        isOpen={isRegistrationModalOpen}
-        onClose={() => setIsRegistrationModalOpen(false)}
-        onRegistrationComplete={handleRegistrationComplete}
-      />
+        <RegistrationModal
+          isOpen={isRegistrationModalOpen}
+          onClose={() => setIsRegistrationModalOpen(false)}
+          onRegistrationComplete={handleRegistrationComplete}
+        />
 
-      <ExchangeNotification
-        isOpen={isNotificationOpen}
-        onClose={closeNotification}
-        onNavigateToExchange={handleNotificationButtonClick}
-        type="info"
-        title="Ваше предложение создано"
-        message="Теперь вы можете предложить обмен"
-        buttonText="Готово"
-      />
-    </>
-  )}
+        <ExchangeNotification
+          isOpen={isNotificationOpen}
+          onClose={closeNotification}
+          type="info"
+          title="Ваше предложение создано"
+          message="Теперь вы можете предложить обмен"
+          buttonText="Готово"
+        />
+      </>
+    );
+  }
 
+  // ----------------- Рендер с кнопкой редактирования -----------------
   return (
     <>
-      <div
-        className={styles.skillCard}
-        style={{padding: '2.75em 3.75em 4.5em'}}
-      >
-
+      <div className={styles.skillCard} style={{ padding: '2.75em 3.75em 4.5em' }}>
         <div className={styles.headSection}>
           <h3 className={styles.headTitle}>Ваше предложение</h3>
-          <p className={styles.headText}>Пожалуйста, проверьте и подтвердите правильность данных</p>
+          <p className={styles.headText}>
+            Пожалуйста, проверьте и подтвердите правильность данных
+          </p>
         </div>
 
         <div className={styles.mainSection}>
-
           <div className={styles.leftSection}>
             <div className={styles.info}>
               <h2 className={styles.title}>{title}</h2>
@@ -153,46 +153,35 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
               <p className={styles.description}>{description}</p>
             </div>
             <div className={styles.buttonsContainer}>
-              <Button 
-                className={styles.buttonEdit}
-                onClick={editHandle}
-              >
+              <Button className={styles.buttonEdit} onClick={editHandle}>
                 Редактировать <Icon name="edit" />
               </Button>
-              <Button
-                colored
-                onClick={handleExchangeClick}
-              >
+              <Button colored onClick={handleExchangeClick}>
                 {buttonText}
               </Button>
             </div>
           </div>
-          
+
           <div className={styles.rightSection}>
-            {images && (
-              <Gallery images={images} placeholder={photoPlaceholder} />
-            )}
+            {images && <Gallery images={images} placeholder={photoPlaceholder} />}
           </div>
-
         </div>
+
+        <RegistrationModal
+          isOpen={isRegistrationModalOpen}
+          onClose={() => setIsRegistrationModalOpen(false)}
+          onRegistrationComplete={handleRegistrationComplete}
+        />
+
+        <ExchangeNotification
+          isOpen={isNotificationOpen}
+          onClose={closeNotification}
+          type="info"
+          title="Ваше предложение создано"
+          message="Теперь вы можете предложить обмен"
+          buttonText="Готово"
+        />
       </div>
-
-    {/* Модалка регистрации */}
-      <RegistrationModal
-        isOpen={isRegistrationModalOpen}
-        onClose={() => setIsRegistrationModalOpen(false)}
-        onRegistrationComplete={handleRegistrationComplete}
-      />
-
-      <ExchangeNotification
-        isOpen={isNotificationOpen}
-        onClose={closeNotification}
-        onNavigateToExchange={handleNotificationButtonClick}
-        type="info"
-        title="Ваше предложение создано"
-        message="Теперь вы можете предложить обмен"
-        buttonText="Готово"
-      />
     </>
-  )
+  );
 };
