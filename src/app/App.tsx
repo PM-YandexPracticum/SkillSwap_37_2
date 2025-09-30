@@ -115,7 +115,7 @@ export const App: React.FC = () => {
         <Route element={<Layout />}>
           {/*То, что есть*/}
           <Route path="skills" element={<CatalogContent />} />
-          <Route path="auth/login" element={<LoginContent />} />
+          <Route path="login" element={<LoginContent />} />
           <Route path="auth/register" element={<RegisterContent />} />
           <Route path="skill/new" element={<SkillFormContent />} />
           <Route path="skills/:id" element={<OfferPage />} />

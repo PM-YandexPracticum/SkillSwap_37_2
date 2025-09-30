@@ -1,58 +1,82 @@
 // src\widgets\header\Header.tsx
 
 import { FC, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
 import { Button } from "../../shared/ui/button/Button";
 import { NotificationWidget } from "../notification-widget/NotificationWidget";
 import { Icon } from "../../shared/ui/icon/Icon";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getImageUrl } from "../../shared/lib/helpers";
 import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
 import { Popup } from "../popup/Popup";
 import { SkillMenu } from "../SkillMenu/SkillMenu";
 import { getCurrentUser, setUser } from "../../services/user/user-slice";
 import { ProfilePopup } from "../profile-popup/ProfilePopup";
-import { getPlainUsers } from "../../services/users/users-slice";
-import { useDispatch } from "@store";
+import { LoginNotification } from "../../shared/ui/notification/LoginNotification";
+import { TUser } from "../../api/types";
 
-// type PopupType = "skills" | "profile" | "notifications" | null;
 export const POPUP_TYPES = {
-  SKILLS: 'skills',
-  PROFILE: 'profile',
-  NOTIFICATIONS: 'notifications',
+  SKILLS: "skills",
+  PROFILE: "profile",
+  NOTIFICATIONS: "notifications",
 } as const;
 
-export type PopupType = typeof POPUP_TYPES[keyof typeof POPUP_TYPES] | null;
+export type PopupType =
+  | typeof POPUP_TYPES[keyof typeof POPUP_TYPES]
+  | null;
 
 export const Header: FC = () => {
-  
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
-  
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+
   const currentUser = useSelector(getCurrentUser);
-  const plainUsers = useSelector(getPlainUsers);
 
   const togglePopup = (popup: PopupType) => {
-    setOpenPopup(prev => (prev === popup ? null : popup));
+    setOpenPopup((prev) => (prev === popup ? null : popup));
   };
-  
+
   const closePopup = () => setOpenPopup(null);
 
-  const handleLogin = () => {
-    if (plainUsers.length === 0) {
-      console.warn('Нет загруженных пользователей для входа');
-      return;
-    }
-    const randomIndex = Math.floor(Math.random() * plainUsers.length);
-    const randomUser = plainUsers[randomIndex];
-    dispatch(setUser(randomUser));
+  const handleLoginClick = () => {
+    setLoginModalOpen(true);
+  };
+
+  const handleLoginConfirm = () => {
+    // тестовый пользователь, полностью соответствует TUser
+    const testUser: TUser = {
+      id: 1,
+      name: "Test User",
+      gender: "unspecified",
+      photo: "avatar.png",
+      from: "Test City",
+      skill: "Test Skill",
+      need_subcat: [],
+      cat_text: "Test Category",
+      sub_text: "Test Subcategory",
+      categoryId: 0,
+      subCategoryId: 0,
+      description: "Тестовое описание",
+      images: [],
+      birthdate: "2000-01-01",
+      email: "test@example.com",
+      created_at: new Date().toISOString(),
+      about: "Тестовый пользователь",
+      likedByMe: false,
+      random: Math.random(),
+    };
+
+    dispatch(setUser(testUser));
+    setLoginModalOpen(false);
+    navigate("/"); // редирект на главную
   };
 
   const handleRegistration = () => {
-    window.location.href = '/registration/step1'
-  }
+    navigate("/registration/step1");
+  };
 
   return (
     <header className={styles.header}>
@@ -63,15 +87,22 @@ export const Header: FC = () => {
       <nav>
         <ul className={styles.navList}>
           <li className={styles.li}>
-            <Link to="/about" className={styles.link} onClick={() => console.log('Click on About link')}>
+            <Link to="/about" className={styles.link}>
               О проекте
             </Link>
           </li>
           <li className={styles.li}>
-            <button className={styles.link} onClick={() => togglePopup(POPUP_TYPES.SKILLS)}>
+            <button
+              className={styles.link}
+              onClick={() => togglePopup(POPUP_TYPES.SKILLS)}
+            >
               Все навыки
               <Icon
-                name={isOpenPopup === POPUP_TYPES.SKILLS ? 'chevronUp' : 'chevronDown'}
+                name={
+                  isOpenPopup === POPUP_TYPES.SKILLS
+                    ? "chevronUp"
+                    : "chevronDown"
+                }
                 size="s"
                 className={styles.iconChevron}
               />
@@ -80,16 +111,13 @@ export const Header: FC = () => {
         </ul>
       </nav>
 
-      {/* Используем компонент SearchBar с разной шириной */}
       <SearchBar width={currentUser ? 648 : 527} />
 
       <div className={styles.rightSection}>
-        {/* Иконка темы всегда видима */}
         <button className={styles.moonButton}>
           <Icon name="moon" size="s" />
         </button>
 
-        {/* Иконки уведомлений и лайков только для авторизованных */}
         {currentUser && (
           <>
             <button
@@ -106,7 +134,6 @@ export const Header: FC = () => {
           </>
         )}
 
-        {/* Блок пользователя или кнопки входа */}
         {currentUser ? (
           <div
             className={styles.userAuthWrapper}
@@ -122,7 +149,9 @@ export const Header: FC = () => {
           </div>
         ) : (
           <div className={styles.buttonsWrapper}>
-            <Button size={92} onClick={handleLogin}>Войти</Button>
+            <Button size={92} onClick={handleLoginClick}>
+              Войти
+            </Button>
             <Button size={208} onClick={handleRegistration} colored>
               Зарегистрироваться
             </Button>
@@ -130,24 +159,30 @@ export const Header: FC = () => {
         )}
       </div>
 
-
       {/* Попапы */}
-      {currentUser ? (
-        <Popup isOpen={isOpenPopup === POPUP_TYPES.NOTIFICATIONS} onClose={closePopup}>
-          <NotificationWidget/>
+      {currentUser && (
+        <Popup
+          isOpen={isOpenPopup === POPUP_TYPES.NOTIFICATIONS}
+          onClose={closePopup}
+        >
+          <NotificationWidget />
         </Popup>
-      ) : null}
+      )}
 
       <Popup isOpen={isOpenPopup === POPUP_TYPES.SKILLS} onClose={closePopup}>
         <SkillMenu />
       </Popup>
-      
 
       <Popup isOpen={isOpenPopup === POPUP_TYPES.PROFILE} onClose={closePopup}>
         <ProfilePopup onClose={closePopup} />
       </Popup>
 
-
+      {/* Модальное окно логина */}
+      <LoginNotification
+        isOpen={isLoginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
+        onLogin={handleLoginConfirm}
+      />
     </header>
   );
 };
