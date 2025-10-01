@@ -11,10 +11,11 @@ export const applySearchQuery = (query: string) =>
     const q = (query ?? '').trim();
     const { categories, subcategories } = state.categories;
     const { gender, places } = state.filters;
+    const isShort = q.length < 3;
 
     dispatch(setQuery(q));
 
-    const ids = q ? subcategoryIdsByQuery(q, categories, subcategories) : [];
+    const ids = isShort ? [] : subcategoryIdsByQuery(q, categories, subcategories);
     dispatch(setSubcategories(ids));
 
     // По умолчанию ищем «Могу научить», чтобы искать по skill/subCategoryId
@@ -27,6 +28,6 @@ export const applySearchQuery = (query: string) =>
       places,
       skillType: getState().filters.skillType,
       subcategories: ids,
-      q
+      q: isShort ? '' : q
     }));
   };

@@ -27,7 +27,7 @@ export const isFiltersEmpty = (state: FiltersState): boolean => {
     state.gender === GENDERS.UNSPECIFIED &&
     state.places.length === 0 &&
     state.subcategories.length === 0 &&
-    state.q.trim() === ''
+    state.q.trim().length < 3
   );
 };
 
