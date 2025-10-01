@@ -15,6 +15,7 @@ type MessageType = typeof MESSAGE_TYPES[keyof typeof MESSAGE_TYPES]
 type FormMessageProps = {
   message?: string;
   type?: MessageType;
+  id?: string;
 };
 
 /**
@@ -26,7 +27,7 @@ type FormMessageProps = {
 
 
 // export const FormMessage = memo(({ message, type = 'error' }: FormMessageProps) => {
-export const FormMessage = memo(function FormMessage({ message, type = 'error' }: FormMessageProps) {
+export const FormMessage = memo(function FormMessage({ message, type = 'error', id }: FormMessageProps) {
   if (!message || message.trim() === '') return null;
   
   return (
@@ -38,6 +39,8 @@ export const FormMessage = memo(function FormMessage({ message, type = 'error' }
       )}
       role={type === 'error' ? 'alert' : 'status'}
       aria-live={type === 'error' ? 'assertive' : 'polite'}
+      aria-atomic="true"
+      id={id}
     >
       {message}
     </p>
