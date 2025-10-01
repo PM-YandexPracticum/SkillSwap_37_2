@@ -1,13 +1,12 @@
 // src\widgets\header\Header.tsx
 
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
 import { Button } from "../../shared/ui/button/Button";
 import { NotificationWidget } from "../notification-widget/NotificationWidget";
 import { Icon } from "../../shared/ui/icon/Icon";
-import { useSelector } from "react-redux";
 import { getImageUrl } from "../../shared/lib/helpers";
 import { SearchBar } from "../../shared/ui/search-bar/SearchBar";
 import { Popup } from "../popup/Popup";
@@ -15,7 +14,9 @@ import { SkillMenu } from "../SkillMenu/SkillMenu";
 import { getCurrentUser, setUser } from "../../services/user/user-slice";
 import { ProfilePopup } from "../profile-popup/ProfilePopup";
 import { getPlainUsers } from "../../services/users/users-slice";
-import { useDispatch } from "@store";
+import { useDispatch, useSelector } from "@store";
+import { applySearchQuery } from "../../services/filters/actions";
+import { RootState } from "@store";
 
 // type PopupType = "skills" | "profile" | "notifications" | null;
 export const POPUP_TYPES = {
@@ -26,6 +27,15 @@ export const POPUP_TYPES = {
 
 export type PopupType = typeof POPUP_TYPES[keyof typeof POPUP_TYPES] | null;
 
+function useDebounced<T>(value: T, ms = 300) {
+  const [v, setV] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setV(value), ms);
+    return () => clearTimeout(t);
+  }, [value, ms]);
+  return v;
+}
+
 export const Header: FC = () => {
   
   const dispatch = useDispatch();
@@ -33,6 +43,14 @@ export const Header: FC = () => {
   
   const currentUser = useSelector(getCurrentUser);
   const plainUsers = useSelector(getPlainUsers);
+
+  const currentQuery = useSelector((s: RootState) => s.filters.q);
+  const [query, setQuery] = useState(currentQuery || '');
+  const debounced = useDebounced(query, 300);
+
+  useEffect(() => {
+    dispatch(applySearchQuery(debounced));
+  }, [debounced, dispatch]);
 
   const togglePopup = (popup: PopupType) => {
     setOpenPopup(prev => (prev === popup ? null : popup));
@@ -81,7 +99,7 @@ export const Header: FC = () => {
       </nav>
 
       {/* Используем компонент SearchBar с разной шириной */}
-      <SearchBar width={currentUser ? 648 : 527} />
+      <SearchBar width={currentUser ? 648 : 527} value={query} onChange={setQuery} />
 
       <div className={styles.rightSection}>
         {/* Иконка темы всегда видима */}
