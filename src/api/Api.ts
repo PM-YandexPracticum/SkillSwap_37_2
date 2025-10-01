@@ -84,7 +84,7 @@ export const getFilteredUsersApi = async ({
 
     // Текстовый поиск по названию навыка или подкатегории
     const qn = (q ?? "").trim().toLowerCase();
-    const hasQ = qn.length > 0;
+    const hasQ = qn.length >= 3;
     const hasSubcats = Array.isArray(subcategories) && subcategories.length > 0;
 
     const matchSkill = (u: TUser) =>
