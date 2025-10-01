@@ -96,12 +96,9 @@ export const App: React.FC = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        {/* Главная БЕЗ Layout, тк есть внутри фотер и хедер */}
-        <Route index element={<HomePage />} />
-
-        {/* Все прочие — под Layout */}
         <Route element={<Layout />}>
           {/*То, что есть*/}
+          <Route index element={<HomePage />} />
           <Route path="skills" element={<CatalogContent />} />
           <Route path="auth/login" element={<LoginContent />} />
           <Route path="auth/register" element={<RegisterContent />} />

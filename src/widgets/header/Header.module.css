@@ -13,8 +13,8 @@
 
 .navList {
   display: flex;
-  flex-direction: row;
-  column-gap: 24px;
+  width: 100%;
+  column-gap: 1.5em;
 }
 
 .li {
@@ -27,6 +27,11 @@
   color: #253017;
   background-color: transparent;
   letter-spacing: 0.0224em;
+}
+
+.dropButton {
+  display: flex;
+  align-items: center;
 }
 
 li:has(img) {

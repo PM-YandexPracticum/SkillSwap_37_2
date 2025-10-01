@@ -1,5 +1,7 @@
 .searchWrapper {
   position: relative;
+  max-width: 648px;
+  flex-grow: 1;
 }
 
 .iconSearch {
@@ -13,6 +15,7 @@
 }
 
 .search {
+  display: block;
   width: 100%;
   height: 48px;
   padding-left: 44px;
