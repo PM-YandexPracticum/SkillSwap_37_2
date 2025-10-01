@@ -93,26 +93,26 @@ export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue }) => {
   }));
 
   // Валидация формы
-  const validateForm = () => {
-    const newErrors = {
-      skillName: skillName.trim() ? "" : "Введите название навыка",
-      selectedCategory: selectedCategory ? "" : "Выберите категорию",
-      selectedSubCategory: selectedSubCategory ? "" : "Выберите подкатегорию",
-      description: description.trim() ? "" : "Введите описание",
-    };
-    setErrors(newErrors);
-    return Object.values(newErrors).every((err) => err === "");
+   const isFormValid = (): boolean => {
+    return (
+      skillName.trim() !== "" &&
+      selectedCategory !== "" &&
+      selectedSubCategory !== ""
+      // description - необязательное поле, не проверяем
+    );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) onContinue();
+    if (isFormValid()) {
+      onContinue();
+    }
   };
 
   return (
     <div className={styles.wrapper}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <fieldset className={styles.inputGroup}>
+        <div className={styles.inputGroup}>
           <Input
             label="Название навыка"
             placeholder="Введите название вашего навыка"
@@ -154,16 +154,22 @@ export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue }) => {
             showEditIcon={false}
             status={errors.description ? "error" : "default"}
             errorMessage={errors.description}
+            required={false}
+            className={styles.customTextarea}
           />
 
           <DragDrop />
-        </fieldset>
+        </div>
 
         <div className={styles.buttonGroup}>
           <Button type="button" onClick={onBack} className={styles.backButton}>
             Назад
           </Button>
-          <Button colored type="submit">
+          <Button 
+          colored 
+          type="submit"
+          disabled={!isFormValid()} 
+          >
             Продолжить
           </Button>
         </div>

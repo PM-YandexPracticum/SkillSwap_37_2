@@ -30,6 +30,7 @@ interface RegisterStep2Props {
   initialData?: Partial<RegisterStep2Data>;
 }
 
+
 export const RegisterStep2: React.FC<RegisterStep2Props> = ({
   onBack,
   onContinue,
@@ -49,6 +50,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
   const [subcategories, setSubcategories] = useState<TSubcategory[]>([]);
   const [cities, setCities] = useState<TPlace[]>([]);
   const [loading, setLoading] = useState(true);
+  const [nameError, setNameError] = useState(""); // Упрощаем - только для имени
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +83,11 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
       ...prev,
       [field]: value,
     }));
+
+    // Очищаем ошибку имени при вводе
+    if (field === "name" && nameError) {
+      setNameError("");
+    }
   };
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,24 +101,43 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isFormValid()) {
-      onContinue(formData);
-    }
-  };
+  // Простая проверка валидности формы
+  const isFormValid = 
+    formData.name.trim() !== "" &&
+    formData.birthdate !== null &&
+    formData.city.trim() !== "" &&
+    formData.selectedCategories.length > 0 &&
+    formData.selectedSubcategories.length > 0;
 
-  const isFormValid = (): boolean => {
-    return (
-      formData.avatar?.trim() !== "" && // теперь аватар обязателен
-      formData.name.trim() !== "" &&
-      formData.birthdate !== null &&
-      formData.gender.trim() !== "" &&
-      formData.city.trim() !== "" &&
-      formData.selectedCategories.length > 0 &&
-      formData.selectedSubcategories.length > 0
-    );
-  };
+    // ДОБАВИТЬ отладку
+console.log("Form validation:", {
+  name: formData.name,
+  birthdate: formData.birthdate,
+  city: formData.city,
+  categories: formData.selectedCategories.length,
+  subcategories: formData.selectedSubcategories.length,
+  isValid: isFormValid});
+
+  const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  console.log("Submit clicked, form valid:", isFormValid);
+  
+  // Проверяем только имя для показа ошибки
+  if (!formData.name.trim()) {
+    setNameError("Укажите свое имя");
+    console.log("Name is empty, showing error");
+    return;
+  }
+
+  // Проверяем остальные поля
+  if (!isFormValid) {
+    console.log("Form is not valid, cannot continue");
+    return;
+  }
+
+  console.log("Form is valid, continuing to step 3");
+  onContinue(formData);
+};
 
   if (loading) {
     return <div className={styles.loading}>Загрузка...</div>;
@@ -132,32 +158,34 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
       <div className={styles.content}>
         {/* Аватар */}
         <div className={styles.avatarSection}>
-          <div className={styles.avatarContainer}>
-            {formData.avatar ? (
-              <img
-                src={formData.avatar}
-                alt="Аватар"
-                className={styles.avatar}
-              />
-            ) : (
-              <Icon
-                name="userCircle"
-                size={54}
-                strokeWidth={0.5}
-                className={styles.avatarIcon}
-              />
-            )}
-            <label htmlFor="avatar-upload" className={styles.addButton}>
-              <Icon name="add" size={16} className={styles.addIcon} />
-              <input
-                id="avatar-upload"
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarChange}
-                style={{ display: "none" }}
-              />
-            </label>
-          </div>
+          <label htmlFor="avatar-upload" className={styles.avatarUploadLabel}>
+            <div className={styles.avatarContainer}>
+              {formData.avatar ? (
+                <img
+                  src={formData.avatar}
+                  alt="Аватар"
+                  className={styles.avatar}
+                />
+              ) : (
+                <Icon
+                  name="userCircle"
+                  size={54}
+                  strokeWidth={0.5}
+                  className={styles.avatarIcon}
+                />
+              )}
+              <div className={styles.addButton}>
+                <Icon name="add" size={16} className={styles.addIcon} />
+              </div>
+            </div>
+            <input
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              style={{ display: "none" }}
+            />
+          </label>
         </div>
 
         {/* Форма */}
@@ -168,6 +196,8 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             onChange={(value) => handleInputChange("name", value)}
             placeholder="Введите ваше имя"
             required={true}
+            status={nameError ? "error" : "default"}
+            errorMessage={nameError}
           />
 
           <div className={styles.row}>
@@ -203,9 +233,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
           <Dropdown
             label="Категория навыка, которому хотите научиться"
             value={formData.selectedCategories}
-            onChange={(value) =>
-              handleInputChange("selectedCategories", value)
-            }
+            onChange={(value) => handleInputChange("selectedCategories", value)}
             options={categoryOptions}
             multiple={true}
             placeholder="Выберите категории"
@@ -239,11 +267,12 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             >
               Назад
             </Button>
+  
             <Button
               type="submit"
               size={208}
               colored={true}
-              disabled={!isFormValid()} // кнопка неактивна, пока не заполнены все поля включая аватар
+              disabled={!isFormValid}
               className={styles.continueButton}
             >
               Продолжить

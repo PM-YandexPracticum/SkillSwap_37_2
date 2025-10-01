@@ -1,10 +1,10 @@
 .wrapper {
   max-width: 556px;
-  max-height: 692px;
   padding: 50px 60px;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
+  background: #ffffff;
+  border-radius: 12px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .form {
@@ -20,6 +20,12 @@
   border: none;
   flex: 1; /* занимает оставшееся место */
   overflow-y: auto; /* скролл при переполнении */
+}
+
+.customTextarea {
+  height: 96px !important;
+  min-height: 96px !important;
+  resize: vertical;
 }
 
 .buttonGroup {
