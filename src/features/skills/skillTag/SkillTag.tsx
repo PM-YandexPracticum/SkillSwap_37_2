@@ -1,6 +1,6 @@
 // SkillTag.tsx
-import { skillColors } from './skillColors';
 import { SkillTagUI } from '../../../shared/ui/skillTag/SkillTagUI';
+import { RootState, useSelector } from '@store';
 
 type SkillTagProps = {
   skill?: string;
@@ -13,6 +13,7 @@ type SkillTagProps = {
 //  Поэтому указываем либо проп-скилл, либо проп-rest
 
 export const SkillTag = ({ skill, rest, className }: SkillTagProps) => {
+  const subcategories = useSelector((s: RootState) => s.categories.subcategories);
   if (!skill && rest) {
     return (
       <SkillTagUI
@@ -23,11 +24,13 @@ export const SkillTag = ({ skill, rest, className }: SkillTagProps) => {
   }
 
   if (skill) {
+    const subcat = subcategories.find((s) => s.name === skill);
     return (
       <SkillTagUI
         className={className}
         label={skill}
-        backgroundColor={skillColors[skill] ?? "#e8ecf7"}
+        backgroundColor={subcat?.color ?? "#e8ecf7"}
+        // backgroundColor={skillColors[skill] ?? "#e8ecf7"}
       />
     );
   }

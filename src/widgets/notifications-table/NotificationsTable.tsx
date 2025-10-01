@@ -1,5 +1,9 @@
 // src\widgets\notifications-table\NotificationsTable.tsx
 
+
+// Компонент для отладки предложений - просто таблица
+
+
 import { useEffect, useState } from 'react';
 import { TNotificationEvent } from '@api/types';
 import { getNotificationsApi } from '@api/Api';

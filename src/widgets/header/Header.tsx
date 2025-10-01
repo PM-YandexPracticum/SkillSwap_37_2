@@ -13,13 +13,13 @@ import { Popup } from "../popup/Popup";
 import { SkillMenu } from "../SkillMenu/SkillMenu";
 import { getCurrentUser, setUser } from "../../services/user/user-slice";
 import { ProfilePopup } from "../profile-popup/ProfilePopup";
-import { getPlainUsers } from "../../services/users/users-slice";
 import { useDispatch, useSelector } from "@store";
-import { applySearchQuery } from "../../services/filters/actions";
 import { RootState } from "@store";
 import clsx from "clsx";
+import { getRandomUsers } from "../../services/randomUsers/random-users-slice";
+import { setTextForSearch } from "../../services/filters/filters-slice";
+import { reloadFilteredUsers } from "../../services/filteredUsers/actions";
 
-// type PopupType = "skills" | "profile" | "notifications" | null;
 export const POPUP_TYPES = {
   SKILLS: 'skills',
   PROFILE: 'profile',
@@ -43,15 +43,17 @@ export const Header: FC = () => {
   const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
   
   const currentUser = useSelector(getCurrentUser);
-  const plainUsers = useSelector(getPlainUsers);
+  const randomUsers = useSelector(getRandomUsers);
 
-  const currentQuery = useSelector((s: RootState) => s.filters.q);
-  const [query, setQuery] = useState(currentQuery || '');
-  const debounced = useDebounced(query, 300);
+  const currentTextForSearch = useSelector((rs: RootState) => rs.filters.text_for_search);
+  const [query, setQuery] = useState(currentTextForSearch || '');
+
+  const debounced = useDebounced(query, 1000);
 
   useEffect(() => {
-    dispatch(applySearchQuery(debounced));
-  }, [debounced, dispatch]);
+    dispatch(setTextForSearch(debounced));
+    reloadFilteredUsers(1);
+  }, [debounced]);
 
   const togglePopup = (popup: PopupType) => {
     setOpenPopup(prev => (prev === popup ? null : popup));
@@ -60,12 +62,12 @@ export const Header: FC = () => {
   const closePopup = () => setOpenPopup(null);
 
   const handleLogin = () => {
-    if (plainUsers.length === 0) {
+    if (randomUsers.length === 0) {
       console.warn('Нет загруженных пользователей для входа');
       return;
     }
-    const randomIndex = Math.floor(Math.random() * plainUsers.length);
-    const randomUser = plainUsers[randomIndex];
+    const randomIndex = Math.floor(Math.random() * randomUsers.length);
+    const randomUser = randomUsers[randomIndex];
     dispatch(setUser(randomUser));
   };
 

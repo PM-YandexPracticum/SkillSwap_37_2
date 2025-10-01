@@ -9,7 +9,7 @@ type FiltersState = {
   gender: TGender;
   places: string[];
   subcategories: number[];
-  q: string;
+  text_for_search: string;
 };
 
 const getInitialState = (): FiltersState => ({
@@ -17,7 +17,7 @@ const getInitialState = (): FiltersState => ({
   gender: GENDERS.UNSPECIFIED,
   places: [],
   subcategories: [],
-  q: ''
+  text_for_search: ''
 });
 
 const initialState = getInitialState();
@@ -27,7 +27,7 @@ export const isFiltersEmpty = (state: FiltersState): boolean => {
     state.gender === GENDERS.UNSPECIFIED &&
     state.places.length === 0 &&
     state.subcategories.length === 0 &&
-    state.q.trim() === ''
+    state.text_for_search.trim() === ''
   );
 };
 
@@ -38,21 +38,14 @@ export const filtersSlice = createSlice({
     setSkillType: (state, action: PayloadAction<TSkillType>) => {
       state.skillType = action.payload;
     },
-    // toggleCategory: (state, action: PayloadAction<string>) => {
-    //   if (state.categories.includes(action.payload)) {
-    //     state.categories = state.categories.filter(c => c !== action.payload);
-    //   } else {
-    //     state.categories.push(action.payload);
-    //   }
-    // },
     setGender: (state, action: PayloadAction<TGender>) => {
       state.gender = action.payload;
     },
     setPlaces: (state, action: PayloadAction<string[]>) => {
       state.places = action.payload;
     },
-    setQuery: (state, action: PayloadAction<string>) => {
-      state.q = action.payload;
+    setTextForSearch: (state, action: PayloadAction<string>) => {
+      state.text_for_search = action.payload;
     },
     setSubcategories: (state, action: PayloadAction<number[]>) => {
       state.subcategories = action.payload;
@@ -61,5 +54,12 @@ export const filtersSlice = createSlice({
   },
 });
 
-export const { setSkillType, setGender, setPlaces, setQuery, resetFilters, setSubcategories } = filtersSlice.actions;
+export const { 
+  setSkillType,
+  setGender,
+  setPlaces,
+  setTextForSearch,
+  resetFilters,
+  setSubcategories
+} = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;

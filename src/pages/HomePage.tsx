@@ -1,7 +1,7 @@
 // src\pages\HomePage.tsx
 
 // External libs
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 // Store
@@ -11,7 +11,7 @@ import { RootState, useDispatch } from '@store';
 import { getPopularUsersThunk } from '../services/popularUsers/actions';
 import { getCreatedAtUsersThunk } from '../services/createdAtUsers/actions';
 import { getRandomUsersThunk } from '../services/randomUsers/actions';
-import { getFilteredUsersThunk } from '../services/filteredUsers/actions';
+import { reloadFilteredUsers } from '../services/filteredUsers/actions';
 import {
   isFiltersEmpty,
   resetFilters,
@@ -33,7 +33,7 @@ import { FiltersContainer } from '../features/filters/FiltersContainer';
 import { ActiveFiltersBar } from '../features/filters/ActiveFiltersBar';
 
 // Widgets
-import { Footer, GridList, Header, NotificationsTable } from '@widgets';
+import { GridList } from '@widgets';
 import { CardShowcase, SHOWCASE_TITLES } from '../widgets/cardShowcase/CardShowcase';
 
 // Shared
@@ -41,7 +41,6 @@ import { Icon } from '../shared/ui/icon/Icon';
 
 // Styles
 import styles from './HomePage.module.css';
-import { getUsersThunk } from '../services/users/actions';
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -49,19 +48,6 @@ export const HomePage = () => {
   // -------------------- State одной кнопки --------------------
   const [showAllCategory, setShowAllCategory] = useState<'popular' | 'createdAt' | 'random' | null>(null);
 
-  // *********************************************************************
-  // ЭТИ СТРОКИ ВЛИЯЮТ ТОЛЬКО НА ЧИТТЕРСКИЙ ВХОД ПО КНОПКЕ "ВОЙТИ"
-  // *********************************************************************
-  const { users: plainUsers, isLoading: isUsersLoading, hasMore: hasMoreUsers, page: usersPage } =
-    useSelector((state: RootState) => state.users);
-
-  const handleLoadMorePlainUsers = () => {
-    if (!isUsersLoading && hasMoreUsers) {
-      dispatch(getUsersThunk(usersPage + 1));
-    }
-  };
-
-  // *************************************************
   // популярные пользователи
   const { users: popularUsers, isLoading: isPopularLoading, hasMore: hasMorePopular, page: popularPage } =
     useSelector((state: RootState) => state.popularUsers);
@@ -74,8 +60,12 @@ export const HomePage = () => {
 
   // *************************************************
   // по created_at
-  const { users: createdAtUsers, isLoading: isCreatedAtLoading, hasMore: hasMoreCreatedAt, page: createdAtPage } =
-    useSelector((state: RootState) => state.createdAtUsers);
+  const { 
+    users: createdAtUsers,
+    isLoading: isCreatedAtLoading,
+    hasMore: hasMoreCreatedAt,
+    page: createdAtPage 
+  } = useSelector((state: RootState) => state.createdAtUsers);
 
   const handleLoadMoreCreatedAtUsers = () => {
     if (!isCreatedAtLoading && hasMoreCreatedAt) {
@@ -85,8 +75,12 @@ export const HomePage = () => {
 
   // *************************************************
   // случайные пользователи
-  const { users: randomUsers, isLoading: isRandomLoading, hasMore: hasMoreRandom, page: randomPage } =
-    useSelector((state: RootState) => state.randomUsers);
+  const {
+    users: randomUsers,
+    isLoading: isRandomLoading,
+    hasMore: hasMoreRandom,
+    page: randomPage 
+  } = useSelector((state: RootState) => state.randomUsers);
 
   const handleLoadMoreRandomUsers = () => {
     if (!isRandomLoading && hasMoreRandom) {
@@ -102,18 +96,16 @@ export const HomePage = () => {
   const selectedSubcategories = useSelector((state: RootState) => state.filters.subcategories);
   const selectedSkillType = useSelector((state: RootState) => state.filters.skillType);
 
-  const { users: filteredUsers, isLoading: isFilteredLoading, hasMore: hasMoreFiltered, page: filteredPage } =
-    useSelector((state: RootState) => state.filteredUsers);
+  const { 
+    users: filteredUsers,
+    isLoading: isFilteredLoading,
+    hasMore: hasMoreFiltered,
+    page: filteredPage 
+  } = useSelector((state: RootState) => state.filteredUsers);
 
   const handleLoadMoreFilteredUsers = () => {
     if (!isFilteredLoading && hasMoreFiltered) {
-      dispatch(getFilteredUsersThunk({
-        page: filteredPage + 1,
-        gender: selectedGender,
-        places: selectedPlaces,
-        skillType: selectedSkillType,
-        subcategories: selectedSubcategories,
-      }));
+      reloadFilteredUsers(filteredPage + 1);
     }
   };
 
@@ -127,50 +119,22 @@ export const HomePage = () => {
       ? selectedSubcategories.filter(x => x !== id)
       : [...selectedSubcategories, id];
     dispatch(setSubcategories(updated));
-    dispatch(resetFilteredUsers());
-    dispatch(getFilteredUsersThunk({
-      page: 1,
-      gender: selectedGender,
-      places: selectedPlaces,
-      skillType: selectedSkillType,
-      subcategories: updated,
-    }));
+    reloadFilteredUsers();
   };
 
   const handleGenderChange = (gender: TGender) => {
     dispatch(setGender(gender));
-    dispatch(resetFilteredUsers());
-    dispatch(getFilteredUsersThunk({
-      page: 1,
-      gender,
-      places: selectedPlaces,
-      skillType: selectedSkillType,
-      subcategories: selectedSubcategories,
-    }));
+    reloadFilteredUsers();
   };
 
   const handlePlacesChange = (places: string[]) => {
     dispatch(setPlaces(places));
-    dispatch(resetFilteredUsers());
-    dispatch(getFilteredUsersThunk({
-      page: 1,
-      gender: selectedGender,
-      places,
-      skillType: selectedSkillType,
-      subcategories: selectedSubcategories,
-    }));
+    reloadFilteredUsers();
   };
 
   const handleSkillTypeChange = (newType: TSkillType) => {
     dispatch(setSkillType(newType));
-    dispatch(resetFilteredUsers());
-    dispatch(getFilteredUsersThunk({
-      page: 1,
-      gender: selectedGender,
-      places: selectedPlaces,
-      skillType: newType,
-      subcategories: selectedSubcategories,
-    }));
+    reloadFilteredUsers();
   };
 
   const handleResetAll = () => {
@@ -292,14 +256,6 @@ export const HomePage = () => {
           )}
         </div>
       </div>
-
-      <h2>NotificationsTable</h2>
-      <div style={{ marginBottom: '300px' }}>
-        <NotificationsTable />
-      </div>
-
     </div>
-
-
   );
 };

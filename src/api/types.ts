@@ -39,7 +39,7 @@ export type TGetFilteredUsersArgs = {
   places: string[];
   skillType?: TSkillType;
   subcategories?: number[]; 
-  q?: string;
+  text_for_search?: string;
 };
 
 export type TPlace = {

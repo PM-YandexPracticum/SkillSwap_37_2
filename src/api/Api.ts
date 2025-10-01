@@ -34,7 +34,7 @@ export const getFilteredUsersApi = async ({
   places = [],
   skillType,
   subcategories = [],
-  q,
+  text_for_search,
 }: TGetFilteredUsersArgs): Promise<TResponseUsers> => {
   try {
     const response = await fetch(USERS_JSON_FILE);
@@ -82,31 +82,11 @@ export const getFilteredUsersApi = async ({
       }
     }
 
-    // Текстовый поиск по названию навыка или подкатегории
-    const qn = (q ?? "").trim().toLowerCase();
-    const hasQ = qn.length > 0;
-    const hasSubcats = Array.isArray(subcategories) && subcategories.length > 0;
-
-    const matchSkill = (u: TUser) =>
-      ((u.skill ?? "") + "").toLowerCase().includes(qn);
-
-    const matchSubcategoryId = (u: TUser) =>
-      hasSubcats ? subcategories.includes((u as any).subCategoryId) : false;
-
-    const matchNeedSubcat = (u: TUser) =>
-     hasSubcats ? (u.need_subcat ?? []).some((id) => subcategories.includes(id)) : false;
-
-    if (hasQ && hasSubcats) {
-      // OR: skill ИЛИ subCategoryId ИЛИ need_subcat
-      filtered = filtered.filter(
-        (u: TUser) => matchSkill(u) || matchSubcategoryId(u) || matchNeedSubcat(u)
+    if (text_for_search && text_for_search.trim() !== '') {
+      const q = text_for_search.trim().toLowerCase();
+      filtered = filtered.filter((u: TUser) =>
+        u.skill.toLowerCase().includes(q)
       );
-    } else if (hasQ) {
-      filtered = filtered.filter(
-        (u: TUser) => matchSkill(u)
-      );
-    } else if (hasSubcats) {
-      filtered = filtered.filter((u: TUser) => matchSubcategoryId(u) || matchNeedSubcat(u));
     }
 
     // пагинация
