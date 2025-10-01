@@ -17,6 +17,7 @@ import { getPlainUsers } from "../../services/users/users-slice";
 import { useDispatch, useSelector } from "@store";
 import { applySearchQuery } from "../../services/filters/actions";
 import { RootState } from "@store";
+import clsx from "clsx";
 
 // type PopupType = "skills" | "profile" | "notifications" | null;
 export const POPUP_TYPES = {
@@ -73,7 +74,10 @@ export const Header: FC = () => {
   }
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header}
+      style={currentUser ? {maxHeight: '116px', padding: '42px 36px 26px'}
+                         : {maxHeight: '104px', padding: '36px 36px 20px'}
+    }>
       <Link to="/">
         <Logo />
       </Link>
@@ -86,7 +90,7 @@ export const Header: FC = () => {
             </Link>
           </li>
           <li className={styles.li}>
-            <button className={styles.link} onClick={() => togglePopup(POPUP_TYPES.SKILLS)}>
+            <button className={clsx(styles.link, styles.dropButton)} onClick={() => togglePopup(POPUP_TYPES.SKILLS)}>
               Все навыки
               <Icon
                 name={isOpenPopup === POPUP_TYPES.SKILLS ? 'chevronUp' : 'chevronDown'}
@@ -99,17 +103,24 @@ export const Header: FC = () => {
       </nav>
 
       {/* Используем компонент SearchBar с разной шириной */}
-      <SearchBar width={currentUser ? 648 : 527} value={query} onChange={setQuery} />
+      <SearchBar
+        maxWidth={currentUser ? 648 : 527}
+        value={query} onChange={setQuery}
+      />
+
+      {!currentUser && (
+        <button className={styles.moonButton}>
+        <Icon name="moon" size="s" />
+        </button>
+      )}
 
       <div className={styles.rightSection}>
-        {/* Иконка темы всегда видима */}
-        <button className={styles.moonButton}>
-          <Icon name="moon" size="s" />
-        </button>
-
         {/* Иконки уведомлений и лайков только для авторизованных */}
         {currentUser && (
           <>
+            <button className={styles.moonButton}>
+              <Icon name="moon" size="s" />
+            </button>
             <button
               className={styles.notificationButton}
               onClick={() => togglePopup(POPUP_TYPES.NOTIFICATIONS)}
@@ -148,7 +159,6 @@ export const Header: FC = () => {
         )}
       </div>
 
-
       {/* Попапы */}
       {currentUser ? (
         <Popup isOpen={isOpenPopup === POPUP_TYPES.NOTIFICATIONS} onClose={closePopup}>
@@ -159,12 +169,11 @@ export const Header: FC = () => {
       <Popup isOpen={isOpenPopup === POPUP_TYPES.SKILLS} onClose={closePopup}>
         <SkillMenu />
       </Popup>
-      
+    
 
       <Popup isOpen={isOpenPopup === POPUP_TYPES.PROFILE} onClose={closePopup}>
         <ProfilePopup onClose={closePopup} />
       </Popup>
-
 
     </header>
   );

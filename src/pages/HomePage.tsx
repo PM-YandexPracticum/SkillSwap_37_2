@@ -233,7 +233,6 @@ export const HomePage = () => {
 
   return (
     <div className={styles.homePageWrapper}>
-      <Header />
 
       <div className={styles.filterSectionWrapper}>
         <FiltersContainer
@@ -337,12 +336,11 @@ export const HomePage = () => {
         </div>
       </div>
 
-      <h2>NotificationsTable</h2>
+      {/* <h2>NotificationsTable</h2>
       <div  style={{ marginBottom: '300px' }}>
         <NotificationsTable/>
-      </div>
+      </div> */}
 
-      <Footer />
     </div>
   );
 };

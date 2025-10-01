@@ -84,17 +84,6 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
     return (
       <>
         <div className={styles.skillCard}>
-          <div className={styles.iconsBar}>
-            <button className={styles.buttonIcon} onClick={likeHandle}>
-              <Icon name="like" />
-            </button>
-            <button className={styles.buttonIcon} onClick={shareHandle}>
-              <Icon name="share" />
-            </button>
-            <button className={styles.buttonIcon} onClick={moreHandle}>
-              <Icon name="more" />
-            </button>
-          </div>
 
         <div className={styles.iconsBar}>
           <button className={styles.buttonIcon} onClick={likeHandle}>
@@ -139,9 +128,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
               <Gallery images={images} placeholder={photoPlaceholder} />
             )}
           </div>
-            <div className={styles.rightSection}>
-              {images && <Gallery images={images} placeholder={photoPlaceholder} />}
-            </div>
+          
           </div>
         </div>
 

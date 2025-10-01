@@ -93,7 +93,7 @@ const { skillsCanRender, isRest, rest } = prepareSkillsToRender(
             Может научить
           </p>
           <ul className={styles.tagWrapper}>
-              <SkillTag skill={user.sub_text as TSkillName} />
+              <SkillTag skill={user.sub_text} />
           </ul>
         </div>
         <div>
