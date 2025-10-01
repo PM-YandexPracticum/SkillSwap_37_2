@@ -82,12 +82,31 @@ export const getFilteredUsersApi = async ({
       }
     }
 
-    // текстовый поиск по названию навыка пользователя (users.skill)
-    if (q && typeof q === "string" && q.trim().length > 0) {
-      const qn = q.trim().toLowerCase();
-      filtered = filtered.filter((u: TUser) =>
-        (u.skill || "").toLowerCase().includes(qn)
+    // Текстовый поиск по названию навыка или подкатегории
+    const qn = (q ?? "").trim().toLowerCase();
+    const hasQ = qn.length > 0;
+    const hasSubcats = Array.isArray(subcategories) && subcategories.length > 0;
+
+    const matchSkill = (u: TUser) =>
+      ((u.skill ?? "") + "").toLowerCase().includes(qn);
+
+    const matchSubcategoryId = (u: TUser) =>
+      hasSubcats ? subcategories.includes((u as any).subCategoryId) : false;
+
+    const matchNeedSubcat = (u: TUser) =>
+     hasSubcats ? (u.need_subcat ?? []).some((id) => subcategories.includes(id)) : false;
+
+    if (hasQ && hasSubcats) {
+      // OR: skill ИЛИ subCategoryId ИЛИ need_subcat
+      filtered = filtered.filter(
+        (u: TUser) => matchSkill(u) || matchSubcategoryId(u) || matchNeedSubcat(u)
       );
+    } else if (hasQ) {
+      filtered = filtered.filter(
+        (u: TUser) => matchSkill(u)
+      );
+    } else if (hasSubcats) {
+      filtered = filtered.filter((u: TUser) => matchSubcategoryId(u) || matchNeedSubcat(u));
     }
 
     // пагинация
