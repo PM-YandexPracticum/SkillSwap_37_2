@@ -28,9 +28,14 @@ import { SKILL_TYPES, TSkillType } from "../shared/types/filters";
 const USERS_PAGE_SIZE = Number(import.meta.env.VITE_USERS_PAGE_SIZE);
 
 // filtered
-export const getFilteredUsersApi = async (
-  { page, gender, places = [], skillType, subcategories = [] }: TGetFilteredUsersArgs
-): Promise<TResponseUsers> => {
+export const getFilteredUsersApi = async ({
+  page,
+  gender,
+  places = [],
+  skillType,
+  subcategories = [],
+  q,
+}: TGetFilteredUsersArgs): Promise<TResponseUsers> => {
   try {
     const response = await fetch(USERS_JSON_FILE);
     const data = await response.json();
@@ -46,8 +51,8 @@ export const getFilteredUsersApi = async (
     if (places.length > 0) {
       filtered = filtered.filter((u: TUser) => places.includes(u.from));
     }
-const st = skillType as TSkillType
-// SKILL_TYPES.CAN_TEACH as TSkillType
+    const st = skillType as TSkillType;
+    // SKILL_TYPES.CAN_TEACH as TSkillType
 
     // фильтрация по типу навыка
     if (st && subcategories && subcategories.length > 0) {
@@ -61,8 +66,8 @@ const st = skillType as TSkillType
 
         case SKILL_TYPES.WANT_TO_LEARN:
           // хотя бы один навык из его списка need_subcat есть среди переданных подкатегорий
-          filtered = filtered.filter(
-            (u: TUser) => u.need_subcat.some((id) => subcategories.includes(id))
+          filtered = filtered.filter((u: TUser) =>
+            u.need_subcat.some((id) => subcategories.includes(id))
           );
           break;
 
@@ -75,7 +80,34 @@ const st = skillType as TSkillType
           );
           break;
       }
-    }   
+    }
+
+    // Текстовый поиск по названию навыка или подкатегории
+    const qn = (q ?? "").trim().toLowerCase();
+    const hasQ = qn.length > 0;
+    const hasSubcats = Array.isArray(subcategories) && subcategories.length > 0;
+
+    const matchSkill = (u: TUser) =>
+      ((u.skill ?? "") + "").toLowerCase().includes(qn);
+
+    const matchSubcategoryId = (u: TUser) =>
+      hasSubcats ? subcategories.includes((u as any).subCategoryId) : false;
+
+    const matchNeedSubcat = (u: TUser) =>
+     hasSubcats ? (u.need_subcat ?? []).some((id) => subcategories.includes(id)) : false;
+
+    if (hasQ && hasSubcats) {
+      // OR: skill ИЛИ subCategoryId ИЛИ need_subcat
+      filtered = filtered.filter(
+        (u: TUser) => matchSkill(u) || matchSubcategoryId(u) || matchNeedSubcat(u)
+      );
+    } else if (hasQ) {
+      filtered = filtered.filter(
+        (u: TUser) => matchSkill(u)
+      );
+    } else if (hasSubcats) {
+      filtered = filtered.filter((u: TUser) => matchSubcategoryId(u) || matchNeedSubcat(u));
+    }
 
     // пагинация
     const start = (page - 1) * USERS_PAGE_SIZE;
@@ -87,15 +119,10 @@ const st = skillType as TSkillType
       hasMore: end < filtered.length,
     };
   } catch (error) {
-    console.error('Ошибка в getFilteredUsersApi:', error);
+    console.error("Ошибка в getFilteredUsersApi:", error);
     throw error;
   }
 };
-
-
-
-
-
 
 export const getUsersApi = async (page = 1): Promise<TResponseUsers> => {
   try {
@@ -141,7 +168,6 @@ export const getPopularUsersApi = async (page = 1): Promise<TResponseUsers> => {
   }
 };
 
-
 // добавляем функцию для created_at
 export const getCreatedAtUsersApi = async (
   page: number
@@ -165,7 +191,7 @@ export const getCreatedAtUsersApi = async (
       hasMore: end < sorted.length,
     };
   } catch (error) {
-    console.error('Ошибка в getUsersByCreatedAtApi:', error);
+    console.error("Ошибка в getUsersByCreatedAtApi:", error);
     throw error;
   }
 };
@@ -174,7 +200,7 @@ export const getUsersByRandomApi = async (
   page: number
 ): Promise<{ users: TUser[]; hasMore: boolean }> => {
   try {
-    const response = await fetch('/db/users.json');
+    const response = await fetch("/db/users.json");
     const data = await response.json();
 
     const sorted = data.users.sort((a: TUser, b: TUser) => b.random - a.random);
@@ -186,13 +212,12 @@ export const getUsersByRandomApi = async (
     return {
       users: paginated,
       hasMore: end < sorted.length,
-      };
+    };
   } catch (error) {
-    console.error('Ошибка в getUsersByCreatedAtApi:', error);
+    console.error("Ошибка в getUsersByCreatedAtApi:", error);
     throw error;
   }
 };
-
 
 export const getUserByIdAPI = async (userId: number): Promise<TUser | null> => {
   try {
@@ -258,18 +283,16 @@ export const getSkillsSubCategoriesApi =
     }
   };
 
-export const getOffersApi = 
-  async (): Promise<TResponseOffers> => {
-    try {
-      const response = await fetch(OFFERS_JSON_FILE);
-      const data = await response.json();
-      return data;
-    }
-    catch (error) {
-      console.error(error);
-      throw error;
-    }
+export const getOffersApi = async (): Promise<TResponseOffers> => {
+  try {
+    const response = await fetch(OFFERS_JSON_FILE);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
+};
 
 export const getNotificationsApi = async (
   userId: number,
@@ -354,10 +377,9 @@ export const getUserLikesApi = async (userId: number) => {
   }
 };
 
-
 export const logoutApi = async (): Promise<{ success: boolean }> => {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 50)); 
+    await new Promise((resolve) => setTimeout(resolve, 50));
     return { success: true };
   } catch (error) {
     console.error(error);

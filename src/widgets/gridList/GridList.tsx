@@ -39,7 +39,7 @@ export const GridList = ({
 
 
   const lastElementRef = useInfiniteScroll(onLoadMore, hasMore, loading);
-  if (users.length === 0 && !loading) {
+  if (visibleUsers.length === 0 && !loading) {
     return <div className={styles.empty}>Пользователи не найдены</div>;
   }
 
@@ -50,7 +50,7 @@ export const GridList = ({
               <li
               key={user.id}
               className={styles.gridItem}
-              ref={index === users.length - 1 ? lastElementRef : undefined}
+              ref={index === visibleUsers.length - 1 ? lastElementRef : undefined}
             >
               <UserCard
                 user = {user}
