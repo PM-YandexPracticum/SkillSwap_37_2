@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "@store";
 
 import { Gallery } from "../../../shared/ui/gallery/Gallery";
@@ -35,6 +34,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   requireRegistration = true,
 }) => {
   const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false); // Состояние для модалки
   const isOfferReady = useSelector(isOfferCreated);
 
   // Получаем пользователя из Redux
