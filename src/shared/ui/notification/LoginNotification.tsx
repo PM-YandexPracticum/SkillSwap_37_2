@@ -28,37 +28,53 @@ export const LoginNotification: React.FC<LoginNotificationProps> = ({
     onClose();
   };
 
+  const notificationId = `login-notification-${Date.now()}`;
+  const titleId = `${notificationId}-title`;
+  const messageId = `${notificationId}-message`;
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className={styles.modalContent}>
+      <div
+        className={styles.modalContent}
+        role="dialog"
+        aria-labelledby={titleId}
+        aria-describedby={messageId}
+        aria-modal="true"
+      >
         <div className={styles.iconContainer}>
           <Icon
             name="userCircle"
             size="l"
             className={styles.icon}
             strokeWidth={0.5}
+            aria-hidden="true"
           />
         </div>
-        
+
         <div className={styles.content}>
           <div className={styles.textContent}>
-            <h2 className={styles.title}>Пожалуйста, войдите в аккаунт</h2>
-             <p className={styles.message}>
-              Присоединяйтесь к SkillSwap и обменивайтесь
-            </p>
-            <p className={styles.message}>
-              знаниями и навыками с другими людьми
-            </p>
-          </div>
-
-          <div className={styles.buttons}>
-            <Button 
-              onClick={handleCancel}
-              className={styles.cancelButton}
+            <h2 id={titleId} className={styles.title}>
+              Пожалуйста, войдите в аккаунт
+            </h2>
+            <div
+              id={messageId}
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
             >
+              <p className={styles.message}>
+                Присоединяйтесь к SkillSwap и обменивайтесь
+              </p>
+              <p className={styles.message}>
+                знаниями и навыками с другими людьми
+              </p>
+            </div>
+          </div>
+          <div className={styles.buttons}>
+            <Button onClick={handleCancel} className={styles.cancelButton}>
               Отмена
             </Button>
-            <Button 
+            <Button
               onClick={handleLogin}
               colored
               className={styles.loginButton}

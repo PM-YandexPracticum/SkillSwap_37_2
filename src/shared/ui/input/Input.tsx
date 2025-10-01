@@ -43,6 +43,7 @@ export const Input = ({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const actualType = type === "password" && isPasswordVisible ? "text" : type;
   const isError = status === "error";
+  const messageId = id ? `${id}-message` : undefined;
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -53,12 +54,13 @@ export const Input = ({
       {label && (
         <label htmlFor={id} className={styles.label}>
           {label}
+          {required && <span aria-hidden="true">*</span>}
         </label>
       )}
       <div className={styles.inputContainer}>
         {icon && (
           <div className={styles.iconContainer}>
-            <img src={icon} alt="input icon" />
+            <img src={icon} alt="input icon" aria-hidden="true" />
           </div>
         )}
         <input
@@ -80,6 +82,8 @@ export const Input = ({
           onBlur={onBlur}
           required={required}
           disabled={disabled}
+          aria-invalid={isError}
+          aria-describedby={messageId}
           {...otherProps}
         />
 
@@ -90,24 +94,27 @@ export const Input = ({
             className={styles.eyeButton}
             onClick={togglePasswordVisibility}
             aria-label={isPasswordVisible ? "Скрыть пароль" : "Показать пароль"}
+            aria-pressed={isPasswordVisible}
           >
             <Icon
               name={isPasswordVisible ? "eyeSlash" : "eye"}
               size="s"
               className={styles.eyeIcon}
+              aria-hidden="true"
             />
           </button>
         )}
         {/* Иконка редактирования (статическая) */}
         {showEditIcon && (
           <div className={styles.editIconContainer}>
-            <Icon name="edit" size="s" className={styles.editIcon} />
+            <Icon name="edit" size="s" className={styles.editIcon} aria-hidden="true" />
           </div>
         )}
       </div>
       <FormMessage
         message={errorMessage}
         type={isError ? "error" : status === "success" ? "success" : "hint"}
+        id={messageId}
       />
     </div>
   );
