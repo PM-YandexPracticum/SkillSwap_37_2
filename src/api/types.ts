@@ -38,7 +38,8 @@ export type TGetFilteredUsersArgs = {
   gender?: TGender;
   places: string[];
   skillType?: TSkillType;
-  subcategories?: number[];  
+  subcategories?: number[]; 
+  q?: string;
 };
 
 export type TPlace = {

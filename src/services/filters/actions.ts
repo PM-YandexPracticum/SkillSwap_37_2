@@ -8,12 +8,13 @@ import { SKILL_TYPES } from '../../shared/types/filters';
 export const applySearchQuery = (query: string) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
     const state = getState();
+    const q = (query ?? '').trim();
     const { categories, subcategories } = state.categories;
     const { gender, places } = state.filters;
 
-    dispatch(setQuery(query));
+    dispatch(setQuery(q));
 
-    const ids = subcategoryIdsByQuery(query, categories, subcategories);
+    const ids = q ? subcategoryIdsByQuery(q, categories, subcategories) : [];
     dispatch(setSubcategories(ids));
 
     // По умолчанию ищем «Могу научить», чтобы искать по skill/subCategoryId
@@ -26,5 +27,6 @@ export const applySearchQuery = (query: string) =>
       places,
       skillType: getState().filters.skillType,
       subcategories: ids,
+      q
     }));
   };
