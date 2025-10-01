@@ -10,11 +10,13 @@ import styles from "./RegistrationPages.module.css";
 interface RegistrationStep3Props {
   onBack: () => void;
   onComplete: () => void;
+  onClose?: () => void;
 }
 
 export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
   onBack,
   onComplete,
+  onClose,
 }) => {
   const navigate = useNavigate();
   return (
@@ -24,7 +26,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
           <Icon name="logo" size={40} />
           <span>SkillSwap</span>
         </div>
-        <button className={styles.closeButton} onClick={() => navigate("/")}>
+        <button className={styles.closeButton} onClick={onClose}>
           Закрыть
           <Icon name="cross" size={24} />
         </button>

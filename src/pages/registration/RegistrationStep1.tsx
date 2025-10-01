@@ -9,12 +9,15 @@ import styles from "./RegistrationPages.module.css";
 
 interface RegistrationStep1Props {
   onContinue: (email: string, password: string) => void;
+  onClose?: () => void;
 }
 
 export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   onContinue,
+  onClose,
 }) => {
   const navigate = useNavigate();
+
   return (
     <div className={styles.registrationPage}>
       <div className={styles.registrationHeader}>
@@ -22,7 +25,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
           <Icon name="logo" size={40} />
           <span>SkillSwap</span>
         </div>
-        <button className={styles.closeButton} onClick={() => navigate("/")}>
+        <button className={styles.closeButton} onClick={onClose}>
           Закрыть
           <Icon name="cross" size={24} />
         </button>

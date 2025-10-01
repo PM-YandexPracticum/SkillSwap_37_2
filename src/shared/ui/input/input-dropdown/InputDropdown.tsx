@@ -18,7 +18,8 @@ interface DropdownProps {
   id?: string;
   label?: string;
   disabled?: boolean;
-  searchable?: boolean; // Добавляем возможность поиска
+  searchable?: boolean;
+  status?: "error" | "default" | "success" | "hint"; 
 }
 
 export const Dropdown: FC<DropdownProps> = ({
@@ -32,7 +33,9 @@ export const Dropdown: FC<DropdownProps> = ({
   label,
   disabled = false,
   searchable = false,
+  status = "default",
 }) => {
+   const isError = status === "error";
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -115,7 +118,8 @@ export const Dropdown: FC<DropdownProps> = ({
       className={clsx(
         styles.dropdownGroup,
         className,
-        disabled && styles.disabled
+        disabled && styles.disabled,
+        isError && styles.error
       )}
     >
       {label && (
@@ -131,7 +135,8 @@ export const Dropdown: FC<DropdownProps> = ({
           className={clsx(
             styles.dropdownButton,
             isOpen && styles.open,
-            disabled && styles.disabled
+            disabled && styles.disabled,
+            isError && styles.error
           )}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}

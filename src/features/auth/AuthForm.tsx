@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useForm, Controller } from "react-hook-form";
 import styles from "./AuthForm.module.css";
 import { Button } from "../../shared/ui/button/Button";
-import { Input } from "../../shared/ui/input/Input";
+import { Input, INPUT_STATUS } from "../../shared/ui/input/Input";
 import { SocialButton } from "../../shared/ui/social-button/SocialButton";
 
 type AuthFormProps = {
@@ -20,7 +20,7 @@ export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormData>({
-    mode: "onChange",       // Обновляем валидность при каждом изменении
+    mode: "onChange",
     reValidateMode: "onChange",
   });
 
@@ -34,6 +34,17 @@ export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
 
   const handleAppleLogin = () => {
     console.log("Apple login clicked");
+  };
+
+  const isPasswordStrong = (password: string): boolean => {
+    if (!password) return false;
+
+    return (
+      password.length >= 8 &&
+      /\d/.test(password) &&
+      /[a-zA-Zа-яА-Я]/.test(password) &&
+      /[A-ZА-Я]/.test(password)
+    );
   };
 
   return (
@@ -72,8 +83,10 @@ export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
                 label="Email"
                 id="email"
                 placeholder="Введите email"
-                {...field} // передаем value, onChange, onBlur
-                status={errors.email ? "error" : "default"}
+                {...field}
+                status={
+                  errors.email ? INPUT_STATUS.ERROR : INPUT_STATUS.DEFAULT
+                }
                 errorMessage={errors.email?.message}
               />
             )}
@@ -85,30 +98,41 @@ export const AuthForm: FC<AuthFormProps> = ({ onContinue }) => {
             control={control}
             rules={{
               required: "Пароль обязателен",
-              minLength: {
-                value: 8,
-                message: "Пароль должен быть не менее 8 символов",
-              },
               validate: {
+                minLength: (v) =>
+                  v.length >= 8 || "Пароль должен быть не менее 8 символов",
                 hasNumber: (v) =>
                   /\d/.test(v) || "Пароль должен содержать хотя бы одну цифру",
                 hasLetter: (v) =>
-                  /[a-zA-Z]/.test(v) ||
+                  /[a-zA-Zа-яА-Я]/.test(v) ||
                   "Пароль должен содержать хотя бы одну букву",
+                hasCapitalLetter: (v) =>
+                  /[A-ZА-Я]/.test(v) ||
+                  "Пароль должен содержать хотя бы одну заглавную букву",
               },
             }}
-            render={({ field }) => (
-              <Input
-                type="password"
-                label="Пароль"
-                id="password"
-                placeholder="Придумайте надёжный пароль"
-                showPasswordToggle
-                {...field} // передаем value, onChange, onBlur
-                status={errors.password ? "error" : "default"}
-                errorMessage={errors.password?.message}
-              />
-            )}
+            render={({ field }) => {
+              const isStrong = isPasswordStrong(field.value);
+              const status = errors.password
+                ? INPUT_STATUS.ERROR
+                : isStrong
+                ? INPUT_STATUS.SUCCESS
+                : INPUT_STATUS.DEFAULT;
+
+              return (
+                <Input
+                  type="password"
+                  label="Пароль"
+                  id="password"
+                  placeholder="Придумайте надёжный пароль"
+                  showPasswordToggle
+                  {...field}
+                  status={status}
+                  errorMessage={errors.password?.message}
+                  successMessage={isStrong ? "Надёжный" : undefined}
+                />
+              );
+            }}
           />
 
           <Button colored type="submit" disabled={!isValid}>

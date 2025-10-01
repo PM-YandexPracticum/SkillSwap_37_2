@@ -27,18 +27,18 @@ type FormMessageProps = {
 
 
 // export const FormMessage = memo(({ message, type = 'error' }: FormMessageProps) => {
-export const FormMessage = memo(function FormMessage({ message, type = 'error', id }: FormMessageProps) {
+export const FormMessage = memo(function FormMessage({ message, type = MESSAGE_TYPES.ERROR, id }: FormMessageProps) {
   if (!message || message.trim() === '') return null;
   
   return (
     <p className={clsx(
       styles.message,
-      type === 'error' && styles.error,
-      type === 'success' && styles.success,
-      type === 'hint' && styles.hint
+      type === MESSAGE_TYPES.ERROR && styles.error,
+        type === MESSAGE_TYPES.SUCCESS && styles.success,
+        type === MESSAGE_TYPES.HINT && styles.hint
       )}
-      role={type === 'error' ? 'alert' : 'status'}
-      aria-live={type === 'error' ? 'assertive' : 'polite'}
+      role={type === MESSAGE_TYPES.ERROR ? 'alert' : 'status'}
+      aria-live={type === MESSAGE_TYPES.ERROR ? 'assertive' : 'polite'}
       aria-atomic="true"
       id={id}
     >

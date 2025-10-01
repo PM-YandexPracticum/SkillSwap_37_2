@@ -133,3 +133,11 @@
   font-size: 14px;
   text-align: center;
 }
+
+.dropdownGroup.error .dropdownButton {
+  border-color: #BF3920 !important;
+}
+
+.dropdownGroup.error .dropdownButton:focus {
+  border-color: #BF3920 !important;
+}

@@ -1,12 +1,7 @@
 // src/app/App.tsx
 
 import React, { useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Outlet,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 import {
   DropdownDemo,
@@ -39,7 +34,6 @@ import { getPlacesThunk } from "../services/places/actions";
 import { getCategoriesThunk } from "../services/categories/actions";
 import { getUserLikesThunk } from "../services/user/actions";
 
-
 import { OfferPage } from "../pages/Offer/OfferPage";
 import { RegisterStep2Data } from "../features/auth/RegisterStep2";
 import { getPopularUsersThunk } from "../services/popularUsers/actions";
@@ -56,6 +50,8 @@ import { getOffersThunk } from "../services/offers/actions";
 import { getOffers } from "../services/offers/offers-slice";
 import { getUsersThunk } from "../services/users/actions";
 
+import { HeaderWithModal } from '../widgets/header/HeaderWithModal';
+
 import styles from "./App.module.css";
 
 export const App: React.FC = () => {
@@ -68,30 +64,28 @@ export const App: React.FC = () => {
     // dispatch(getUserThunk(API_USER_ID));
 
     dispatch(getUsersThunk(1));
-    dispatch(getPopularUsersThunk(1)); 
-    dispatch(getCreatedAtUsersThunk(1)); 
-    dispatch(getRandomUsersThunk(1)); 
+    dispatch(getPopularUsersThunk(1));
+    dispatch(getCreatedAtUsersThunk(1));
+    dispatch(getRandomUsersThunk(1));
     // dispatch(getFilteredUsersThunk({
     //   page:1,
     //   gender:GENDERS.MALE,
-    // })); 
+    // }));
 
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
-    
   }, [dispatch]);
-  
+
   const currentUser = useSelector((s: RootState) => s.user.user);
   const offers = useSelector(getOffers);
 
   // лайки грузятся при смене пользователя
   React.useEffect(() => {
     if (currentUser) {
-      dispatch(getUserLikesThunk(currentUser.id));        
+      dispatch(getUserLikesThunk(currentUser.id));
     }
   }, [dispatch, currentUser, offers]);
 
-  
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -107,28 +101,39 @@ export const App: React.FC = () => {
           <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
           <Route path="about" element={<About />} />
 
-      {/* Страницы регистрации */}
-          <Route path="registration/step1" element={
-            <RegistrationStep1 onContinue={(email, password) => {
-              console.log('Step 1 data:', email, password);
-              window.location.href = '/registration/step2';
-            }} />
-          } />
-          <Route path="registration/step2" element={
-            <RegistrationStep2 
-              onBack={() => window.location.href = '/registration/step1'}
-              onContinue={(data) => {
-                console.log('Step 2 data:', data);
-                window.location.href = '/registration/step3';
-              }}
-            />
-          } />
-          <Route path="registration/step3" element={
-            <RegistrationStep3 
-              onBack={() => window.location.href = '/registration/step2'}
-              onComplete={() => window.location.href = '/'}
-            />
-          } />
+          {/* Страницы регистрации */}
+          <Route
+            path="registration/step1"
+            element={
+              <RegistrationStep1
+                onContinue={(email, password) => {
+                  console.log("Step 1 data:", email, password);
+                  window.location.href = "/registration/step2";
+                }}
+              />
+            }
+          />
+          <Route
+            path="registration/step2"
+            element={
+              <RegistrationStep2
+                onBack={() => (window.location.href = "/registration/step1")}
+                onContinue={(data) => {
+                  console.log("Step 2 data:", data);
+                  window.location.href = "/registration/step3";
+                }}
+              />
+            }
+          />
+          <Route
+            path="registration/step3"
+            element={
+              <RegistrationStep3
+                onBack={() => (window.location.href = "/registration/step2")}
+                onComplete={() => (window.location.href = "/")}
+              />
+            }
+          />
 
           {/*заглушки*/}
           <Route path="favorites" element={<FavoritesPageStub />} />
@@ -154,12 +159,10 @@ export const App: React.FC = () => {
   );
 };
 
-
-
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
   <div className="layout">
-    <Header />
+    <HeaderWithModal />
     <main className={styles.main}>
       <Outlet />
     </main>
@@ -171,7 +174,9 @@ const Layout: React.FC = () => (
 const CatalogContent: React.FC = () => {
   const users = useSelector((s: RootState) => s.users.users);
 
-  const [selectedGender, setSelectedGender] = React.useState<TGender>(GENDERS.UNSPECIFIED);
+  const [selectedGender, setSelectedGender] = React.useState<TGender>(
+    GENDERS.UNSPECIFIED
+  );
   const [selectedPlaces, setSelectedPlaces] = React.useState<string[]>([]);
 
   return (
@@ -196,16 +201,20 @@ const CatalogContent: React.FC = () => {
 //Логин — AuthForm
 const LoginContent: React.FC = () => (
   <section className="page page-auth">
-    <AuthForm onContinue={(email, password) => {
-  console.log('Email:', email, 'Password:', password);
- }}/>
+    <AuthForm
+      onContinue={(email, password) => {
+        console.log("Email:", email, "Password:", password);
+      }}
+    />
   </section>
 );
 
-// Регистрация 
+// Регистрация
 const RegisterContent: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [step2Data, setStep2Data] = useState<Partial<RegisterStep2Data> | null>(null);
+  const [step2Data, setStep2Data] = useState<Partial<RegisterStep2Data> | null>(
+    null
+  );
 
   const handleStep2Continue = (data: RegisterStep2Data) => {
     setStep2Data(data);
@@ -218,7 +227,7 @@ const RegisterContent: React.FC = () => {
   };
 
   const handleStep1Continue = (email: string, password: string) => {
-    console.log('Шаг 1 данные:', email, password);
+    console.log("Шаг 1 данные:", email, password);
     setStep(2);
   };
 
@@ -240,9 +249,10 @@ const RegisterContent: React.FC = () => {
 //Форма навыка
 const SkillFormContent: React.FC = () => (
   <section className="page page-skillform">
-    <SkillForm 
-      onBack={() => console.log('Back')}
-      onContinue={() => console.log('Continue')}/>
+    <SkillForm
+      onBack={() => console.log("Back")}
+      onContinue={() => console.log("Continue")}
+    />
   </section>
 );
 

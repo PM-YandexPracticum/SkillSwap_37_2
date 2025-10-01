@@ -49,6 +49,10 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
   const [subcategories, setSubcategories] = useState<TSubcategory[]>([]);
   const [cities, setCities] = useState<TPlace[]>([]);
   const [loading, setLoading] = useState(true);
+  const [nameError, setNameError] = useState("Имя обязательно");
+  const [cityError, setCityError] = useState("");
+  const [categoryError, setCategoryError] = useState("");
+  const [subcategoryError, setSubcategoryError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +77,29 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
     fetchData();
   }, []);
 
+  const validateName = (name: string): string => {
+    if (!name.trim()) {
+      return "Имя обязательно";
+    }
+
+    // Проверка на только цифры
+    if (/^\d+$/.test(name)) {
+      return "Имя не может состоять только из цифр";
+    }
+
+    // Проверка на только специальные символы
+    if (/^[^\wа-яА-Я]+$/i.test(name)) {
+      return "Имя не может состоять только из специальных символов";
+    }
+
+    // Проверка на минимальную длину
+    if (name.trim().length < 2) {
+      return "Имя должно быть не менее 2 символов";
+    }
+
+    return "";
+  };
+
   const handleInputChange = (
     field: keyof RegisterStep2Data,
     value: string | Date | null | string[]
@@ -81,6 +108,31 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
       ...prev,
       [field]: value,
     }));
+
+    // Валидация при изменении полей
+    if (field === "name" && typeof value === "string") {
+      const error = validateName(value);
+      setNameError(error);
+    }
+
+    // Валидация города
+    if (field === "city" && typeof value === "string") {
+      setCityError(value ? "" : "Город обязателен");
+    }
+
+    // Валидация категории
+    if (field === "selectedCategories") {
+      setCategoryError(
+        Array.isArray(value) && value.length > 0 ? "" : "Выберите категорию"
+      );
+    }
+
+    // Валидация подкатегории
+    if (field === "selectedSubcategories") {
+      setSubcategoryError(
+        Array.isArray(value) && value.length > 0 ? "" : "Выберите подкатегорию"
+      );
+    }
   };
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,23 +146,32 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
     }
   };
 
+  const isFormValid = (): boolean => {
+    return (
+      formData.name.trim() !== "" &&
+      nameError === "" &&
+      formData.birthdate !== null &&
+      formData.city.trim() !== "" &&
+      cityError === "" &&
+      formData.selectedCategories.length > 0 &&
+      categoryError === "" &&
+      formData.selectedSubcategories.length > 0 &&
+      subcategoryError === ""
+    );
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const nameValidationError = validateName(formData.name);
+    if (nameValidationError) {
+      setNameError(nameValidationError);
+      return;
+    }
+
     if (isFormValid()) {
       onContinue(formData);
     }
-  };
-
-  const isFormValid = (): boolean => {
-    return (
-      formData.avatar?.trim() !== "" && // теперь аватар обязателен
-      formData.name.trim() !== "" &&
-      formData.birthdate !== null &&
-      formData.gender.trim() !== "" &&
-      formData.city.trim() !== "" &&
-      formData.selectedCategories.length > 0 &&
-      formData.selectedSubcategories.length > 0
-    );
   };
 
   if (loading) {
@@ -132,32 +193,34 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
       <div className={styles.content}>
         {/* Аватар */}
         <div className={styles.avatarSection}>
-          <div className={styles.avatarContainer}>
-            {formData.avatar ? (
-              <img
-                src={formData.avatar}
-                alt="Аватар"
-                className={styles.avatar}
-              />
-            ) : (
-              <Icon
-                name="userCircle"
-                size={54}
-                strokeWidth={0.5}
-                className={styles.avatarIcon}
-              />
-            )}
-            <label htmlFor="avatar-upload" className={styles.addButton}>
-              <Icon name="add" size={16} className={styles.addIcon} />
-              <input
-                id="avatar-upload"
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarChange}
-                style={{ display: "none" }}
-              />
-            </label>
-          </div>
+          <label htmlFor="avatar-upload" className={styles.avatarUploadLabel}>
+            <div className={styles.avatarContainer}>
+              {formData.avatar ? (
+                <img
+                  src={formData.avatar}
+                  alt="Аватар"
+                  className={styles.avatar}
+                />
+              ) : (
+                <Icon
+                  name="userCircle"
+                  size={54}
+                  strokeWidth={0.5}
+                  className={styles.avatarIcon}
+                />
+              )}
+              <div className={styles.addButton}>
+                <Icon name="add" size={16} className={styles.addIcon} />
+              </div>
+            </div>
+            <input
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              style={{ display: "none" }}
+            />
+          </label>
         </div>
 
         {/* Форма */}
@@ -168,6 +231,8 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             onChange={(value) => handleInputChange("name", value)}
             placeholder="Введите ваше имя"
             required={true}
+            status={nameError ? "error" : "default"}
+            errorMessage={nameError}
           />
 
           <div className={styles.row}>
@@ -198,17 +263,17 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             options={cityOptions}
             placeholder="Не указан"
             searchable={true}
+            status={cityError ? "error" : "default"}
           />
 
           <Dropdown
             label="Категория навыка, которому хотите научиться"
             value={formData.selectedCategories}
-            onChange={(value) =>
-              handleInputChange("selectedCategories", value)
-            }
+            onChange={(value) => handleInputChange("selectedCategories", value)}
             options={categoryOptions}
             multiple={true}
             placeholder="Выберите категории"
+            status={categoryError ? "error" : "default"}
           />
 
           <GroupedSubcategoryDropdown
@@ -228,6 +293,7 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             subcategories={subcategories}
             selectedCategoryIds={formData.selectedCategories}
             placeholder="Выберите подкатегории"
+            status={subcategoryError ? "error" : "default"}
           />
 
           <div className={styles.buttons}>
@@ -239,11 +305,12 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
             >
               Назад
             </Button>
+
             <Button
               type="submit"
               size={208}
               colored={true}
-              disabled={!isFormValid()} // кнопка неактивна, пока не заполнены все поля включая аватар
+              disabled={!isFormValid()}
               className={styles.continueButton}
             >
               Продолжить

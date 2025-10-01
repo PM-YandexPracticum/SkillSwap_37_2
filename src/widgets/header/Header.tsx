@@ -1,6 +1,6 @@
 // src\widgets\header\Header.tsx
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Logo } from "../../shared/ui/logo/Logo";
@@ -18,15 +18,16 @@ import { useDispatch, useSelector } from "@store";
 import { applySearchQuery } from "../../services/filters/actions";
 import { RootState } from "@store";
 import clsx from "clsx";
+import { RegistrationModal } from "../../features/registration/RegistrationModal";
 
 // type PopupType = "skills" | "profile" | "notifications" | null;
 export const POPUP_TYPES = {
-  SKILLS: 'skills',
-  PROFILE: 'profile',
-  NOTIFICATIONS: 'notifications',
+  SKILLS: "skills",
+  PROFILE: "profile",
+  NOTIFICATIONS: "notifications",
 } as const;
 
-export type PopupType = typeof POPUP_TYPES[keyof typeof POPUP_TYPES] | null;
+export type PopupType = (typeof POPUP_TYPES)[keyof typeof POPUP_TYPES] | null;
 
 function useDebounced<T>(value: T, ms = 300) {
   const [v, setV] = useState(value);
@@ -37,16 +38,19 @@ function useDebounced<T>(value: T, ms = 300) {
   return v;
 }
 
-export const Header: FC = () => {
-  
+export const Header: FC<{ onOpenRegistration?: () => void }> = ({
+  onOpenRegistration,
+}) => {
   const dispatch = useDispatch();
   const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
-  
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+ const closeModalRef = useRef(() => setIsRegistrationModalOpen(false));
+
   const currentUser = useSelector(getCurrentUser);
   const plainUsers = useSelector(getPlainUsers);
 
   const currentQuery = useSelector((s: RootState) => s.filters.q);
-  const [query, setQuery] = useState(currentQuery || '');
+  const [query, setQuery] = useState(currentQuery || "");
   const debounced = useDebounced(query, 300);
 
   useEffect(() => {
@@ -54,14 +58,14 @@ export const Header: FC = () => {
   }, [debounced, dispatch]);
 
   const togglePopup = (popup: PopupType) => {
-    setOpenPopup(prev => (prev === popup ? null : popup));
+    setOpenPopup((prev) => (prev === popup ? null : popup));
   };
-  
+
   const closePopup = () => setOpenPopup(null);
 
   const handleLogin = () => {
     if (plainUsers.length === 0) {
-      console.warn('Нет загруженных пользователей для входа');
+      console.warn("Нет загруженных пользователей для входа");
       return;
     }
     const randomIndex = Math.floor(Math.random() * plainUsers.length);
@@ -70,14 +74,22 @@ export const Header: FC = () => {
   };
 
   const handleRegistration = () => {
-    window.location.href = '/registration/step1'
-  }
+    setIsRegistrationModalOpen(true);
+  };
+
+  const handleRegistrationComplete = useCallback(() => {
+    closeModalRef.current();
+  }, []);
 
   return (
-    <header className={styles.header}
-      style={currentUser ? {maxHeight: '116px', padding: '42px 36px 26px'}
-                         : {maxHeight: '104px', padding: '36px 36px 20px'}
-    }>
+    <header
+      className={styles.header}
+      style={
+        currentUser
+          ? { maxHeight: "116px", padding: "42px 36px 26px" }
+          : { maxHeight: "104px", padding: "36px 36px 20px" }
+      }
+    >
       <Link to="/">
         <Logo />
       </Link>
@@ -85,15 +97,26 @@ export const Header: FC = () => {
       <nav>
         <ul className={styles.navList}>
           <li className={styles.li}>
-            <Link to="/about" className={styles.link} onClick={() => console.log('Click on About link')}>
+            <Link
+              to="/about"
+              className={styles.link}
+              onClick={() => console.log("Click on About link")}
+            >
               О проекте
             </Link>
           </li>
           <li className={styles.li}>
-            <button className={clsx(styles.link, styles.dropButton)} onClick={() => togglePopup(POPUP_TYPES.SKILLS)}>
+            <button
+              className={clsx(styles.link, styles.dropButton)}
+              onClick={() => togglePopup(POPUP_TYPES.SKILLS)}
+            >
               Все навыки
               <Icon
-                name={isOpenPopup === POPUP_TYPES.SKILLS ? 'chevronUp' : 'chevronDown'}
+                name={
+                  isOpenPopup === POPUP_TYPES.SKILLS
+                    ? "chevronUp"
+                    : "chevronDown"
+                }
                 size="s"
                 className={styles.iconChevron}
               />
@@ -105,12 +128,13 @@ export const Header: FC = () => {
       {/* Используем компонент SearchBar с разной шириной */}
       <SearchBar
         maxWidth={currentUser ? 648 : 527}
-        value={query} onChange={setQuery}
+        value={query}
+        onChange={setQuery}
       />
 
       {!currentUser && (
         <button className={styles.moonButton}>
-        <Icon name="moon" size="s" />
+          <Icon name="moon" size="s" />
         </button>
       )}
 
@@ -151,7 +175,9 @@ export const Header: FC = () => {
           </div>
         ) : (
           <div className={styles.buttonsWrapper}>
-            <Button size={92} onClick={handleLogin}>Войти</Button>
+            <Button size={92} onClick={handleLogin}>
+              Войти
+            </Button>
             <Button size={208} onClick={handleRegistration} colored>
               Зарегистрироваться
             </Button>
@@ -161,20 +187,27 @@ export const Header: FC = () => {
 
       {/* Попапы */}
       {currentUser ? (
-        <Popup isOpen={isOpenPopup === POPUP_TYPES.NOTIFICATIONS} onClose={closePopup}>
-          <NotificationWidget/>
+        <Popup
+          isOpen={isOpenPopup === POPUP_TYPES.NOTIFICATIONS}
+          onClose={closePopup}
+        >
+          <NotificationWidget />
         </Popup>
       ) : null}
 
       <Popup isOpen={isOpenPopup === POPUP_TYPES.SKILLS} onClose={closePopup}>
         <SkillMenu />
       </Popup>
-    
 
       <Popup isOpen={isOpenPopup === POPUP_TYPES.PROFILE} onClose={closePopup}>
         <ProfilePopup onClose={closePopup} />
       </Popup>
 
+      <RegistrationModal
+        isOpen={isRegistrationModalOpen}
+        onClose={closeModalRef.current} 
+        onRegistrationComplete={handleRegistrationComplete}
+      />
     </header>
   );
 };

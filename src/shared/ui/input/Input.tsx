@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import styles from "./Input.module.css";
 import clsx from "clsx";
-import { FormMessage } from "../form-message/FormMessage";
+import { FormMessage, MESSAGE_TYPES } from "../form-message/FormMessage";
 import { Icon } from "../icon/Icon";
+
+export const INPUT_STATUS = {
+  ERROR: "error",
+  DEFAULT: "default",
+  SUCCESS: "success",
+  HINT: "hint",
+} as const;
+
+type InputStatus = (typeof INPUT_STATUS)[keyof typeof INPUT_STATUS];
 
 interface InputProps {
   label?: string;
   className?: string;
   placeholder?: string;
   errorMessage?: string;
-  status?: "error" | "default" | "success" | "hint";
+  successMessage?: string;
+  status?: InputStatus;
   id?: string;
   icon?: string;
   type?: "text" | "search" | "tel" | "email" | "password";
@@ -26,7 +36,8 @@ export const Input = ({
   label,
   placeholder,
   errorMessage,
-  status = "default",
+  successMessage,
+  status = INPUT_STATUS.DEFAULT,
   id,
   type = "text",
   icon,
@@ -42,8 +53,20 @@ export const Input = ({
 }: InputProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const actualType = type === "password" && isPasswordVisible ? "text" : type;
-  const isError = status === "error";
+  const isError = status === INPUT_STATUS.ERROR;
+  const isSuccess = status === INPUT_STATUS.SUCCESS;
   const messageId = id ? `${id}-message` : undefined;
+
+  const message = isError
+    ? errorMessage
+    : isSuccess
+    ? successMessage
+    : undefined;
+  const messageType = isError
+    ? MESSAGE_TYPES.ERROR
+    : isSuccess
+    ? MESSAGE_TYPES.SUCCESS
+    : MESSAGE_TYPES.HINT;
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -68,6 +91,7 @@ export const Input = ({
             styles.input,
             {
               [styles.error]: isError,
+              [styles.success]: isSuccess,
               [styles.withIcon]: icon,
               [styles.withRightIcon]: showPasswordToggle || showEditIcon,
               [styles.disabled]: disabled,
@@ -107,15 +131,16 @@ export const Input = ({
         {/* Иконка редактирования (статическая) */}
         {showEditIcon && (
           <div className={styles.editIconContainer}>
-            <Icon name="edit" size="s" className={styles.editIcon} aria-hidden="true" />
+            <Icon
+              name="edit"
+              size="s"
+              className={styles.editIcon}
+              aria-hidden="true"
+            />
           </div>
         )}
       </div>
-      <FormMessage
-        message={errorMessage}
-        type={isError ? "error" : status === "success" ? "success" : "hint"}
-        id={messageId}
-      />
+      <FormMessage message={message} type={messageType} id={messageId} />
     </div>
   );
 };
