@@ -16,11 +16,14 @@ export type TShowcaseTitle = (typeof SHOWCASE_TITLES)[keyof typeof SHOWCASE_TITL
 type CardShowcaseProps = {
   children: ReactElement;
   title: TShowcaseTitle;
-  buttonTitle?: string
+  buttonTitle?: string;
   icon?: ReactElement;
-  isIconFirst?: boolean; //если указан атрибут, то иконка слева от текста
-  titleSize?: string; 
+  isIconFirst?: boolean;
+  titleSize?: string;
+  onButtonClick?: () => void; // ← вот это добавляем
 };
+
+
 
 export const CardShowcase = ({
   children,
@@ -28,7 +31,8 @@ export const CardShowcase = ({
   buttonTitle = '',
   icon,
   isIconFirst,
-  titleSize = '2em'
+  titleSize = '2em',
+  onButtonClick, // ← добавляем сюда
 }: CardShowcaseProps) => {
 
   const showHideRowsHandle = () => {
@@ -52,21 +56,21 @@ export const CardShowcase = ({
           </h2>
         </div>
         {buttonTitle && icon && !isIconFirst && (
-              <button
-                onClick={showHideRowsHandle} 
-                className={styles.button}>
-                <span>{buttonTitle}</span>
-                <span>{icon}</span>
-              </button>
-        )}
-        {buttonTitle && icon && isIconFirst && (
-              <button
-                onClick={showHideRowsHandle} 
-                className={styles.button}>
-                <span>{icon}</span>
-                <span>{buttonTitle}</span>
-              </button>
-        )}
+  <button
+    onClick={onButtonClick ?? showHideRowsHandle} 
+    className={styles.button}>
+    <span>{buttonTitle}</span>
+    <span>{icon}</span>
+  </button>
+)}
+{buttonTitle && icon && isIconFirst && (
+  <button
+    onClick={onButtonClick ?? showHideRowsHandle} 
+    className={styles.button}>
+    <span>{icon}</span>
+    <span>{buttonTitle}</span>
+  </button>
+)}
       </div>
       <div className={styles.childsWrapper}>
         {children &&

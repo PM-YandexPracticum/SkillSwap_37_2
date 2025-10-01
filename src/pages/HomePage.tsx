@@ -1,6 +1,7 @@
 // src\pages\HomePage.tsx
 
 // External libs
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 // Store
@@ -32,12 +33,7 @@ import { FiltersContainer } from '../features/filters/FiltersContainer';
 import { ActiveFiltersBar } from '../features/filters/ActiveFiltersBar';
 
 // Widgets
-import {
-  Footer,
-  GridList,
-  Header,
-  NotificationsTable,
-} from '@widgets';
+import { Footer, GridList, Header, NotificationsTable } from '@widgets';
 import { CardShowcase, SHOWCASE_TITLES } from '../widgets/cardShowcase/CardShowcase';
 
 // Shared
@@ -48,100 +44,71 @@ import styles from './HomePage.module.css';
 import { getUsersThunk } from '../services/users/actions';
 
 export const HomePage = () => {
-
   const dispatch = useDispatch();
 
-// *********************************************************************
-  // ЭТИ СТРОКИ ВЛИЯЮТ ТОЛЬКО НА ЧИТТЕРСКИЙ ВХОД ПО КНОПКЕ "ВОЙТИ"
-  // *************************************************
-  // пользоаватели без сортировки
-  const {
-    users: plainUsers,
-    isLoading: isUsersLoading,
-    hasMore: hasMoreUsers,
-    page: usersPage,
-  } = useSelector((state: RootState) => state.users);
+  // -------------------- State одной кнопки --------------------
+  const [showAllCategory, setShowAllCategory] = useState<'popular' | 'createdAt' | 'random' | null>(null);
 
-  // функция загрузки последующих данных
+  // *********************************************************************
+  // ЭТИ СТРОКИ ВЛИЯЮТ ТОЛЬКО НА ЧИТТЕРСКИЙ ВХОД ПО КНОПКЕ "ВОЙТИ"
+  // *********************************************************************
+  const { users: plainUsers, isLoading: isUsersLoading, hasMore: hasMoreUsers, page: usersPage } =
+    useSelector((state: RootState) => state.users);
+
   const handleLoadMorePlainUsers = () => {
     if (!isUsersLoading && hasMoreUsers) {
-      const nextPage = usersPage + 1;
-      dispatch(getUsersThunk(nextPage));
+      dispatch(getUsersThunk(usersPage + 1));
     }
   };
-// *********************************************************************
-// *********************************************************************
-
 
   // *************************************************
   // популярные пользователи
-  const {
-    users: popularUsers,
-    isLoading: isPopularLoading,
-    hasMore: hasMorePopular,
-    page: popularPage,
-  } = useSelector((state: RootState) => state.popularUsers);
+  const { users: popularUsers, isLoading: isPopularLoading, hasMore: hasMorePopular, page: popularPage } =
+    useSelector((state: RootState) => state.popularUsers);
 
-  // функция загрузки последующих данных
   const handleLoadMorePopularUsers = () => {
     if (!isPopularLoading && hasMorePopular) {
-      const nextPage = popularPage + 1;
-      dispatch(getPopularUsersThunk(nextPage));
+      dispatch(getPopularUsersThunk(popularPage + 1));
     }
   };
 
   // *************************************************
   // по created_at
-  const {
-    users: createdAtUsers,
-    isLoading: isCreatedAtLoading,
-    hasMore: hasMoreCreatedAt,
-    page: createdAtPage,
-  } = useSelector((state: RootState) => state.createdAtUsers);
+  const { users: createdAtUsers, isLoading: isCreatedAtLoading, hasMore: hasMoreCreatedAt, page: createdAtPage } =
+    useSelector((state: RootState) => state.createdAtUsers);
 
-    // функция загрузки последующих данных
   const handleLoadMoreCreatedAtUsers = () => {
     if (!isCreatedAtLoading && hasMoreCreatedAt) {
-      const nextPage = createdAtPage + 1;
-      dispatch(getCreatedAtUsersThunk(nextPage));
+      dispatch(getCreatedAtUsersThunk(createdAtPage + 1));
     }
   };
 
   // *************************************************
   // случайные пользователи
-  const {
-    users: randomUsers,
-    isLoading: isRandomLoading,
-    hasMore: hasMoreRandom,
-    page: randomPage,
-  } = useSelector((state: RootState) => state.randomUsers);
+  const { users: randomUsers, isLoading: isRandomLoading, hasMore: hasMoreRandom, page: randomPage } =
+    useSelector((state: RootState) => state.randomUsers);
 
-    // функция загрузки последующих данных
   const handleLoadMoreRandomUsers = () => {
     if (!isRandomLoading && hasMoreRandom) {
-      const nextPage = randomPage + 1;
-      dispatch(getRandomUsersThunk(nextPage));
+      dispatch(getRandomUsersThunk(randomPage + 1));
     }
   };
 
   // *************************************************
   // отфильтрованные пользователи
-  const filters = useSelector((s: RootState) => s.filters);
-  const selectedGender = useSelector((s: RootState) => s.filters.gender);
-  
-  const {
-    users: filteredUsers,
-    isLoading: isFilteredLoading,
-    hasMore: hasMoreFiltered,
-    page: filteredPage,
-  } = useSelector((state: RootState) => state.filteredUsers);
+  const filters = useSelector((state: RootState) => state.filters);
+  const selectedGender = useSelector((state: RootState) => state.filters.gender);
+  const selectedPlaces = useSelector((state: RootState) => state.filters.places);
+  const selectedSubcategories = useSelector((state: RootState) => state.filters.subcategories);
+  const selectedSkillType = useSelector((state: RootState) => state.filters.skillType);
 
-  // функция загрузки последующих данных
-  const handleLoadMoreFilteredUsers = ( ) => {
+  const { users: filteredUsers, isLoading: isFilteredLoading, hasMore: hasMoreFiltered, page: filteredPage } =
+    useSelector((state: RootState) => state.filteredUsers);
+
+  const handleLoadMoreFilteredUsers = () => {
     if (!isFilteredLoading && hasMoreFiltered) {
-      const nextPage = filteredPage + 1;
-      dispatch(getFilteredUsersThunk({ 
-        page: nextPage, 
+      dispatch(getFilteredUsersThunk({
+        page: filteredPage + 1,
         gender: selectedGender,
         places: selectedPlaces,
         skillType: selectedSkillType,
@@ -150,66 +117,48 @@ export const HomePage = () => {
     }
   };
 
-  const selectedSubcategories = useSelector((s: RootState) => s.filters.subcategories);
-
-  const subCategories = useSelector(
-    (s: RootState) => s.categories.subcategories
-  );
-
-  const selectedSkillType = useSelector((s: RootState) => s.filters.skillType);
-
-  // Получаем категории из Redux
+  // -------------------- Категории и сабкатегории --------------------
   const categories = useSelector((s: RootState) => s.categories.categories);
+  const subCategories = useSelector((s: RootState) => s.categories.subcategories);
 
+  // -------------------- Фильтры --------------------
   const handleSubcategoryToggle = (id: number) => {
-    const current = [...selectedSubcategories];
-    if (current.includes(id)) {
-      dispatch(setSubcategories(current.filter((x) => x !== id)));
-    } else {
-      dispatch(setSubcategories([...current, id]));
-    }
+    const updated = selectedSubcategories.includes(id)
+      ? selectedSubcategories.filter(x => x !== id)
+      : [...selectedSubcategories, id];
+    dispatch(setSubcategories(updated));
     dispatch(resetFilteredUsers());
     dispatch(getFilteredUsersThunk({
       page: 1,
       gender: selectedGender,
       places: selectedPlaces,
       skillType: selectedSkillType,
-      subcategories: current.includes(id)
-        ? current.filter((x) => x !== id)
-        : [...current, id],
+      subcategories: updated,
     }));
   };
 
-  const selectedPlaces = useSelector((s: RootState) => s.filters.places);
-
   const handleGenderChange = (gender: TGender) => {
     dispatch(setGender(gender));
-    dispatch(resetFilteredUsers()); // очистим список
-    dispatch(getFilteredUsersThunk({ 
+    dispatch(resetFilteredUsers());
+    dispatch(getFilteredUsersThunk({
       page: 1,
       gender,
       places: selectedPlaces,
       skillType: selectedSkillType,
-      subcategories: selectedSubcategories
-   }));
+      subcategories: selectedSubcategories,
+    }));
   };
-
 
   const handlePlacesChange = (places: string[]) => {
     dispatch(setPlaces(places));
-    dispatch(resetFilteredUsers()); // очистим список
-    dispatch(getFilteredUsersThunk({ 
+    dispatch(resetFilteredUsers());
+    dispatch(getFilteredUsersThunk({
       page: 1,
       gender: selectedGender,
       places,
       skillType: selectedSkillType,
       subcategories: selectedSubcategories,
     }));
-  };
-
-  const handleResetAll = () => {
-    dispatch(resetFilters());
-    dispatch(resetFilteredUsers());
   };
 
   const handleSkillTypeChange = (newType: TSkillType) => {
@@ -221,9 +170,14 @@ export const HomePage = () => {
       places: selectedPlaces,
       skillType: newType,
       subcategories: selectedSubcategories,
-  }));
-};
+    }));
+  };
 
+  const handleResetAll = () => {
+    dispatch(resetFilters());
+    dispatch(resetFilteredUsers());
+    setShowAllCategory(null);
+  };
 
   const hasActiveFilters =
     filters.skillType !== SKILL_TYPES.ALL ||
@@ -231,6 +185,7 @@ export const HomePage = () => {
     filters.gender !== GENDERS.UNSPECIFIED ||
     filters.places.length > 0;
 
+  // -------------------- Рендер --------------------
   return (
     <div className={styles.homePageWrapper}>
 
@@ -239,10 +194,8 @@ export const HomePage = () => {
           title="Фильтры"
           onReset={hasActiveFilters ? handleResetAll : undefined}
         >
- 
           <SkillFilters
             onSkillTypeChange={handleSkillTypeChange}
-            // onSkillTypeChange={(newType) => dispatch(setSkillType(newType))}
             selectedSkillType={selectedSkillType}
             categories={categories}
             subcategories={subCategories}
@@ -264,82 +217,86 @@ export const HomePage = () => {
             selectedPlaces={selectedPlaces}
             selectedSubcategories={selectedSubcategories}
             onSkillTypeChange={handleSkillTypeChange}
-            // onSkillTypeChange={(newType) => dispatch(setSkillType(newType))}
             onChangeGender={handleGenderChange}
             onChangePlaces={handlePlacesChange}
             onSubcategoryToggle={handleSubcategoryToggle}
           />
 
-        {isFiltersEmpty(filters) ? (          
-                <>
-                  <CardShowcase
-                    title={SHOWCASE_TITLES.POPULAR}
-                    buttonTitle="Смотреть все"
-                    icon={<Icon name="chevronRight" />}
-                  >
-                    <GridList
-                      rows={1}
-                      users={popularUsers}
-                      loading={isPopularLoading}
-                      hasMore={hasMorePopular}
-                      onLoadMore={handleLoadMorePopularUsers}
-                    />
-                  </CardShowcase>
-                  <CardShowcase
-                    title={SHOWCASE_TITLES.NEW}
-                    buttonTitle="Смотреть все"
-                    icon={<Icon name="chevronRight" />}
-                  >
-                    <GridList
-                      rows={1}
-                      users={createdAtUsers}
-                      loading={isCreatedAtLoading}
-                      hasMore={hasMoreCreatedAt}
-                      onLoadMore={handleLoadMoreCreatedAtUsers}
-                    />
-                  </CardShowcase>
+          {isFiltersEmpty(filters) ? (
+            <>
+              <CardShowcase
+                title={SHOWCASE_TITLES.POPULAR}
+                buttonTitle={showAllCategory === 'popular' ? 'Свернуть' : 'Смотреть все'}
+                icon={<Icon name="chevronRight" />}
+                onButtonClick={() =>
+                  setShowAllCategory(showAllCategory === 'popular' ? null : 'popular')
+                }
+              >
+                <GridList
+                  rows={showAllCategory === 'popular' ? 'auto' : 1}
+                  users={popularUsers}
+                  loading={isPopularLoading}
+                  hasMore={hasMorePopular}
+                  onLoadMore={() => handleLoadMorePopularUsers()}
+                />
+              </CardShowcase>
 
-                  <CardShowcase
-                    title={SHOWCASE_TITLES.RECOMMEND}
-                    buttonTitle="Смотреть все"
-                    icon={<Icon name="chevronRight" />}
-                  >
-                    <GridList
-                      rows={1}
-                      users={randomUsers}
-                      loading={isRandomLoading}
-                      hasMore={hasMoreRandom}
-                      onLoadMore={handleLoadMoreRandomUsers}
-                    />
-                  </CardShowcase>
+              <CardShowcase
+                title={SHOWCASE_TITLES.NEW}
+                buttonTitle={showAllCategory === 'createdAt' ? 'Свернуть' : 'Смотреть все'}
+                icon={<Icon name="chevronRight" />}
+                onButtonClick={() =>
+                  setShowAllCategory(showAllCategory === 'createdAt' ? null : 'createdAt')
+                }
+              >
+                <GridList
+                  rows={showAllCategory === 'createdAt' ? 'auto' : 1}
+                  users={createdAtUsers}
+                  loading={isCreatedAtLoading}
+                  hasMore={hasMoreCreatedAt}
+                  onLoadMore={() => handleLoadMoreCreatedAtUsers()}
+                />
+              </CardShowcase>
 
-                </>
-        ):(
-
-              <div className={styles.filterSectionWrapper}>
-                <CardShowcase
-                  title={SHOWCASE_TITLES.MATCHING}
-                  buttonTitle="Сначала новые"
-                  icon={<Icon name="sort" />}
-                  isIconFirst
-                >
-                  <GridList
-                    users={filteredUsers}
-                    loading={isFilteredLoading}
-                    hasMore={hasMoreFiltered}
-                    onLoadMore={handleLoadMoreFilteredUsers}
-                  />
-                </CardShowcase>
-              </div>
-          )
-        }
+              <CardShowcase
+                title={SHOWCASE_TITLES.RECOMMEND}
+                buttonTitle={showAllCategory === 'random' ? 'Свернуть' : 'Смотреть все'}
+                icon={<Icon name="chevronRight" />}
+                onButtonClick={() =>
+                  setShowAllCategory(showAllCategory === 'random' ? null : 'random')
+                }
+              >
+                <GridList
+                  rows={showAllCategory === 'random' ? 'auto' : 1}
+                  users={randomUsers}
+                  loading={isRandomLoading}
+                  hasMore={hasMoreRandom}
+                  onLoadMore={() => handleLoadMoreRandomUsers()}
+                />
+              </CardShowcase>
+            </>
+          ) : (
+            <CardShowcase
+              title={SHOWCASE_TITLES.MATCHING}
+              buttonTitle="Сначала новые"
+              icon={<Icon name="sort" />}
+              isIconFirst
+            >
+              <GridList
+                users={filteredUsers}
+                loading={isFilteredLoading}
+                hasMore={hasMoreFiltered}
+                onLoadMore={() => handleLoadMoreFilteredUsers()}
+              />
+            </CardShowcase>
+          )}
         </div>
       </div>
 
-      {/* <h2>NotificationsTable</h2>
-      <div  style={{ marginBottom: '300px' }}>
-        <NotificationsTable/>
-      </div> */}
+      <h2>NotificationsTable</h2>
+      <div style={{ marginBottom: '300px' }}>
+        <NotificationsTable />
+      </div>
 
     </div>
   );
