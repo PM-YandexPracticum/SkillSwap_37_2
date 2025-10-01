@@ -130,3 +130,11 @@
   color: #69735d ;
   opacity: 0.7;
 }
+
+.dropdownGroup.error .dropdownButton {
+  border-color: #BF3920 !important;
+}
+
+.dropdownGroup.error .dropdownButton:focus {
+  border-color: #BF3920 !important;
+}

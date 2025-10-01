@@ -131,7 +131,11 @@
 }
 
 .error {
-  border-color: #bf3920;
+  border-color: #bf3920 !important;
+}
+
+.input:focus.error {
+  border-color: #bf3920 !important;
 }
 
 .textError {

@@ -11,16 +11,52 @@ import { getOfferUser } from '../../services/users/users-slice';
 import { Loader } from '../../shared/ui/loader/Loader';
 import { getCurrentUser } from '../../services/user/user-slice';
 import { addOfferThunk } from '../../services/offers/actions';
+import { RegistrationModal } from '../../features/registration/RegistrationModal';
+import { useState } from 'react';
 
 import styles from './OfferPage.module.css';
 
 export const OfferPage: React.FC = () => {
   
   const dispatch = useDispatch();
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
   const currentUser = useSelector(getCurrentUser);
   const offerUser = useSelector(getOfferUser);
   const {users} = useSelector((state: RootState) => state.users);
+
+   const handleExchange = () => {
+    if (!offerUser) {
+      console.error("Offer user is not available");
+      return;
+    }
+
+    if (currentUser?.subCategoryId) {
+      // Пользователь авторизован - предлагаем обмен
+      dispatch(addOfferThunk({
+        offerUserId: offerUser.id,
+        skillOwnerId: currentUser.subCategoryId
+      }));
+    } else {
+      // Пользователь не авторизован - показываем модалку регистрации
+      setIsRegistrationModalOpen(true);
+    }
+  };
+
+  const handleRegistrationComplete = () => {
+    console.log("Регистрация завершена, можно предлагать обмен");
+    // После регистрации можно сразу предложить обмен
+    if (offerUser && currentUser?.subCategoryId) {
+      dispatch(addOfferThunk({
+        offerUserId: offerUser.id,
+        skillOwnerId: currentUser.subCategoryId
+      }));
+    }
+  };
+
+  if (!offerUser) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -40,15 +76,7 @@ export const OfferPage: React.FC = () => {
               description={offerUser.description || "Описание отсутствует"}
               images={offerUser.images || ""}
               buttonText={"Предложить обмен"}
-              onExchange={() => {
-                if (currentUser?.subCategoryId) {
-                dispatch(addOfferThunk({
-                  offerUserId: offerUser.id,
-                  skillOwnerId: currentUser.subCategoryId
-                }))
-                }
-                else {alert('Необходима авторизация')} //временно, пока не сделают норм атворизацию
-              }}
+              onExchange={handleExchange}
           />)
         }
       </section>
@@ -70,6 +98,12 @@ export const OfferPage: React.FC = () => {
             <CardSlider users={users}/>
         </CardShowcase>
       </section>
+
+      <RegistrationModal
+        isOpen={isRegistrationModalOpen}
+        onClose={() => setIsRegistrationModalOpen(false)}
+        onRegistrationComplete={handleRegistrationComplete}
+      />
     </>
   )
 };

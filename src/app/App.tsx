@@ -50,6 +50,8 @@ import { getOffersThunk } from "../services/offers/actions";
 import { getOffers } from "../services/offers/offers-slice";
 import { getUsersThunk } from "../services/users/actions";
 
+import { HeaderWithModal } from '../widgets/header/HeaderWithModal';
+
 import styles from "./App.module.css";
 
 export const App: React.FC = () => {
@@ -77,12 +79,6 @@ export const App: React.FC = () => {
   const currentUser = useSelector((s: RootState) => s.user.user);
   const offers = useSelector(getOffers);
 
-  const RegistrationLayout: React.FC = () => (
-    <div className="registration-layout">
-      <Outlet />
-    </div>
-  );
-
   // лайки грузятся при смене пользователя
   React.useEffect(() => {
     if (currentUser) {
@@ -94,8 +90,18 @@ export const App: React.FC = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        {/* Страницы регистрации - без хедера и футера */}
-        <Route element={<RegistrationLayout />}>
+        <Route element={<Layout />}>
+          {/*То, что есть*/}
+          <Route index element={<HomePage />} />
+          <Route path="skills" element={<CatalogContent />} />
+          <Route path="auth/login" element={<LoginContent />} />
+          <Route path="auth/register" element={<RegisterContent />} />
+          <Route path="skill/new" element={<SkillFormContent />} />
+          <Route path="skills/:id" element={<OfferPage />} />
+          <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
+          <Route path="about" element={<About />} />
+
+          {/* Страницы регистрации */}
           <Route
             path="registration/step1"
             element={
@@ -128,19 +134,6 @@ export const App: React.FC = () => {
               />
             }
           />
-        </Route>
-
-        {/* Все остальные страницы - с хедером и футером */}
-        <Route element={<Layout />}>
-          {/*То, что есть*/}
-          <Route index element={<HomePage />} />
-          <Route path="skills" element={<CatalogContent />} />
-          <Route path="auth/login" element={<LoginContent />} />
-          <Route path="auth/register" element={<RegisterContent />} />
-          <Route path="skill/new" element={<SkillFormContent />} />
-          <Route path="skills/:id" element={<OfferPage />} />
-          <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
-          <Route path="about" element={<About />} />
 
           {/*заглушки*/}
           <Route path="favorites" element={<FavoritesPageStub />} />
@@ -169,7 +162,7 @@ export const App: React.FC = () => {
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
   <div className="layout">
-    <Header />
+    <HeaderWithModal />
     <main className={styles.main}>
       <Outlet />
     </main>

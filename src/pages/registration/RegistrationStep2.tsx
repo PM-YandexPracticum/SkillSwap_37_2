@@ -14,12 +14,14 @@ interface RegistrationStep2Props {
   onBack: () => void;
   onContinue: (data: RegisterStep2Data) => void;
   initialData?: Partial<RegisterStep2Data>;
+  onClose?: () => void;
 }
 
 export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   onBack,
   onContinue,
   initialData,
+  onClose,
 }) => {
   const navigate = useNavigate();
   return (
@@ -29,7 +31,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
           <Icon name="logo" size={40} />
           <span>SkillSwap</span>
         </div>
-        <button className={styles.closeButton} onClick={() => navigate("/")}>
+        <button className={styles.closeButton} onClick={onClose}>
           Закрыть
           <Icon name="cross" size={24} />
         </button>

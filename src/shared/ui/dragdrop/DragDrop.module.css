@@ -5,6 +5,11 @@
   gap: 4px;
 }
 
+.wrapper.error {
+  border: 2px solid #BF3920 !important;
+  border-radius: 8px;
+}
+
 .image {
   fill: #508826;
 }

@@ -13,6 +13,7 @@ interface GroupedSubcategoryDropdownProps {
   placeholder?: string;
   label?: string;
   disabled?: boolean;
+  status?: "error" | "default" | "success" | "hint";
 }
 
 export const GroupedSubcategoryDropdown: FC<GroupedSubcategoryDropdownProps> = ({
@@ -24,7 +25,9 @@ export const GroupedSubcategoryDropdown: FC<GroupedSubcategoryDropdownProps> = (
   placeholder = "Выберите подкатегории",
   label,
   disabled = false,
+  status = "default",
 }) => {
+  const isError = status === "error";
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -96,7 +99,8 @@ export const GroupedSubcategoryDropdown: FC<GroupedSubcategoryDropdownProps> = (
       ref={dropdownRef}
       className={clsx(
         styles.dropdownGroup,
-        disabled && styles.disabled
+        disabled && styles.disabled,
+        isError && styles.error
       )}
     >
       {label && (
@@ -111,7 +115,8 @@ export const GroupedSubcategoryDropdown: FC<GroupedSubcategoryDropdownProps> = (
           className={clsx(
             styles.dropdownButton,
             isOpen && styles.open,
-            disabled && styles.disabled
+            disabled && styles.disabled,
+        isError && styles.error
           )}
           onClick={toggleDropdown}
           disabled={disabled}

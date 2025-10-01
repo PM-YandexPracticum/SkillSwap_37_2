@@ -1,11 +1,13 @@
 .registrationPage {
   width: 100%;
-  height: 100vh;
+  height: auto;
+  max-height: 80vh;
   display: flex;
   flex-direction: column;
   background: #f8f9fa;
   overflow-y: auto;
   padding-bottom: 40px;
+  border-radius: 12px;
 }
 
 .registrationHeader {
@@ -46,6 +48,7 @@
   align-items: flex-start;
   min-height: calc(100vh - 80px);
   box-sizing: border-box;
+  flex: 1;
 }
 
 .contentContainer {

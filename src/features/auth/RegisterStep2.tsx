@@ -30,7 +30,6 @@ interface RegisterStep2Props {
   initialData?: Partial<RegisterStep2Data>;
 }
 
-
 export const RegisterStep2: React.FC<RegisterStep2Props> = ({
   onBack,
   onContinue,
@@ -50,7 +49,10 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
   const [subcategories, setSubcategories] = useState<TSubcategory[]>([]);
   const [cities, setCities] = useState<TPlace[]>([]);
   const [loading, setLoading] = useState(true);
-  const [nameError, setNameError] = useState(""); // Упрощаем - только для имени
+  const [nameError, setNameError] = useState("Имя обязательно");
+  const [cityError, setCityError] = useState("");
+  const [categoryError, setCategoryError] = useState("");
+  const [subcategoryError, setSubcategoryError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,6 +77,29 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
     fetchData();
   }, []);
 
+  const validateName = (name: string): string => {
+    if (!name.trim()) {
+      return "Имя обязательно";
+    }
+
+    // Проверка на только цифры
+    if (/^\d+$/.test(name)) {
+      return "Имя не может состоять только из цифр";
+    }
+
+    // Проверка на только специальные символы
+    if (/^[^\wа-яА-Я]+$/i.test(name)) {
+      return "Имя не может состоять только из специальных символов";
+    }
+
+    // Проверка на минимальную длину
+    if (name.trim().length < 2) {
+      return "Имя должно быть не менее 2 символов";
+    }
+
+    return "";
+  };
+
   const handleInputChange = (
     field: keyof RegisterStep2Data,
     value: string | Date | null | string[]
@@ -84,9 +109,29 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
       [field]: value,
     }));
 
-    // Очищаем ошибку имени при вводе
-    if (field === "name" && nameError) {
-      setNameError("");
+    // Валидация при изменении полей
+    if (field === "name" && typeof value === "string") {
+      const error = validateName(value);
+      setNameError(error);
+    }
+
+    // Валидация города
+    if (field === "city" && typeof value === "string") {
+      setCityError(value ? "" : "Город обязателен");
+    }
+
+    // Валидация категории
+    if (field === "selectedCategories") {
+      setCategoryError(
+        Array.isArray(value) && value.length > 0 ? "" : "Выберите категорию"
+      );
+    }
+
+    // Валидация подкатегории
+    if (field === "selectedSubcategories") {
+      setSubcategoryError(
+        Array.isArray(value) && value.length > 0 ? "" : "Выберите подкатегорию"
+      );
     }
   };
 
@@ -101,43 +146,33 @@ export const RegisterStep2: React.FC<RegisterStep2Props> = ({
     }
   };
 
-  // Простая проверка валидности формы
-  const isFormValid = 
-    formData.name.trim() !== "" &&
-    formData.birthdate !== null &&
-    formData.city.trim() !== "" &&
-    formData.selectedCategories.length > 0 &&
-    formData.selectedSubcategories.length > 0;
-
-    // ДОБАВИТЬ отладку
-console.log("Form validation:", {
-  name: formData.name,
-  birthdate: formData.birthdate,
-  city: formData.city,
-  categories: formData.selectedCategories.length,
-  subcategories: formData.selectedSubcategories.length,
-  isValid: isFormValid});
+  const isFormValid = (): boolean => {
+    return (
+      formData.name.trim() !== "" &&
+      nameError === "" &&
+      formData.birthdate !== null &&
+      formData.city.trim() !== "" &&
+      cityError === "" &&
+      formData.selectedCategories.length > 0 &&
+      categoryError === "" &&
+      formData.selectedSubcategories.length > 0 &&
+      subcategoryError === ""
+    );
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  console.log("Submit clicked, form valid:", isFormValid);
-  
-  // Проверяем только имя для показа ошибки
-  if (!formData.name.trim()) {
-    setNameError("Укажите свое имя");
-    console.log("Name is empty, showing error");
-    return;
-  }
+    e.preventDefault();
 
-  // Проверяем остальные поля
-  if (!isFormValid) {
-    console.log("Form is not valid, cannot continue");
-    return;
-  }
+    const nameValidationError = validateName(formData.name);
+    if (nameValidationError) {
+      setNameError(nameValidationError);
+      return;
+    }
 
-  console.log("Form is valid, continuing to step 3");
-  onContinue(formData);
-};
+    if (isFormValid()) {
+      onContinue(formData);
+    }
+  };
 
   if (loading) {
     return <div className={styles.loading}>Загрузка...</div>;
@@ -228,6 +263,7 @@ console.log("Form validation:", {
             options={cityOptions}
             placeholder="Не указан"
             searchable={true}
+            status={cityError ? "error" : "default"}
           />
 
           <Dropdown
@@ -237,6 +273,7 @@ console.log("Form validation:", {
             options={categoryOptions}
             multiple={true}
             placeholder="Выберите категории"
+            status={categoryError ? "error" : "default"}
           />
 
           <GroupedSubcategoryDropdown
@@ -256,6 +293,7 @@ console.log("Form validation:", {
             subcategories={subcategories}
             selectedCategoryIds={formData.selectedCategories}
             placeholder="Выберите подкатегории"
+            status={subcategoryError ? "error" : "default"}
           />
 
           <div className={styles.buttons}>
@@ -267,12 +305,12 @@ console.log("Form validation:", {
             >
               Назад
             </Button>
-  
+
             <Button
               type="submit"
               size={208}
               colored={true}
-              disabled={!isFormValid}
+              disabled={!isFormValid()}
               className={styles.continueButton}
             >
               Продолжить

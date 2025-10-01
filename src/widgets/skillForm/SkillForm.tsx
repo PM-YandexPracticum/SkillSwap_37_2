@@ -4,7 +4,10 @@ import { Dropdown } from "../../shared/ui/input/input-dropdown/InputDropdown";
 import { Textarea } from "../../shared/ui/textarea/Textarea";
 import { Button } from "../../shared/ui/button/Button";
 import { DragDrop } from "../../shared/ui/dragdrop/DragDrop";
-import { getSkillsCategoriesApi, getSkillsSubCategoriesApi } from "../../api/Api";
+import {
+  getSkillsCategoriesApi,
+  getSkillsSubCategoriesApi,
+} from "../../api/Api";
 import { TCategory, TSubcategory } from "../../api/types";
 import styles from "./SkillForm.module.css";
 
@@ -20,13 +23,10 @@ export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue }) => {
   const [description, setDescription] = useState<string>("");
   const [categories, setCategories] = useState<TCategory[]>([]);
   const [subcategories, setSubcategories] = useState<TSubcategory[]>([]);
-  const [filteredSubcategories, setFilteredSubcategories] = useState<TSubcategory[]>([]);
-  const [errors, setErrors] = useState({
-    skillName: "",
-    selectedCategory: "",
-    selectedSubCategory: "",
-    description: "",
-  });
+  const [filteredSubcategories, setFilteredSubcategories] = useState<
+    TSubcategory[]
+  >([]);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   // Загрузка категорий и подкатегорий
   useEffect(() => {
@@ -56,29 +56,64 @@ export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue }) => {
     }
   }, [selectedCategory, subcategories]);
 
-  // Обработчики с очисткой ошибок
-  const handleSkillNameChange = (value: string) => {
-    setSkillName(value);
-    if (value.trim()) setErrors((prev) => ({ ...prev, skillName: "" }));
+  // Проверка валидности полей
+  const getFieldStatus = (
+    field: string,
+    value: string | File | null
+  ): "error" | "default" => {
+    switch (field) {
+      case "skillName":
+        return value &&
+          typeof value === "string" &&
+          (value.length < 3 || value.length > 50)
+          ? "error"
+          : "default";
+      case "description":
+        return value &&
+          typeof value === "string" &&
+          (value.length === 0 || value.length > 500)
+          ? "error"
+          : "default";
+      case "selectedCategory":
+        return !value ? "error" : "default";
+      case "selectedSubCategory":
+        return !value ? "error" : "default";
+      case "image":
+        if (value && value instanceof File) {
+          return value.size > 2 * 1024 * 1024 ||
+            !["image/jpeg", "image/png"].includes(value.type)
+            ? "error"
+            : "default";
+        }
+        return "default";
+      default:
+        return "default";
+    }
+  };
+  // Проверка валидности формы для кнопки
+  const isFormValid = (): boolean => {
+    return (
+      skillName.trim().length >= 3 &&
+      skillName.trim().length <= 50 &&
+      description.trim().length > 0 &&
+      description.length <= 500 &&
+      selectedCategory !== "" &&
+      selectedSubCategory !== "" &&
+      (!imageFile ||
+        (imageFile.size <= 2 * 1024 * 1024 &&
+          ["image/jpeg", "image/png"].includes(imageFile.type)))
+    );
   };
 
-  const handleCategoryChange = (value: string | string[]) => {
-    if (typeof value === "string") {
-      setSelectedCategory(value);
-      setErrors((prev) => ({ ...prev, selectedCategory: "" }));
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isFormValid()) {
+      onContinue();
     }
   };
 
-  const handleSubCategoryChange = (value: string | string[]) => {
-    if (typeof value === "string") {
-      setSelectedSubCategory(value);
-      setErrors((prev) => ({ ...prev, selectedSubCategory: "" }));
-    }
-  };
-
-  const handleDescriptionChange = (value: string) => {
-    setDescription(value);
-    if (value.trim()) setErrors((prev) => ({ ...prev, description: "" }));
+  const handleImageChange = (files: File[]) => {
+    setImageFile(files[0] || null);
   };
 
   // Опции для Dropdown
@@ -92,84 +127,61 @@ export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue }) => {
     label: subcategory.name,
   }));
 
-  // Валидация формы
-   const isFormValid = (): boolean => {
-    return (
-      skillName.trim() !== "" &&
-      selectedCategory !== "" &&
-      selectedSubCategory !== ""
-      // description - необязательное поле, не проверяем
-    );
-  };
-
-   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isFormValid()) {
-      onContinue();
-    }
-  };
-
   return (
     <div className={styles.wrapper}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputGroup}>
+        <fieldset className={styles.inputGroup}>
           <Input
             label="Название навыка"
             placeholder="Введите название вашего навыка"
             value={skillName}
-            onChange={handleSkillNameChange}
+            onChange={setSkillName}
             id="skillName"
-            status={errors.skillName ? "error" : "default"}
-            errorMessage={errors.skillName}
+            required={true}
+            status={getFieldStatus("skillName", skillName)}
           />
 
           <Dropdown
             value={selectedCategory}
-            onChange={handleCategoryChange}
+            onChange={(value) =>
+              typeof value === "string" && setSelectedCategory(value)
+            }
             options={categoryOptions}
             label="Категория навыка"
             placeholder="Выберите категорию"
+            status={getFieldStatus("selectedCategory", selectedCategory)}
           />
-          {errors.selectedCategory && (
-            <div className={styles.error}>{errors.selectedCategory}</div>
-          )}
 
           <Dropdown
             value={selectedSubCategory}
-            onChange={handleSubCategoryChange}
+            onChange={(value) =>
+              typeof value === "string" && setSelectedSubCategory(value)
+            }
             options={subcategoryOptions}
             label="Подкатегория навыка"
             placeholder="Выберите подкатегорию"
+            status={getFieldStatus("selectedSubCategory", selectedSubCategory)}
           />
-          {errors.selectedSubCategory && (
-            <div className={styles.error}>{errors.selectedSubCategory}</div>
-          )}
 
           <Textarea
             label="Описание"
             value={description}
-            onChange={handleDescriptionChange}
+            onChange={setDescription}
             placeholder="Коротко опишите, чему можете научить"
             rows={4}
             showEditIcon={false}
-            status={errors.description ? "error" : "default"}
-            errorMessage={errors.description}
-            required={false}
-            className={styles.customTextarea}
+            required={true}
+            status={getFieldStatus("description", description)}
           />
 
-          <DragDrop />
-        </div>
+          <DragDrop onChange={handleImageChange} />
+        </fieldset>
 
         <div className={styles.buttonGroup}>
           <Button type="button" onClick={onBack} className={styles.backButton}>
             Назад
           </Button>
-          <Button 
-          colored 
-          type="submit"
-          disabled={!isFormValid()} 
-          >
+          <Button colored type="submit" disabled={!isFormValid()}>
             Продолжить
           </Button>
         </div>

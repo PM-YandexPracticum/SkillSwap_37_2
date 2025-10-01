@@ -4,6 +4,7 @@ import { RegistrationStep1 } from "../../pages/registration/RegistrationStep1";
 import { RegistrationStep2 } from "../../pages/registration/RegistrationStep2";
 import { RegistrationStep3 } from "../../pages/registration/RegistrationStep3";
 import { RegisterStep2Data } from "../auth/RegisterStep2";
+import styles from './RegistrationModal.module.css';
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -31,7 +32,6 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   };
 
   const handleStep3Complete = () => {
-    console.log("Регистрация завершена!", { ...step1Data, ...step2Data });
     onRegistrationComplete();
     onClose();
   };
@@ -45,13 +45,14 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <RegistrationStep1 onContinue={handleStep1Continue} />;
+        return <RegistrationStep1 onContinue={handleStep1Continue} onClose={onClose}/>;
       case 2:
         return (
           <RegistrationStep2
             onBack={handleBack}
             onContinue={handleStep2Continue}
             initialData={step2Data}
+            onClose={onClose}
           />
         );
       case 3:
@@ -59,6 +60,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
           <RegistrationStep3
             onBack={handleBack}
             onComplete={handleStep3Complete}
+            onClose={onClose}
           />
         );
       default:
@@ -67,7 +69,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} className={styles.registrationModal}>
       <div>{renderStep()}</div>
     </Modal>
   );

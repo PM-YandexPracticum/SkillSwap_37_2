@@ -4,6 +4,7 @@ import galleryAddImg from '../../assets/icons/gallery-add.svg';
 
 type DragDropProps = {
   onChange?: (files: File[]) => void;
+   status?: "error" | "default";
 };
 
 export const DragDrop: React.FC<DragDropProps> = ({ onChange }) => {
@@ -43,7 +44,7 @@ export const DragDrop: React.FC<DragDropProps> = ({ onChange }) => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${status === "error" ? styles.error : ""}`}>
       <div
         onDragEnter={handleDrag}
         onDragOver={handleDrag}
