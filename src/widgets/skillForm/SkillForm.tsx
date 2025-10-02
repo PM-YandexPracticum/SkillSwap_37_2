@@ -11,9 +11,17 @@ import {
 import { TCategory, TSubcategory } from "../../api/types";
 import styles from "./SkillForm.module.css";
 
+export interface SkillFormData {
+  skillName: string;
+  selectedCategory: string;
+  selectedSubCategory: string;
+  description: string;
+  imageFile?: File | null;
+}
+
 type SkillFormProps = {
   onBack: () => void;
-  onContinue: () => void;
+  onContinue: (data: SkillFormData) => void;
 };
 
 export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue }) => {
@@ -108,7 +116,13 @@ export const SkillForm: React.FC<SkillFormProps> = ({ onBack, onContinue }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isFormValid()) {
-      onContinue();
+      onContinue({
+      skillName,
+      selectedCategory,
+      selectedSubCategory,
+      description,
+      imageFile,
+    });
     }
   };
 

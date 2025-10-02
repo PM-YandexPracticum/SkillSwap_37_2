@@ -42,6 +42,7 @@
   display: flex;
   max-width: 916px;
   justify-content: space-between;
+  gap: 2.75em;
 }
 
 .leftSection {
@@ -49,6 +50,10 @@
   flex-direction: column;
   max-width: 399px;
   gap: 1.25em;
+}
+
+.leftSectionEdit {
+  max-width: 420px;
 }
 
 .title {
@@ -72,7 +77,15 @@
   font-family: "Roboto";
   font-size: 1em;
   line-height: 1.33;
-  color: #253017;
+  color: #253017; 
+  word-wrap: break-word;    /* перенос длинных слов */
+  overflow-wrap: break-word; /* то же самое, более современный вариант */
+  white-space: normal; 
+}
+
+.descriptionEdit {
+  flex-wrap: wrap;
+  text-wrap: wrap;
 }
 
 .rightSection {

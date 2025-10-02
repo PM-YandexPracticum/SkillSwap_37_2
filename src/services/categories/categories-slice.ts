@@ -22,6 +22,10 @@ export const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {},
+  selectors: {
+    getCategories: (state) => state.categories,
+    getSubcategories: (state) => state.subcategories
+  },
   extraReducers: builder => {
     builder
       .addCase(getCategoriesThunk.pending, state => {
@@ -40,4 +44,5 @@ export const categoriesSlice = createSlice({
   }
 });
 
+export const { getCategories, getSubcategories } = categoriesSlice.selectors;
 export const categoriesReducer = categoriesSlice.reducer;

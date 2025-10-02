@@ -5,6 +5,7 @@ import { Icon } from '../../shared/ui/icon/Icon'
 import styles from './ProfilePopup.module.css'
 import { useDispatch } from '@store';
 import { logoutThunk } from '../../services/user/actions';
+import { setIsOfferCreated } from '../../services/offers/offers-slice';
 
 type ProfilePopupProps = {
   onClose: () => void;
@@ -21,6 +22,7 @@ export const ProfilePopup = ({ onClose }: ProfilePopupProps) => {
 
   const logout = () => {
     dispatch(logoutThunk());
+    dispatch(setIsOfferCreated(false));
     onClose();
     navigate("/");
   };

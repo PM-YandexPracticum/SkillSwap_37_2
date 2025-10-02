@@ -49,8 +49,7 @@ import { GENDERS, TGender } from "@api/types";
 import { getOffersThunk } from "../services/offers/actions";
 import { getOffers } from "../services/offers/offers-slice";
 import { getUsersThunk } from "../services/users/actions";
-
-import { HeaderWithModal } from '../widgets/header/HeaderWithModal';
+import { RegistrationFlow } from "../features/registration/RegistrationModal";
 
 import styles from "./App.module.css";
 
@@ -61,16 +60,11 @@ export const App: React.FC = () => {
   // Подгружаем данные при старте
   React.useEffect(() => {
     dispatch(getOffersThunk()); //подгружаем все офферы
-    // dispatch(getUserThunk(API_USER_ID));
 
     dispatch(getUsersThunk(1));
     dispatch(getPopularUsersThunk(1));
     dispatch(getCreatedAtUsersThunk(1));
     dispatch(getRandomUsersThunk(1));
-    // dispatch(getFilteredUsersThunk({
-    //   page:1,
-    //   gender:GENDERS.MALE,
-    // }));
 
     dispatch(getPlacesThunk());
     dispatch(getCategoriesThunk());
@@ -90,12 +84,12 @@ export const App: React.FC = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
+          <Route path="auth/register" element={<RegistrationFlow />} />
         <Route element={<Layout />}>
           {/*То, что есть*/}
           <Route index element={<HomePage />} />
           <Route path="skills" element={<CatalogContent />} />
           <Route path="auth/login" element={<LoginContent />} />
-          <Route path="auth/register" element={<RegisterContent />} />
           <Route path="skill/new" element={<SkillFormContent />} />
           <Route path="skills/:id" element={<OfferPage />} />
           <Route path="demo/dropdowns" element={<DropdownsDemoContent />} />
@@ -162,7 +156,7 @@ export const App: React.FC = () => {
 //Общий Layout (для всех КРОМЕ главной), чтобы не дублировать везде хедер и футер
 const Layout: React.FC = () => (
   <div className="layout">
-    <HeaderWithModal />
+    <Header />
     <main className={styles.main}>
       <Outlet />
     </main>

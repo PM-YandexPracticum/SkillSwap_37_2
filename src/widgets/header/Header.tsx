@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "@store";
 import { applySearchQuery } from "../../services/filters/actions";
 import { RootState } from "@store";
 import clsx from "clsx";
-import { RegistrationModal } from "../../features/registration/RegistrationModal";
+import { RegistrationFlow } from "../../features/registration/RegistrationModal";
 
 // type PopupType = "skills" | "profile" | "notifications" | null;
 export const POPUP_TYPES = {
@@ -74,7 +74,8 @@ export const Header: FC<{ onOpenRegistration?: () => void }> = ({
   };
 
   const handleRegistration = () => {
-    setIsRegistrationModalOpen(true);
+    // setIsRegistrationModalOpen(true);
+    
   };
 
   const handleRegistrationComplete = useCallback(() => {
@@ -178,9 +179,11 @@ export const Header: FC<{ onOpenRegistration?: () => void }> = ({
             <Button size={92} onClick={handleLogin}>
               Войти
             </Button>
-            <Button size={208} onClick={handleRegistration} colored>
-              Зарегистрироваться
-            </Button>
+            <Link to='/auth/register'>
+              <Button size={208} onClick={handleRegistration} colored>
+                Зарегистрироваться
+              </Button>
+            </Link>
           </div>
         )}
       </div>
@@ -203,11 +206,11 @@ export const Header: FC<{ onOpenRegistration?: () => void }> = ({
         <ProfilePopup onClose={closePopup} />
       </Popup>
 
-      <RegistrationModal
-        isOpen={isRegistrationModalOpen}
+      {/* <RegistrationModal
+        // isOpen={isRegistrationModalOpen}
         onClose={closeModalRef.current} 
         onRegistrationComplete={handleRegistrationComplete}
-      />
+      /> */}
     </header>
   );
 };

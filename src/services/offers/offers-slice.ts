@@ -1,5 +1,5 @@
 // src\services\user\user-slice.ts
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOffer } from '../../api/types';
 import { addOfferThunk, getOffersThunk } from './actions';
 
@@ -21,10 +21,15 @@ export const offersSlice = createSlice({
   name: 'offers',
   initialState,
   reducers: {
+    setIsOfferCreated: (state, action: PayloadAction<boolean>) => {
+      state.isOfferCreated = action.payload;
+      console.log(`state.isOfferCreated ${state.isOfferCreated}`);
+      
+  }
   },
   selectors: {
     getOffers: (state) => state.offers,
-    isOfferCreated: (state) => state.isOfferCreated
+    getIsOfferCreated: (state) => state.isOfferCreated
   },
   extraReducers: builder => {
     builder
@@ -59,7 +64,8 @@ export const offersSlice = createSlice({
   }
 });
 
-export const { getOffers, isOfferCreated } = offersSlice.selectors;
+export const { getOffers, getIsOfferCreated } = offersSlice.selectors;
+export const { setIsOfferCreated } = offersSlice.actions;
 
 export const offersReducer = offersSlice.reducer;
 

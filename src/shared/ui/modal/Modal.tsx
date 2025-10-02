@@ -20,11 +20,7 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   // Блокировка скролла при открытой модалке
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
 
     return () => {
       document.body.style.overflow = "unset";
@@ -33,12 +29,10 @@ export const Modal: React.FC<ModalProps> = ({
 
   // Закрытие по ESC
   useEffect(() => {
-    if (!closeOnEscape || !isOpen) return;
+    if (!isOpen || !closeOnEscape) return;
 
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+      if (e.key === "Escape") onClose?.();
     };
 
     document.addEventListener("keydown", handleEscape);
@@ -47,9 +41,9 @@ export const Modal: React.FC<ModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleOverlayClick = (e: React.MouseEvent) => {
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (closeOnOverlayClick && e.target === e.currentTarget) {
-      onClose();
+      onClose?.();
     }
   };
 

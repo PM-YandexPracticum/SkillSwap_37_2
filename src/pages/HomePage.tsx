@@ -293,10 +293,10 @@ export const HomePage = () => {
         </div>
       </div>
 
-      <h2>NotificationsTable</h2>
+      {/* <h2>NotificationsTable</h2>
       <div style={{ marginBottom: '300px' }}>
         <NotificationsTable />
-      </div>
+      </div> */}
 
     </div>
 
