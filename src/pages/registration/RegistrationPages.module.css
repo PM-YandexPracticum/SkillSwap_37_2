@@ -1,7 +1,6 @@
 .registrationPage {
   width: 100%;
   height: auto;
-  max-height: 80vh;
   display: flex;
   flex-direction: column;
   background: #f8f9fa;

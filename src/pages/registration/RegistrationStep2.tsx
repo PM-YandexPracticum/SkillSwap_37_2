@@ -29,7 +29,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
           <Icon name="logo" size={40} />
           <span>SkillSwap</span>
         </div>
-        <button className={styles.closeButton} onClick={onClose}>
+        <button className={styles.closeButton} onClick={() => navigate(-1)}>
           Закрыть
           <Icon name="cross" size={24} />
         </button>

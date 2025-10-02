@@ -11,42 +11,26 @@ import { getOfferUser } from '../../services/users/users-slice';
 import { Loader } from '../../shared/ui/loader/Loader';
 import { getCurrentUser } from '../../services/user/user-slice';
 import { addOfferThunk } from '../../services/offers/actions';
-import { RegistrationModal } from '../../features/registration/RegistrationModal';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getIsOfferCreated } from '../../services/offers/offers-slice';
 
 import styles from './OfferPage.module.css';
 
 export const OfferPage: React.FC = () => {
   
   const dispatch = useDispatch();
-  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
+  const navigate = useNavigate();
 
+  const isOfferReady = useSelector(getIsOfferCreated);
   const currentUser = useSelector(getCurrentUser);
   const offerUser = useSelector(getOfferUser);
   const {users} = useSelector((state: RootState) => state.users);
 
    const handleExchange = () => {
-    if (!offerUser) {
-      console.error("Offer user is not available");
-      return;
+    if (!currentUser || !offerUser) {
+      navigate('/auth/register');
     }
-
-    if (currentUser?.subCategoryId) {
-      // Пользователь авторизован - предлагаем обмен
-      dispatch(addOfferThunk({
-        offerUserId: offerUser.id,
-        skillOwnerId: currentUser.subCategoryId
-      }));
-    } else {
-      // Пользователь не авторизован - показываем модалку регистрации
-      setIsRegistrationModalOpen(true);
-    }
-  };
-
-  const handleRegistrationComplete = () => {
-    console.log("Регистрация завершена, можно предлагать обмен");
-    // После регистрации можно сразу предложить обмен
-    if (offerUser && currentUser?.subCategoryId) {
+    if (!isOfferReady && offerUser && currentUser?.subCategoryId) {
       dispatch(addOfferThunk({
         offerUserId: offerUser.id,
         skillOwnerId: currentUser.subCategoryId
@@ -99,11 +83,11 @@ export const OfferPage: React.FC = () => {
         </CardShowcase>
       </section>
 
-      <RegistrationModal
+      {/* <RegistrationModal
         isOpen={isRegistrationModalOpen}
         onClose={() => setIsRegistrationModalOpen(false)}
         onRegistrationComplete={handleRegistrationComplete}
-      />
+      /> */}
     </>
   )
 };

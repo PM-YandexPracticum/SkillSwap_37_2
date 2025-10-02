@@ -1,14 +1,14 @@
 import React from "react";
 import { RegistrationOnBoarding } from "../../features/onboarding/registrationBoard";
 import { onBoarding } from "../../features/onboarding/registrationBoard";
-import { SkillForm } from "../../widgets/skillForm/SkillForm";
+import { SkillForm, SkillFormData } from "../../widgets/skillForm/SkillForm";
 import { RegistrationProgress } from "../../shared/ui/RegistrationProgress/RegistrationProgress";
 import { Icon } from "../../shared/ui/icon/Icon";
 import styles from "./RegistrationPages.module.css";
 
 interface RegistrationStep3Props {
   onBack: () => void;
-  onComplete: () => void;
+  onComplete: (data: SkillFormData) => void;
   onClose?: () => void;
 }
 
@@ -24,7 +24,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
           <Icon name="logo" size={40} />
           <span>SkillSwap</span>
         </div>
-        <button className={styles.closeButton} onClick={onClose}>
+        <button className={styles.closeButton} onClick={() => navigate(-1)}>
           Закрыть
           <Icon name="cross" size={24} />
         </button>

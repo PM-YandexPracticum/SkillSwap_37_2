@@ -87,3 +87,11 @@ export function subcategoryIdsByQuery(
 
   return [...matchSubIds];
 }
+
+export function getCurrentDateTimeString(): string {
+  const now = new Date();
+  const pad = (num: number) => num.toString().padStart(2, "0");
+
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ` +
+         `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+}

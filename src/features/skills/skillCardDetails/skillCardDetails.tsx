@@ -8,8 +8,10 @@ import { Icon } from "../../../shared/ui/icon/Icon";
 import { Button } from "../../../shared/ui/button/Button";
 import photoPlaceholder from "../../../shared/assets/images/school-board.svg?.svg";
 import { useSelector } from "@store";
-import { isOfferCreated } from "../../../services/offers/offers-slice";
+import { getIsOfferCreated } from "../../../services/offers/offers-slice";
 import styles from './skillCardDetails.module.css';
+import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 type SkillCardDetailsProps = {
   checkEdit?: boolean;
@@ -19,7 +21,6 @@ type SkillCardDetailsProps = {
   images?: string[];
   buttonText?: string;
   onExchange?: () => void;
-  requireRegistration?: boolean;
 };
 
 export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
@@ -31,8 +32,10 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   buttonText = "Предложить обмен",
   onExchange,
 }) => {
+  const navigate = useNavigate();
+
   const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
-  const isOfferReady = useSelector(isOfferCreated);
+  const isOfferReady = useSelector(getIsOfferCreated);
 
   // Получаем пользователя из Redux
   const currentUser = useSelector((s: RootState) => s.user.user);
@@ -96,10 +99,17 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
                   {buttonText}
                 </Button>
               )}
-              {isOfferReady && (
+              {isOfferReady && !currentUser && (
+                <Button
+                  className={(styles.buttonOffer, styles.buttonOffer)}
+                  onClick={handleExchangeClick}
+              >
+                  <Icon name='clock'/> {buttonText}
+              </Button>
+              )}
+              {isOfferReady && currentUser && (
                 <Button
                   className={(styles.buttonOffer, styles.buttonOfferReady)}
-                  onClick={handleExchangeClick}
               >
                   <Icon name='clock'/> Обмен предложен
               </Button>
@@ -139,7 +149,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
         </div>
 
         <div className={styles.mainSection}>
-          <div className={styles.leftSection}>
+          <div className={clsx(styles.leftSection, styles.leftSectionEdit)}>
             <div className={styles.info}>
               <h2 className={styles.title}>{title}</h2>
               <h3 className={styles.subtitle}>{subtitle}</h3>
@@ -150,7 +160,7 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
                 Редактировать <Icon name="edit" />
               </Button>
               <Button colored onClick={handleExchangeClick}>
-                {buttonText}
+                Готово
               </Button>
             </div>
           </div>
@@ -162,7 +172,10 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
 
         <ExchangeNotification
           isOpen={isNotificationOpen}
-          onClose={closeNotification}
+          onClose={() => {
+            closeNotification();
+            navigate(`/skills/${currentUser?.id}`)
+          }}
           type="info"
           title="Ваше предложение создано"
           message="Теперь вы можете предложить обмен"
