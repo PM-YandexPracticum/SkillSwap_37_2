@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { RegistrationOnBoarding } from "../../features/onboarding/registrationBoard";
 import { onBoarding } from "../../features/onboarding/registrationBoard";
 import {
@@ -23,7 +22,6 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   initialData,
   onClose,
 }) => {
-  const navigate = useNavigate();
   return (
     <div className={styles.registrationPage}>
       <div className={styles.registrationHeader}>

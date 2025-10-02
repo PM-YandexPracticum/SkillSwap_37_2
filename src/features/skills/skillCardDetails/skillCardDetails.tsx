@@ -30,7 +30,6 @@ export const SkillCardDetails: React.FC<SkillCardDetailsProps> = ({
   images = [],
   buttonText = "Предложить обмен",
   onExchange,
-  requireRegistration = true,
 }) => {
   const { isNotificationOpen, openNotification, closeNotification } = useExchangeNotification();
   const isOfferReady = useSelector(isOfferCreated);

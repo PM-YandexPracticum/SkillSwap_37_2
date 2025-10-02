@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { RegistrationOnBoarding } from "../../features/onboarding/registrationBoard";
 import { onBoarding } from "../../features/onboarding/registrationBoard";
 import { SkillForm } from "../../widgets/skillForm/SkillForm";
@@ -18,7 +17,6 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
   onComplete,
   onClose,
 }) => {
-  const navigate = useNavigate();
   return (
     <div className={styles.registrationPage}>
       <div className={styles.registrationHeader}>

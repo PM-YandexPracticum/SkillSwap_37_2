@@ -18,7 +18,7 @@ export const RegistrationModal: React.FC<RegistrationModalProps> = ({
   onRegistrationComplete,
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [step1Data, setStep1Data] = useState({ email: "", password: "" });
+  const [, setStep1Data] = useState({ email: "", password: "" });
   const [step2Data, setStep2Data] = useState<Partial<RegisterStep2Data>>({});
 
   const handleStep1Continue = (email: string, password: string) => {

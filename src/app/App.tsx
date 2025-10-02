@@ -8,7 +8,6 @@ import {
   DropdownGroupedDemo,
   Footer,
   GridList,
-  Header,
   SkillForm,
 } from "@widgets";
 

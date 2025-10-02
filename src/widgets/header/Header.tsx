@@ -37,10 +37,7 @@ function useDebounced<T>(value: T, ms = 300) {
   }, [value, ms]);
   return v;
 }
-
-export const Header: FC<{ onOpenRegistration?: () => void }> = ({
-  onOpenRegistration,
-}) => {
+export const Header: FC = () => {
   const dispatch = useDispatch();
   const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
   const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);

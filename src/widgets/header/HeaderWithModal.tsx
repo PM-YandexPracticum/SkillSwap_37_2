@@ -11,7 +11,7 @@ export const HeaderWithModal: React.FC = () => {
 
   return (
     <>
-      <Header onOpenRegistration={() => setIsRegistrationModalOpen(true)} />
+      <Header />
       {isRegistrationModalOpen && (
         <RegistrationModal
           isOpen={isRegistrationModalOpen}
