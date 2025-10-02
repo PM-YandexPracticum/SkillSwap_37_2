@@ -24,6 +24,9 @@ const initialState: RandomUsersState = {
 export const randomUsersSlice = createSlice({
   name: 'randomUsers',
   initialState,
+  selectors: {
+    getRandomUsers: (state) => state.users
+  },
   reducers: {
     resetRandomUsers: (state) => {
       state.users = [];
@@ -65,5 +68,6 @@ export const randomUsersSlice = createSlice({
   },
 });
 
+export const { getRandomUsers } = randomUsersSlice.selectors;
 export const { resetRandomUsers } = randomUsersSlice.actions;
 export const randomUsersReducer = randomUsersSlice.reducer;
