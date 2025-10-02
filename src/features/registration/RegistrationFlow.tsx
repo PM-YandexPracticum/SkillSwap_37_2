@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { RegistrationStep1 } from "../../pages/registration/RegistrationStep1";
 import { RegistrationStep2 } from "../../pages/registration/RegistrationStep2";
 import { RegistrationStep3 } from "../../pages/registration/RegistrationStep3";

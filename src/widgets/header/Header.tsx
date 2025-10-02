@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "@store";
 import { applySearchQuery } from "../../services/filters/actions";
 import { RootState } from "@store";
 import clsx from "clsx";
-import { RegistrationFlow } from "../../features/registration/RegistrationModal";
+import { RegistrationFlow } from "../../features/registration/RegistrationFlow";
 
 // type PopupType = "skills" | "profile" | "notifications" | null;
 export const POPUP_TYPES = {

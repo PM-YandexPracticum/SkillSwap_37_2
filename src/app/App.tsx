@@ -49,7 +49,7 @@ import { GENDERS, TGender } from "@api/types";
 import { getOffersThunk } from "../services/offers/actions";
 import { getOffers } from "../services/offers/offers-slice";
 import { getUsersThunk } from "../services/users/actions";
-import { RegistrationFlow } from "../features/registration/RegistrationModal";
+import { RegistrationFlow } from "../features/registration/RegistrationFlow";
 
 import styles from "./App.module.css";
 
