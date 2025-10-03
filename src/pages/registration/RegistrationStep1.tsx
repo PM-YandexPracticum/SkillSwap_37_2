@@ -5,17 +5,16 @@ import { AuthForm } from "../../features/auth/AuthForm";
 import { RegistrationProgress } from "../../shared/ui/RegistrationProgress/RegistrationProgress";
 import { Icon } from "../../shared/ui/icon/Icon";
 import styles from "./RegistrationPages.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface RegistrationStep1Props {
   onContinue: (email: string, password: string) => void;
-  onClose?: () => void;
 }
 
 export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   onContinue,
-  onClose,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className={styles.registrationPage}>
       <div className={styles.registrationHeader}>

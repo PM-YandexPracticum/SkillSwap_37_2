@@ -203,43 +203,6 @@ const LoginContent: React.FC = () => (
   </section>
 );
 
-// Регистрация
-const RegisterContent: React.FC = () => {
-  const [step, setStep] = useState(1);
-  const [step2Data, setStep2Data] = useState<Partial<RegisterStep2Data> | null>(
-    null
-  );
-
-  const handleStep2Continue = (data: RegisterStep2Data) => {
-    setStep2Data(data);
-    console.log("Данные регистрации:", data);
-    alert("Регистрация завершена! Данные: " + JSON.stringify(data, null, 2));
-  };
-
-  const handleBack = () => {
-    if (step > 1) setStep(step - 1);
-  };
-
-  const handleStep1Continue = (email: string, password: string) => {
-    console.log("Шаг 1 данные:", email, password);
-    setStep(2);
-  };
-
-  return (
-    <section className="page page-auth">
-      {step === 1 ? (
-        <AuthForm onContinue={handleStep1Continue} />
-      ) : (
-        <RegisterStep2
-          onBack={handleBack}
-          onContinue={handleStep2Continue}
-          initialData={step2Data || undefined}
-        />
-      )}
-    </section>
-  );
-};
-
 //Форма навыка
 const SkillFormContent: React.FC = () => (
   <section className="page page-skillform">
@@ -259,17 +222,6 @@ const DropdownsDemoContent: React.FC = () => (
     <DropdownGroupedDemo />
   </section>
 );
-
-// /skills/:id — детальная страница навыка (пока заглушка)
-// const SkillPageStub: React.FC = () => {
-//   const { id } = useParams();
-//   return (
-//     <section className="page page-skill">
-//       <h1>Навык #{id}</h1>
-//       <p>Здесь будет детальная страница навыка.</p>
-//     </section>
-//   );
-// };
 
 // /favorites
 const FavoritesPageStub: React.FC = () => (

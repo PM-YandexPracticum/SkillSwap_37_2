@@ -8,20 +8,20 @@ import {
 import { RegistrationProgress } from "../../shared/ui/RegistrationProgress/RegistrationProgress";
 import { Icon } from "../../shared/ui/icon/Icon";
 import styles from "./RegistrationPages.module.css";
+import { useNavigate } from "react-router-dom";
 
 interface RegistrationStep2Props {
   onBack: () => void;
   onContinue: (data: RegisterStep2Data) => void;
   initialData?: Partial<RegisterStep2Data>;
-  onClose?: () => void;
 }
 
 export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   onBack,
   onContinue,
   initialData,
-  onClose,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className={styles.registrationPage}>
       <div className={styles.registrationHeader}>

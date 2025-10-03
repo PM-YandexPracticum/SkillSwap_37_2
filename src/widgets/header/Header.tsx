@@ -15,11 +15,10 @@ import { getCurrentUser, setUser } from "../../services/user/user-slice";
 import { ProfilePopup } from "../profile-popup/ProfilePopup";
 import { useDispatch, useSelector } from "@store";
 import { RootState } from "@store";
-import clsx from "clsx";
-import { RegistrationFlow } from "../../features/registration/RegistrationFlow";
 import { getRandomUsers } from "../../services/randomUsers/random-users-slice";
 import { setTextForSearch } from "../../services/filters/filters-slice";
 import { reloadFilteredUsers } from "../../services/filteredUsers/actions";
+import clsx from "clsx";
 
 export const POPUP_TYPES = {
   SKILLS: "skills",
@@ -40,8 +39,6 @@ function useDebounced<T>(value: T, ms = 300) {
 export const Header: FC = () => {
   const dispatch = useDispatch();
   const [isOpenPopup, setOpenPopup] = useState<PopupType>(null);
-  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
- const closeModalRef = useRef(() => setIsRegistrationModalOpen(false));
 
   const currentUser = useSelector(getCurrentUser);
   const randomUsers = useSelector(getRandomUsers);
@@ -72,15 +69,6 @@ export const Header: FC = () => {
     dispatch(setUser(randomUser));
   };
 
-  const handleRegistration = () => {
-    // setIsRegistrationModalOpen(true);
-    
-  };
-
-  const handleRegistrationComplete = useCallback(() => {
-    closeModalRef.current();
-  }, []);
-
   return (
     <header
       className={styles.header}
@@ -108,7 +96,10 @@ export const Header: FC = () => {
           <li className={styles.li}>
             <button
               className={clsx(styles.link, styles.dropButton)}
-              onClick={() => togglePopup(POPUP_TYPES.SKILLS)}
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePopup(POPUP_TYPES.SKILLS)
+              }}
             >
               Все навыки
               <Icon
@@ -179,7 +170,7 @@ export const Header: FC = () => {
               Войти
             </Button>
             <Link to='/auth/register'>
-              <Button size={208} onClick={handleRegistration} colored>
+              <Button size={208} colored>
                 Зарегистрироваться
               </Button>
             </Link>
@@ -205,11 +196,6 @@ export const Header: FC = () => {
         <ProfilePopup onClose={closePopup} />
       </Popup>
 
-      {/* <RegistrationModal
-        // isOpen={isRegistrationModalOpen}
-        onClose={closeModalRef.current} 
-        onRegistrationComplete={handleRegistrationComplete}
-      /> */}
     </header>
   );
 };
